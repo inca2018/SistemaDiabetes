@@ -121,40 +121,13 @@
 								<?php if(isset($_SESSION['permiso1'])){ if($_SESSION['permiso1']=='1' || $_SESSION['permiso1']==1){ ?>
 
 								<li id="Gestion1" class="">
-									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Operaciones/Enconado.php';?>" title="Gestión de Enconado">
+									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Operaciones/GestionPacientes.php';?>" title="Gestión de Pacientes">
 										<span>Gestión de Pacientes</span>
 									</a>
 								</li>
 
 								<?php  }}else{ };?>
 
-								<?php if(isset($_SESSION['permiso2'])){ if($_SESSION['permiso2']=='1' || $_SESSION['permiso2']==1){ ?>
-
-								<li id="Gestion2" class="">
-									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Operaciones/Ovillado.php';?>" title="estión de Ovillado">
-										<span>Gestión de Ovillado</span>
-									</a>
-								</li>
-
-								<?php  }}else{ };?>
-								<?php if(isset($_SESSION['permiso3'])){ if($_SESSION['permiso3']=='1' || $_SESSION['permiso3']==1){ ?>
-
-								<!-- <li id="Gestion3" class="">
-									<a href="<?php  // echo  $conexionConfig->rutaOP().'vista/Operaciones/Tintoreria.php';?>" title="Gestión de Tinteroria">
-										<span>Gestión de Tinteroria</span>
-									</a>
-								</li> -->
-
-								<?php  }}else{ };?>
-								<?php if(isset($_SESSION['permiso4'])){ if($_SESSION['permiso4']=='1' || $_SESSION['permiso4']==1){ ?>
-
-								<li id="Gestion4" class="">
-									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Operaciones/Calidad.php';?>" title="Gestión de Calidad">
-										<span>Gestión de Calidad</span>
-									</a>
-								</li>
-
-								<?php  }}else{ };?>
 							</ul>
 						</li>
 
@@ -203,11 +176,7 @@
 										<span>Indicadores</span>
 									</a>
 								</li>
-								<li id="GeneracionFactura" class=" ">
-									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Reporte/Reporte.php';?>" title="Reporte">
-										<span>Reportes</span>
-									</a>
-								</li>
+
 
 							</ul>
 						</li>

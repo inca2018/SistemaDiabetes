@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 22-11-2018 a las 12:46:12
--- Versión del servidor: 5.7.21
--- Versión de PHP: 5.6.35
+-- Tiempo de generación: 22-11-2018 a las 20:35:02
+-- Versión del servidor: 5.7.19
+-- Versión de PHP: 5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -800,6 +800,29 @@ INSERT INTO `condicion` (`idCondicion`, `Descripcion`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `dx`
+--
+
+DROP TABLE IF EXISTS `dx`;
+CREATE TABLE IF NOT EXISTS `dx` (
+  `idDx` int(11) NOT NULL AUTO_INCREMENT,
+  `Descripcion` varchar(100) NOT NULL,
+  PRIMARY KEY (`idDx`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `dx`
+--
+
+INSERT INTO `dx` (`idDx`, `Descripcion`) VALUES
+(1, 'DM1'),
+(2, 'DM2'),
+(3, 'DM3'),
+(4, 'PREDIABETES');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `estado`
 --
 
@@ -866,7 +889,7 @@ CREATE TABLE IF NOT EXISTS `paciente` (
   `Codigo` varchar(100) NOT NULL,
   `Persona_idPersona` int(11) NOT NULL,
   `TipoEnfermedad` varchar(150) NOT NULL,
-  `dx` varchar(100) NOT NULL,
+  `dx` int(11) DEFAULT NULL,
   `Medico_idMedico` int(11) NOT NULL,
   `Procedencia` varchar(150) NOT NULL,
   `Condicion_idCondicion` int(11) NOT NULL,
@@ -875,17 +898,19 @@ CREATE TABLE IF NOT EXISTS `paciente` (
   PRIMARY KEY (`idPaciente`),
   KEY `FK_SExoSexo` (`Sexo_idSexo`),
   KEY `FK_SCondicion` (`Condicion_idCondicion`),
-  KEY `FK_Persona_idPersona` (`Persona_idPersona`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  KEY `FK_Persona_idPersona` (`Persona_idPersona`),
+  KEY `FK_DX` (`dx`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `paciente`
 --
 
 INSERT INTO `paciente` (`idPaciente`, `Codigo`, `Persona_idPersona`, `TipoEnfermedad`, `dx`, `Medico_idMedico`, `Procedencia`, `Condicion_idCondicion`, `Sexo_idSexo`, `fechaRegistro`) VALUES
-(3, 'Nº 0001', 142, 'DIABETES A', 'DEE', 40, 'HOSPITAL A', 1, 1, '2018-11-21 23:39:58'),
-(4, 'Nº 0002', 143, 'ENFER', 'DDX', 41, 'FWEFEW', 2, 1, '2018-11-22 00:41:25'),
-(5, 'Nº 0003', 144, 'fewf', 'rq3', 41, 'wefew', 1, 1, '2018-11-22 00:42:06');
+(3, 'Nº 0001', 142, 'DIABETES A', 1, 40, 'HOSPITAL A', 1, 1, '2018-11-21 23:39:58'),
+(4, 'Nº 0002', 143, 'ENFER', 2, 41, 'FWEFEW', 2, 1, '2018-11-22 00:41:25'),
+(5, 'Nº 0003', 144, 'fewf', 3, 41, 'wefew', 1, 1, '2018-11-22 00:42:06'),
+(6, 'Nº 0004', 145, 'wefwe', 1, 41, 'weffw', 1, 1, '2018-11-22 15:28:08');
 
 -- --------------------------------------------------------
 
@@ -965,7 +990,7 @@ CREATE TABLE IF NOT EXISTS `persona` (
   `fechaRegistro` datetime NOT NULL,
   PRIMARY KEY (`idPersona`),
   KEY `FK_Estado_idEstado` (`Estado_idEstado`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=145 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=146 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `persona`
@@ -1075,7 +1100,42 @@ INSERT INTO `persona` (`idPersona`, `nombrePersona`, `apellidoPaterno`, `apellid
 (139, 'FATIMA', 'ROJAS', 'ALVAREZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:09:00'),
 (142, 'ROMULO', 'SANTA', 'PEREZ', '47404442', '2018-11-21', 'jic_D12@hotmail.com', '121313', 'a.a.h.h enrique milla ochoa mz 74 lt 7\r\nlos olivos- lima - lima', 1, '2018-11-21 23:39:58'),
 (143, 'LUISA', 'LUPE', 'ROMEROS', '23121231', '2018-11-13', 'WFEF@RF.COM', '312312', 'WEFWEFEWFWE', 1, '2018-11-22 00:41:25'),
-(144, 'MIRIAN', 'RODRIGUEZX', 'PORRAS', '35635454', '2018-11-27', 'wef@gew.com', '123124123', 'cqefqwfewf', 1, '2018-11-22 00:42:06');
+(144, 'MIRIAN', 'RODRIGUEZX', 'PORRAS', '35635454', '2018-11-27', 'wef@gew.com', '123124123', 'cqefqwfewf', 1, '2018-11-22 00:42:06'),
+(145, 'wef', 'wef', 'wef', '122321', '2018-11-14', NULL, '141', NULL, 1, '2018-11-22 15:28:08');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `seguimiento`
+--
+
+DROP TABLE IF EXISTS `seguimiento`;
+CREATE TABLE IF NOT EXISTS `seguimiento` (
+  `idSeguimiento` int(11) NOT NULL AUTO_INCREMENT,
+  `Paciente_idPaciente` int(11) NOT NULL,
+  `year` int(11) NOT NULL,
+  `mes` int(11) NOT NULL,
+  `Riesgo` text,
+  `fechaInicio` date DEFAULT NULL,
+  `Observaciones` text,
+  `Taller1` int(11) DEFAULT NULL,
+  `Taller2` int(11) DEFAULT NULL,
+  `Taller3` int(11) DEFAULT NULL,
+  `ProximaCita` date DEFAULT NULL,
+  `Usuario_idUsuario` int(11) NOT NULL,
+  `Estado_idEstado` int(11) NOT NULL,
+  `fechaRegistro` datetime NOT NULL,
+  `ResultadosA` int(11) NOT NULL,
+  `ResultadosB` int(11) NOT NULL,
+  PRIMARY KEY (`idSeguimiento`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `seguimiento`
+--
+
+INSERT INTO `seguimiento` (`idSeguimiento`, `Paciente_idPaciente`, `year`, `mes`, `Riesgo`, `fechaInicio`, `Observaciones`, `Taller1`, `Taller2`, `Taller3`, `ProximaCita`, `Usuario_idUsuario`, `Estado_idEstado`, `fechaRegistro`, `ResultadosA`, `ResultadosB`) VALUES
+(4, 3, 2018, 1, 'wefw', '2018-11-22', 'wefwef', 2, 2, 2, '2018-11-23', 1, 1, '2018-11-22 14:45:40', 8, 8);
 
 -- --------------------------------------------------------
 
@@ -1129,6 +1189,78 @@ INSERT INTO `usuario` (`idUsuario`, `usuario`, `pass`, `Perfil_idPerfil`, `Perso
 (50, 'jgonzalezc', '$2a$08$wMCGnNSJl1Al2ZhvbSh6JeXv6lKrdQrnyWQdZfroQbGiZDnrB6lJ6', 11, 41, 1, '2018-11-21 22:46:48'),
 (51, 'mrodriguezc', '$2a$08$TGTEo0z.wGkW6KsOZfBGY.yFOPxcrBWmoucC43qTWFVNG0Ao1YgLC', 11, 42, 1, '2018-11-21 22:47:07');
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `valores1`
+--
+
+DROP TABLE IF EXISTS `valores1`;
+CREATE TABLE IF NOT EXISTS `valores1` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `VAR1` text,
+  `VAR2` int(11) DEFAULT NULL,
+  `VAR3` int(11) DEFAULT NULL,
+  `VAR4` int(11) DEFAULT NULL,
+  `VAR5` int(11) DEFAULT NULL,
+  `VAR6` int(11) DEFAULT NULL,
+  `VAR7` int(11) DEFAULT NULL,
+  `VAR8` int(11) DEFAULT NULL,
+  `VAR9` int(11) DEFAULT NULL,
+  `VAR10` int(11) DEFAULT NULL,
+  `VAR11` int(11) DEFAULT NULL,
+  `VAR12` int(11) DEFAULT NULL,
+  `VAR13` int(11) DEFAULT NULL,
+  `VAR14` int(11) DEFAULT NULL,
+  `TALLA` decimal(7,2) DEFAULT NULL,
+  `PESO` decimal(7,2) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `valores1`
+--
+
+INSERT INTO `valores1` (`ID`, `VAR1`, `VAR2`, `VAR3`, `VAR4`, `VAR5`, `VAR6`, `VAR7`, `VAR8`, `VAR9`, `VAR10`, `VAR11`, `VAR12`, `VAR13`, `VAR14`, `TALLA`, `PESO`) VALUES
+(8, 'werg', 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, '120.00', '70.00');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `valores2`
+--
+
+DROP TABLE IF EXISTS `valores2`;
+CREATE TABLE IF NOT EXISTS `valores2` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `VAR1` int(11) DEFAULT NULL,
+  `VAR1_OBS` text,
+  `VAR2` int(11) DEFAULT NULL,
+  `VAR2_OBS` text,
+  `VAR3` int(11) DEFAULT NULL,
+  `VAR3_OBS` text,
+  `VAR4` int(11) DEFAULT NULL,
+  `VAR4_OBS` text,
+  `VAR5` int(11) DEFAULT NULL,
+  `VAR5_OBS` text,
+  `VAR6` int(11) DEFAULT NULL,
+  `VAR6_OBS` text,
+  `VAR7` int(11) DEFAULT NULL,
+  `VAR7_OBS` text,
+  `VAR8` int(11) DEFAULT NULL,
+  `VAR8_OBS` text,
+  `VAR9` int(11) DEFAULT NULL,
+  `VAR9_OBS` text,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `valores2`
+--
+
+INSERT INTO `valores2` (`ID`, `VAR1`, `VAR1_OBS`, `VAR2`, `VAR2_OBS`, `VAR3`, `VAR3_OBS`, `VAR4`, `VAR4_OBS`, `VAR5`, `VAR5_OBS`, `VAR6`, `VAR6_OBS`, `VAR7`, `VAR7_OBS`, `VAR8`, `VAR8_OBS`, `VAR9`, `VAR9_OBS`) VALUES
+(8, 2, '', 2, '', 2, '', 2, '', 2, '', 2, '', 2, '', 2, '', 2, '');
+
 --
 -- Restricciones para tablas volcadas
 --
@@ -1143,6 +1275,7 @@ ALTER TABLE `login`
 -- Filtros para la tabla `paciente`
 --
 ALTER TABLE `paciente`
+  ADD CONSTRAINT `FK_DX` FOREIGN KEY (`dx`) REFERENCES `dx` (`idDx`),
   ADD CONSTRAINT `FK_Persona_idPersona` FOREIGN KEY (`Persona_idPersona`) REFERENCES `persona` (`idPersona`),
   ADD CONSTRAINT `FK_SCondicion` FOREIGN KEY (`Condicion_idCondicion`) REFERENCES `condicion` (`idCondicion`),
   ADD CONSTRAINT `FK_SExoSexo` FOREIGN KEY (`Sexo_idSexo`) REFERENCES `sexo` (`idSexo`);

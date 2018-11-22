@@ -132,6 +132,14 @@
          	}
        break;
 
+            case 'listar_dx':
+      		$rpta = $general->Listar_DX();
+            echo '<option value="0">-- SELECCIONE --</option>';
+         	while ($reg = $rpta->fetch_object()){
+					echo '<option   value=' . $reg->idDx . '>' . $reg->Descripcion . '</option>';
+         	}
+       break;
+
 
 		case 'Listar_Paciente':
 

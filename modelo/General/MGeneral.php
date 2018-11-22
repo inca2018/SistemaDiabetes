@@ -44,7 +44,10 @@
          $sql="SELECT p.idPersona,CONCAT(p.nombrePersona,' ',p.apellidoPaterno,' ',p.apellidoMaterno) as NombreMedico FROM persona p INNER JOIN usuario u ON u.Persona_idPersona=p.idPersona WHERE u.Perfil_idPerfil=11";
          return ejecutarConsulta($sql);
        }
-
+ public function Listar_DX(){
+         $sql="SELECT * FROM dx";
+         return ejecutarConsulta($sql);
+       }
 
 
 
