@@ -122,7 +122,7 @@
 
 								<li id="Gestion1" class="">
 									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Operaciones/Enconado.php';?>" title="Gestión de Enconado">
-										<span>Gestión de Enconado</span>
+										<span>Gestión de Pacientes</span>
 									</a>
 								</li>
 
@@ -182,8 +182,8 @@
 									</a>
 								</li>
 								<li id="" class="">
-									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Mantenimiento/MantMaterial.php';?>" title="Materiales">
-										<span> Material </span>
+									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Mantenimiento/MantPacientes.php';?>" title="Materiales">
+										<span> Pacientes </span>
 									</a>
 								</li>
 							</ul>

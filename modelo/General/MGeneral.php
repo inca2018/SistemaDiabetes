@@ -32,6 +32,18 @@
          $sql="SELECT * FROM material";
          return ejecutarConsulta($sql);
        }
+       public function Listar_Sexo(){
+         $sql="SELECT * FROM sexo";
+         return ejecutarConsulta($sql);
+       }
+        public function Listar_Condicion(){
+         $sql="SELECT * FROM condicion";
+         return ejecutarConsulta($sql);
+       }
+       public function Listar_Medicos(){
+         $sql="SELECT p.idPersona,CONCAT(p.nombrePersona,' ',p.apellidoPaterno,' ',p.apellidoMaterno) as NombreMedico FROM persona p INNER JOIN usuario u ON u.Persona_idPersona=p.idPersona WHERE u.Perfil_idPerfil=11";
+         return ejecutarConsulta($sql);
+       }
 
 
 
