@@ -39,7 +39,7 @@
                         <h5 class="mt-3 mb-3 titulo_area" ><em><b>Permisos de Perfil:</b></em></h5>
                         <h3 class="mt-3 mb-3 text-muted" id="perfilRecuperado"><em><b></b></em></h3>
                         <div class="row">
-                            <label class="col-md-3 col-form-label texto-x12"><b>MÓDULO GESTIÓN ENCONADO:</b></label>
+                            <label class="col-md-3 col-form-label texto-x12"><b>MÓDULO GESTIÓN PACIENTE:</b></label>
                             <div class="col-md-3  mt-1">
                                <div class="row">
                                     <label class=" texto-x12 col-md-6">
@@ -52,7 +52,7 @@
                             </div>
                         </div>
                          <div class="row">
-                            <label class="col-md-3 col-form-label texto-x12"><b>MÓDULO GESTIÓN OVILLADO:</b></label>
+                            <label class="col-md-3 col-form-label texto-x12"><b>MÓDULO GESTIÓN 2:</b></label>
                             <div class="col-md-3  mt-1">
                                <div class="row">
                                     <label class=" texto-x12 col-md-6">
@@ -65,7 +65,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-3 col-form-label texto-x12"><b>MÓDULO GESTIÓN TINTORERIA:</b></label>
+                            <label class="col-md-3 col-form-label texto-x12"><b>MÓDULO GESTIÓN 3:</b></label>
                             <div class="col-md-3  mt-1">
                                <div class="row">
                                     <label class=" texto-x12 col-md-6">
@@ -78,7 +78,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-3 col-form-label texto-x12"><b>MÓDULO GESTIÓN CALIDAD:</b></label>
+                            <label class="col-md-3 col-form-label texto-x12"><b>MÓDULO GESTIÓN 4:</b></label>
                             <div class="col-md-3  mt-1">
                                <div class="row">
                                     <label class=" texto-x12 col-md-6">
