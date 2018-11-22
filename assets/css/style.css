@@ -1,0 +1,102 @@
+.uk-notify {
+  left: auto;
+  right: 50px;
+   z-index: 1600;
+}
+/*------- Modal -------*/
+@media (min-width: 720px){
+   .modal-xl {
+      max-width: 90%;
+   }
+}
+/* ----- select 2 -----*/
+.select2-selection {
+   width: 100% !important;
+}
+/* ---- fin select 2 ----*/
+@media screen and (min-width: 900px){
+   .dataTables_wrapper .dataTables_length label{
+      text-align: left !important;
+      display: block;
+   }
+}
+.dataTables_wrapper .dataTables_length {
+   width: 100%;
+}
+.dataTables_wrapper .dt-buttons{
+   display: inline-flex;
+}
+/* activi */
+.sidebar-subnav > li.active2 > a, .sidebar-subnav > li.active2 > .nav-item {
+    color: #045a88;
+}
+.select2{
+   width: 100% !important;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] { -moz-appearance:textfield; }
+
+-moz-appearance:textfield;al input number, input[type=number] { -moz-appearance:textfield; }
+
+
+.red{
+	color: #f05050;
+}
+.orange{
+	color: #ff902b;
+}
+.green{
+	color: #27c24c;
+}
+.info{
+	color: #23b7e5;
+}
+
+.fondo {
+	background-color: #23b7e5 !important;
+	color: white !important;
+}
+
+.activo{
+	border: 1px solid red;
+}
+
+td.highlight {
+    background-color: #23b7e5 !important;
+}
+.cargarOn{
+	position: absolute;
+	z-index: 2;
+	background-color: #ddddff;
+}
+
+.cargarOnTabla{
+	z-index: 1;
+}
+
+.redondearTabla{
+	border-radius: 15px !important;
+	border : 1px solid #000000;
+	font-family : Arial, Verdana, Helvetica, sans-serif;
+	font-size : 12px;
+	padding-left : 5px;
+	padding-right : 5px;
+}
+
+.titulo_area{
+ 	color:#6357ad;
+}
+
+.btn{
+   	-webkit-box-shadow: 3px 3px 10px 0px rgba(163,161,163,1);
+-moz-box-shadow: 3px 3px 10px 0px rgba(163,161,163,1);
+box-shadow: 3px 3px 10px 0px rgba(163,161,163,1);
+}
+
+
