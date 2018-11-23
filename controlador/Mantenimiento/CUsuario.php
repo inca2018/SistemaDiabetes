@@ -2,6 +2,7 @@
    session_start();
    require_once "../../modelo/Mantenimiento/MUsuario.php";
    require_once "../../modelo/General/MGeneral.php";
+    require_once "../../../php/PasswordHash.php";
    $mantenimiento = new MUsuario();
    $general = new MGeneral();
 	//Variables Generales
@@ -55,6 +56,9 @@
                 if($rspta["Error"]){
                     $rspta["Mensaje"].="Por estas razones no se puede Registrar el Usuario.";
                 }else{
+                    $hasher= new PasswordHash(8,FALSE);
+                    $UsuarioPassword = $hasher->HashPassword($UsuarioPassword);
+
                     $RespuestaRegistro=$mantenimiento->RegistroUsuario($UsuarioPersona,$UsuarioUsuario,$UsuarioPerfil,$UsuarioPassword,$UsuarioEstado,$idUsuario,$login_idLog);
                     if($RespuestaRegistro){
                         $rspta["Registro"]=true;
@@ -74,6 +78,14 @@
                 if($rspta["Error"]){
                     $rspta["Mensaje"].="Por estas razones no se puede Registrar el Usuario.";
                 }else{
+
+                      if($UsuarioPassword!=''){
+                        $hasher= new PasswordHash(8,FALSE);
+                        $UsuarioPassword = $hasher->HashPassword($UsuarioPassword);
+                    }else{
+                        $UsuarioPassword='-1';
+                    }
+
 
                     $RespuestaRegistro=$mantenimiento->RegistroUsuario($UsuarioPersona,$UsuarioUsuario,$UsuarioPerfil,$UsuarioPassword,$UsuarioEstado,$idUsuario,$login_idLog);
                     if($RespuestaRegistro){

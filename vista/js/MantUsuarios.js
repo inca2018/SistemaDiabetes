@@ -182,7 +182,7 @@ function RecuperarUsuario(idUsuario){
 		$("#UsuarioPersona").attr("disabled","true");
 		$("#idUsuario").val(data.idUsuario);
 		$("#UsuarioPersona").val(data.Persona_idPersona);
-		$("#UsuarioUsuario").val(data.user);
+		$("#UsuarioUsuario").val(data.usuario);
 		$("#UsuarioPerfil").val(data.Perfil_idPerfil);
 		$("#UsuarioPassword").val("");
 		$("#UsuarioPassword").removeClass("validarPanel");

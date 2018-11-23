@@ -1,6 +1,6 @@
 <?php
    require_once '../../config/config.php';
-   require_once "PasswordHash.php";
+
 
    class MUsuario{
 
@@ -26,13 +26,6 @@
       }
       public function RegistroUsuario($UsuarioPersona,$UsuarioUsuario,$UsuarioPerfil,$UsuarioPassword,$UsuarioEstado,$idUsuario,$login_idLog){
         $sql="";
-        $hasher=new PasswordHash(8,FALSE);
-
-			if($UsuarioPassword=='' || $UsuarioPassword=null || empty($UsuarioPassword)){
-					 $UsuarioPassword=0;
-				 }else{
-				   $UsuarioPassword=$hasher->HashPassword($UsuarioPassword);
-			}
 
         if($idUsuario=="" || $idUsuario==null || empty($idUsuario)){
              $sql="CALL `SP_USUARIO_REGISTRO`('$UsuarioUsuario','$UsuarioPassword','$UsuarioPerfil','$UsuarioPersona','$UsuarioEstado','$login_idLog');";
