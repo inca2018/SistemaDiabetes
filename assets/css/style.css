@@ -100,3 +100,92 @@ box-shadow: 3px 3px 10px 0px rgba(163,161,163,1);
 }
 
 
+.titulo_area{
+ 	color:#1797be;
+}
+.titulo_area2{
+ 	color:#ffab5e;
+}
+.titulo_area3{
+ 	color:#f47f7f;
+}
+.titulo_area4{
+ 	color:#58ceb1;
+}
+.titulo_area5{
+ 	color:#9289ca;
+}
+
+
+/* not active */
+.nav-pills .pill-1 .nav-link:not(.active) {
+    background-color: #51c6ea;
+}
+
+.nav-pills .pill-2 .nav-link:not(.active) {
+    background-color: #ffab5e;
+}
+
+.nav-pills .pill-3 .nav-link:not(.active) {
+    background-color: #f47f7f;
+    color: white;
+}
+.nav-pills .pill-4 .nav-link:not(.active) {
+    background-color: #58ceb1;
+    color: white;
+}
+.nav-pills .pill-5 .nav-link:not(.active) {
+    background-color: #9289ca;
+    color: white;
+}
+
+
+/* active (faded) */
+.nav-pills .pill-1 .nav-link {
+    background-color: #1797be;
+    color: white;
+}
+
+.nav-pills .pill-2 .nav-link {
+    background-color: #f77600;
+	color: white;
+}
+
+.nav-pills .pill-3 .nav-link {
+    background-color: #ec2121;
+    color: white;
+}
+.nav-pills .pill-4 .nav-link {
+    background-color: #2b957a;
+    color: white;
+}
+.nav-pills .pill-5 .nav-link {
+    background-color: #564aa3;
+    color: white;
+}
+
+.texto-x12 {
+	font-size: 12px;
+}
+.texto-x10 {
+	font-size: 10px;
+}
+
+.caja{
+    background-color: #3e3e8e29 !important;
+    border: 1px solid  #0000ff54 !important;
+}
+
+input.caja:focus{
+    background-color: #3e408e85 !important;
+    color: white !important;
+    border: 1px solid  #11adade8 !important;
+}
+
+.correcto{
+     border: 2px solid  green !important;
+}
+.incorrecto{
+     border: 2px solid  red !important;
+}
+
