@@ -42,7 +42,8 @@
 
         $resp.='
 				<button title="Fichas" class="btn btn-info  btn-sm"type="button" onclick="ficha('.$reg->idPaciente.')">
-                 <i class="fa fa-list"></i>
+
+                 <i class="fas fa-chart-line"></i>
               </button>';
 		 return $resp;
     }
@@ -86,7 +87,7 @@ case 'listar_seguimientos':
          $data[]=array(
             "0"=>$num,
             "1"=>'<button title="Información de Seguimiento" class="btn btn-info  btn-sm"type="button" onclick="informacion('.$reg->idSeguimiento.','.$reg->Paciente_idPaciente.','.$reg->ANO.','.$reg->MES.')">
-                 <i class="fa fa-list"></i>
+                 <i class="fas fa-clipboard-list"></i>
               </button>
                 ',
             "2"=>$reg->PACIENTE,
