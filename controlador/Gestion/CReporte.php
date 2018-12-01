@@ -73,8 +73,6 @@ switch ($_GET["op"]){
          $resu4=$control->condicion2($FechaInicio,$FechaFin);
         $response["condicion2"]=$resu4["TOTAL2"];
 
-        $resu5=$control->condicion3($FechaInicio,$FechaFin);
-        $response["condicion3"]=$resu5["TOTAL3"];
 
 
         $resu6=$control->tipo1($FechaInicio,$FechaFin);
@@ -86,6 +84,13 @@ switch ($_GET["op"]){
         $response["tipo3"]=$resu8["TOTAL6"];
         $resu9=$control->tipo4($FechaInicio,$FechaFin);
         $response["tipo4"]=$resu9["TOTAL7"];
+         $resu10=$control->tipo5($FechaInicio,$FechaFin);
+        $response["tipo5"]=$resu10["TOTAL8"];
+         $resu11=$control->tipo6($FechaInicio,$FechaFin);
+        $response["tipo6"]=$resu11["TOTAL9"];
+         $resu12=$control->tipo7($FechaInicio,$FechaFin);
+        $response["tipo7"]=$resu12["TOTAL10"];
+
 
         echo json_encode($response);
     break;

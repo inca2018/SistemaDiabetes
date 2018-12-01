@@ -86,14 +86,16 @@ case 'listar_seguimientos':
          $num++;
          $data[]=array(
             "0"=>$num,
-            "1"=>'<button title="Información de Seguimiento" class="btn btn-info  btn-sm"type="button" onclick="informacion('.$reg->idSeguimiento.','.$reg->Paciente_idPaciente.','.$reg->ANO.','.$reg->MES.')">
-                 <i class="fas fa-clipboard-list"></i>
-              </button>
+            "1"=>'
+              <button type="button"   title="Editar Seguimiento" class="btn btn-warning btn-sm" onclick="EditarSeguimiento('.$reg->idModulo.','.$reg->idPaciente.','.$reg->idYear.','.$reg->idMes.')"><i class="fa fa-edit"></i></button>
+               <button type="button"  title="Eliminar Seguimiento" class="btn btn-danger btn-sm" onclick="EliminarSeguimiento('.$reg->idModulo.','.$reg->idPaciente.','.$reg->idYear.','.$reg->idMes.')"><i class="fa fa-trash"></i></button>
                 ',
             "2"=>$reg->PACIENTE,
-            "3"=>$reg->fechaInicio,
-            "4"=>$reg->ProximaCita,
-            "5"=>BuscarEstado($reg)
+            "3"=>$reg->Sexo,
+            "4"=>$reg->Edad,
+            "5"=>$reg->FechaInicio,
+            "6"=>$reg->FechaProxima
+            //"7"=>BuscarEstado($reg)
 
             );
       }

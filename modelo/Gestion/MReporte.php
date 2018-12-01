@@ -34,7 +34,7 @@ class MReporte {
     }
 
     public function total_atenciones($Fecha1,$Fecha2){
-        $sql="SELECT COUNT(fechaRegistro) AS TOTAL_ATENCIONES FROM `seguimiento` WHERE  DATE(`fechaRegistro`) BETWEEN '$Fecha1' AND '$Fecha2'";
+        $sql="SELECT COUNT(m.FechaRegistro) AS TOTAL_ATENCIONES FROM modulo_seguimiento_paciente m WHERE  DATE(m.FechaRegistro) BETWEEN '$Fecha1' AND '$Fecha2'";
         return ejecutarConsultaSimpleFila($sql);
     }
 
@@ -44,7 +44,7 @@ class MReporte {
     }
 
      public function listar_paciente(){
-       $sql="SELECT p.idPaciente FROM paciente p INNER JOIN seguimiento s ON s.Paciente_idPaciente=p.idPaciente INNER JOIN valores1 val1 ON val1.ID=s.ResultadosA GROUP BY p.idPaciente;  ";
+       $sql="SELECT p.idPaciente FROM paciente p INNER JOIN modulo_seguimiento_paciente s ON s.idPaciente=p.idPaciente GROUP BY p.idPaciente;  ";
       return ejecutarConsulta($sql);
    }
 
@@ -57,10 +57,7 @@ class MReporte {
         $sql="SELECT COUNT(pa.idPaciente) AS TOTAL2 FROM paciente pa WHERE pa.Condicion_idCondicion=2 AND DATE(pa.fechaRegistro) BETWEEN '$Fecha1' AND '$Fecha2'";
         return ejecutarConsultaSimpleFila($sql);
     }
-      public function condicion3($Fecha1,$Fecha2){
-        $sql="SELECT COUNT(pa.idPaciente) AS TOTAL3 FROM paciente pa WHERE pa.Condicion_idCondicion=3 AND DATE(pa.fechaRegistro) BETWEEN '$Fecha1' AND '$Fecha2'";
-        return ejecutarConsultaSimpleFila($sql);
-    }
+
 
 
      public function tipo1($Fecha1,$Fecha2){
@@ -77,6 +74,18 @@ class MReporte {
     }
     public function tipo4($Fecha1,$Fecha2){
         $sql="SELECT COUNT(pa.idPaciente) AS TOTAL7 FROM paciente pa WHERE pa.dx=4 AND DATE(pa.fechaRegistro) BETWEEN '$Fecha1' AND '$Fecha2'";
+        return ejecutarConsultaSimpleFila($sql);
+    }
+     public function tipo5($Fecha1,$Fecha2){
+        $sql="SELECT COUNT(pa.idPaciente) AS TOTAL8 FROM paciente pa WHERE pa.dx=5 AND DATE(pa.fechaRegistro) BETWEEN '$Fecha1' AND '$Fecha2'";
+        return ejecutarConsultaSimpleFila($sql);
+    }
+     public function tipo6($Fecha1,$Fecha2){
+        $sql="SELECT COUNT(pa.idPaciente) AS TOTAL9 FROM paciente pa WHERE pa.dx=6 AND DATE(pa.fechaRegistro) BETWEEN '$Fecha1' AND '$Fecha2'";
+        return ejecutarConsultaSimpleFila($sql);
+    }
+     public function tipo7($Fecha1,$Fecha2){
+        $sql="SELECT COUNT(pa.idPaciente) AS TOTAL10 FROM paciente pa WHERE pa.dx=7 AND DATE(pa.fechaRegistro) BETWEEN '$Fecha1' AND '$Fecha2'";
         return ejecutarConsultaSimpleFila($sql);
     }
 

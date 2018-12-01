@@ -26,8 +26,9 @@ if(isset($_POST["idPaciente"])){
                             <h3>Registro de Ficha de control (Mensual):</h3>
                         </div>
                     </div>
-                    <div class="row m-1">
+                    <div class="row m-1" id="contenedor">
                         <form method="post" id="formulario_seguimiento">
+                            <input type="hidden" id="idSeguimiento" name="idSeguimiento" value="<?php echo $_POST['idSeguimiento']?>">
                             <input type="hidden" id="idPaciente" name="idPaciente" value="<?php echo $_POST['idPaciente']?>">
                             <input type="hidden" id="idAno" name="idAno" value="<?php echo $_POST['idAno']?>">
                             <input type="hidden" id="idMes" name="idMes" value="<?php echo $_POST['idMes']?>">
@@ -35,16 +36,16 @@ if(isset($_POST["idPaciente"])){
                             <div class="col-12 col-md-12">
                                 <div role="tabpanel">
                                     <ul class="nav nav-pills " role="tablist">
-                                        <li class="nav-item pill-1 m-2 " role="presentation"><a class="nav-link active" href="#op_1" aria-controls="home" role="tab" data-toggle="tab" onclick="prueba();">Datos del Seguimiento</a>
+                                        <li class="nav-item pill-1 m-2 " role="presentation"><a class="nav-link active" href="#op_1" aria-controls="home" role="tab" data-toggle="tab">Datos del Seguimiento</a>
                                         </li>
-                                        <li class="nav-item pill-2 m-2" role="presentation"><a class="nav-link" href="#op_2" aria-controls="profile" role="tab" data-toggle="tab" onclick="prueba2();">Otras Especialidades</a>
+                                        <li class="nav-item pill-2 m-2" role="presentation"><a class="nav-link" href="#op_2" aria-controls="profile" role="tab" data-toggle="tab">Otras Especialidades</a>
                                         </li>
 
                                         <li class="nav-item pill-3 m-2" role="presentation"><a class="nav-link" href="#op_3" aria-controls="settings" role="tab" data-toggle="tab">Otros Tratamientos</a>
                                         </li>
-                                        <li class="nav-item pill-4 m-2" role="presentation"><a class="nav-link" href="#op_4" aria-controls="settings" role="tab" data-toggle="tab">Datos Adicionales</a>
+                                        <li class="nav-item pill-4 m-2" role="presentation" ><a class="nav-link" href="#op_4" aria-controls="settings" role="tab" data-toggle="tab">Datos Adicionales</a>
                                         </li>
-                                        <li class="nav-item pill-5 m-2" role="presentation"><a class="nav-link" href="#op_5" aria-controls="settings" role="tab" data-toggle="tab">Fechas de Seguimiento</a>
+                                        <li class="nav-item pill-5 m-2" role="presentation" ><a class="nav-link" href="#op_5" aria-controls="settings" role="tab" data-toggle="tab">Fechas de Seguimiento</a>
                                         </li>
                                     </ul>
                                     <div class="tab-content">
@@ -229,14 +230,14 @@ if(isset($_POST["idPaciente"])){
                                                                     <div class="row">
                                                                         <div class="radio col-6">
                                                                             <label>SI
-                                                                                <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                <input id="radio1" class="form-control opcion2" type="radio" name="radio1" value="1"></label></div>
                                                                         <div class="checradiokbox col-6">
                                                                             <label>NO
-                                                                                <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                <input id="radio1" class="form-control opcion2" type="radio" name="radio1" value="2" checked></label></div>
                                                                     </div>
                                                                 </th>
                                                                 <th>
-                                                                    <input id="obs1" class="form-control caja" type="text" name="obs1" onkeypress="return SoloLetras(event,100,this.id);"> </th>
+                                                                    <input id="obs1" class="form-control caja campo2" type="text" name="obs1" onkeypress="return SoloLetras(event,100,this.id);"> </th>
                                                             </tr>
                                                             <tr>
                                                                 <th data-priority="1">2.-</th>
@@ -246,14 +247,14 @@ if(isset($_POST["idPaciente"])){
                                                                     <div class="row">
                                                                         <div class="radio col-6">
                                                                             <label>SI
-                                                                                <input id="var2B" class="form-control opcion" type="radio" name="var2B" value="1"> </label></div>
+                                                                                <input id="radio2" class="form-control opcion2" type="radio" name="radio2" value="1"> </label></div>
                                                                         <div class="radio col-6">
                                                                             <label>NO
-                                                                                <input id="var2B" class="form-control opcion" type="radio" name="var2B" value="2"> </label></div>
+                                                                                <input id="radio2" class="form-control opcion2" type="radio" name="radio2" value="2" checked> </label></div>
                                                                     </div>
                                                                 </th>
                                                                 <th>
-                                                                    <input id="obs2" class="form-control caja" type="text" name="obs2" onkeypress="return SoloLetras(event,100,this.id);"> </th>
+                                                                    <input id="obs2" class="form-control caja campo2" type="text" name="obs2" onkeypress="return SoloLetras(event,100,this.id);"> </th>
                                                             </tr>
                                                             <tr>
                                                                 <th data-priority="1">3.-</th>
@@ -263,14 +264,14 @@ if(isset($_POST["idPaciente"])){
                                                                     <div class="row">
                                                                         <div class="radio col-6">
                                                                             <label>SI
-                                                                                <input id="var3B" class="form-control " type="radio" name="var3B" value="1"> </label></div>
+                                                                                <input id="radio3" class="form-control opcion2" type="radio" name="radio3" value="1"> </label></div>
                                                                         <div class="radio col-6">
                                                                             <label>NO
-                                                                                <input id="var3B" class="form-control " type="radio" name="var3B" value="2"></label> </div>
+                                                                                <input id="radio3" class="form-control opcion2" type="radio" name="radio3" value="2" checked></label> </div>
                                                                     </div>
                                                                 </th>
                                                                 <th>
-                                                                    <input id="obs3" class="form-control  caja" type="text" name="obs3" onkeypress="return SoloLetras(event,100,this.id);"> </th>
+                                                                    <input id="obs3" class="form-control  caja campo2" type="text" name="obs3" onkeypress="return SoloLetras(event,100,this.id);"> </th>
                                                             </tr>
                                                             <tr>
                                                                 <th data-priority="1">4.-</th>
@@ -280,14 +281,14 @@ if(isset($_POST["idPaciente"])){
                                                                     <div class="row">
                                                                         <div class="radio col-6">
                                                                             <label>SI
-                                                                                <input id="var4B" class="form-control " type="radio" name="var4B" value="1"></label> </div>
+                                                                                <input id="radio4" class="form-control opcion2" type="radio" name="radio4" value="1"></label> </div>
                                                                         <div class="radio col-6">
                                                                             <label>NO
-                                                                                <input id="var4B" class="form-control  " type="radio" name="var4B" value="2"></label> </div>
+                                                                                <input id="radio4" class="form-control  opcion2" type="radio" name="radio4" value="2" checked></label> </div>
                                                                     </div>
                                                                 </th>
                                                                 <th>
-                                                                    <input id="obs4" class="form-control   caja" type="text" name="obs4" onkeypress="return SoloLetras(event,100,this.id);"> </th>
+                                                                    <input id="obs4" class="form-control   caja campo2" type="text" name="obs4" onkeypress="return SoloLetras(event,100,this.id);"> </th>
                                                             </tr>
                                                             <tr>
                                                                 <th data-priority="1">5.-</th>
@@ -297,14 +298,14 @@ if(isset($_POST["idPaciente"])){
                                                                     <div class="row">
                                                                         <div class="radio col-6">
                                                                             <label>SI
-                                                                                <input id="var5B" class="form-control " type="radio" name="var5B" value="1"></label> </div>
+                                                                                <input id="radio5" class="form-control opcion2" type="radio" name="radio5" value="1"></label> </div>
                                                                         <div class="radio col-6">
                                                                             <label>NO
-                                                                                <input id="var5B" class="form-control  " type="radio" name="var5B" value="2"></label> </div>
+                                                                                <input id="radio5" class="form-control  opcion2" type="radio" name="radio5" value="2" checked ></label> </div>
                                                                     </div>
                                                                 </th>
                                                                 <th>
-                                                                    <input id="obs5" class="form-control   caja" type="text" name="obs5" onkeypress="return SoloLetras(event,100,this.id);"> </th>
+                                                                    <input id="obs5" class="form-control   caja campo2" type="text" name="obs5" onkeypress="return SoloLetras(event,100,this.id);"> </th>
                                                             </tr>
                                                             <tr>
                                                                 <th data-priority="1">6.-</th>
@@ -314,14 +315,14 @@ if(isset($_POST["idPaciente"])){
                                                                     <div class="row">
                                                                         <div class="radio col-6">
                                                                             <label>SI
-                                                                                <input id="var6B" class="form-control " type="radio" name="var6B" value="1"></label> </div>
+                                                                                <input id="radio6" class="form-control opcion2" type="radio" name="radio6" value="1"></label> </div>
                                                                         <div class="radio col-6">
                                                                             <label>NO
-                                                                                <input id="var6B" class="form-control  " type="radio" name="var6B" value="2"></label> </div>
+                                                                                <input id="radio6" class="form-control  opcion2" type="radio" name="radio6" value="2" checked></label> </div>
                                                                     </div>
                                                                 </th>
                                                                 <th>
-                                                                    <input id="obs6" class="form-control  caja " type="text" name="obs6" onkeypress="return SoloLetras(event,100,this.id);"> </th>
+                                                                    <input id="obs6" class="form-control  caja campo2" type="text" name="obs6" onkeypress="return SoloLetras(event,100,this.id);"> </th>
                                                             </tr>
                                                             <tr>
                                                                 <th data-priority="1">7.-</th>
@@ -331,14 +332,14 @@ if(isset($_POST["idPaciente"])){
                                                                     <div class="row">
                                                                         <div class="radio col-6">
                                                                             <label>SI
-                                                                                <input id="var7B" class="form-control " type="radio" name="var7B" value="1"></label> </div>
+                                                                                <input id="radio7" class="form-control opcion2" type="radio" name="radio7" value="1"></label> </div>
                                                                         <div class="radio col-6">
                                                                             <label>NO
-                                                                                <input id="var7B" class="form-control  " type="radio" name="var7B" value="2"></label> </div>
+                                                                                <input id="radio7" class="form-control  opcion2" type="radio" name="radio7" value="2" checked></label> </div>
                                                                     </div>
                                                                 </th>
                                                                 <th>
-                                                                    <input id="obs7" class="form-control  caja " type="text" name="obs7" onkeypress="return SoloLetras(event,100,this.id);"> </th>
+                                                                    <input id="obs7" class="form-control  caja campo2" type="text" name="obs7" onkeypress="return SoloLetras(event,100,this.id);"> </th>
                                                             </tr>
                                                             <tr>
                                                                 <th data-priority="1">8.-</th>
@@ -348,14 +349,14 @@ if(isset($_POST["idPaciente"])){
                                                                     <div class="row">
                                                                         <div class="radio col-6">
                                                                             <label>SI
-                                                                                <input id="var8B" class="form-control  " type="radio" name="var8B" value="1"> </label></div>
+                                                                                <input id="radio8" class="form-control opcion2 " type="radio" name="radio8" value="1"> </label></div>
                                                                         <div class="radio col-6">
                                                                             <label>NO
-                                                                                <input id="var8B" class="form-control  " type="radio" name="var8B" value="2"></label> </div>
+                                                                                <input id="radio8" class="form-control opcion2 " type="radio" name="radio8" value="2" checked></label> </div>
                                                                     </div>
                                                                 </th>
                                                                 <th>
-                                                                    <input id="obs8" class="form-control  caja " type="text" name="obs8" onkeypress="return SoloLetras(event,100,this.id);"> </th>
+                                                                    <input id="obs8" class="form-control  caja campo2" type="text" name="obs8" onkeypress="return SoloLetras(event,100,this.id);"> </th>
                                                             </tr>
                                                             <tr>
                                                                 <th data-priority="1">9.-</th>
@@ -365,14 +366,14 @@ if(isset($_POST["idPaciente"])){
                                                                     <div class="row">
                                                                         <div class="radio col-md-6">
                                                                             <label>SI
-                                                                                <input id="var9B" class="form-control  " type="radio" name="var9B" value="1"></label> </div>
+                                                                                <input id="radio9" class="form-control opcion2 " type="radio" name="radio9" value="1"></label> </div>
                                                                         <div class="radio col-md-6">
                                                                             <label>NO
-                                                                                <input id="var9B" class="form-control  " type="radio" name="var9B" value="2"></label> </div>
+                                                                                <input id="radio9" class="form-control  opcion2" type="radio" name="radio9" value="2" checked></label> </div>
                                                                     </div>
                                                                 </th>
                                                                 <th>
-                                                                    <input id="obs9" class="form-control  caja " type="text" name="obs9" onkeypress="return SoloLetras(event,100,this.id);"> </th>
+                                                                    <input id="obs9" class="form-control  caja campo2" type="text" name="obs9" onkeypress="return SoloLetras(event,100,this.id);"> </th>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -392,12 +393,12 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                     <div class="radio col-6">
                                                                         <label>SI
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                            <input id="otro1" class="form-control opcion3" type="radio" name="otro1" value="1"></label></div>
                                                                 </th>
                                                                 <th>
                                                                     <div class="checradiokbox col-6">
                                                                         <label>NO
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                            <input id="otro1" class="form-control opcion3" type="radio" name="otro1" value="2" checked></label></div>
                                                                 </th>
                                                             </tr>
                                                             <tr>
@@ -406,12 +407,12 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                     <div class="radio col-6">
                                                                         <label>SI
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                            <input id="otro2" class="form-control opcion3" type="radio" name="otro2" value="1"></label></div>
                                                                 </th>
                                                                 <th>
                                                                     <div class="checradiokbox col-6">
                                                                         <label>NO
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                            <input id="otro2" class="form-control opcion3" type="radio" name="otro2" value="2" checked></label></div>
                                                                 </th>
                                                             </tr>
                                                             <tr>
@@ -420,12 +421,12 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                     <div class="radio col-6">
                                                                         <label>SI
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                            <input id="otro3" class="form-control opcion3" type="radio" name="otro3" value="1"></label></div>
                                                                 </th>
                                                                 <th>
                                                                     <div class="checradiokbox col-6">
                                                                         <label>NO
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                            <input id="otro3" class="form-control opcion3" type="radio" name="otro3" value="2" checked></label></div>
                                                                 </th>
                                                             </tr>
                                                             <tr>
@@ -434,12 +435,12 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                     <div class="radio col-6">
                                                                         <label>SI
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                            <input id="otro4" class="form-control opcion3" type="radio" name="otro4" value="1"></label></div>
                                                                 </th>
                                                                 <th>
                                                                     <div class="checradiokbox col-6">
                                                                         <label>NO
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                            <input id="otro4" class="form-control opcion3" type="radio" name="otro4" value="2" checked></label></div>
                                                                 </th>
                                                             </tr>
 
@@ -453,12 +454,12 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                     <div class="radio col-6">
                                                                         <label>SI
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                            <input id="otro5" class="form-control opcion3" type="radio" name="otro5" value="1"></label></div>
                                                                 </th>
                                                                 <th>
                                                                     <div class="checradiokbox col-6">
                                                                         <label>NO
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                            <input id="otro5" class="form-control opcion3" type="radio" name="otro5" value="2" checked></label></div>
                                                                 </th>
                                                             </tr>
                                                             <tr>
@@ -467,12 +468,12 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                     <div class="radio col-6">
                                                                         <label>SI
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                            <input id="otro6" class="form-control opcion3" type="radio" name="otro6" value="1"></label></div>
                                                                 </th>
                                                                 <th>
                                                                     <div class="checradiokbox col-6">
                                                                         <label>NO
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                            <input id="otro6" class="form-control opcion3" type="radio" name="otro6" value="2" checked></label></div>
                                                                 </th>
                                                             </tr>
                                                             <tr>
@@ -481,12 +482,12 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                     <div class="radio col-6">
                                                                         <label>SI
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                            <input id="otro7" class="form-control opcion3" type="radio" name="otro7" value="1"></label></div>
                                                                 </th>
                                                                 <th>
                                                                     <div class="checradiokbox col-6">
                                                                         <label>NO
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                            <input id="otro7" class="form-control opcion3" type="radio" name="otro7" value="2" checked></label></div>
                                                                 </th>
                                                             </tr>
                                                             <tr>
@@ -495,12 +496,12 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                     <div class="radio col-6">
                                                                         <label>SI
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                            <input id="otro8" class="form-control opcion3" type="radio" name="otro8" value="1"></label></div>
                                                                 </th>
                                                                 <th>
                                                                     <div class="checradiokbox col-6">
                                                                         <label>NO
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                            <input id="otro8" class="form-control opcion3" type="radio" name="otro8" value="2" checked></label></div>
                                                                 </th>
                                                             </tr>
 
@@ -514,12 +515,12 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                     <div class="radio col-6">
                                                                         <label>SI
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                            <input id="otro9" class="form-control opcion3" type="radio" name="otro9" value="1"></label></div>
                                                                 </th>
                                                                 <th>
                                                                     <div class="checradiokbox col-6">
                                                                         <label>NO
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                            <input id="otro9" class="form-control opcion3" type="radio" name="otro9" value="2" checked></label></div>
                                                                 </th>
                                                             </tr>
                                                             <tr>
@@ -528,12 +529,12 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                     <div class="radio col-6">
                                                                         <label>SI
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                            <input id="otro10" class="form-control opcion3" type="radio" name="otro10" value="1"></label></div>
                                                                 </th>
                                                                 <th>
                                                                     <div class="checradiokbox col-6">
                                                                         <label>NO
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                            <input id="otro10" class="form-control opcion3" type="radio" name="otro10" value="2" checked></label></div>
                                                                 </th>
                                                             </tr>
                                                             <tr>
@@ -542,12 +543,12 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                     <div class="radio col-6">
                                                                         <label>SI
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                            <input id="otro11" class="form-control opcion3" type="radio" name="otro11" value="1"></label></div>
                                                                 </th>
                                                                 <th>
                                                                     <div class="checradiokbox col-6">
                                                                         <label>NO
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                            <input id="otro11" class="form-control opcion3" type="radio" name="otro11" value="2" checked></label></div>
                                                                 </th>
                                                             </tr>
                                                             <tr>
@@ -556,12 +557,12 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                     <div class="radio col-6">
                                                                         <label>SI
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                            <input id="otro12" class="form-control opcion3" type="radio" name="otro12" value="1"></label></div>
                                                                 </th>
                                                                 <th>
                                                                     <div class="checradiokbox col-6">
                                                                         <label>NO
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                            <input id="otro12" class="form-control opcion3" type="radio" name="otro12" value="2" checked></label></div>
                                                                 </th>
                                                             </tr>
 
@@ -581,12 +582,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro13" class="form-control opcion3" type="radio" name="otro13" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro13" class="form-control opcion3" type="radio" name="otro13" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -595,12 +596,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro14" class="form-control opcion3" type="radio" name="otro14" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro14" class="form-control opcion3" type="radio" name="otro14" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -609,12 +610,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro15" class="form-control opcion3" type="radio" name="otro15" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro15" class="form-control opcion3" type="radio" name="otro15" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -623,12 +624,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro16" class="form-control opcion3" type="radio" name="otro16" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro16" class="form-control opcion3" type="radio" name="otro16" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -637,12 +638,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro17" class="form-control opcion3" type="radio" name="otro17" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro17" class="form-control opcion3" type="radio" name="otro17" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -651,12 +652,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro18" class="form-control opcion3" type="radio" name="otro18" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro18" class="form-control opcion3" type="radio" name="otro18" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -665,12 +666,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro19" class="form-control opcion3" type="radio" name="otro19" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro19" class="form-control opcion3" type="radio" name="otro19" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -679,12 +680,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro20" class="form-control opcion3" type="radio" name="otro20" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro20" class="form-control opcion3" type="radio" name="otro20" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -693,12 +694,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro21" class="form-control opcion3" type="radio" name="otro21" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro21" class="form-control opcion3" type="radio" name="otro21" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -707,12 +708,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro22" class="form-control opcion3" type="radio" name="otro22" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro22" class="form-control opcion3" type="radio" name="otro22" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -721,12 +722,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro23" class="form-control opcion3" type="radio" name="otro23" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro23" class="form-control opcion3" type="radio" name="otro23" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
 
@@ -745,12 +746,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro24" class="form-control opcion3" type="radio" name="otro24" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro24" class="form-control opcion3" type="radio" name="otro24" value="2" checked></label></div>
                                                                         </th>
                                                                         <th></th>
                                                                         <th></th>
@@ -761,12 +762,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro25" class="form-control opcion3" type="radio" name="otro25" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro25" class="form-control opcion3" type="radio" name="otro25" value="2" checked></label></div>
                                                                         </th>
                                                                         <th></th>
                                                                         <th></th>
@@ -780,15 +781,15 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro26" data-id="1" class="form-control opcion3 opcionTexto" type="radio" name="otro26" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro26" data-id="1" class="form-control opcion3 opcionTexto" type="radio" name="otro26" value="2" checked></label></div>
                                                                         </th>
-                                                                        <th><input id="obs1" class="form-control caja" type="text" name="obs1" placeholder="Presentación" onkeypress="return SoloLetras(event,100,this.id);"></th>
-                                                                        <th><input id="obs1" class="form-control caja" type="text" name="obs1" placeholder="Tab/dia" onkeypress="return SoloLetras(event,100,this.id);"></th>
+                                                                        <th><input id="pre1" class="form-control caja texto3" type="text" name="obs1" placeholder="Presentación" onkeypress="return SoloLetras(event,100,this.id);"></th>
+                                                                        <th><input id="tableta1" class="form-control caja texto3" type="text" name="obs1" placeholder="Tab/dia" onkeypress="return SoloLetras(event,100,this.id);"></th>
                                                                     </tr>
                                                                     <tr>
 
@@ -796,15 +797,15 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro27"  data-id="2" class="form-control opcion3 opcionTexto" type="radio" name="otro27" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro27"  data-id="2" class="form-control opcion3 opcionTexto" type="radio" name="otro27" value="2" checked></label></div>
                                                                         </th>
-                                                                        <th><input id="obs1" class="form-control caja" type="text" name="obs1" placeholder="Presentación" onkeypress="return SoloLetras(event,100,this.id);"></th>
-                                                                        <th><input id="obs1" class="form-control caja" type="text" name="obs1" placeholder="Tab/dia" onkeypress="return SoloLetras(event,100,this.id);"></th>
+                                                                        <th><input id="pre2" class="form-control caja texto3" type="text" name="obs1" placeholder="Presentación" onkeypress="return SoloLetras(event,100,this.id);"></th>
+                                                                        <th><input id="tableta2" class="form-control caja texto3" type="text" name="obs1" placeholder="Tab/dia" onkeypress="return SoloLetras(event,100,this.id);"></th>
                                                                     </tr>
                                                                     <tr>
 
@@ -812,15 +813,15 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro28" data-id="3" class="form-control opcion3 opcionTexto" type="radio" name="otro28" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro28" data-id="3" class="form-control opcion3 opcionTexto" type="radio" name="otro28" value="2" checked></label></div>
                                                                         </th>
-                                                                        <th><input id="obs1" class="form-control caja" type="text" name="obs1" placeholder="Presentación" onkeypress="return SoloLetras(event,100,this.id);"></th>
-                                                                        <th><input id="obs1" class="form-control caja" type="text" name="obs1" placeholder="Tab/dia" onkeypress="return SoloLetras(event,100,this.id);"></th>
+                                                                        <th><input id="pre3" class="form-control caja texto3" type="text" name="obs1" placeholder="Presentación" onkeypress="return SoloLetras(event,100,this.id);"></th>
+                                                                        <th><input id="tableta3" class="form-control caja texto3" type="text" name="obs1" placeholder="Tab/dia" onkeypress="return SoloLetras(event,100,this.id);"></th>
                                                                     </tr>
                                                                     <tr>
 
@@ -828,15 +829,15 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro29" data-id="4" class="form-control opcion3 opcionTexto" type="radio" name="otro29" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro29" data-id="4" class="form-control opcion3 opcionTexto" type="radio" name="otro29" value="2" checked></label></div>
                                                                         </th>
-                                                                        <th><input id="obs1" class="form-control caja" type="text" name="obs1" placeholder="Presentación" onkeypress="return SoloLetras(event,100,this.id);"></th>
-                                                                        <th><input id="obs1" class="form-control caja" type="text" name="obs1" placeholder="Tab/dia" onkeypress="return SoloLetras(event,100,this.id);"></th>
+                                                                        <th><input id="pre4" class="form-control caja texto3" type="text" name="obs1" placeholder="Presentación" onkeypress="return SoloLetras(event,100,this.id);"></th>
+                                                                        <th><input id="tableta4" class="form-control caja texto3" type="text" name="obs1" placeholder="Tab/dia" onkeypress="return SoloLetras(event,100,this.id);"></th>
                                                                     </tr>
                                                                     <tr>
 
@@ -844,15 +845,15 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro30" data-id="5" class="form-control opcion3 opcionTexto" type="radio" name="otro30" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro30" data-id="5" class="form-control opcion3 opcionTexto" type="radio" name="otro30" value="2" checked></label></div>
                                                                         </th>
-                                                                        <th><input id="obs1" class="form-control caja" type="text" name="obs1" placeholder="Presentación" onkeypress="return SoloLetras(event,100,this.id);"></th>
-                                                                        <th><input id="obs1" class="form-control caja" type="text" name="obs1" placeholder="Tab/dia" onkeypress="return SoloLetras(event,100,this.id);"></th>
+                                                                        <th><input id="pre5" class="form-control caja texto3" type="text" name="obs1" placeholder="Presentación" onkeypress="return SoloLetras(event,100,this.id);"></th>
+                                                                        <th><input id="tableta5" class="form-control caja texto3" type="text" name="obs1" placeholder="Tab/dia" onkeypress="return SoloLetras(event,100,this.id);"></th>
                                                                     </tr>
                                                                     <tr>
 
@@ -860,15 +861,15 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro31"  data-id="6" class="form-control opcion3 opcionTexto" type="radio" name="otro31" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro31" data-id="6"  class="form-control opcion3 opcionTexto" type="radio" name="otro31" value="2" checked></label></div>
                                                                         </th>
-                                                                        <th><input id="obs1" class="form-control caja" type="text" name="obs1" placeholder="Presentación" onkeypress="return SoloLetras(event,100,this.id);"></th>
-                                                                        <th><input id="obs1" class="form-control caja" type="text" name="obs1" placeholder="Tab/dia" onkeypress="return SoloLetras(event,100,this.id);"></th>
+                                                                        <th><input id="pre6" class="form-control caja texto3" type="text" name="obs1" placeholder="Presentación" onkeypress="return SoloLetras(event,100,this.id);"></th>
+                                                                        <th><input id="tableta6" class="form-control caja texto3" type="text" name="obs1" placeholder="Tab/dia" onkeypress="return SoloLetras(event,100,this.id);"></th>
                                                                     </tr>
                                                                     <tr>
 
@@ -876,15 +877,15 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro32" data-id="7" class="form-control opcion3 opcionTexto" type="radio" name="otro32" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro32" data-id="7" class="form-control opcion3 opcionTexto" type="radio" name="otro32" value="2" checked></label></div>
                                                                         </th>
-                                                                        <th><input id="obs1" class="form-control caja" type="text" name="obs1" placeholder="Presentación" onkeypress="return SoloLetras(event,100,this.id);"></th>
-                                                                        <th><input id="obs1" class="form-control caja" type="text" name="obs1" placeholder="Tab/dia" onkeypress="return SoloLetras(event,100,this.id);"></th>
+                                                                        <th><input id="pre7" class="form-control caja texto3" type="text" name="obs1" placeholder="Presentación" onkeypress="return SoloLetras(event,100,this.id);"></th>
+                                                                        <th><input id="tableta7" class="form-control caja texto3" type="text" name="obs1" placeholder="Tab/dia" onkeypress="return SoloLetras(event,100,this.id);"></th>
                                                                     </tr>
                                                                     <tr>
 
@@ -892,15 +893,15 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro33" data-id="8" class="form-control opcion3 opcionTexto" type="radio" name="otro33" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro33" data-id="8" class="form-control opcion3 opcionTexto" type="radio" name="otro33" value="2" checked></label></div>
                                                                         </th>
-                                                                        <th><input id="obs1" class="form-control caja" type="text" name="obs1" placeholder="Presentación" onkeypress="return SoloLetras(event,100,this.id);"></th>
-                                                                        <th><input id="obs1" class="form-control caja" type="text" name="obs1" placeholder="Tab/dia" onkeypress="return SoloLetras(event,100,this.id);"></th>
+                                                                        <th><input id="pre8" class="form-control caja texto3" type="text" name="obs1" placeholder="Presentación" onkeypress="return SoloLetras(event,100,this.id);"></th>
+                                                                        <th><input id="tableta8" class="form-control caja texto3" type="text" name="obs1" placeholder="Tab/dia" onkeypress="return SoloLetras(event,100,this.id);"></th>
                                                                     </tr>
                                                                     <tr>
 
@@ -908,15 +909,15 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro34" data-id="9" class="form-control opcion3 opcionTexto" type="radio" name="otro34" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro34" data-id="9" class="form-control opcion3 opcionTexto" type="radio" name="otro34" value="2" checked></label></div>
                                                                         </th>
-                                                                        <th><input id="obs1" class="form-control caja" type="text" name="obs1" placeholder="Presentación" onkeypress="return SoloLetras(event,100,this.id);"></th>
-                                                                        <th><input id="obs1" class="form-control caja" type="text" name="obs1" placeholder="Tab/dia" onkeypress="return SoloLetras(event,100,this.id);"></th>
+                                                                        <th><input id="pre9" class="form-control caja texto3" type="text" name="obs1" placeholder="Presentación" onkeypress="return SoloLetras(event,100,this.id);"></th>
+                                                                        <th><input id="tableta9" class="form-control caja texto3" type="text" name="obs1" placeholder="Tab/dia" onkeypress="return SoloLetras(event,100,this.id);"></th>
                                                                     </tr>
                                                                     <tr>
 
@@ -924,15 +925,15 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro35" data-id="10" class="form-control opcion3 opcionTexto" type="radio" name="otro35" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro35" data-id="10" class="form-control opcion3 opcionTexto" type="radio" name="otro35" value="2" checked></label></div>
                                                                         </th>
-                                                                        <th><input id="obs1" class="form-control caja" type="text" name="obs1" placeholder="Presentación" onkeypress="return SoloLetras(event,100,this.id);"></th>
-                                                                        <th><input id="obs1" class="form-control caja" type="text" name="obs1" placeholder="Tab/dia" onkeypress="return SoloLetras(event,100,this.id);"></th>
+                                                                        <th><input id="pre10" class="form-control caja texto3" type="text" name="obs1" placeholder="Presentación" onkeypress="return SoloLetras(event,100,this.id);"></th>
+                                                                        <th><input id="tableta10" class="form-control caja texto3" type="text" name="obs1" placeholder="Tab/dia" onkeypress="return SoloLetras(event,100,this.id);"></th>
                                                                     </tr>
                                                                     <tr>
 
@@ -940,15 +941,15 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro36" data-id="11" class="form-control opcion3 opcionTexto" type="radio" name="otro36" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro36" data-id="11" class="form-control opcion3 opcionTexto" type="radio" name="otro36" value="2" checked></label></div>
                                                                         </th>
-                                                                        <th><input id="obs1" class="form-control caja" type="text" name="obs1" placeholder="Presentación" onkeypress="return SoloLetras(event,100,this.id);"></th>
-                                                                        <th><input id="obs1" class="form-control caja" type="text" name="obs1" placeholder="Tab/dia" onkeypress="return SoloLetras(event,100,this.id);"></th>
+                                                                        <th><input id="pre11" class="form-control caja texto3" type="text" name="obs1" placeholder="Presentación" onkeypress="return SoloLetras(event,100,this.id);"></th>
+                                                                        <th><input id="tableta11" class="form-control caja texto3" type="text" name="obs1" placeholder="Tab/dia" onkeypress="return SoloLetras(event,100,this.id);"></th>
                                                                     </tr>
 
                                                                 </table>
@@ -967,12 +968,12 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                     <div class="radio col-6">
                                                                         <label>SI
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                            <input id="otro37" class="form-control opcion3" type="radio" name="otro37" value="1"></label></div>
                                                                 </th>
                                                                 <th>
                                                                     <div class="checradiokbox col-6">
                                                                         <label>NO
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                            <input id="otro37" class="form-control opcion3" type="radio" name="otro37" value="2" checked></label></div>
                                                                 </th>
                                                             </tr>
                                                             <tr>
@@ -981,12 +982,12 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                     <div class="radio col-6">
                                                                         <label>SI
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                            <input id="otro38" class="form-control opcion3" type="radio" name="otro38" value="1"></label></div>
                                                                 </th>
                                                                 <th>
                                                                     <div class="checradiokbox col-6">
                                                                         <label>NO
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                            <input id="otro38" class="form-control opcion3" type="radio" name="otro38" value="2" checked></label></div>
                                                                 </th>
                                                             </tr>
                                                             <tr>
@@ -995,12 +996,12 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                     <div class="radio col-6">
                                                                         <label>SI
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                            <input id="otro39" class="form-control opcion3" type="radio" name="otro39" value="1"></label></div>
                                                                 </th>
                                                                 <th>
                                                                     <div class="checradiokbox col-6">
                                                                         <label>NO
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                            <input id="otro39" class="form-control opcion3" type="radio" name="otro39" value="2" checked></label></div>
                                                                 </th>
                                                             </tr>
 
@@ -1015,12 +1016,12 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                     <div class="radio col-6">
                                                                         <label>SI
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                            <input id="otro40" class="form-control opcion3" type="radio" name="otro40" value="1"></label></div>
                                                                 </th>
                                                                 <th>
                                                                     <div class="checradiokbox col-6">
                                                                         <label>NO
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                            <input id="otro40" class="form-control opcion3" type="radio" name="otro40" value="2" checked></label></div>
                                                                 </th>
                                                             </tr>
                                                             <tr>
@@ -1029,12 +1030,12 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                     <div class="radio col-6">
                                                                         <label>SI
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                            <input id="otro41" class="form-control opcion3" type="radio" name="otro41" value="1"></label></div>
                                                                 </th>
                                                                 <th>
                                                                     <div class="checradiokbox col-6">
                                                                         <label>NO
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                            <input id="otro41" class="form-control opcion3" type="radio" name="otro41" value="2" checked></label></div>
                                                                 </th>
                                                             </tr>
                                                             <tr>
@@ -1043,12 +1044,12 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                     <div class="radio col-6">
                                                                         <label>SI
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                            <input id="otro42" class="form-control opcion3" type="radio" name="otro42" value="1"></label></div>
                                                                 </th>
                                                                 <th>
                                                                     <div class="checradiokbox col-6">
                                                                         <label>NO
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                            <input id="otro42" class="form-control opcion3" type="radio" name="otro42" value="2" checked></label></div>
                                                                 </th>
                                                             </tr>
 
@@ -1063,12 +1064,12 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                     <div class="radio col-6">
                                                                         <label>SI
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                            <input id="otro43" class="form-control opcion3" type="radio" name="otro43" value="1"></label></div>
                                                                 </th>
                                                                 <th>
                                                                     <div class="checradiokbox col-6">
                                                                         <label>NO
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                            <input id="otro43" class="form-control opcion3" type="radio" name="otro43" value="2" checked></label></div>
                                                                 </th>
                                                             </tr>
                                                             <tr>
@@ -1077,12 +1078,12 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                     <div class="radio col-6">
                                                                         <label>SI
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                            <input id="otro44" class="form-control opcion3" type="radio" name="otro44" value="1"></label></div>
                                                                 </th>
                                                                 <th>
                                                                     <div class="checradiokbox col-6">
                                                                         <label>NO
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                            <input id="otro44" class="form-control opcion3" type="radio" name="otro44" value="2" checked></label></div>
                                                                 </th>
                                                             </tr>
                                                             <tr>
@@ -1091,12 +1092,12 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                     <div class="radio col-6">
                                                                         <label>SI
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                            <input id="otro45" class="form-control opcion3" type="radio" name="otro45" value="1"></label></div>
                                                                 </th>
                                                                 <th>
                                                                     <div class="checradiokbox col-6">
                                                                         <label>NO
-                                                                            <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                            <input id="otro45" class="form-control opcion3" type="radio" name="otro45" value="2" checked></label></div>
                                                                 </th>
                                                             </tr>
 
@@ -1116,12 +1117,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro46" class="form-control opcion3" type="radio" name="otro46" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro46" class="form-control opcion3" type="radio" name="otro46" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr class="bb bl br bt">
@@ -1133,12 +1134,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro47" class="form-control opcion3" type="radio" name="otro47" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro47" class="form-control opcion3" type="radio" name="otro47" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -1147,12 +1148,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro48" class="form-control opcion3" type="radio" name="otro48" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro48" class="form-control opcion3" type="radio" name="otro48" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr class="bb bl br bt">
@@ -1164,12 +1165,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro49" class="form-control opcion3" type="radio" name="otro49" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro49" class="form-control opcion3" type="radio" name="otro49" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -1178,12 +1179,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro50" class="form-control opcion3" type="radio" name="otro50" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro50" class="form-control opcion3" type="radio" name="otro50" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -1192,12 +1193,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro51" class="form-control opcion3" type="radio" name="otro51" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro51" class="form-control opcion3" type="radio" name="otro51" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -1206,12 +1207,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro52" class="form-control opcion3" type="radio" name="otro52" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro52" class="form-control opcion3" type="radio" name="otro52" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -1220,12 +1221,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro53" class="form-control opcion3" type="radio" name="otro53" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro53" class="form-control opcion3" type="radio" name="otro53" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -1234,12 +1235,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro54" class="form-control opcion3" type="radio" name="otro54" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro54" class="form-control opcion3" type="radio" name="otro54" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -1248,12 +1249,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro55" class="form-control opcion3" type="radio" name="otro55" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro55" class="form-control opcion3" type="radio" name="otro55" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr class="bb bl br bt">
@@ -1265,12 +1266,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro56" class="form-control opcion3" type="radio" name="otro56" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro56" class="form-control opcion3" type="radio" name="otro56" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -1279,12 +1280,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro57" class="form-control opcion3" type="radio" name="otro57" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro57" class="form-control opcion3" type="radio" name="otro57" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -1293,12 +1294,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro58" class="form-control opcion3" type="radio" name="otro58" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro58" class="form-control opcion3" type="radio" name="otro58" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -1307,12 +1308,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro59" class="form-control opcion3" type="radio" name="otro59" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro59" class="form-control opcion3" type="radio" name="otro59" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
 
@@ -1327,7 +1328,7 @@ if(isset($_POST["idPaciente"])){
                                                 <hr>
                                                 <div class="row bb bl br bt ">
                                                     <div class="col-md-4 ">
-                                                        <h5 class="mt-2 mb-2 titulo_area3" id="titulo_gasto"><em><b>EVALUACIÓN DE LA EDUCACIÓN</b>( </em></h5>
+                                                        <h5 class="mt-2 mb-2 titulo_area3" id="titulo_gasto"><em><b>EVALUACIÓN DE LA EDUCACIÓN</b> </em></h5>
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <table>
@@ -1336,12 +1337,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro60" class="form-control opcion3" type="radio" name="otro60" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro60" class="form-control opcion3" type="radio" name="otro60" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -1349,12 +1350,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro61" class="form-control opcion3" type="radio" name="otro61" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro61" class="form-control opcion3" type="radio" name="otro61" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -1362,12 +1363,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro62" class="form-control opcion3" type="radio" name="otro62" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro62" class="form-control opcion3" type="radio" name="otro62" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                 </table>
@@ -1384,12 +1385,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro63" class="form-control opcion3" type="radio" name="otro63" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro63" class="form-control opcion3" type="radio" name="otro63" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -1397,12 +1398,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro64" class="form-control opcion3" type="radio" name="otro64" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro64" class="form-control opcion3" type="radio" name="otro64" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -1410,12 +1411,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro65" class="form-control opcion3" type="radio" name="otro65" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro65" class="form-control opcion3" type="radio" name="otro65" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -1423,12 +1424,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro66" class="form-control opcion3" type="radio" name="otro66" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro66" class="form-control opcion3" type="radio" name="otro66" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -1436,12 +1437,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro67" class="form-control opcion3" type="radio" name="otro67" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro67" class="form-control opcion3" type="radio" name="otro67" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                     <tr>
@@ -1449,12 +1450,12 @@ if(isset($_POST["idPaciente"])){
                                                                         <th>
                                                                             <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="otro68" class="form-control opcion3" type="radio" name="otro68" value="1"></label></div>
                                                                         </th>
                                                                         <th>
                                                                             <div class="checradiokbox col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="2"></label></div>
+                                                                                    <input id="otro68" class="form-control opcion3" type="radio" name="otro68" value="2" checked></label></div>
                                                                         </th>
                                                                     </tr>
                                                                 </table>
@@ -1476,7 +1477,7 @@ if(isset($_POST["idPaciente"])){
                                                                     Primaria Incompleta
                                                                 </th>
                                                                 <th>
-                                                                    <input  type="checkbox" name="var1B">
+                                                                    <input  type="checkbox" class="checkOpcion" name="var1B" id="check1">
                                                                 </th>
                                                             </tr>
                                                             <tr>
@@ -1485,7 +1486,7 @@ if(isset($_POST["idPaciente"])){
                                                                     Primaria Completa
                                                                 </th>
                                                                 <th>
-                                                                    <input  type="checkbox" name="var1B">
+                                                                    <input  type="checkbox" class="checkOpcion" name="var1B" id="check2">
                                                                 </th>
                                                             </tr>
                                                              <tr>
@@ -1494,7 +1495,7 @@ if(isset($_POST["idPaciente"])){
                                                                     Secundaria Completa
                                                                 </th>
                                                                 <th>
-                                                                     <input  type="checkbox" name="var1B">
+                                                                     <input  type="checkbox" class="checkOpcion" name="var1B" id="check3">
                                                                 </th>
                                                             </tr>
                                                         </table>
@@ -1507,7 +1508,7 @@ if(isset($_POST["idPaciente"])){
                                                                     Secundaria Completa
                                                                 </th>
                                                                 <th>
-                                                                     <input  type="checkbox" name="var1B">
+                                                                     <input  type="checkbox" class="checkOpcion" name="var1B" id="check4">
                                                                 </th>
                                                             </tr>
                                                             <tr>
@@ -1516,7 +1517,7 @@ if(isset($_POST["idPaciente"])){
                                                                     Superior no Univ. Incompleto
                                                                 </th>
                                                                 <th>
-                                                                     <input  type="checkbox" name="var1B">
+                                                                     <input  type="checkbox" class="checkOpcion" name="var1B" id="check5">
                                                                 </th>
                                                             </tr>
                                                              <tr>
@@ -1525,7 +1526,7 @@ if(isset($_POST["idPaciente"])){
                                                                     Superio No Uni. Completo
                                                                 </th>
                                                                 <th>
-                                                                     <input  type="checkbox" name="var1B">
+                                                                     <input  type="checkbox" class="checkOpcion" name="var1B" id="check6">
                                                                 </th>
                                                             </tr>
                                                         </table>
@@ -1538,7 +1539,7 @@ if(isset($_POST["idPaciente"])){
                                                                     Seperior Univ. Incompleto
                                                                 </th>
                                                                 <th>
-                                                                    <input  type="checkbox" name="var1B">
+                                                                    <input  type="checkbox" class="checkOpcion" name="var1B" id="check7">
                                                                 </th>
                                                             </tr>
                                                             <tr>
@@ -1547,7 +1548,7 @@ if(isset($_POST["idPaciente"])){
                                                                     Superior Univ. Completo
                                                                 </th>
                                                                 <th>
-                                                                     <input  type="checkbox" name="var1B">
+                                                                     <input  type="checkbox" class="checkOpcion" name="var1B" id="check8">
                                                                 </th>
                                                             </tr>
                                                              <tr>
@@ -1556,7 +1557,7 @@ if(isset($_POST["idPaciente"])){
                                                                     Ninguno
                                                                 </th>
                                                                 <th>
-                                                                    <input  type="checkbox" name="var1B">
+                                                                    <input  type="checkbox" class="checkOpcion" name="var1B" id="check9">
                                                                 </th>
                                                             </tr>
                                                         </table>
@@ -1618,16 +1619,7 @@ if(isset($_POST["idPaciente"])){
 
 
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-4  ">
-                                                        <button id="volver_boton" type="button" class="btn btn-info " onclick="volver_ficha(<?php echo $_POST['idPaciente']?>);">VOLVER</button>
-                                                    </div>
 
-                                                    <div class="col-md-4 offset-4">
-                                                        <button id="grabar_boton" type="submit" class="btn btn-success ">GUARDAR</button>
-                                                    </div>
-
-                                                </div>
 
                                             </div>
                                         </div>
@@ -1635,94 +1627,92 @@ if(isset($_POST["idPaciente"])){
                                             <div class="container">
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <div class="col-md-3">
+
                                                         <table>
                                                             <tr>
                                                                 <th>FECHAS</th>
                                                                 <th>
-                                                                  <input id="obs4" class="form-control   caja" type="text" name="obs4" onkeypress="return SoloLetras(event,100,this.id);">
+                                                                    <input type="date" class="form-control col-md-12 fechaOpcion" id="fecha1" name="fecha1" style="width:140px; font-size:12px;">
                                                                 </th>
                                                                 <th>
-                                                                   <input id="obs4" class="form-control   caja" type="text" name="obs4" onkeypress="return SoloLetras(event,100,this.id);">
+                                                                   <input type="date" class="form-control col-md-12 fechaOpcion" id="fecha2" name="fecha2" style="width:140px; font-size:12px;">
                                                                 </th>
                                                                 <th>
-                                                                   <input id="obs4" class="form-control   caja" type="text" name="obs4" onkeypress="return SoloLetras(event,100,this.id);">
+                                                                   <input type="date" class="form-control col-md-12 fechaOpcion" id="fecha3" name="fecha3" style="width:140px; font-size:12px;">
                                                                 </th>
                                                                 <th>
-                                                                   <input id="obs4" class="form-control   caja" type="text" name="obs4" onkeypress="return SoloLetras(event,100,this.id);">
+                                                                    <input type="date" class="form-control col-md-12 fechaOpcion" id="fecha4" name="fecha4" style="width:140px; font-size:12px;">
                                                                 </th>
                                                                 <th>
-                                                                   <input id="obs4" class="form-control   caja" type="text" name="obs4" onkeypress="return SoloLetras(event,100,this.id);">
+                                                                    <input type="date" class="form-control col-md-12 fechaOpcion" id="fecha5" name="fecha5" style="width:140px; font-size:12px;">
                                                                 </th>
                                                                 <th>
-                                                                   <input id="obs4" class="form-control   caja" type="text" name="obs4" onkeypress="return SoloLetras(event,100,this.id);">
+                                                                    <input type="date" class="form-control col-md-12 fechaOpcion" id="fecha6" name="fecha6" style="width:140px; font-size:12px;">
                                                                 </th>
                                                                 <th>
-                                                                   <input id="obs4" class="form-control   caja" type="text" name="obs4" onkeypress="return SoloLetras(event,100,this.id);">
+                                                                    <input type="date" class="form-control col-md-12 fechaOpcion" id="fecha7" name="fecha7" style="width:140px; font-size:12px;">
                                                                 </th>
-                                                                <th>
-                                                                   <input id="obs4" class="form-control   caja" type="text" name="obs4" onkeypress="return SoloLetras(event,100,this.id);">
-                                                                </th>
+
 
                                                             </tr>
 
                                                               <tr>
                                                                 <th>Cumple Dieta</th>
                                                                 <th>
-                                                                  <div class="radio col-6">
+                                                                  <div class="radio col-12">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
-                                                                    <div class="radio col-6">
+                                                                                    <input id="ra1" class="form-control opcion5" type="radio" name="ra1" value="1"></label></div>
+                                                                    <div class="radio col-12">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra1" class="form-control opcion5" type="radio" name="ra1" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra2" class="form-control opcion5" type="radio" name="ra2" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra2" class="form-control opcion5" type="radio" name="ra2" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra3" class="form-control opcion5" type="radio" name="ra3" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra3" class="form-control opcion5" type="radio" name="ra3" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra4" class="form-control opcion5" type="radio" name="ra4" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra4" class="form-control opcion5" type="radio" name="ra4" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra5" class="form-control opcion5" type="radio" name="ra5" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra5" class="form-control opcion5" type="radio" name="ra5" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra6" class="form-control opcion5" type="radio" name="ra6" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra6" class="form-control opcion5" type="radio" name="ra6" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra7" class="form-control opcion5" type="radio" name="ra7" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra7" class="form-control opcion5" type="radio" name="ra7" value="2" checked></label></div>
                                                                 </th>
 
 
@@ -1732,58 +1722,58 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra8" class="form-control opcion5" type="radio" name="ra8" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra8" class="form-control opcion5" type="radio" name="ra8" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra9" class="form-control opcion5" type="radio" name="ra9" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra9" class="form-control opcion5" type="radio" name="ra9" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra10" class="form-control opcion5" type="radio" name="ra10" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra10" class="form-control opcion5" type="radio" name="ra10" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra11" class="form-control opcion5" type="radio" name="ra11" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra11" class="form-control opcion5" type="radio" name="ra11" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra12" class="form-control opcion5" type="radio" name="ra12" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra12" class="form-control opcion5" type="radio" name="ra12" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra13" class="form-control opcion5" type="radio" name="ra13" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra13" class="form-control opcion5" type="radio" name="ra13" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra14" class="form-control opcion5" type="radio" name="ra14" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra14" class="form-control opcion5" type="radio" name="ra14" value="2" checked></label></div>
                                                                 </th>
 
 
@@ -1793,58 +1783,58 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra15" class="form-control opcion5" type="radio" name="ra15" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra15" class="form-control opcion5" type="radio" name="ra15" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra16" class="form-control opcion5" type="radio" name="ra16" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra16" class="form-control opcion5" type="radio" name="ra16" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra17" class="form-control opcion5" type="radio" name="ra17" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra17" class="form-control opcion5" type="radio" name="ra17" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra18" class="form-control opcion5" type="radio" name="ra18" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra18" class="form-control opcion5" type="radio" name="ra18" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra19" class="form-control opcion5" type="radio" name="ra19" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra19" class="form-control opcion5" type="radio" name="ra19" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra20" class="form-control opcion5" type="radio" name="ra20" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra20" class="form-control opcion5" type="radio" name="ra20" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra21" class="form-control opcion5" type="radio" name="ra21" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra21" class="form-control opcion5" type="radio" name="ra21" value="2" checked></label></div>
                                                                 </th>
 
 
@@ -1854,58 +1844,58 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra22" class="form-control opcion5" type="radio" name="ra22" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra22" class="form-control opcion5" type="radio" name="ra22" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra23" class="form-control opcion5" type="radio" name="ra23" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra23" class="form-control opcion5" type="radio" name="ra23" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra24" class="form-control opcion5" type="radio" name="ra24" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra24" class="form-control opcion5" type="radio" name="ra24" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra25" class="form-control opcion5" type="radio" name="ra25" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra25" class="form-control opcion5" type="radio" name="ra25" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra26" class="form-control opcion5" type="radio" name="ra26" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra26" class="form-control opcion5" type="radio" name="ra26" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra27" class="form-control opcion5" type="radio" name="ra27" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra27" class="form-control opcion5" type="radio" name="ra27" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra28" class="form-control opcion5" type="radio" name="ra28" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra28" class="form-control opcion5" type="radio" name="ra28" value="2" checked></label></div>
                                                                 </th>
 
 
@@ -1915,58 +1905,58 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra29" class="form-control opcion5" type="radio" name="ra29" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra29" class="form-control opcion5" type="radio" name="ra29" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra30" class="form-control opcion5" type="radio" name="ra30" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra30" class="form-control opcion5" type="radio" name="ra30" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra31" class="form-control opcion5" type="radio" name="ra31" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra31" class="form-control opcion5" type="radio" name="ra31" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra32" class="form-control opcion5" type="radio" name="ra32" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra32" class="form-control opcion5" type="radio" name="ra32" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra33" class="form-control opcion5" type="radio" name="ra33" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra33" class="form-control opcion5" type="radio" name="ra33" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra34" class="form-control opcion5" type="radio" name="ra34" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra34" class="form-control opcion5" type="radio" name="ra34" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra35" class="form-control opcion5" type="radio" name="ra35" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra35" class="form-control opcion5" type="radio" name="ra35" value="2" checked></label></div>
                                                                 </th>
 
 
@@ -1976,58 +1966,58 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra36" class="form-control opcion5" type="radio" name="ra36" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra36" class="form-control opcion5" type="radio" name="ra36" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra37" class="form-control opcion5" type="radio" name="ra37" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra37" class="form-control opcion5" type="radio" name="ra37" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra38" class="form-control opcion5" type="radio" name="ra38" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra38" class="form-control opcion5" type="radio" name="ra38" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra39" class="form-control opcion5" type="radio" name="ra39" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra39" class="form-control opcion5" type="radio" name="ra39" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra40" class="form-control opcion5" type="radio" name="ra40" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra40" class="form-control opcion5" type="radio" name="ra40" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra41" class="form-control opcion5" type="radio" name="ra41" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra41" class="form-control opcion5" type="radio" name="ra41" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra42" class="form-control opcion5" type="radio" name="ra42" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra42" class="form-control opcion5" type="radio" name="ra42" value="2" checked></label></div>
                                                                 </th>
 
 
@@ -2037,58 +2027,58 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra43" class="form-control opcion5" type="radio" name="ra43" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra43" class="form-control opcion5" type="radio" name="ra43" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra44" class="form-control opcion5" type="radio" name="ra44" value="1" checked></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra44" class="form-control opcion5" type="radio" name="ra44" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra45" class="form-control opcion5" type="radio" name="ra45" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra45" class="form-control opcion5" type="radio" name="ra45" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra46" class="form-control opcion5" type="radio" name="ra46" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra46" class="form-control opcion5" type="radio" name="ra46" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra47" class="form-control opcion5" type="radio" name="ra47" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra47" class="form-control opcion5" type="radio" name="ra47" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra48" class="form-control opcion5" type="radio" name="ra48" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra48" class="form-control opcion5" type="radio" name="ra48" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra49" class="form-control opcion5" type="radio" name="ra49" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra49" class="form-control opcion5" type="radio" name="ra49" value="2" checked></label></div>
                                                                 </th>
 
 
@@ -2098,58 +2088,58 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra50" class="form-control opcion5" type="radio" name="ra50" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra50" class="form-control opcion5" type="radio" name="ra50" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra51" class="form-control opcion5" type="radio" name="ra51" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra51" class="form-control opcion5" type="radio" name="ra51" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra52" class="form-control opcion5" type="radio" name="ra52" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra52" class="form-control opcion5" type="radio" name="ra52" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra53" class="form-control opcion5" type="radio" name="ra53" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra53" class="form-control opcion5" type="radio" name="ra53" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra54" class="form-control opcion5" type="radio" name="ra54" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra54" class="form-control opcion5" type="radio" name="ra54" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra55" class="form-control opcion5" type="radio" name="ra55" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra55" class="form-control opcion5" type="radio" name="ra55" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra56" class="form-control opcion5" type="radio" name="ra56" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra56" class="form-control opcion5" type="radio" name="ra56" value="2" checked></label></div>
                                                                 </th>
 
 
@@ -2159,58 +2149,58 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra57" class="form-control opcion5" type="radio" name="ra57" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra57" class="form-control opcion5" type="radio" name="ra57" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra58" class="form-control opcion5" type="radio" name="ra58" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra58" class="form-control opcion5" type="radio" name="ra58" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra59" class="form-control opcion5" type="radio" name="ra59" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra59" class="form-control opcion5" type="radio" name="ra59" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra60" class="form-control opcion5" type="radio" name="ra60" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra60" class="form-control opcion5" type="radio" name="ra60" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra61" class="form-control opcion5" type="radio" name="ra61" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra61" class="form-control opcion5" type="radio" name="ra61" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra62" class="form-control opcion5" type="radio" name="ra62" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra62" class="form-control opcion5" type="radio" name="ra62" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra63" class="form-control opcion5" type="radio" name="ra63" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra63" class="form-control opcion5" type="radio" name="ra63" value="2" checked></label></div>
                                                                 </th>
 
 
@@ -2220,58 +2210,58 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra64" class="form-control opcion5" type="radio" name="ra64" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra64" class="form-control opcion5" type="radio" name="ra64" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra65" class="form-control opcion5" type="radio" name="ra65" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra65" class="form-control opcion5" type="radio" name="ra65" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra66" class="form-control opcion5" type="radio" name="ra66" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra66" class="form-control opcion5" type="radio" name="ra66" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra67" class="form-control opcion5" type="radio" name="ra67" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra67" class="form-control opcion5" type="radio" name="ra67" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra68" class="form-control opcion5" type="radio" name="ra68" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra68" class="form-control opcion5" type="radio" name="ra68" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra69" class="form-control opcion5" type="radio" name="ra69" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra69" class="form-control opcion5" type="radio" name="ra69" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra70" class="form-control opcion5" type="radio" name="ra70" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra70" class="form-control opcion5" type="radio" name="ra70" value="2" checked></label></div>
                                                                 </th>
 
 
@@ -2281,65 +2271,76 @@ if(isset($_POST["idPaciente"])){
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra71" class="form-control opcion5" type="radio" name="ra71" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra71" class="form-control opcion5" type="radio" name="ra71" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra72" class="form-control opcion5" type="radio" name="ra72" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra72" class="form-control opcion5" type="radio" name="ra72" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra73" class="form-control opcion5" type="radio" name="ra73" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra73" class="form-control opcion5" type="radio" name="ra73" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra74" class="form-control opcion5" type="radio" name="ra74" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra74" class="form-control opcion5" type="radio" name="ra74" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                   <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra75" class="form-control opcion5" type="radio" name="ra75" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra75" class="form-control opcion5" type="radio" name="ra75" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra76" class="form-control opcion5" type="radio" name="ra76" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra76" class="form-control opcion5" type="radio" name="ra76" value="2" checked></label></div>
                                                                 </th>
                                                                 <th>
                                                                    <div class="radio col-6">
                                                                                 <label>SI
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra77" class="form-control opcion5" type="radio" name="ra77" value="1"></label></div>
                                                                     <div class="radio col-6">
                                                                                 <label>NO
-                                                                                    <input id="var1B" class="form-control opcion" type="radio" name="var1B" value="1"></label></div>
+                                                                                    <input id="ra77" class="form-control opcion5" type="radio" name="ra77" value="2" checked></label></div>
                                                                 </th>
 
 
                                                             </tr>
                                                         </table>
+
                                                     </div>
+                                                </div>
+                                                <hr>
+                                                 <div class="row">
+                                                    <div class="col-md-4">
+                                                        <button id="volver_boton" type="button" class="btn btn-info " onclick="volver_ficha(<?php echo $_POST['idPaciente']?>);">VOLVER</button>
                                                     </div>
+
+                                                    <div class="col-md-4 offset-4">
+                                                        <button id="grabar_boton" type="button" class="btn btn-success" onclick="GuardarSeguimiento();">GUARDAR</button>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>

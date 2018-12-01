@@ -5,19 +5,20 @@ var flecha_up = '<button class="btn btn-success  btn-sm"type="button"><i class="
 
 function init() {
 
+
     recuperar_pacientes();
     iniciar_componentes();
     EvaluarSeguimiento();
-
-
+    var idSeguimiento = $("#idSeguimiento").val();
+    if (idSeguimiento != 0) {
+        RecuperarSeguimiento(idSeguimiento);
+    }
 }
 
 function iniciar_componentes() {
 
 
     iniciar_radios();
-    gestion_radios();
-    gestion_inputs();
 
 
     $("#formulario_seguimiento").on("submit", function (e) {
@@ -25,6 +26,7 @@ function iniciar_componentes() {
 
     });
 
+    OpcionesHabilitar();
 }
 
 function recuperar_pacientes() {
@@ -39,6 +41,189 @@ function recuperar_pacientes() {
     });
 }
 
+function RecuperarSeguimiento(idSeguimiento) {
+
+    $.post("../../controlador/Gestion/CSeguimiento.php?op=RecuperarSeguimiento", {
+        idSeguimiento: idSeguimiento
+    }, function (data, status) {
+        data = JSON.parse(data);
+
+        //Recuperar Opciones 1
+        var Opciones1 = data.op_opcion1.split("|");
+        Opciones1.pop();
+
+        //Recuperar Campos de Opciones 1
+        var ArregloCampos = new Array();
+        $(".campo").each(function () {
+            ArregloCampos.push($(this));
+        });
+        // SETEAR VALORES RECUPERADOS 1
+        for (var i = 0; i < Opciones1.length; i++) {
+            ArregloCampos[i].val(Opciones1[i]);
+        }
+        //Recuperar Campos de Opciones 2 CAMPOS
+        var Opciones2Campos = data.op_opcion2Campos.split("|");
+        Opciones2Campos.pop();
+
+        var Arreglo2Campos = new Array();
+        $(".campo2").each(function () {
+            Arreglo2Campos.push($(this));
+        });
+        // SETEAR VALORES RECUPERADOS 2
+        for (var i = 0; i < Opciones2Campos.length; i++) {
+            Arreglo2Campos[i].val(Opciones2Campos[i]);
+        }
+
+        var Opciones2Estado = data.op_opcion2Estado.split("|");
+        Opciones2Estado.pop();
+
+        var ArregloEstadoSI = new Array();
+        var ArregloEstadoNO = new Array();
+        $('.opcion2[type=radio][value=1]').each(function () {
+            ArregloEstadoSI.push($(this));
+        });
+        $('.opcion2[type=radio][value=2]').each(function () {
+            ArregloEstadoNO.push($(this));
+        });
+
+        for (var i = 0; i < Opciones2Estado.length; i++) {
+            if (Opciones2Estado[i] == 1) {
+                ArregloEstadoNO[i].prop("checked", false);
+                ArregloEstadoSI[i].prop("checked", true);
+            } else {
+                ArregloEstadoNO[i].prop("checked", true);
+                ArregloEstadoSI[i].prop("checked", false);
+            }
+
+        }
+
+
+        var Opcion3Campos = data.op_opcion3Campos.split("|");
+        Opcion3Campos.pop();
+        var Opcion3Estados = data.op_opcion3Estado.split("|");
+        Opcion3Estados.pop();
+
+        var ArregloOpcion3Campos = new Array();
+        $(".texto3").each(function () {
+            ArregloOpcion3Campos.push($(this));
+        });
+
+        for (var i = 0; i < Opcion3Campos.length; i++) {
+            ArregloOpcion3Campos[i].val(Opcion3Campos[i]);
+        }
+
+        var ArregloOpcion3EstadoSI = new Array();
+        var ArregloOpcion3EstadoNO = new Array();
+        $('.opcion3[type=radio][value=1]').each(function () {
+            ArregloOpcion3EstadoSI.push($(this));
+        });
+        $('.opcion3[type=radio][value=2]').each(function () {
+            ArregloOpcion3EstadoNO.push($(this));
+        });
+
+
+        for (var i = 0; i < Opcion3Estados.length; i++) {
+            if (Opcion3Estados[i] == 1) {
+                ArregloOpcion3EstadoNO[i].prop("checked", false);
+                ArregloOpcion3EstadoSI[i].prop("checked", true);
+            } else {
+                ArregloOpcion3EstadoNO[i].prop("checked", true);
+                ArregloOpcion3EstadoSI[i].prop("checked", false);
+            }
+
+        }
+
+
+
+        var ArrregloOpcion4 = data.op_opcion4.split("|");
+        ArrregloOpcion4.pop();
+
+        var ArregloOpcion4Checks = new Array();
+        $('.checkOpcion').each(function () {
+            ArregloOpcion4Checks.push($(this));
+
+        });
+
+        for (var i = 0; i < ArrregloOpcion4.length; i++) {
+            if (ArrregloOpcion4[i] == 1) {
+                ArregloOpcion4Checks[i].prop("checked", true);
+            } else {
+                ArregloOpcion4Checks[i].prop("checked", false);
+            }
+        }
+
+        var ArregloOpcionRecuperado5 = data.op_opcion5.split("|");
+        ArregloOpcionRecuperado5.pop();
+
+        var ArregloOpcion5SI = new Array();
+        var ArregloOpcion5NO = new Array();
+        $('.opcion5[type=radio][value=1]').each(function () {
+            ArregloOpcion5SI.push($(this));
+        });
+        $('.opcion5[type=radio][value=2]').each(function () {
+            ArregloOpcion5NO.push($(this));
+        });
+        console.log(ArregloOpcionRecuperado5);
+        console.log(ArregloOpcion5SI);
+        console.log(ArregloOpcion5NO);
+        for (var i = 0; i < ArregloOpcionRecuperado5.length; i++) {
+
+            if (ArregloOpcionRecuperado5[i]==1) {
+                ArregloOpcion5NO[i].prop("checked",false);
+                ArregloOpcion5SI[i].prop("checked",true);
+            } else {
+                ArregloOpcion5NO[i].prop("checked",true);
+                ArregloOpcion5SI[i].prop("checked",false);
+            }
+
+        }
+
+
+
+        var Arreglo5Fechas = data.op_opcion5Fechas.split("|");
+        Arreglo5Fechas.pop();
+        var Arreglo5Campos = new Array();
+
+        $(".fechaOpcion").each(function () {
+            Arreglo5Campos.push($(this));
+        });
+
+        for (var i = 0; i < Arreglo5Fechas.length; i++) {
+            Arreglo5Campos[i].val(Arreglo5Fechas[i]);
+        }
+
+        $("#riesgo").val(data.Riesgo);
+        $("#fecha_inicio").val(data.FechaInicio);
+        $("#observaciones").val(data.Observaciones);
+
+        $("#proxima_cita").val(data.FechaProximaCita);
+
+        if(data.Taller1==1){
+            $('#taller1[type=radio][value=1]').prop("checked", true);
+            $('#taller1[type=radio][value=2]').prop("checked", false);
+        }else{
+           $('#taller1[type=radio][value=1]').prop("checked", false);
+            $('#taller1[type=radio][value=2]').prop("checked", true);
+        }
+        if(data.Taller2==1){
+            $('#taller2[type=radio][value=1]').prop("checked", true);
+            $('#taller2[type=radio][value=2]').prop("checked", false);
+        }else{
+           $('#taller2[type=radio][value=1]').prop("checked", false);
+            $('#taller2[type=radio][value=2]').prop("checked", true);
+        }
+        if(data.Taller3==1){
+            $('#taller3[type=radio][value=1]').prop("checked", true);
+            $('#taller3[type=radio][value=2]').prop("checked", false);
+        }else{
+           $('#taller3[type=radio][value=1]').prop("checked", false);
+            $('#taller3[type=radio][value=2]').prop("checked", true);
+        }
+
+
+    });
+}
+
 function iniciar_radios() {
     $('#obs1').attr("disabled", "true");
     $('#obs2').attr("disabled", "true");
@@ -49,17 +234,28 @@ function iniciar_radios() {
     $('#obs7').attr("disabled", "true");
     $('#obs8').attr("disabled", "true");
     $('#obs9').attr("disabled", "true");
-
-
-    $('input:radio[name=var1B]').filter('[value=2]').attr('checked', true);
-    $('input:radio[name=var2B]').filter('[value=2]').attr('checked', true);
-    $('input:radio[name=var3B]').filter('[value=2]').attr('checked', true);
-    $('input:radio[name=var4B]').filter('[value=2]').attr('checked', true);
-    $('input:radio[name=var5B]').filter('[value=2]').attr('checked', true);
-    $('input:radio[name=var6B]').filter('[value=2]').attr('checked', true);
-    $('input:radio[name=var7B]').filter('[value=2]').attr('checked', true);
-    $('input:radio[name=var8B]').filter('[value=2]').attr('checked', true);
-    $('input:radio[name=var9B]').filter('[value=2]').attr('checked', true);
+    $("#pre1").attr("disabled", "true");
+    $("#tableta1").attr("disabled", "true");
+    $("#pre2").attr("disabled", "true");
+    $("#tableta2").attr("disabled", "true");
+    $("#pre3").attr("disabled", "true");
+    $("#tableta3").attr("disabled", "true");
+    $("#pre4").attr("disabled", "true");
+    $("#tableta4").attr("disabled", "true");
+    $("#pre5").attr("disabled", "true");
+    $("#tableta5").attr("disabled", "true");
+    $("#pre6").attr("disabled", "true");
+    $("#tableta6").attr("disabled", "true");
+    $("#pre7").attr("disabled", "true");
+    $("#tableta7").attr("disabled", "true");
+    $("#pre8").attr("disabled", "true");
+    $("#tableta8").attr("disabled", "true");
+    $("#pre9").attr("disabled", "true");
+    $("#tableta9").attr("disabled", "true");
+    $("#pre10").attr("disabled", "true");
+    $("#tableta10").attr("disabled", "true");
+    $("#pre11").attr("disabled", "true");
+    $("#tableta11").attr("disabled", "true");
 
 
     $('input:radio[name=taller1]').filter('[value=2]').attr('checked', true);
@@ -70,466 +266,12 @@ function iniciar_radios() {
 
 }
 
-function gestion_radios() {
-    $("input[name=var1B]").click(function () {
-        var val1 = $('input:radio[name=var1B]:checked').val();
-        if (val1 == 1) {
-            $('#obs1').removeAttr("disabled");
-        } else {
-            $('#obs1').attr("disabled", "true");
-        }
-    });
-
-
-    $("input[name=var2B]").click(function () {
-        var val1 = $('input:radio[name=var2B]:checked').val();
-        if (val1 == 1) {
-            $('#obs2').removeAttr("disabled");
-        } else {
-            $('#obs2').attr("disabled", "true");
-        }
-    });
-
-    $("input[name=var3B]").click(function () {
-        var val1 = $('input:radio[name=var3B]:checked').val();
-        if (val1 == 1) {
-            $('#obs3').removeAttr("disabled");
-        } else {
-            $('#obs3').attr("disabled", "true");
-        }
-    });
-
-    $("input[name=var4B]").click(function () {
-        var val1 = $('input:radio[name=var4B]:checked').val();
-        if (val1 == 1) {
-            $('#obs4').removeAttr("disabled");
-        } else {
-            $('#obs4').attr("disabled", "true");
-        }
-    });
-
-    $("input[name=var5B]").click(function () {
-        var val1 = $('input:radio[name=var5B]:checked').val();
-        if (val1 == 1) {
-            $('#obs5').removeAttr("disabled");
-        } else {
-            $('#obs5').attr("disabled", "true");
-        }
-    });
-
-    $("input[name=var6B]").click(function () {
-        var val1 = $('input:radio[name=var6B]:checked').val();
-        if (val1 == 1) {
-            $('#obs6').removeAttr("disabled");
-        } else {
-            $('#obs6').attr("disabled", "true");
-        }
-    });
-
-    $("input[name=var7B]").click(function () {
-        var val1 = $('input:radio[name=var7B]:checked').val();
-        if (val1 == 1) {
-            $('#obs7').removeAttr("disabled");
-        } else {
-            $('#obs7').attr("disabled", "true");
-        }
-    });
-
-    $("input[name=var8B]").click(function () {
-        var val1 = $('input:radio[name=var8B]:checked').val();
-        if (val1 == 1) {
-            $('#obs8').removeAttr("disabled");
-        } else {
-            $('#obs8').attr("disabled", "true");
-        }
-    });
-
-
-    $("input[name=var9B]").click(function () {
-        var val1 = $('input:radio[name=var9B]:checked').val();
-        if (val1 == 1) {
-            $('#obs9').removeAttr("disabled");
-        } else {
-            $('#obs9').attr("disabled", "true");
-        }
-    });
-}
-
-function gestion_inputs() {
-
-    $('#var2A').keyup(function () {
-
-        var dato2 = $('#var2A').val();
-        if (dato2 >= 70 && dato2 <= 130) {
-            console.log("Valido");
-            $('#var2A').removeClass("colorNegativo");
-            $('#var2A').addClass("colorPositivo");
-            $("#op2").empty();
-            $("#op2").html(flecha_up);
-
-        } else {
-            console.log("No Valido");
-            $('#var2A').removeClass("colorPositivo");
-            $('#var2A').addClass("colorNegativo");
-            $("#op2").empty();
-            $("#op2").html(flecha_down);
-        }
-    });
-
-    $('#var3A').keyup(function () {
-
-        var dato3 = $('#var3A').val();
-        if (dato3 >= 70 && dato3 <= 130) {
-            console.log("Valido");
-            $('#var3A').removeClass("colorNegativo");
-            $('#var3A').addClass("colorPositivo");
-            $("#op3").empty();
-            $("#op3").html(flecha_up);
-
-        } else {
-            console.log("No Valido");
-            $('#var3A').removeClass("colorPositivo");
-            $('#var3A').addClass("colorNegativo");
-            $("#op3").empty();
-            $("#op3").html(flecha_down);
-        }
-    });
-
-
-    $('#var4A').keyup(function () {
-
-        var dato4 = $('#var4A').val();
-        if (dato4 <= 180) {
-            console.log("Valido");
-            $('#var4A').removeClass("colorNegativo");
-            $('#var4A').addClass("colorPositivo");
-            $("#op4").empty();
-            $("#op4").html(flecha_up);
-
-        } else {
-            console.log("No Valido");
-            $('#var4A').removeClass("colorPositivo");
-            $('#var4A').addClass("colorNegativo");
-            $("#op4").empty();
-            $("#op4").html(flecha_down);
-        }
-    });
-
-
-    $('#var5A').keyup(function () {
-
-        var dato5 = $('#var5A').val();
-        if (dato5 >= 5 && dato5 <= 7) {
-            console.log("Valido");
-            $('#var5A').removeClass("colorNegativo");
-            $('#var5A').addClass("colorPositivo");
-            $("#op5").empty();
-            $("#op5").html(flecha_up);
-
-        } else {
-            console.log("No Valido");
-            $('#var5A').removeClass("colorPositivo");
-            $('#var5A').addClass("colorNegativo");
-            $("#op5").empty();
-            $("#op5").html(flecha_down);
-        }
-    });
-
-
-    $('#var6A').keyup(function () {
-
-        var dato6 = $('#var6A').val();
-        if (dato6 <= 200) {
-            console.log("Valido");
-            $('#var6A').removeClass("colorNegativo");
-            $('#var6A').addClass("colorPositivo");
-            $("#op6").empty();
-            $("#op6").html(flecha_up);
-
-        } else {
-            console.log("No Valido");
-            $('#var6A').removeClass("colorPositivo");
-            $('#var6A').addClass("colorNegativo");
-            $("#op6").empty();
-            $("#op6").html(flecha_down);
-        }
-    });
-
-    $('#var7A').keyup(function () {
-
-        var dato7 = $('#var7A').val();
-        if (sexo == 2) {
-            if (dato7 <= 40) {
-                console.log("Valido");
-                $('#var7A').removeClass("colorNegativo");
-                $('#var7A').addClass("colorPositivo");
-                $("#op7").empty();
-                $("#op7").html(flecha_up);
-
-            } else {
-                console.log("No Valido");
-                $('#var7A').removeClass("colorPositivo");
-                $('#var7A').addClass("colorNegativo");
-                $("#op7").empty();
-                $("#op7").html(flecha_down);
-            }
-        } else {
-            if (dato7 <= 50) {
-                console.log("Valido");
-                $('#var7A').removeClass("colorNegativo");
-                $('#var7A').addClass("colorPositivo");
-                $("#op7").empty();
-                $("#op7").html(flecha_up);
-
-            } else {
-                console.log("No Valido");
-                $('#var7A').removeClass("colorPositivo");
-                $('#var7A').addClass("colorNegativo");
-                $("#op7").empty();
-                $("#op7").html(flecha_down);
-            }
-        }
-
-
-    });
-
-    $('#var8A').keyup(function () {
-
-        var dato8 = $('#var8A').val();
-        if (dato8 <= 100) {
-            console.log("Valido");
-            $('#var8A').removeClass("colorNegativo");
-            $('#var8A').addClass("colorPositivo");
-            $("#op8").empty();
-            $("#op8").html(flecha_up);
-
-        } else {
-            console.log("No Valido");
-            $('#var8A').removeClass("colorPositivo");
-            $('#var8A').addClass("colorNegativo");
-            $("#op8").empty();
-            $("#op8").html(flecha_down);
-        }
-    });
-
-
-    $('#var9A').keyup(function () {
-
-        var dato9 = $('#var9A').val();
-        if (dato9 <= 150) {
-            console.log("Valido");
-            $('#var9A').removeClass("colorNegativo");
-            $('#var9A').addClass("colorPositivo");
-            $("#op9").empty();
-            $("#op9").html(flecha_up);
-
-        } else {
-            console.log("No Valido");
-            $('#var9A').removeClass("colorPositivo");
-            $('#var9A').addClass("colorNegativo");
-            $("#op9").empty();
-            $("#op9").html(flecha_down);
-        }
-    });
-
-
-    $('#var11A').keyup(function () {
-
-        var dato11 = $('#var11A').val();
-        if (dato11 >= 18.5 && dato11 <= 24.9) {
-            console.log("Valido");
-            $('#var11A').removeClass("colorNegativo");
-            $('#var11A').addClass("colorPositivo");
-            $("#op11").empty();
-            $("#op11").html(flecha_up);
-
-        } else {
-            console.log("No Valido");
-            $('#var11A').removeClass("colorPositivo");
-            $('#var11A').addClass("colorNegativo");
-            $("#op11").empty();
-            $("#op11").html(flecha_down);
-        }
-    });
-
-    $('#var12A').keyup(function () {
-
-        var dato12 = $('#var12A').val();
-        if (dato12 <= 30) {
-            console.log("Valido");
-            $('#var12A').removeClass("colorNegativo");
-            $('#var12A').addClass("colorPositivo");
-            $("#op12").empty();
-            $("#op12").html(flecha_up);
-
-        } else {
-            console.log("No Valido");
-            $('#var12A').removeClass("colorPositivo");
-            $('#var12A').addClass("colorNegativo");
-            $("#op12").empty();
-            $("#op12").html(flecha_down);
-        }
-    });
-
-
-    $('#var13A').keyup(function () {
-
-        var dato13 = $('#var13A').val();
-        if (dato13 >= 6 && dato13 <= 11) {
-            console.log("Valido");
-            $('#var13A').removeClass("colorNegativo");
-            $('#var13A').addClass("colorPositivo");
-            $("#op13").empty();
-            $("#op13").html(flecha_up);
-
-        } else {
-            console.log("No Valido");
-            $('#var13A').removeClass("colorPositivo");
-            $('#var13A').addClass("colorNegativo");
-            $("#op13").empty();
-            $("#op13").html(flecha_down);
-        }
-    });
-
-
-    $('#var14A').keyup(function () {
-
-        var dato14 = $('#var14A').val();
-        if (dato14 <= 130) {
-            console.log("Valido");
-            $('#var14A').removeClass("colorNegativo");
-            $('#var14A').addClass("colorPositivo");
-            $("#op14").empty();
-            $("#op14").html(flecha_up);
-
-        } else {
-            console.log("No Valido");
-            $('#var14A').removeClass("colorPositivo");
-            $('#var14A').addClass("colorNegativo");
-            $("#op14").empty();
-            $("#op14").html(flecha_down);
-        }
-    });
-
-
-
-}
-
-function guardaryeditar(e) {
-
-    //cargar(true);
-    e.preventDefault(); //No se activará la acción predeterminada del evento
-    //$("#btnGuardar").prop("disabled",true);
-    //$("#btnLimpiar").prop("disabled",true);
-    var Mensaje_Validacion = verificar_campos();
-    if (Mensaje_Validacion.length == 0) {
-        var formData = new FormData($("#formulario_seguimiento")[0]);
-        console.log(formData);
-        $.ajax({
-            url: "../../controlador/Gestion/CSeguimiento.php?op=guardaryeditar",
-            type: "POST",
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function (data, status) {
-                data = JSON.parse(data);
-                console.log(data);
-                var Mensaje = data.Mensaje;
-                var Error = data.Error;
-
-                if (Error) {
-
-                    //$('#modal_usuarios').modal('hide');
-                    //cargar(false);
-                    //bootbox.alert(Mensaje);
-                    //$("#btnGuardar").prop("disabled",false);
-                    //$("#btnLimpiar").prop("disabled",false);
-                    swal("Error:", Mensaje);
-                    //$('#formularioUsuario')[0].reset();
-                } else {
-                    // $('#modal_usuarios').modal('hide');
-                    //limpiar_modal();
-                    //cargar(false);
-                    //bootbox.alert(Mensaje);
-                    //mostrarform(false);
-                    //tabla_usuarios.ajax.reload();
-                    //limpiar();
-
-                    $("#grabar_boton").attr("disabled", "true");
-                    swal("Seguimiento:", Mensaje);
-
-                }
-            }
-
-        });
-    } else {
-        notificar_warning("Validación:<br>" + Mensaje_Validacion);
-
-    }
-
-
-
-}
-
-function verificar_campos() {
-    var Mensaje = "";
-    var Variable = new Object();
-    Variable.valor = $("#talla").val();
-    Variable.texto = "Debe Ingresar Talla del Paciente.<br>";
-    var Variable2 = new Object();
-    Variable2.valor = $("#peso").val();
-    Variable2.texto = "Debe Ingresar Peso del Paciente.<br>";
-    var Variable3 = new Object();
-    Variable3.valor = $("#var2A").val();
-    Variable3.texto = "Debe Ingresar Parametro de Glucosa Ayunas del Paciente.<br>";
-    var Variable4 = new Object();
-    Variable4.valor = $("#var3A").val();
-    Variable4.texto = "Debe Ingresar Parametro de Glucosa al Azar del Paciente.<br>";
-    var Variable5 = new Object();
-    Variable5.valor = $("#var4A").val();
-    Variable5.texto = "Debe Ingresar Parametro de Glucosa post Prandial del Paciente.<br>";
-    var Variable6 = new Object();
-    Variable6.valor = $("#var5A").val();
-    Variable6.texto = "Debe Ingresar Parametro de Hemoglobina Glicosilada del Paciente.<br>";
-    var Variable7 = new Object();
-    Variable7.valor = $("#fecha_inicio").val();
-    Variable7.texto = "Debe Ingresar Fecha de Inicio del Seguimiento.<br>";
-    var Variable8 = new Object();
-    Variable8.valor = $("#proxima_cita").val();
-    Variable8.texto = "Debe Ingresar Fecha de Proxima Visita del Seguimiento.<br>";
-
-
-    var Validaciones = new Array();
-    Validaciones.push(Variable);
-    Validaciones.push(Variable2);
-    Validaciones.push(Variable3);
-    Validaciones.push(Variable4);
-    Validaciones.push(Variable5);
-    Validaciones.push(Variable6);
-    Validaciones.push(Variable7);
-    Validaciones.push(Variable8);
-
-    debugger;
-    Validaciones.forEach(function (value, indice, array) {
-        console.log("En el índice " + indice + " hay este valor: " + value.valor);
-        var texto = value.valor;
-        if (texto.length == 0) {
-            Mensaje = Mensaje + "-" + value.texto;
-        }
-    });
-
-
-    return Mensaje;
-
-}
-
 function volver_ficha(idPaciente) {
     $.redirect('../../vista/Operaciones/GestionFicha.php', {
         'idPaciente': idPaciente
     });
 
 }
-
 /** FUNCIONES FIJAS **/
 function EvaluarSeguimiento() {
 
@@ -623,43 +365,232 @@ function CalcularIMC() {
     }
 }
 
-function prueba() {
-    var Arreglo = new Array();
-    var Respuestas = "";
-    $(".campo").each(function () {
-        Arreglo.push($(this).val());
-        Respuestas = Respuestas + $(this).val() + "|";
-    });
-
-    console.log(Respuestas);
-
-}
-
-function prueba2() {
-    var Arreglo = new Array();
-    var Respuestas1 = "";
-    var Respuestas2 = "";
-   /* $(".opcion").each(function () {
-        Arreglo.push($(this).val());
-        Respuestas1 = Respuestas1 + $(this).val() + "|";
-    });*/
-    $(".campo").each(function () {
-        Arreglo.push($(this).val());
-        Respuestas2 = Respuestas2 + $(this).val() + "|";
-    });
-
-    $('.opcion[type=radio]').change(function(){
-        if ($(this).val()==1) {
-            Arreglo.push($(this).val());
-            Respuestas2 = Respuestas2 + $(this).val() + "|";
+function OpcionesHabilitar() {
+    $('.opcion2[type=radio]').change(function () {
+        var recuperado = $(this).val();
+        var id = $(this).attr("id");
+        var codigo = 0;
+        codigo = id.replace("radio", "");
+        codigo = codigo.trim();
+        if (recuperado == 1) {
+            $('#obs' + codigo).removeAttr("disabled");
         } else {
-            Arreglo.push($(this).val());
-            Respuestas2 = Respuestas2 + $(this).val() + "|";
+            $('#obs' + codigo).attr("disabled", "true");
+            $('#obs' + codigo).val("");
         }
     });
 
-    console.log(Respuestas1);
-    console.log(Respuestas2);
+    $('.opcionTexto[type=radio]').change(function () {
+        debugger;
+        var recuperado = $(this).val();
+        var id = $(this).data("id");
+
+        if (recuperado == 1) {
+            $('#pre' + id).removeAttr("disabled");
+            $('#tableta' + id).removeAttr("disabled");
+        } else {
+            $('#pre' + id).attr("disabled", "true");
+            $('#pre' + id).val("");
+            $('#tableta' + id).attr("disabled", "true");
+            $('#tableta' + id).val("");
+        }
+    });
+}
+
+function VerificarCampos() {
+    var Mensaje = "";
+    var Variable = new Object();
+    Variable.valor = $("#talla").val();
+    Variable.texto = "Debe Ingresar Talla del Paciente.<br>";
+    var Variable2 = new Object();
+    Variable2.valor = $("#peso").val();
+    Variable2.texto = "Debe Ingresar Peso del Paciente.<br>";
+    var Variable3 = new Object();
+    Variable3.valor = $("#seg2").val();
+    Variable3.texto = "Debe Ingresar Parametro de Glucosa Ayunas del Paciente.<br>";
+    var Variable4 = new Object();
+    Variable4.valor = $("#seg3").val();
+    Variable4.texto = "Debe Ingresar Parametro de Glucosa al Azar del Paciente.<br>";
+    var Variable5 = new Object();
+    Variable5.valor = $("#seg4").val();
+    Variable5.texto = "Debe Ingresar Parametro de Glucosa post Prandial del Paciente.<br>";
+    var Variable6 = new Object();
+    Variable6.valor = $("#seg5").val();
+    Variable6.texto = "Debe Ingresar Parametro de Hemoglobina Glicosilada del Paciente.<br>";
+    var Variable7 = new Object();
+    Variable7.valor = $("#fecha_inicio").val();
+    Variable7.texto = "Debe Ingresar Fecha de Inicio del Seguimiento.<br>";
+    var Variable8 = new Object();
+    Variable8.valor = $("#proxima_cita").val();
+    Variable8.texto = "Debe Ingresar Fecha de Proxima Visita del Seguimiento.<br>";
+
+    var Validaciones = new Array();
+    Validaciones.push(Variable);
+    Validaciones.push(Variable2);
+    Validaciones.push(Variable3);
+    Validaciones.push(Variable4);
+    Validaciones.push(Variable5);
+    Validaciones.push(Variable6);
+    Validaciones.push(Variable7);
+    Validaciones.push(Variable8);
+
+    Validaciones.forEach(function (value, indice, array) {
+        console.log("En el índice " + indice + " hay este valor: " + value.valor);
+        var texto = value.valor;
+        if (texto.length == 0) {
+            Mensaje = Mensaje + "-" + value.texto;
+        }
+    });
+    return Mensaje;
+}
+
+function GuardarSeguimiento() {
+
+    var RespuestasOpcion1 = "";
+    $(".campo").each(function () {
+        RespuestasOpcion1 = RespuestasOpcion1 + $(this).val() + "|";
+    });
+
+    console.log(RespuestasOpcion1);
+
+    var RespuestasOpcion2Radios = "";
+    var RespuestasOpcion2Campos = "";
+
+    $(".campo2").each(function () {
+        RespuestasOpcion2Campos = RespuestasOpcion2Campos + $(this).val() + "|";
+    });
+
+    $('.opcion2[type=radio]').each(function () {
+        if ($(this).is(':checked')) {
+            RespuestasOpcion2Radios = RespuestasOpcion2Radios + $(this).val() + "|";
+        }
+    });
+
+    var RespuestasOpcion3Radios = "";
+    var RespuestasOpcion3Campos = "";
+
+    // 66 opciones
+    $('.opcion3[type=radio]').each(function () {
+
+        if ($(this).is(':checked')) {
+            RespuestasOpcion3Radios = RespuestasOpcion3Radios + $(this).val() + "|";
+        }
+    });
+
+    // cajas de texto 22
+    $(".texto3").each(function () {
+        RespuestasOpcion3Campos = RespuestasOpcion3Campos + $(this).val() + "|";
+    });
+
+    var RespuestasOpcion4Check = "";
+
+    $('.checkOpcion').each(function () {
+        if (this.checked == true) {
+            RespuestasOpcion4Check = RespuestasOpcion4Check + 1 + "|";
+        } else {
+            RespuestasOpcion4Check = RespuestasOpcion4Check + 2 + "|";
+        }
+
+    });
+
+    var riesgo = $("#riesgo").val();
+    var fechaInicio = $("#fecha_inicio").val();
+    var Obs = $("#observaciones").val();
+    var Taller1 = $("#taller1").val();
+    var Taller2 = $("#taller2").val();
+    var Taller3 = $("#taller3").val();
+    var proximaCita = $("#proxima_cita").val();
+
+    var Respuesta5 = "";
+    var Respuesta5Fecha = "";
+    $('.opcion5[type=radio]').each(function () {
+
+        if ($(this).is(':checked')) {
+            Respuesta5 = Respuesta5 + $(this).val() + "|";
+        }
+    });
+
+    $(".fechaOpcion").each(function () {
+
+        Respuesta5Fecha = Respuesta5Fecha + $(this).val() + "|";
+    });
+    var idSeguimiento=$("#idSeguimiento").val();
+    var idPaciente = $("#idPaciente").val();
+    var idAno = $("#idAno").val();
+    var idMes = $("#idMes").val();
+    var Mensaje_Validacion = VerificarCampos();
+    if (Mensaje_Validacion.length == 0) {
+        $("#contenedor").addClass("whirl");
+        $("#contenedor").addClass("ringed");
+
+        $.post("../../controlador/Gestion/CSeguimiento.php?op=guardaryeditar", {
+            Opciones1: RespuestasOpcion1,
+            Opciones2Radios: RespuestasOpcion2Radios,
+            Opcion2Campos: RespuestasOpcion2Campos,
+            Opcion3Radios: RespuestasOpcion3Radios,
+            Opcion3Campos: RespuestasOpcion3Campos,
+            Opcion4: RespuestasOpcion4Check,
+            riesgo: riesgo,
+            fechaInicio: fechaInicio,
+            Obs: Obs,
+            Taller1: Taller1,
+            Taller2: Taller2,
+            Taller3: Taller3,
+            proximaCita: proximaCita,
+            Opcion5: Respuesta5,
+            Opcion5Fechas: Respuesta5Fecha,
+            idSeguimiento:idSeguimiento,
+            idPaciente: idPaciente,
+            idAno: idAno,
+            idMes: idMes
+
+
+        }, function (data, status) {
+            data = JSON.parse(data);
+            $("#contenedor").removeClass("whirl");
+            $("#contenedor").removeClass("ringed");
+
+            if (data.Registro) {
+                //swal("Acción:", data.Mensaje);
+                swal({
+                        title: "Seguimiento:",
+                        text: data.Mensaje,
+                        type: "success"
+                    },
+                    function () {
+                        var idPaciente = $("#idPaciente").val();
+                        $.redirect('../../vista/Operaciones/GestionFicha.php', {
+                            'idPaciente': idPaciente
+                        });
+
+                    });
+            } else {
+                swal({
+                        title: "Seguimiento:",
+                        text: data.Mensaje,
+                        type: "error"
+                    },
+                    function () {
+                        var idPaciente = $("#idPaciente").val();
+                        $.redirect('../../vista/Operaciones/GestionFicha.php', {
+                            'idPaciente': idPaciente
+                        });
+
+                    });
+            }
+
+        });
+    } else {
+        notificar_warning("Validación:<br>" + Mensaje_Validacion);
+
+    }
+
+
+
+}
+
+function Regresar() {
+    console.log("REGRESO");
 }
 
 init();

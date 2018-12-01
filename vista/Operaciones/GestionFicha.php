@@ -69,7 +69,7 @@ if(isset($_POST["idPaciente"])){
 							</div>
 						</div>
 						<div class="col-md-3 col-12 d-flex justify-content-center align-self-center mt-3 offset-3">
-							<button class="btn btn-info  btn-block" type="button" onclick="agregar_seguimiento()">AGREGAR</button>
+							<button class="btn btn-success  btn-block" type="button" onclick="agregar_seguimiento()">AGREGAR</button>
 						</div>
 					</div>
 					<div class="row ">
@@ -80,11 +80,13 @@ if(isset($_POST["idPaciente"])){
 										<thead class="thead-light">
 											<tr>
 												<th data-priority="1">#</th>
-												<th>RESULTADOS</th>
+												<th>ACCIONES</th>
 												<th>PACIENTE</th>
+												<th>SEXO</th>
+												<th>EDAD</th>
 												<th>FECHA EVALUACION</th>
-												<th>PROXIMA FECHA</th>
-												<th>ESTADO</th>
+												<th>FECHA PROXIMA CITA</th>
+
 											</tr>
 										</thead>
 										<tbody>

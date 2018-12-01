@@ -9,7 +9,7 @@ function init(){
 function listar_seguimiento(){
 
     $('#select_ano').on('change',function(){
-        debugger;
+
         var idPaciente=$("#idPaciente").val();
         var ano=$("#select_ano").val();
         var mes=$("#select_mes").val();
@@ -23,7 +23,7 @@ function listar_seguimiento(){
    });
 
      $('#select_mes').on('change',function(){
-         debugger;
+
         var idPaciente=$("#idPaciente").val();
         var ano=$("#select_ano").val();
         var mes=$("#select_mes").val();
@@ -121,7 +121,7 @@ function agregar_seguimiento(){
     if(ano=='' || mes==''){
          swal("Error:", "Seleccione Año y Mes para continuar!");
     }else{
-        $.redirect('../../vista/Operaciones/Seguimiento.php', {'idPaciente':idPaciente,'idAno':ano,'idMes':mes});
+        $.redirect('../../vista/Operaciones/Seguimiento.php', {'idSeguimiento':0,'idPaciente':idPaciente,'idAno':ano,'idMes':mes});
     }
 }
 
@@ -236,4 +236,51 @@ function informacion(idSeguimiento,idPaciente,ano,mes){
 
 
 }
+
+function EditarSeguimiento(idSeguimiento,idPaciente,idAno,idMes){
+     swal({
+      title: "Editar?",
+      text: "Esta Seguro que desea Editar Seguimiento!",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Si, Editar!",
+      closeOnConfirm: false
+   }, function () {
+        EnvioEditarSeguimiento(idSeguimiento,idPaciente,idAno,idMes);
+
+   });
+}
+
+function EnvioEditarSeguimiento(idSeguimiento,idPaciente,idAno,idMes){
+     $.redirect('../../vista/Operaciones/Seguimiento.php', {'idSeguimiento':idSeguimiento, 'idPaciente':idPaciente,'idAno':idAno,'idMes':idMes});
+}
+
+function EliminarSeguimiento(idSeguimiento,idPaciente,idAno,idMes){
+     swal({
+      title: "Eliminar?",
+      text: "Esta Seguro que desea Eliminar Seguimiento!",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Si, Eliminar!",
+      closeOnConfirm: false
+   }, function () {
+        EnvioEliminarSeguimiento(idSeguimiento,idPaciente,idAno,idMes);
+
+   });
+}
+function EnvioEliminarSeguimiento(idSeguimiento,idPaciente,idAno,idMes){
+  $.post("../../controlador/Gestion/CSeguimiento.php?op=EliminarSeguimiento",{idSeguimiento:idSeguimiento}, function(data, status){
+        data = JSON.parse(data);
+        if(data.Eliminar){
+            swal("Eliminado!", data.Mensaje, "success");
+            tabla_seguimientos.ajax.reload();
+        }else{
+            swal("Error", data.Mensaje, "error");
+        }
+  });
+}
+
+
 init();

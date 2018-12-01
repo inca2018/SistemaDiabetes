@@ -113,10 +113,10 @@
 						<thead class="thead">
 							<tr>
 
-								<th>Condición</th>
-								<th>Nuevo</th>
-								<th>Continuador</th>
-								<th>Reingresante</th>
+								<th>Tipo de Paciente</th>
+								<th>Caso Nuevo</th>
+								<th>Caso Prevalente</th>
+
 
 
 							</tr>
@@ -126,7 +126,7 @@
 								<th data-priority="1">N° de Pacientes</th>
 								<th id="condicion1">0</th>
 								<th id="condicion2">0</th>
-								<th id="condicion3">0</th>
+
 
 							</tr>
 
@@ -136,17 +136,20 @@
 
 				<div class="row m-4">
 
-					<h5 class="m-2"> Pacientes del Programa de Diabetes según Condición</h5>
+					<h5 class="m-2"> Pacientes del Programa de Diabetes según Tipo de Diabetes</h5>
 					<table class="table   table-hover table-sm dt-responsive nowrap" id="datatable_reporte">
 						<thead class="thead">
 							<tr>
 
 								<th>Diagnóstico</th>
-								<th>Prediabetes</th>
-								<th>Diabetes tipo 1 (DM1)</th>
-								<th>Diabetes tipo 2 (DM2)</th>
-								<th>Diabetes tipo 3 (DM3)</th>
 
+								<th>Diabetes TIPO 1</th>
+								<th>Diabetes TIPO 2</th>
+								<th>Diabetes GESTACIONAL</th>
+								<th>Diabetes SECUNDARIA</th>
+                                <th>Diabetes INTOLERANCIA A LA GLUCOSA</th>
+                                <th>Diabetes NO CALSIFICADA</th>
+                                 <th>OTRO</th>
 
 							</tr>
 						</thead>
@@ -157,6 +160,10 @@
 								<th id="tipo2">0</th>
 								<th id="tipo3">0</th>
 								<th id="tipo4">0</th>
+								<th id="tipo5">0</th>
+                                <th id="tipo6">0</th>
+                                <th id="tipo7">0</th>
+
 
 							</tr>
 

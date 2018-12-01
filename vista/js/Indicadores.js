@@ -39,8 +39,7 @@ function recuperar_totales(inicio,fin){
         $("#condicion2").empty();
         $("#condicion2").html(data.condicion2);
 
-        $("#condicion3").empty();
-        $("#condicion3").html(data.condicion3);
+
 
         $("#tipo1").empty();
         $("#tipo1").html(data.tipo1);
@@ -53,6 +52,13 @@ function recuperar_totales(inicio,fin){
 
          $("#tipo4").empty();
         $("#tipo4").html(data.tipo4);
+         $("#tipo5").empty();
+        $("#tipo5").html(data.tipo5);
+         $("#tipo6").empty();
+        $("#tipo6").html(data.tipo6);
+         $("#tipo7").empty();
+        $("#tipo7").html(data.tipo7);
+
 
 
     });

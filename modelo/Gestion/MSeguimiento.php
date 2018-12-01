@@ -81,12 +81,31 @@
     }
 
 
-     public function recuperarSeguimiento($id_paciente,$ano,$mes){
-        $sql="
-SELECT s.Riesgo,s.fechaInicio,s.Observaciones,s.Taller1,s.Taller2,s.Taller3,s.ProximaCita,s.fechaRegistro,val1.VAR1 AS A1,val1.VAR2 AS A2,val1.VAR3 AS A3,val1.VAR4 AS A4,val1.VAR5 AS A5,val1.VAR6 AS A6,val1.VAR7 AS A7,val1.VAR8 as A8,val1.VAR9 AS A9,val1.VAR10 AS A10,val1.VAR11 AS A11,val1.VAR12 AS A12 , val1.VAR13 AS A13,val1.VAR14 AS A14,val1.TALLA,val1.PESO,val2.VAR1 AS B1,val2.VAR1_OBS AS OBS1,val2.VAR2 AS B2,val2.VAR2_OBS AS OBS2,val2.VAR3 AS B3,val2.VAR3_OBS AS OBS3,val2.VAR4 AS B4,val2.VAR4_OBS AS OBS4,val2.VAR5 AS B5,val2.VAR5_OBS AS OBS5,val2.VAR6 AS B6,val2.VAR6_OBS AS OBS6,val2.VAR7 AS B7,val2.VAR7_OBS AS OBS7,val2.VAR8 AS B8,val2.VAR8_OBS AS OBS8,val2.VAR9 AS B9,val2.VAR9_OBS AS OBS9 FROM seguimiento s INNER JOIN paciente p ON p.idPaciente=s.Paciente_idPaciente INNER JOIN valores1 val1 ON val1.ID=s.ResultadosA INNER JOIN valores2 val2 ON val2.ID=s.ResultadosB WHERE s.Paciente_idPaciente='$id_paciente' and s.year='$ano' and s.mes='$mes'";
+
+
+       /**  FUNCIONES NUEVAS **/
+
+     public function RegistroSeguimiento($idSeguimiento,$idPaciente,$idAno,$idMes,$Opciones1,$Opciones2Radios,$Opcion2Campos,$Opcion3Radios,$Opcion3Campos,$Opcion4,$riesgo,$fechaInicio,$Obs,$Taller1,$Taller2,$Taller3,$proximaCita,$Opcion5,$Opcion5Fechas){
+         $sql="";
+         if($idSeguimiento==null || $idSeguimiento=='' || $idSeguimiento=='0'){
+             $sql="INSERT INTO `modulo_seguimiento_paciente`(`idModulo`, `idPaciente`, `year`, `Mes`, `op_opcion1`, `op_opcion2Estado`, `op_opcion2Campos`, `op_opcion3Estado`, `op_opcion3Campos`, `op_opcion4`, `Riesgo`, `FechaInicio`, `Observaciones`, `Taller1`, `Taller2`, `Taller3`, `FechaProximaCita`, `op_opcion5`, `op_opcion5Fechas`) VALUES (NULL,'$idPaciente','$idAno','$idMes','$Opciones1','$Opciones2Radios','$Opcion2Campos','$Opcion3Radios','$Opcion3Campos','$Opcion4','$riesgo','$fechaInicio','$Obs','$Taller1','$Taller2','$Taller3','$proximaCita','$Opcion5','$Opcion5Fechas');";
+         }else{
+             $sql="UPDATE `modulo_seguimiento_paciente` SET  `op_opcion1`='$Opciones1',`op_opcion2Estado`='$Opciones2Radios',`op_opcion2Campos`='$Opcion2Campos',`op_opcion3Estado`='$Opcion3Radios',`op_opcion3Campos`='$Opcion3Campos',`op_opcion4`='$Opcion4',`Riesgo`='$riesgo',`FechaInicio`='$fechaInicio',`Observaciones`='$Obs',`Taller1`='$Taller1',`Taller2`='$Taller2',`Taller3`='$Taller3',`FechaProximaCita`='$proximaCita',`op_opcion5`='$Opcion5',`op_opcion5Fechas`='$Opcion5Fechas' WHERE `idModulo`='$idSeguimiento';";
+         }
+
+         return ejecutarConsulta($sql);
+    }
+
+       public function RecuperarSeguimiento($idSeguimiento){
+             $sql="SELECT * FROM `modulo_seguimiento_paciente` WHERE `idModulo`=$idSeguimiento;";
 
         return ejecutarConsultaSimpleFila($sql);
-    }
+       }
+
+       public function EliminarSeguimiento($idSeguimiento){
+           $sql="DELETE FROM `modulo_seguimiento_paciente` WHERE `idModulo`='$idSeguimiento';";
+           return ejecutarConsulta($sql);
+       }
 
 
 
