@@ -347,6 +347,7 @@ function VerificarRango(elemento, codigo) {
 }
 
 function CalcularIMC() {
+    debugger;
     var resultado = 0;
     var talla = $("#talla").val();
     var peso = $("#peso").val();
@@ -358,10 +359,19 @@ function CalcularIMC() {
         $("#imc").val(resultado);
         var porc = parseFloat((peso * 7) / 100).toFixed(2);
         $("#peso_actual").val(porc);
+        if(resultado>=18.5 && resultado<=24.9){
+            $("#op11").empty();
+            $("#op11").html(flecha_up);
+        }else{
+             $("#op11").empty();
+            $("#op11").html(flecha_down);
+        }
     } else {
         resultado = 0;
         $("#imc").val(resultado);
         $("#peso_actual").val(resultado);
+         $("#op11").empty();
+         $("#op11").html(flecha_down);
     }
 }
 

@@ -8,6 +8,7 @@ function init() {
 	Listar_Medicos();
 	Listar_Paciente();
 	Listar_dx();
+    Listar_Procedencia();
 }
 
 function Iniciar_Componentes() {
@@ -109,6 +110,13 @@ function Listar_dx() {
 	$.post("../../controlador/Mantenimiento/CPaciente.php?op=listar_dx", function (ts) {
 		$("#PacienteDX").empty();
 		$("#PacienteDX").append(ts);
+	});
+}
+
+function Listar_Procedencia(){
+    $.post("../../controlador/Mantenimiento/CPaciente.php?op=listar_procedencia", function (ts) {
+		$("#PacienteProcedencia").empty();
+		$("#PacienteProcedencia").append(ts);
 	});
 }
 
@@ -221,32 +229,42 @@ function RecuperarPaciente(idPaciente, idPersona) {
 		data = JSON.parse(data);
 		console.log(data);
 		$.post("../../controlador/Mantenimiento/CPaciente.php?op=listar_estados", function (ts) {
+            $("#PacienteEstado").empty();
 			$("#PacienteEstado").append(ts);
 			$.post("../../controlador/Mantenimiento/CPaciente.php?op=listar_sexo", function (ts) {
+                $("#PacienteSexo").empty();
 				$("#PacienteSexo").append(ts);
 				$.post("../../controlador/Mantenimiento/CPaciente.php?op=listar_condicion", function (ts) {
+                    $("#PacienteCondicion").empty();
 					$("#PacienteCondicion").append(ts);
 					$.post("../../controlador/Mantenimiento/CPaciente.php?op=listar_medicos", function (ts) {
+                        $("#PacienteMedico").empty();
 						$("#PacienteMedico").append(ts);
 						$.post("../../controlador/Mantenimiento/CPaciente.php?op=listar_dx", function (ts) {
+                            $("#PacienteDX").empty();
 							$("#PacienteDX").append(ts);
+                             $.post("../../controlador/Mantenimiento/CPaciente.php?op=listar_procedencia", function (ts) {
+                                $("#PacienteProcedencia").empty();
+                                $("#PacienteProcedencia").append(ts);
 
-							$("#PacienteCodigo").val(data.Codigo);
-							$("#PacienteNombre").val(data.nombrePersona);
-							$("#PacienteApellidoP").val(data.apellidoPaterno);
-							$("#PacienteApellidoM").val(data.apellidoMaterno);
-							$("#PacienteFechaNacimiento").val(data.fechaNacimiento);
-							$("#PacienteDNI").val(data.DNI);
-							$("#PacienteTelefono").val(data.telefono);
-							$("#PacienteDireccion").val(data.direccion);
-							$("#PacienteCorreo").val(data.correo);
-							$("#PacienteEnfermedad").val(data.TipoEnfermedad);
-							$("#PacienteDX").val(data.dx);
-							$("#PacienteMedico").val(data.Medico_idMedico);
-							$("#PacienteProcedencia").val(data.Procedencia);
-							$("#PacienteCondicion").val(data.Condicion_idCondicion);
-							$("#PacienteSexo").val(data.Sexo_idSexo);
-							$("#PacienteEstado").val(data.Estado_idEstado);
+                                 $("#PacienteCodigo").val(data.Codigo);
+                                $("#PacienteNombre").val(data.nombrePersona);
+                                $("#PacienteApellidoP").val(data.apellidoPaterno);
+                                $("#PacienteApellidoM").val(data.apellidoMaterno);
+                                $("#PacienteFechaNacimiento").val(data.fechaNacimiento);
+                                $("#PacienteDNI").val(data.DNI);
+                                $("#PacienteTelefono").val(data.telefono);
+                                $("#PacienteDireccion").val(data.direccion);
+                                $("#PacienteCorreo").val(data.correo);
+                                $("#PacienteEnfermedad").val(data.TipoEnfermedad);
+                                $("#PacienteDX").val(data.dx);
+                                $("#PacienteMedico").val(data.Medico_idMedico);
+                                $("#PacienteProcedencia").val(data.Procedencia);
+                                $("#PacienteCondicion").val(data.Condicion_idCondicion);
+                                $("#PacienteSexo").val(data.Sexo_idSexo);
+                                $("#PacienteEstado").val(data.Estado_idEstado);
+                            });
+
 						});
 
 

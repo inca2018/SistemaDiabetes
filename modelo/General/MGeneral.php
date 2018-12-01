@@ -48,6 +48,10 @@
          $sql="SELECT * FROM dx";
          return ejecutarConsulta($sql);
        }
+        public function listar_procedencia(){
+         $sql="select * from ubdistrito u where u.idProv=127";
+         return ejecutarConsulta($sql);
+       }
 
 
 

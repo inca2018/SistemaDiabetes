@@ -186,7 +186,8 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="PacienteProcedencia" class="col-form-label">Procedencia:</label>
-                                        <input type="text" class="form-control validarPanel" placeholder="Procedencia" name="PacienteProcedencia" id="PacienteProcedencia" maxlength="100" data-message="- Procedencia">
+                                         <select class="form-control validarPanel" id="PacienteProcedencia" name="PacienteProcedencia" data-message="- Procedencia">
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-4">

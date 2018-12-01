@@ -139,6 +139,14 @@
 					echo '<option   value=' . $reg->idDx . '>' . $reg->Descripcion . '</option>';
          	}
        break;
+          case 'listar_procedencia':
+      		$rpta = $general->listar_procedencia();
+            echo '<option value="0">-- SELECCIONE --</option>';
+         	while ($reg = $rpta->fetch_object()){
+					echo '<option   value=' . $reg->idDist . '>' . $reg->distrito . '</option>';
+         	}
+       break;
+
 
 
 		case 'Listar_Paciente':
