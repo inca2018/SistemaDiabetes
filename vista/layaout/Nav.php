@@ -155,8 +155,48 @@
 									</a>
 								</li>
 								<li id="" class="">
-									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Mantenimiento/MantPacientes.php';?>" title="Materiales">
+									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Mantenimiento/MantPacientes.php';?>" title="Pacientes">
 										<span> Pacientes </span>
+									</a>
+								</li>
+								<li id="" class="">
+									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Mantenimiento/MantDiagnostico.php';?>" title="Diagnóstico">
+										<span> Diagnóstico </span>
+									</a>
+								</li>
+								<li id="" class="">
+									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Mantenimiento/MantDiagnosticoEnfermeria.php';?>" title=" Diagnóstico Enfermeria">
+										<span> Diagnóstico Enfermeria </span>
+									</a>
+								</li>
+								<li id="" class="">
+									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Mantenimiento/MantGradoInstruccion.php';?>" title=" Grado de Instrucción">
+										<span> Grado de Instrucción </span>
+									</a>
+								</li>
+								<li id="" class="">
+									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Mantenimiento/MantEspecialidad.php';?>" title=" Especialidad">
+										<span> Especialidad </span>
+									</a>
+								</li>
+								<li id="" class="">
+									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Mantenimiento/MantComorbilidad.php';?>" title=" Especialidad">
+										<span> Comorbilidad </span>
+									</a>
+								</li>
+								<li id="" class="">
+									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Mantenimiento/MantSatisfaccion.php';?>" title=" Satisfacción">
+										<span> Satisfacción </span>
+									</a>
+								</li>
+								<li id="" class="">
+									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Mantenimiento/MantCondicion.php';?>" title=" Condición">
+										<span> Condición </span>
+									</a>
+								</li>
+								<li id="" class="">
+									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Mantenimiento/MantGrupoOpcion.php';?>" title=" Grupo de Opciones">
+										<span> Grupo de Opciones </span>
 									</a>
 								</li>
 							</ul>

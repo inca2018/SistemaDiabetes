@@ -1,75 +1,59 @@
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_ORDEN_ACTUALIZAR`(IN `Descri` VARCHAR(100), IN `estado` INT(11), IN `idMaterialE` INT(11), IN `creador` INT(11))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_GrupoOpcion_ACTIVACION`(IN `idGrupoOpcionU` INT(11), IN `codigo` INT(11))
     NO SQL
 BEGIN
 
-UPDATE `material` SET  `Descripcion`=UPPER(Descri),`Estado_idEstado`=estado WHERE `idMaterial`=idMaterialE;
-
-/* ------ REGISTRO DE BITACORA ------ */
-SET @NombreUsuario=(SELECT u.usuario FROM usuario u WHERE u.idUsuario=creador);
-
-INSERT INTO `bitacora`(`idBitacora`, `usuarioAccion`, `Accion`, `tablaAccion`,`Detalle`, `fechaRegistro`) VALUES (null,@NombreUsuario,'ACTUALIZACION','Material',CONCAt("SE ACTUALIZO ORDEN:",Descri),NOW());
-END$$
-DELIMITER ;
-
-DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_ORDEN_LISTAR`()
-    NO SQL
-BEGIN
-
-SELECT * FROM material n INNER JOIN estado e ON e.idEstado=n.Estado_idEstado;
+UPDATE `tab_GrupoOpcion` SET  `Estado_idEstado`=codigo  WHERE  `idGrupoOpcion`=idGrupoOpcionU;
 
 END$$
 DELIMITER ;
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_ORDEN_HABILITACION`(IN `idMaterialE` INT(11), IN `codigo` INT(11), IN `creador` INT(11))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_GrupoOpcion_EDITAR`(IN `dato` VARCHAR(150), IN `idGrupoOpcionU` INT(11))
     NO SQL
 BEGIN
 
-if (codigo=1) then
-
-    UPDATE `material` SET `Estado_idEstado`=4  WHERE `idMaterial`=idMaterialE;
-  SET @Mensaje=("ORDEN DESHABILITADO");
-else
-   UPDATE `material` SET `Estado_idEstado`=1  WHERE `idMaterial`=idMaterialE;
- SET  @Mensaje=("ORDEN HABILITADO");
-end if;
-
- /* ------ REGISTRO DE BITACORA ------ */
-
-set @usuario=(SELECT u.usuario FROM usuario u  WHERE u.idUsuario=creador);
-
-
-
-INSERT INTO `bitacora`(`usuarioAccion`, `Accion`, `tablaAccion`,`Detalle`, `fechaRegistro`) VALUES (@usuario,@Mensaje,'ORDEN',"ORDEN ACTUALIZAR",NOW());
+UPDATE `tab_GrupoOpcion` SET `Descripcion`=dato WHERE `idGrupoOpcion`=idGrupoOpcionU;
 
 END$$
 DELIMITER ;
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_ORDEN_RECUPERAR`(IN `idMaterialE` INT(11))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_GrupoOpcion_ELIMINAR`(IN `idGrupoOpcionD` INT(11))
     NO SQL
 BEGIN
 
-SELECT * FROM material ni WHERE ni.idMaterial=idMaterialE;
+DELETE FROM `tab_GrupoOpcion` WHERE `idGrupoOpcion`=idGrupoOpcionD;
+
 END$$
 DELIMITER ;
 
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_ORDEN_REGISTRO`(IN `nom` VARCHAR(100), IN `estado` INT(11), IN `creador` INT(11))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_GrupoOpcion_LISTAR`()
     NO SQL
 BEGIN
 
--- REGISTRAR TIPO DE TARJETA --
-INSERT INTO `material`(`idMaterial`, `Descripcion`, `fechaRegistro`, `Estado_idEstado`) VALUES (NULL,UPPER(nom),NOW(),estado);
+SELECT tab.idGrupoOpcion,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_GrupoOpcion tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado;
 
+END$$
+DELIMITER ;
 
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_GrupoOpcion_RECUPERAR`(IN `idGrupoOpcionS` INT(11))
+    NO SQL
+BEGIN
 
-SET @NombreUsuario=(SELECT concat(p.nombrePersona,' ',p.apellidoPaterno,' ',p.apellidoMaterno) as NombresPersona FROM usuario u inner join persona p ON p.idPersona=u.Persona_idPersona WHERE u.idUsuario=creador);
+SELECT * FROM tab_GrupoOpcion tab where tab.idGrupoOpcion=idGrupoOpcionS;
 
+END$$
+DELIMITER ;
 
-INSERT INTO `bitacora`(`idBitacora`, `usuarioAccion`, `Accion`, `tablaAccion`,`Detalle`, `fechaRegistro`) VALUES (null,@NombreUsuario,'INSERTAR','SE REGISTRO ORDEN','ORDEN',NOW());
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_GrupoOpcion_REGISTRO`(IN `dato` VARCHAR(150))
+    NO SQL
+BEGIN
+
+INSERT INTO `tab_GrupoOpcion`(`idGrupoOpcion`, `Descripcion`, `Estado_idEstado`, `fechaRegistro`) VALUES (NULL,dato,1,NOW());
 
 END$$
 DELIMITER ;
