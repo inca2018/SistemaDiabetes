@@ -23,7 +23,8 @@ function BuscarEstado($reg)
 function BuscarAccion($reg)
 {
     if ($reg->Estado_idEstado == 1) {
-        return '<button type="button"   title="Editar" class="btn btn-warning btn-sm" onclick="EditarGrupoOpcion(' . $reg->idGrupoOpcion . ')"><i class="fa fa-edit"></i></button>
+        return '<button type="button"   title="Opciones" class="btn btn-primary btn-sm" onclick="Opciones(' . $reg->idGrupoOpcion . ')"><i class="fas fa-th-list"></i></button>
+        <button type="button"   title="Editar" class="btn btn-warning btn-sm" onclick="EditarGrupoOpcion(' . $reg->idGrupoOpcion . ')"><i class="fa fa-edit"></i></button>
                 <button type="button"  title="Desactivación" class="btn btn-info btn-sm" onclick="DesactivacionGrupoOpcion(' . $reg->idGrupoOpcion . ')"><i class="fa fa-arrow-circle-down"></i></button>
                <button type="button"  title="Eliminar" class="btn btn-danger btn-sm" onclick="EliminarGrupoOpcion(' . $reg->idGrupoOpcion . ')"><i class="fa fa-trash"></i></button>';
     } elseif ($reg->Estado_idEstado == 2) {

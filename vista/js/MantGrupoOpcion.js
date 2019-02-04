@@ -258,4 +258,7 @@ function Cancelar() {
 
 }
 
+function Opciones(idGrupoOpcion){
+    $.redirect('../../vista/Mantenimiento/MantOpcion.php', {'idGrupoOpcion':idGrupoOpcion});
+}
 init();
