@@ -155,6 +155,11 @@
 									</a>
 								</li>
 								<li id="" class="">
+									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Mantenimiento/MantMedico.php';?>" title="Medicos">
+										<span> Medicos</span>
+									</a>
+								</li>
+								<li id="" class="">
 									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Mantenimiento/MantPacientes.php';?>" title="Pacientes">
 										<span> Pacientes </span>
 									</a>

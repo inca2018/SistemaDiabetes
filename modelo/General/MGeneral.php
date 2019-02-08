@@ -41,18 +41,38 @@
          return ejecutarConsulta($sql);
        }
        public function Listar_Medicos(){
-         $sql="SELECT p.idPersona,CONCAT(p.nombrePersona,' ',p.apellidoPaterno,' ',p.apellidoMaterno) as NombreMedico FROM persona p INNER JOIN usuario u ON u.Persona_idPersona=p.idPersona WHERE u.Perfil_idPerfil=11";
+         $sql="SELECT med.idMedico,CONCAT(med.nombres,' ',med.apellidoPaterno,' ',med.apellidoMaterno) as nombres FROM tab_medico med where med.Estado_idEstado=1";
          return ejecutarConsulta($sql);
        }
- public function Listar_DX(){
-         $sql="SELECT * FROM dx";
+        public function Listar_DX(){
+         $sql="SELECT * FROM tab_diagnostico";
          return ejecutarConsulta($sql);
        }
         public function listar_procedencia(){
          $sql="select * from ubdistrito u where u.idProv=127";
          return ejecutarConsulta($sql);
        }
+       public function listar_tipoDocumento(){
+            $sql="SELECT * FROM tab_tipodocumento";
+         return ejecutarConsulta($sql);
+       }
 
+       public function listar_Departamentos(){
+            $sql="SELECT * FROM tab_departamento";
+         return ejecutarConsulta($sql);
+       }
+       public function listar_Provincias($idDepartamento){
+             $sql="SELECT * FROM tab_provincia where Departamento_idDepartamento=$idDepartamento";
+         return ejecutarConsulta($sql);
+       }
+    public function listar_Distritos($idProvincia){
+             $sql="SELECT * FROM tab_distrito where Provincia_idProvincia=$idProvincia";
+         return ejecutarConsulta($sql);
+       }
+       public function listar_tipoMedida(){
+             $sql="SELECT * FROM tab_tipomedida";
+         return ejecutarConsulta($sql);
+       }
 
 
 

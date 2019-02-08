@@ -84,12 +84,17 @@ if(isset($_POST["idGrupoOpcion"])){
                     <div class="row" id="cuerpo">
                         <div class="col-md-12 bl">
                             <div class="row">
-                                <div class="col-md-8">
-                                    <div class="form-group row">
-                                        <label for="OpcionDescripcion " class="col-md-4 col-form-label">Grupo de Opciones:</label>
-                                        <div class="col-md-8">
-                                            <input type="text" class="form-control validarPanel" placeholder="Opcion" name="OpcionDescripcion" id="OpcionDescripcion" data-message="- Campo Opcion">
-                                        </div>
+                                 <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="PacienteDX" class="col-form-label">Tipo de Opción:</label>
+                                         <select class="form-control validarPanel" id="TipoOpcion" name="TipoOpcion" data-message="- Tipo de Opción">
+                                        </select>
+                                    </div>
+                                </div>
+                                 <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="PacienteNombre" class="col-form-label">Titulo:</label>
+                                        <input class="form-control validarPanel" id="TituloOpcion" name="TituloOpcion" data-message="- Titulo Opción" placeholder="Titulo" type="text" onkeypress="return SoloLetras(event,40,this.id);">
                                     </div>
                                 </div>
                             </div>
