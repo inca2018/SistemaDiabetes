@@ -176,11 +176,6 @@ function BuscarAccion($reg)
 
 		case 'RecuperarInformacion_Medico':
 			$rspta=$mantenimiento->Recuperar_Medico($idMedico);
-            $fecha_nacimiento_nuevo=$rspta['fechaNacimiento'];
-            $date = str_replace('-','/', $fecha_nacimiento_nuevo);
-            $fecha_nacimiento_nuevo = date("m/d/Y", strtotime($date));
-            $rspta['fechaNacimiento']=$fecha_nacimiento_nuevo;
-
          echo json_encode($rspta);
       break;
 

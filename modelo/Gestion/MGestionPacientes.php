@@ -13,10 +13,19 @@
 		}
 
 	    public function listar_seguimientos($idPaciente,$ano,$mes){
-       $sql="SELECT s.idModulo,concat(per.nombrePersona,' ',per.apellidoPaterno,' ', per.apellidoMaterno) AS PACIENTE,IF(p.Sexo_idSexo=1,'MASCULINO','FEMENINO') as Sexo,(DATE_FORMAT(NOW(),'%Y')-DATE_FORMAT(per.fechaNacimiento,'%Y')) as  Edad,s.idPaciente,s.year,FU_RECUPERAR_MES(s.Mes) as Mes,DATE_FORMAT(s.FechaInicio,'%d/%m/%Y') as FechaInicio,DATE_FORMAT(s.FechaProximaCita,'%d/%m/%Y') as FechaProxima,FU_RECUPERAR_MES(s.Mes) as Mes,s.year as idYear,s.Mes as idMes FROM modulo_seguimiento_paciente s INNER JOIN paciente p ON p.idPaciente=s.idPaciente INNER JOIN persona per On per.idPersona=p.Persona_idPersona WHERE s.idPaciente=$idPaciente  and s.year=$ano and s.Mes=$mes";
+       $sql="SELECT seg.Codigo,y.year as Year,FU_RECUPERAR_MES(seg.Mes) as Mes,DATE_FORMAT(seg.fechaRegistro,'%d/%m/%Y') as fechaRegistro FROM tab_seguimiento seg inner join tab_year y on y.idYear=seg.Year where seg.Year=$ano and seg.Mes=$mes and seg.Paciente_idPaciente=$idPaciente";
 
       return ejecutarConsulta($sql);
-   }
+       }
+       public function RecuperarInformacionPaciente($idPaciente){
+            $sql = "SELECT CONCAT(pa.Codigo,' - ',pa.Nombres,' ',pa.apellidoPaterno,' ',pa.apellidoMaterno) as PacienteNombre,pa.edad,pa.numeroDocumento as documento FROM tab_paciente pa where pa.idPaciente='$idPaciente'";
+        return ejecutarConsultaSimpleFila($sql);
+       }
+        public function listar_year(){
+			  $sql="SELECT * FROM tab_year";
+			return ejecutarConsulta($sql);
+		}
+
 
    }
 

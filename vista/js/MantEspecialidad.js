@@ -258,4 +258,7 @@ function Cancelar() {
 
 }
 
+function AsignacionMedico(idEspecialidad){
+     $.redirect('../../vista/Mantenimiento/MantAsignacionMedico.php', {'idEspecialidad':idEspecialidad});
+}
 init();

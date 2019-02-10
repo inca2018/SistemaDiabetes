@@ -37,7 +37,7 @@
          return ejecutarConsulta($sql);
        }
         public function Listar_Condicion(){
-         $sql="SELECT * FROM condicion";
+         $sql="SELECT * FROM tab_condicion where Estado_idEstado=1";
          return ejecutarConsulta($sql);
        }
        public function Listar_Medicos(){

@@ -8,50 +8,35 @@ class MOpcion
     public function __construct()
     {
     }
-    public function Listar_Opcion()
-    {
-        $sql = "CALL `SP_MANT_Opcion_LISTAR`();";
-        return ejecutarConsulta($sql);
-    }
-    public function Eliminar_Opcion($idOpcion)
-    {
-        $sql = "CALL `SP_MANT_Opcion_ELIMINAR`('$idOpcion');";
-        return ejecutarConsulta($sql);
-    }
-    public function ValidarOpcion($nombreOpcion, $idOpcion)
-    {
-        $sql = "";
-        if ($idOpcion == '' || $idOpcion == null || empty($idOpcion)) {
-            $sql = "SELECT * FROM tab_Opcion WHERE Descripcion='$nombreOpcion';";
-        } else {
-            $sql = "SELECT * FROM tab_Opcion WHERE Descripcion='$nombreOpcion' and idOpcion!='$idOpcion';";
-        }
-        return validarDatos($sql);
-    }
-    public function RegistroOpcion($OpcionDescripcion, $idOpcion)
-    {
-        $sql = "";
-        if ($idOpcion == "" || $idOpcion == null || empty($idOpcion)) {
-            $sql = "CALL `SP_MANT_Opcion_REGISTRO`('$OpcionDescripcion');";
 
-        } else {
-            $sql = "CALL `SP_MANT_Opcion_EDITAR`('$OpcionDescripcion','$idOpcion');";
-        }
-        return ejecutarConsulta($sql);
-    }
-    public function Recuperar_Opcion($idOpcion)
-    {
-        $sql = "CALL `SP_MANT_Opcion_RECUPERAR`('$idOpcion');";
-        return ejecutarConsultaSimpleFila($sql);
-    }
-    public function Activacion_Opcion($idOpcion, $Opcion)
-    {
-        $sql = "CALL `SP_MANT_Opcion_ACTIVACION`('$idOpcion','$Opcion');";
-        return ejecutarConsulta($sql);
-    }
 
+    /** NUEVOS **/
     public function ListarTipoOpcion(){
         $sql = "CALL `SP_MANT_OPCION_LISTARTIPOS`();";
+        return ejecutarConsulta($sql);
+    }
+    public function RecuperarInformacionGrupoOpciones($idGrupoOpcion){
+        $sql = "SELECT tab.Descripcion as TituloGrupoOpciones FROM tab_grupoopcion tab WHERE  tab.idGrupoOpcion='$idGrupoOpcion'";
+        return ejecutarConsultaSimpleFila($sql);
+    }
+    public function RegistroOpcion($grupo,$propiedades,$TipoOpcion,$OpcionTitulo){
+        if($grupo=='' || $grupo==0){
+            $grupo=null;
+        }
+        $sql = "INSERT INTO `tab_opcion`(`idOpcion`,`TituloOpcion`, `Propiedades`, `fechaRegistro`, `Estado_idEstado`, `TipoOpcion_idTipoOpcion`, `GrupoOpcion_idGrupoOpcion`) VALUES (NULL,'$OpcionTitulo','$propiedades',NOW(),1,'$TipoOpcion','$grupo')";
+
+        return ejecutarConsulta($sql);
+    }
+    public function Listar_Opcion($idGrupoOpcion){
+        $sql = "SELECT op.idOpcion,op.TituloOpcion,op.fechaRegistro,op.Estado_idEstado,e.nombreEstado,tip.Descripcion as tipoOpcion FROM tab_opcion op inner join estado e ON e.idEstado=op.Estado_idEstado inner join tab_tipoopcion tip on tip.idTipoOpcion=op.TipoOpcion_idTipoOpcion where op.GrupoOpcion_idGrupoOpcion= '$idGrupoOpcion' ";
+        return ejecutarConsulta($sql);
+    }
+    public function Eliminar_Opcion($idOpcion){
+        $sql = "DELETE FROM `tab_opcion` WHERE `idOpcion`='$idOpcion'";
+        return ejecutarConsulta($sql);
+    }
+    public function Activacion_Opcion($idOpcion, $Opcion){
+         $sql = "UPDATE `tab_opcion` SET  `Estado_idEstado`='$Opcion'   WHERE `idOpcion`='$idOpcion'";
         return ejecutarConsulta($sql);
     }
 }

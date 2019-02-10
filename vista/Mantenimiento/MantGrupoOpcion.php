@@ -37,6 +37,7 @@
                                             <th data-priority="1">#</th>
                                             <th>ESTADO</th>
                                             <th>DESCRIPCIÓN</th>
+                                            <th>CANTIDAD DE OPCIONES</th>
                                             <th>FECHA DE REGISTRO</th>
                                             <th>ACCION</th>
                                         </tr>

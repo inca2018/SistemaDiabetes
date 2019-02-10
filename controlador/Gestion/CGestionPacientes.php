@@ -9,7 +9,7 @@
     $general = new MGeneral();
     $recursos = new Conexion();
 
-	 $id_paciente=isset($_POST["idPaciente"])? limpiarCadena($_POST["idPaciente"]):"";
+	 $idPaciente=isset($_POST["idPaciente"])? limpiarCadena($_POST["idPaciente"]):"";
 	 $ano=isset($_POST["ano"])? limpiarCadena($_POST["ano"]):"";
 	 $mes=isset($_POST["mes"])? limpiarCadena($_POST["mes"]):"";
 
@@ -57,17 +57,16 @@
          $data= array();
          while ($reg=$rspta->fetch_object()){
          $data[]=array(
-               "0"=>'',
+                "0"=>'',
                 "1"=>BuscarEstado($reg),
                 "2"=>$reg->Codigo,
-                "3"=>$reg->NomnbrePersona,
-                "4"=>$reg->DNI,
-                "5"=>$reg->TipoEnfermedad,
-                "6"=>$reg->SexoPaciente,
-                "7"=>$reg->CondicionPaciente,
-                "8"=>$reg->Procedencia,
-                "9"=>$reg->MedicoPaciente,
-                "10"=>BuscarAccion($reg)
+                "3"=>$reg->NombreCompletoPaciente,
+                "4"=>$reg->edad,
+                "5"=>$reg->tipoDocu,
+                "6"=>$reg->numeroDocumento,
+                "7"=>$reg->condicion,
+                "8"=>$reg->procedencia,
+                "9"=>BuscarAccion($reg)
 
             );
          }
@@ -79,7 +78,7 @@
          echo json_encode($results);
       break;
 case 'listar_seguimientos':
-      $rspta=$gestion->listar_seguimientos($id_paciente,$ano,$mes);
+      $rspta=$gestion->listar_seguimientos($idPaciente,$ano,$mes);
       $data= Array();
       $num=0;
       while ($reg=$rspta->fetch_object()){
@@ -87,15 +86,13 @@ case 'listar_seguimientos':
          $data[]=array(
             "0"=>$num,
             "1"=>'
-              <button type="button"   title="Editar Seguimiento" class="btn btn-warning btn-sm" onclick="EditarSeguimiento('.$reg->idModulo.','.$reg->idPaciente.','.$reg->idYear.','.$reg->idMes.')"><i class="fa fa-edit"></i></button>
-               <button type="button"  title="Eliminar Seguimiento" class="btn btn-danger btn-sm" onclick="EliminarSeguimiento('.$reg->idModulo.','.$reg->idPaciente.','.$reg->idYear.','.$reg->idMes.')"><i class="fa fa-trash"></i></button>
+              <button type="button"   title="Editar Seguimiento" class="btn btn-warning btn-sm" onclick="Visualizar('.$reg->idPaciente.','.$reg->idYear.','.$reg->idMes.')"><i class="fa fa-edit"></i></button>
+               <button type="button"  title="Eliminar Seguimiento" class="btn btn-danger btn-sm" onclick="EliminarSeguimiento('.$reg->idPaciente.','.$reg->idYear.','.$reg->idMes.')"><i class="fa fa-trash"></i></button>
                 ',
-            "2"=>$reg->PACIENTE,
-            "3"=>$reg->Sexo,
-            "4"=>$reg->Edad,
-            "5"=>$reg->FechaInicio,
-            "6"=>$reg->FechaProxima
-            //"7"=>BuscarEstado($reg)
+            "1"=>$reg->Codigo,
+            "2"=>$reg->Year,
+            "3"=>$reg->Mes,
+            "4"=>$reg->fechaRegistro,
 
             );
       }
@@ -106,7 +103,19 @@ case 'listar_seguimientos':
          "aaData"=>$data);
       echo json_encode($results);
 
-    break;
+       break;
+
+       case 'RecuperarInformacionPaciente':
+            $rspta = $gestion->RecuperarInformacionPaciente($idPaciente);
+            echo json_encode($rspta);
+       break;
+           case 'listar_year':
+      		$rpta = $gestion->listar_year();
+            echo '<option value="0">-- SELECCIONE --</option>';
+         	while ($reg = $rpta->fetch_object()){
+					echo '<option   value=' . $reg->idYear . '>' . $reg->year . '</option>';
+         	}
+       break;
    }
 
 

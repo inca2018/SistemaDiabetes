@@ -20,6 +20,7 @@ if(isset($_POST["idPaciente"])){
 	<!-- Page content-->
 	<div class="content-wrapper">
 		<!-- START card-->
+		<input type="hidden" id="idPaciente" value="<?php echo $_POST["idPaciente"] ;?>">
 		<div class="card card-default">
 			<div class="card-body">
 				<div class="card-body">
@@ -28,7 +29,22 @@ if(isset($_POST["idPaciente"])){
 							<h3>Registro de Ficha de control (Mensual):</h3>
 						</div>
 					</div>
-					<h5 class="mt-3 mb-3 titulo_area"><em><b>Lista de Pacientes:</b></em></h5>
+					<h5 class="mt-3 mb-3 titulo_area"><em><b>Información de Paciente:</b></em></h5>
+					<div class="row">
+					    <div class="col-md-4 text-center" >
+					       <label>Paciente:</label>
+                            <h4 id="NombrePaciente"></h4>
+					    </div>
+					     <div class="col-md-4 text-center" >
+					       <label>Edad:</label>
+                            <h4 id="EdadPaciente"></h4>
+					    </div>
+					    <div class="col-md-4 text-center" >
+					       <label>Numero de Documento:</label>
+                            <h4 id="DocumentoPaciente"></h4>
+					    </div>
+					</div>
+					<hr>
 					<label>Procedimientos:</label>
 					<p>1.- Seleccione el Mes en el que desea registrar Informacion de control.</p>
 					<div class="row">
@@ -38,12 +54,6 @@ if(isset($_POST["idPaciente"])){
 							<div class="form-group">
 								<label>Seleccione Año:</label>
 								<select class="form-control" id="select_ano" name="select_ano" required>
-									<option value="">-- SELECCIONAR --</option>
-									<option value="2016">2016</option>
-									<option value="2017">2017</option>
-									<option value="2018">2018</option>
-									<option value="2019">2019</option>
-									<option value="2020">2020</option>
 								</select>
 							</div>
 						</div>
@@ -81,12 +91,10 @@ if(isset($_POST["idPaciente"])){
 											<tr>
 												<th data-priority="1">#</th>
 												<th>ACCIONES</th>
-												<th>PACIENTE</th>
-												<th>SEXO</th>
-												<th>EDAD</th>
+												<th>CODIGO DE SEGUIMIENTO</th>
+												<th>AÑO</th>
+												<th>MES</th>
 												<th>FECHA EVALUACION</th>
-												<th>FECHA PROXIMA CITA</th>
-
 											</tr>
 										</thead>
 										<tbody>

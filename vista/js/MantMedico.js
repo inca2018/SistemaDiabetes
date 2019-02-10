@@ -20,7 +20,6 @@ function Iniciar_Componentes() {
 
 }
 
-
 function SetFechaFin() {
     var hoy = hoyFecha();
     var day = parseInt(hoy.substr(0, 2));
@@ -179,7 +178,7 @@ function NuevoMedico() {
     $("#ModalMedico").modal("show");
     $("#tituloModalMedico").empty();
     $("#tituloModalMedico").append("Nuevo Medico:");
-
+    ReiniciarNav();
 }
 
 function EditarMedico(idMedico, idPersona) {
@@ -191,6 +190,7 @@ function EditarMedico(idMedico, idPersona) {
     $("#tituloModalMedico").empty();
     $("#tituloModalMedico").append("Editar Medico:");
     RecuperarMedico(idMedico, idPersona);
+     ReiniciarNav();
 }
 
 function RecuperarMedico(idMedico) {
@@ -220,7 +220,12 @@ function RecuperarMedico(idMedico) {
             $("#MedicoCelular").val(data.Celular);
             $("#MedicoCorreo").val(data.Correo);
 
-            $('#MedicoFechaNacimiento').datepicker('setDate', data.fechaNacimiento);
+            var year = data.fechaNacimiento.substring(0, 4);
+            var mothn = data.fechaNacimiento.substring(5,7);
+            var day = data.fechaNacimiento.substring(8,10);
+
+            $('#dateFechaNacimiento').datepicker("setDate", new Date(year,mothn-1,day));
+            //$('#MedicoFechaNacimiento').datepicker('setDate', data.fechaNacimiento);
 
         });
 
@@ -333,5 +338,10 @@ function calcularEdad(fecha) {
         edad--;
     }
     return edad;
+}
+
+function ReiniciarNav(){
+    $(".nav-link").removeClass("active");
+    $("#nav-base").addClass("active");
 }
 init();

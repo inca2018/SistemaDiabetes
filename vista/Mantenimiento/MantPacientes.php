@@ -81,7 +81,7 @@
                         <div class="col-12">
                             <div role="tabpanel">
                                 <ul class="nav nav-pills " role="tablist">
-                                    <li class="nav-item pill-1 m-2 " role="presentation"><a class="nav-link active" href="#op_1" aria-controls="home" role="tab" data-toggle="tab">Datos del Paciente</a>
+                                    <li class="nav-item pill-1 m-2 " role="presentation"><a id="nav-base" class="nav-link active" href="#op_1" aria-controls="home" role="tab" data-toggle="tab">Datos del Paciente</a>
                                     </li>
                                     <li class="nav-item pill-2 m-2" role="presentation"><a class="nav-link" href="#op_2" aria-controls="profile" role="tab" data-toggle="tab">Datos Adicionales</a>
                                     </li>

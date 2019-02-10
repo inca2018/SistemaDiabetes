@@ -23,7 +23,8 @@ function BuscarEstado($reg)
 function BuscarAccion($reg)
 {
     if ($reg->Estado_idEstado == 1) {
-        return '<button type="button"   title="Editar" class="btn btn-warning btn-sm" onclick="EditarEspecialidad(' . $reg->idEspecialidad . ')"><i class="fa fa-edit"></i></button>
+        return '<button type="button"   title="Asignación de Especialidad" class="btn btn-primary btn-sm" onclick="AsignacionMedico(' . $reg->idEspecialidad . ')"><i class="fa fa-circle"></i></button>
+        <button type="button"   title="Editar" class="btn btn-warning btn-sm" onclick="EditarEspecialidad(' . $reg->idEspecialidad . ')"><i class="fa fa-edit"></i></button>
                 <button type="button"  title="Desactivación" class="btn btn-info btn-sm" onclick="DesactivacionEspecialidad(' . $reg->idEspecialidad . ')"><i class="fa fa-arrow-circle-down"></i></button>
                <button type="button"  title="Eliminar" class="btn btn-danger btn-sm" onclick="EliminarEspecialidad(' . $reg->idEspecialidad . ')"><i class="fa fa-trash"></i></button>';
     } elseif ($reg->Estado_idEstado == 2) {
@@ -90,8 +91,9 @@ switch ($_GET['op']) {
                 "0" => '',
                 "1" => BuscarEstado($reg),
                 "2" => $reg->Descripcion,
-                "3" => $reg->fechaRegistro,
-                "4" => BuscarAccion($reg)
+                "3" => $reg->Asignaciones,
+                "4" => $reg->fechaRegistro,
+                "5" => BuscarAccion($reg)
             );
         }
         $results = array(

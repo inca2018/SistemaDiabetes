@@ -17,8 +17,11 @@
 		 data-options="{&quot;status&quot;:&quot;success&quot;, &quot;pos&quot;:&quot;bottom-right&quot;}">
 
       	<!-- Page footer-->
-      <footer class="footer-container">
-         <span>&copy; 2018 - Angle</span>
+      <footer class="footer-container text-center">
+        <?php if(isset($_SESSION['Year'])){
+         echo "<span>Sistema de Diabetes - ".$_SESSION['Year']."</span>";
+        } ?>
+
       </footer>
    </div>
 </body>

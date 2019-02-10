@@ -91,8 +91,9 @@ switch ($_GET['op']) {
                 "0" => '',
                 "1" => BuscarEstado($reg),
                 "2" => $reg->Descripcion,
-                "3" => $reg->fechaRegistro,
-                "4" => BuscarAccion($reg)
+                "3" => $reg->Opciones,
+                "4" => $reg->fechaRegistro,
+                "5" => BuscarAccion($reg)
             );
         }
         $results = array(

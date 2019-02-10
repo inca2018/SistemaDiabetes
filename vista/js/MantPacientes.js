@@ -323,44 +323,53 @@ function RecuperarPaciente(idPaciente) {
         $.post("../../controlador/Mantenimiento/CPaciente.php?op=listar_tipoDocumento", function (ts) {
             $("#PacienteTipoDocumento").empty();
             $("#PacienteTipoDocumento").append(ts);
-            $("#PacienteTipoDocumento").val(data.TipoDocumento_idTipoDocumento);
+            (data.TipoDocumento_idTipoDocumento==null)? $("#PacienteTipoDocumento").val(0): $("#PacienteTipoDocumento").val(data.TipoDocumento_idTipoDocumento);
+
             $.post("../../controlador/Mantenimiento/CPaciente.php?op=listar_sexo", function (ts) {
                 $("#PacienteSexo").empty();
                 $("#PacienteSexo").append(ts);
-                $("#PacienteSexo").val(data.Sexo_idSexo);
+                (data.Sexo_idSexo==null)? $("#PacienteSexo").val(0): $("#PacienteSexo").val(data.Sexo_idSexo);
+
                 $.post("../../controlador/Mantenimiento/CPaciente.php?op=listar_dx", function (ts) {
                     $("#PacienteDX").empty();
                     $("#PacienteDX").append(ts);
-                    $("#PacienteDX").val(data.DX_idDX);
+                    (data.DX_idDX==null)? $("#PacienteDX").val(0): $("#PacienteDX").val(data.DX_idDX);
+
                     $.post("../../controlador/Mantenimiento/CPaciente.php?op=listar_medicos", function (ts) {
                         $("#PacienteMedico").empty();
                         $("#PacienteMedico").append(ts);
-                        $("#PacienteMedico").val(data.Medico_idMedico);
+                        (data.Medico_idMedico==null)? $("#PacienteMedico").val(0): $("#PacienteMedico").val(data.Medico_idMedico);
+
                         $.post("../../controlador/Mantenimiento/CPaciente.php?op=listar_Departamentos", function (ts) {
                             $("#PacienteDepartamento").empty();
                             $("#PacienteDepartamento").append(ts);
-                            $("#PacienteDepartamento").val(data.Departamento_idDepartamento);
+                            (data.Departamento_idDepartamento==null)? $("#PacienteDepartamento").val(0): $("#PacienteDepartamento").val(data.Departamento_idDepartamento);
+
                             $.post("../../controlador/Mantenimiento/CPaciente.php?op=listar_Provincias", {
                                 idDepartamento: data.Departamento_idDepartamento
                             }, function (ts) {
                                 $("#PacienteProvincia").empty();
                                 $("#PacienteProvincia").append(ts);
-                                $("#PacienteProvincia").val(data.Provincia_idProvincia);
+                                (data.Provincia_idProvincia==null)? $("#PacienteProvincia").val(0): $("#PacienteProvincia").val(data.Provincia_idProvincia);
+
                                 $.post("../../controlador/Mantenimiento/CPaciente.php?op=listar_Distritos", {
                                     idProvincia: data.Provincia_idProvincia
                                 }, function (ts) {
                                     $("#PacienteDistrito").empty();
                                     $("#PacienteDistrito").append(ts);
-                                    $("#PacienteDistrito").val(data.Distrito_idDistrito);
+                                    (data.Distrito_idDistrito==null)? $("#PacienteDistrito").val(0): $("#PacienteDistrito").val(data.Distrito_idDistrito);
+
                                     $.post("../../controlador/Mantenimiento/CPaciente.php?op=listar_condicion", function (ts) {
                                         $("#PacienteCondicion").empty();
                                         $("#PacienteCondicion").append(ts);
-                                        $("#PacienteCondicion").val(data.Condicion_idCondicion);
+                                        (data.Condicion_idCondicion==null)? $("#PacienteCondicion").val(0): $("#PacienteCondicion").val(data.Condicion_idCondicion);
+
 
                                         $.post("../../controlador/Mantenimiento/CPaciente.php?op=listar_tipoMedida", function (ts) {
                                             $("#PacienteTipoMedida").empty();
                                             $("#PacienteTipoMedida").append(ts);
-                                            $("#PacienteTipoMedida").val(data.TipoMedida_idTipoMedida);
+                                             (data.TipoMedida_idTipoMedida==null)? $("#PacienteTipoMedida").val(0): $("#PacienteTipoMedida").val(data.TipoMedida_idTipoMedida);
+
                                             $("#codigoMostrar").empty();
                                             $("#codigoMostrar").append(data.Codigo);
                                             $("#PacienteCodigo").val(data.Codigo);
@@ -374,7 +383,13 @@ function RecuperarPaciente(idPaciente) {
                                             $("#PacienteCorreo").val(data.Correo);
                                             $("#PacienteDireccion").val(data.Direccion);
                                             $("#PacienteCantidadMedida").val(data.CantidadTiempo);
-                                            $('#PacienteFechaNacimiento').datepicker('setDate', data.fechaNacimiento);
+
+                                            var year = data.fechaNacimiento.substring(0, 4);
+                                            var mothn = data.fechaNacimiento.substring(5, 7);
+                                            var day = data.fechaNacimiento.substring(8, 10);
+
+                                            $('#dateFechaNacimiento').datepicker("setDate", new Date(year, mothn - 1, day));
+                                            //$('#PacienteFechaNacimiento').datepicker('setDate', data.fechaNacimiento);
                                         });
                                     });
                                 });
