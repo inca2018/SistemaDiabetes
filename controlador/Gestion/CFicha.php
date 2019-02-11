@@ -31,7 +31,6 @@
             }
            echo json_encode($Grupos);
         break;
-
    }
 
 

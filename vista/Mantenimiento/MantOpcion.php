@@ -274,6 +274,7 @@ if(isset($_POST["idGrupoOpcion"])){
                                                 <option value="2">LISTA DE COMORBILIDAD(OTRAS PATOLOGIAS)</option>
                                                 <option value="3">CAMPOS DE TRATAMIENTO</option>
                                                 <option value="4">EVALUADO POR</option>
+                                                <option value="5">DIAGNOSTICO ENFERMERIA</option>
                                                 </select>
                                             </div>
                                         </div>

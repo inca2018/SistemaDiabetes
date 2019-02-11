@@ -63,16 +63,6 @@ if(isset($_POST["idPaciente"])){
                 </form>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h4 class="text-info">CABECERA 1</h4>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h5 class="text-info">CABECERA 1</h5>
-            </div>
-        </div>
     </div>
 </section>
 <!-- Fin Modal Agregar-->

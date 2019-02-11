@@ -18,7 +18,7 @@
       return ejecutarConsulta($sql);
        }
        public function RecuperarInformacionPaciente($idPaciente){
-            $sql = "SELECT CONCAT(pa.Codigo,' - ',pa.Nombres,' ',pa.apellidoPaterno,' ',pa.apellidoMaterno) as PacienteNombre,pa.edad,pa.numeroDocumento as documento FROM tab_paciente pa where pa.idPaciente='$idPaciente'";
+            $sql = "SELECT CONCAT(pa.Codigo,' - ',pa.Nombres,' ',pa.apellidoPaterno,' ',pa.apellidoMaterno) as PacienteNombre,pa.edad,pa.numeroDocumento as documento,pa.Sexo_idSexo as sexo FROM tab_paciente pa where pa.idPaciente='$idPaciente'";
         return ejecutarConsultaSimpleFila($sql);
        }
         public function listar_year(){
