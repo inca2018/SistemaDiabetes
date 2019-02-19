@@ -31,6 +31,41 @@
             }
            echo json_encode($Grupos);
         break;
+
+       case 'RecuperarEspecialidades':
+             $rpta = $Ficha->RecuperarEspecialidades();
+            $Especialidades=array();
+            while ($reg = $rpta->fetch_object()){
+
+            }
+
+            $rpta = $Ficha->RecuperarEspecialidades();
+
+            $Especialidades=array();
+            while ($reg = $rpta->fetch_object()){
+                 $Especialidad=array("id"=>$reg->idEspecialidad,"especialidad"=>$reg->Descripcion,"medicos"=>null);
+
+                 $rpta2 = $Ficha->RecuperarMedicos($reg->idEspecialidad);
+                $Medico="";
+                $Medico.='<option value"0">-- SELECCIONAR --</option>';
+                 while ($reg2 = $rpta2->fetch_object()){
+                     $Medico.='<option   value=' . $reg2->idMedico . '>' . $reg2->Medico . '</option>';
+                }
+                $Especialidad["medicos"]=$Medico;
+                $Especialidades[]=$Especialidad;
+             }
+           echo json_encode($Especialidades);
+         break;
+
+       case 'ListarDiagnosticos':
+           	$rpta = $Ficha->ListarDiagnosticoEspecialidad();
+        echo '<option value="0">--- SELECCIONE ---</option>';
+         	while ($reg = $rpta->fetch_object()){
+					echo '<option   value=' . $reg->idDiagnosticoEspecialidad . '>' . $reg->Descripcion . '</option>';
+         	}
+
+           break;
+
    }
 
 

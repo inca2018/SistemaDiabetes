@@ -12,20 +12,20 @@
            return ejecutarConsulta($sql);
        }
       public function Eliminar_Paciente($idPaciente){
-          $sql="CALL `SP_CRUD_PACIENTE`('ELIMINAR','$idPaciente','-1','-1','-1','-1','2000-01-01','-1','-1','-1','-1','-1','-1','-1','-1','-1','-1','1','-1','-1','-1','-1','-1');";
+          $sql="CALL `SP_CRUD_PACIENTE`('ELIMINAR','$idPaciente','-1','-1','-1','-1','2000-01-01','-1','-1','-1','-1','-1','-1','-1','-1','-1','-1','1','-1','-1','-1','-1','-1','-1','-1');";
            return ejecutarConsulta($sql);
        }
-      public function ValidarPaciente($documento,$idPaciente){
+      public function ValidarPaciente($PacienteNombre,$PacienteApellidoP,$PacienteApellidoM,$idPaciente){
           $sql="";
           if($idPaciente=='' || $idPaciente==null || empty($idPaciente)){
-			 $sql="SELECT * FROM tab_paciente WHERE  numeroDocumento='$documento';";
+			 $sql="SELECT * FROM tab_paciente WHERE  Nombres='$PacienteNombre' and apellidoPaterno='$PacienteApellidoP' and apellidoMaterno='$PacienteApellidoM';";
           }else{
-             $sql="SELECT * FROM tab_paciente WHERE idPaciente='$idPaciente' and numeroDocumento!='$documento';";
+             $sql="SELECT * FROM tab_paciente WHERE idPaciente!='$idPaciente' and Nombres='$PacienteNombre' and apellidoPaterno='$PacienteApellidoP' and apellidoMaterno='$PacienteApellidoM';";
           }
 
           return validarDatos($sql);
       }
-      public function RegistroPaciente($idPaciente,$PacienteCodigo,$PacienteNombre,$PacienteApellidoP,$PacienteApellidoM,$PacienteFechaNacimiento,$PacienteEdad,$PacienteTipoDocumento,$PacienteNumeroDocumento,$PacienteSexo,$PacienteTelefono,$PacienteCelular,$PacienteCorreo,$PacienteDireccion,$PacienteTipoMedida,$PacienteCantidadMedida,$PacienteDX,$PacienteMedico,$PacienteDepartamento,$PacienteProvincia,$PacienteDistrito,$PacienteCondicion){
+      public function RegistroPaciente($idPaciente,$PacienteCodigo,$PacienteNombre,$PacienteApellidoP,$PacienteApellidoM,$PacienteFechaNacimiento,$PacienteEdad,$PacienteTipoDocumento,$PacienteNumeroDocumento,$PacienteSexo,$PacienteTelefono,$PacienteCelular,$PacienteCorreo,$PacienteDireccion,$PacienteTipoMedida,$PacienteCantidadMedida,$PacienteDX,$PacienteMedico,$PacienteDepartamento,$PacienteProvincia,$PacienteDistrito,$PacienteCondicion,$PacienteGrado,$PacienteTitulo){
         $sql="";
 
             $PacienteCodigo=$this->VerificarNull($PacienteCodigo);
@@ -49,13 +49,15 @@
             $PacienteProvincia=$this->VerificarNull($PacienteProvincia);
             $PacienteDistrito=$this->VerificarNull($PacienteDistrito);
             $PacienteCondicion=$this->VerificarNull($PacienteCondicion);
+            $PacienteGrado=$this->VerificarNull($PacienteGrado);
+            $PacienteTitulo=$this->VerificarNull($PacienteTitulo);
 
 
         if($idPaciente=="" || $idPaciente==null || empty($idPaciente)){
-             $sql="CALL `SP_CRUD_PACIENTE`('REGISTRAR','-1','$PacienteCodigo','$PacienteNombre','$PacienteApellidoP','$PacienteApellidoM','$PacienteFechaNacimiento','$PacienteEdad','$PacienteNumeroDocumento','$PacienteTelefono','$PacienteCelular','$PacienteCorreo','$PacienteDireccion','$PacienteTipoMedida','$PacienteCantidadMedida','$PacienteSexo','$PacienteDX','$PacienteMedico','$PacienteTipoDocumento','$PacienteDepartamento','$PacienteProvincia','$PacienteDistrito','$PacienteCondicion');";
+             $sql="CALL `SP_CRUD_PACIENTE`('REGISTRAR','-1','$PacienteCodigo','$PacienteNombre','$PacienteApellidoP','$PacienteApellidoM','$PacienteFechaNacimiento','$PacienteEdad','$PacienteNumeroDocumento','$PacienteTelefono','$PacienteCelular','$PacienteCorreo','$PacienteDireccion','$PacienteTipoMedida','$PacienteCantidadMedida','$PacienteSexo','$PacienteDX','$PacienteMedico','$PacienteTipoDocumento','$PacienteDepartamento','$PacienteProvincia','$PacienteDistrito','$PacienteCondicion','$PacienteGrado','$PacienteTitulo');";
 
         }else{
-             $sql="CALL `SP_CRUD_PACIENTE`('EDITAR','$idPaciente','$PacienteCodigo','$PacienteNombre','$PacienteApellidoP','$PacienteApellidoM','$PacienteFechaNacimiento','$PacienteEdad','$PacienteNumeroDocumento','$PacienteTelefono','$PacienteCelular','$PacienteCorreo','$PacienteDireccion','$PacienteTipoMedida','$PacienteCantidadMedida','$PacienteSexo','$PacienteDX','$PacienteMedico','$PacienteTipoDocumento','$PacienteDepartamento','$PacienteProvincia','$PacienteDistrito','$PacienteCondicion');";
+             $sql="CALL `SP_CRUD_PACIENTE`('EDITAR','$idPaciente','$PacienteCodigo','$PacienteNombre','$PacienteApellidoP','$PacienteApellidoM','$PacienteFechaNacimiento','$PacienteEdad','$PacienteNumeroDocumento','$PacienteTelefono','$PacienteCelular','$PacienteCorreo','$PacienteDireccion','$PacienteTipoMedida','$PacienteCantidadMedida','$PacienteSexo','$PacienteDX','$PacienteMedico','$PacienteTipoDocumento','$PacienteDepartamento','$PacienteProvincia','$PacienteDistrito','$PacienteCondicion','$PacienteGrado','$PacienteTitulo');";
         }
 
          return ejecutarConsulta($sql);
@@ -73,9 +75,9 @@
         {
             $sql="";
             if($Opcion==1){
-                $sql="CALL `SP_CRUD_PACIENTE`('HABILITAR','$idPaciente','-1','-1','-1','-1','2000-01-01','-1','-1','-1','-1','-1','-1','-1','-1','-1','-1','1','-1','-1','-1','-1','-1');";
+                $sql="CALL `SP_CRUD_PACIENTE`('HABILITAR','$idPaciente','-1','-1','-1','-1','2000-01-01','-1','-1','-1','-1','-1','-1','-1','-1','-1','-1','1','-1','-1','-1','-1','-1','-1','-1');";
             }else{
-                $sql="CALL `SP_CRUD_PACIENTE`('DESHABILITAR','$idPaciente','-1','-1','-1','-1','2000-01-01','-1','-1','-1','-1','-1','-1','-1','-1','-1','-1','1','-1','-1','-1','-1','-1');";
+                $sql="CALL `SP_CRUD_PACIENTE`('DESHABILITAR','$idPaciente','-1','-1','-1','-1','2000-01-01','-1','-1','-1','-1','-1','-1','-1','-1','-1','-1','1','-1','-1','-1','-1','-1','-1','-1');";
             }
 
         return ejecutarConsulta($sql);

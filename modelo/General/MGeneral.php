@@ -74,7 +74,10 @@
          return ejecutarConsulta($sql);
        }
 
-
+       public function listar_Grado(){
+             $sql="SELECT * FROM tab_gradoinstruccion";
+         return ejecutarConsulta($sql);
+       }
 
    }
 

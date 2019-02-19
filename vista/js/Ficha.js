@@ -4,11 +4,102 @@ function init() {
     var idPaciente = $("#idPaciente").val();
     RecuperarDatosPaciente(idPaciente);
     RecuperarGrupos();
+    RecuperarEspecialidades();
+    LanzarFuncionOpcionesPie();
+}
+function LanzarFuncionOpcionesPie(){
+
+     $(".opciones").each(function () {
+          $(this).on('click', function () {
+            if($(this).data("opcion")==1){
+                $(this).removeClass("Option");
+                $(this).addClass("OptionX");
+                $(this).data("opcion",2);
+                $(this).html("<span>X</span>");
+
+            }else if($(this).data("opcion")==2){
+                $(this).removeClass("OptionX");
+                $(this).addClass("OptionFull");
+                $(this).data("opcion",3);
+                $(this).empty();
+
+            }else if($(this).data("opcion")==3){
+                $(this).removeClass("OptionFull");
+                $(this).addClass("Option");
+                $(this).data("opcion",1);
+            }
+          });
+    });
+}
+function RecuperarEspecialidades(){
+    $("#bloqueEspecialidades")
+    $.post("../../controlador/Gestion/CFicha.php?op=RecuperarEspecialidades", function (data, status) {
+        data = JSON.parse(data);
+        console.log(data);
+        $.post("../../controlador/Gestion/CFicha.php?op=ListarDiagnosticos", function (ts) {
+                 var diagnosticos=ts;
+                 var query="";
+                 data.forEach(function (element) {
+
+                   var idEspecialidad=element.id;
+                   var especialidad=element.especialidad;
+                   var medicos=element.medicos;
+
+                   query=query+'<div class="row">'+
+                                                '<div class="col-md-2 mt-5">'+
+                                                    '<label for="">'+especialidad+'</label>'+
+                                                '</div>'+
+                                                '<div class="col-md-2 mt-5">'+
+                                                    '<div class="row">'+
+                                                        '<label for="" class="col-md-3 ">SI</label>'+
+                                                        '<input id="radio1" class="form-control opcion2 col-md-3 mt-1" type="radio" name="radio'+idEspecialidad+'" value="1">'+
+                                                        '<label for="" class="col-md-3 ">NO</label>'+
+                                                        '<input id="radio2" class="form-control opcion2 col-md-3 mt-1" type="radio" name="radio'+idEspecialidad+'" value="1" checked>'+
+                                                    '</div>'+
+                                                '</div>'+
+
+                                                '<div class="col-md-2">'+
+                                                   ' <div class="form-group">'+
+                                                        '<label for="OpcionTipoCampo" class="col-form-label">Diagnosticos:</label>'+
+                                                          '<select class="form-control" id="OptionDiag'+idEspecialidad+'" name="OpcionTipoCampo">'+
+                                                           diagnosticos+'</select>'+
+                                                   ' </div>'+
+                                               ' </div>'+
+                                                '<div class="col-md-2">'+
+                                                   ' <div class="form-group">'+
+                                                       ' <label for="OpcionTipoCampo" class="col-form-label">Medico:</label>'+
+                                                        '<select class="form-control  " id="OptionMedico'+idEspecialidad+'" name="OpcionTipoCampo"  >'+medicos+
+
+                                                        '</select>'+
+                                                    '</div>'+
+                                               ' </div>'+
+                                                '<div class="col-md-2">'+
+                                                   ' <div class="form-group">'+
+                                                       ' <label for="" class="col-form-label">Tratamiento:</label>'+
+                                                       ' <input type="text" class="form-control" placeholder="" name="" id="tratamiento'+idEspecialidad+'" readonly>'+
+                                                    '</div>'+
+                                                '</div>'+
+                                               ' <div class="col-md-2">'+
+                                                   ' <div class="form-group">'+
+                                                        '<label for="" class="col-form-label">Observaciones:</label>'+
+                                                       ' <input type="text" class="form-control" placeholder="" name="" id="Obser'+idEspecialidad+'" readonly>'+
+                                                    '</div>'+
+                                                '</div>'+
+                                           ' </div>';
+
+                });
+
+                $("#contenedorEspecialidades").html(query);
+
+            });
+
+
+
+    });
 
 }
-
 function RecuperarDatosPaciente(idPaciente) {
-    $.post("../../controlador/Gestion/CGestionPacientes.php?op=RecuperarInformacionPaciente", {
+     $.post("../../controlador/Gestion/CGestionPacientes.php?op=RecuperarInformacionPaciente", {
         idPaciente: idPaciente
     }, function (data, status) {
         data = JSON.parse(data);
@@ -18,7 +109,6 @@ function RecuperarDatosPaciente(idPaciente) {
         $("#NombrePaciente").text(data.PacienteNombre);
         $("#EdadPaciente").text(data.edad);
         $("#DocumentoPaciente").text(data.documento);
-        sexo = data.sexo;
     });
 }
 
@@ -33,8 +123,8 @@ function RecuperarGrupos() {
             var grupo = element.grupo;
             var opciones = element.opciones;
 
-            var grupoOpcion = '<div class="card card-default mb-1">' +
-                '<div class="card-header" id="cabecera' + idGrupo + '">' +
+            var grupoOpcion = '<div class="card border-primary mb-1">' +
+                '<div class="card-header text-white bg-primary" id="cabecera' + idGrupo + '">' +
                 '<h4 class="mb-0"><a class="text-inherit" data-toggle="collapse" data-target="#collapse' + idGrupo + '" aria-expanded="false" aria-controls="collapse' + idGrupo + '" href="">' + grupo + '</a>' +
                 '</h4>' +
                 '</div>' +
@@ -61,7 +151,7 @@ function RecuperarGrupos() {
 }
 
 function RecuperarTipoOpcion(elemento, contador) {
-     debugger;
+
     var idOpcion = elemento.id;
     var Titulo = elemento.titulo;
 
@@ -140,7 +230,7 @@ function RecuperarTipoOpcion(elemento, contador) {
             opcion = '<div class="col-md-4">' +
                 '<div class="form-group">' +
                 ' <label for="" class="col-form-label">' + Titulo + ':</label>' +
-                '<div class="input-group date " class="dateFecha">' +
+                '<div class="input-group date dateFecha">' +
                 ' <input class="form-control opcionFecha" type="text" id="OP'+idOpcion +'" data-tipo="' + Tipo + '" data-id="'+idOpcion +'" autocomplete="off">' +
                 ' <span class="input-group-append input-group-addon">' +
                 '     <span class="input-group-text "><i class="fa fa-calendar fa-lg"></i></span>' +
@@ -196,6 +286,8 @@ function RecuperarTipoOpcion(elemento, contador) {
             break;
 
         case "9":
+
+
             break;
 
         case "10":
@@ -211,7 +303,7 @@ function RecuperarTipoOpcion(elemento, contador) {
 function LanzarFunciones() {
 
     $(".opcionFormula").each(function(){
-        debugger;
+
         var elemento=$(this);
         var id=elemento.data("id");
 
@@ -233,7 +325,7 @@ function LanzarFunciones() {
     $(".FuRango").each(function () {
         var elemento = $(this);
         elemento.on('change', function () {
-            debugger;
+
             var id = elemento.data("id");
             $("#SI" + id).hide();
             $("#NO" + id).hide();

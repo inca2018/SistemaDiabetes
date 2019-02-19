@@ -188,4 +188,130 @@ input.caja:focus{
 .incorrecto{
      border: 2px solid  red !important;
 }
+.padre{
+ position: relative;
+}
+
+.ImagenPie{
+    align-content: center;
+    text-align: center;
+    background-image: url("../image/imagenPie.png");
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100vh;
+    z-index: 1;
+}
+
+.OpcionPie1{
+    height: 20px;
+    width: 20px;
+
+    margin-left: 55px;
+    margin-top: 128px;
+    z-index: 2;
+    position: absolute;
+}
+.OpcionPie2{
+    height: 20px;
+    width: 20px;
+
+    margin-left: 65px;
+    margin-top: 162px;
+    z-index: 2;
+    position: absolute;
+}
+.OpcionPie3{
+    height: 20px;
+    width: 20px;
+
+    margin-left: 35px;
+    margin-top: 154px;
+    z-index: 2;
+    position: absolute;
+}
+.OpcionPie4{
+    height: 20px;
+    width: 20px;
+
+    margin-left: 18px;
+    margin-top: 180px;
+    z-index: 2;
+    position: absolute;
+}
+.OpcionPie5{
+    height: 20px;
+    width: 20px;
+
+    margin-left: 305px;
+    margin-top: 130px;
+    z-index: 2;
+    position: absolute;
+}
+.OpcionPie6{
+    height: 20px;
+    width: 20px;
+
+    margin-left: 343px;
+    margin-top: 190px;
+    z-index: 2;
+    position: absolute;
+}
+
+.OpcionPie7{
+    height: 20px;
+    width: 20px;
+
+    margin-left: 320px;
+    margin-top: 164px;
+    z-index: 2;
+    position: absolute;
+}
+.OpcionPie8{
+    height: 20px;
+    width: 20px;
+
+    margin-left: 290px;
+    margin-top: 175px;
+    z-index: 2;
+    position: absolute;
+}
+
+.Option{
+     width: 20px;
+     height: 20px;
+     -moz-border-radius: 50%;
+     -webkit-border-radius: 50%;
+     border-radius: 50%;
+     background: #aec1ae;
+     border: 2px solid #634848;
+}
+.OptionX{
+     width: 20px;
+     height: 20px;
+     -moz-border-radius: 50%;
+     -webkit-border-radius: 50%;
+     border-radius: 50%;
+     background: #aec1ae;
+     border: 2px solid #634848;
+
+     vertical-align: middle;
+     line-height: inherit;
+
+     font-weight: bold;
+     text-align: center;
+     color: #634848;
+     font-size: 12px;
+
+}
+.OptionFull{
+     width: 20px;
+     height: 20px;
+     -moz-border-radius: 50%;
+     -webkit-border-radius: 50%;
+     border-radius: 50%;
+     background: #634848;
+     border: 2px solid #634848;
+}
+
+
 

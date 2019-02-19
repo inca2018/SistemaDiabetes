@@ -141,7 +141,7 @@
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="PacienteTipoDocumento" class="col-form-label">Documento:</label>
-                                                    <select class="form-control validarPanel" id="PacienteTipoDocumento" name="PacienteTipoDocumento" data-message="- Tipo de Documento">
+                                                    <select class="form-control  " id="PacienteTipoDocumento" name="PacienteTipoDocumento" data-message="- Tipo de Documento">
 
                                                     </select>
                                                 </div>
@@ -149,7 +149,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="PacienteNumeroDocumento" class="col-form-label">Numero Documento:</label>
-                                                    <input type="number" class="form-control validarPanel" placeholder="Numero de Documento" name="PacienteNumeroDocumento" id="PacienteNumeroDocumento" data-message="- Numero de Documento" onkeypress="return SoloNumerosModificado(event,8,this.id);">
+                                                    <input type="number" class="form-control  " placeholder="Numero de Documento" name="PacienteNumeroDocumento" id="PacienteNumeroDocumento" data-message="- Numero de Documento" onkeypress="return SoloNumerosModificado(event,8,this.id);">
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
@@ -243,6 +243,19 @@
                                                     <label for="PacienteProcedencia" class="col-form-label">Distrito:</label>
                                                     <select class="form-control " id="PacienteDistrito" name="PacienteDistrito" data-message="- Procedencia">
                                                     </select>
+                                                </div>
+                                            </div>
+                                             <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="PacienteGrado" class="col-form-label">Grado de Instrucción:</label>
+                                                    <select class="form-control " id="PacienteGrado" name="PacienteGrado" data-message="- Condicion">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                             <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="PacienteTitulo" class="col-form-label">Titulo actual/grado actual:</label>
+                                                    <input type="text" class="form-control  " placeholder="Titulo/Grado" name="PacienteTitulo" id="PacienteTitulo" data-message="- Titulo">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">

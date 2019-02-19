@@ -23,6 +23,9 @@
     $PacienteCorreo=isset($_POST["PacienteCorreo"])?limpiarCadena($_POST["PacienteCorreo"]):"";
     $PacienteDireccion=isset($_POST["PacienteDireccion"])?limpiarCadena($_POST["PacienteDireccion"]):"";
 
+    $PacienteGrado=isset($_POST["PacienteGrado"])?limpiarCadena($_POST["PacienteGrado"]):"";
+    $PacienteTitulo=isset($_POST["PacienteTitulo"])?limpiarCadena($_POST["PacienteTitulo"]):"";
+
 
 
     $PacienteTipoMedida=isset($_POST["PacienteTipoMedida"])?limpiarCadena($_POST["PacienteTipoMedida"]):"";
@@ -83,7 +86,7 @@ function BuscarAccion($reg)
          if(empty($idPaciente)){
 
                 /*--  validar si el numero de la factura ya se encuentra emitido  --*/
-                $validarPaciente=$mantenimiento->ValidarPaciente($PacienteNumeroDocumento,$idPaciente);
+                $validarPaciente=$mantenimiento->ValidarPaciente($PacienteNombre,$PacienteApellidoP,$PacienteApellidoM,$idPaciente);
                 if($validarPaciente>0){
                     $rspta["Mensaje"].="El Paciente ya se encuentra Registrado ";
                     $rspta["Error"]=true;
@@ -91,7 +94,7 @@ function BuscarAccion($reg)
                 if($rspta["Error"]){
                     $rspta["Mensaje"].="Por estas razones no se puede Registrar el Paciente.";
                 }else{
-                    $RespuestaRegistro=$mantenimiento->RegistroPaciente($idPaciente,$PacienteCodigo,$PacienteNombre,$PacienteApellidoP,$PacienteApellidoM,$PacienteFechaNacimiento,$PacienteEdad,$PacienteTipoDocumento,$PacienteNumeroDocumento,$PacienteSexo,$PacienteTelefono,$PacienteCelular,$PacienteCorreo,$PacienteDireccion,$PacienteTipoMedida,$PacienteCantidadMedida,$PacienteDX,$PacienteMedico,$PacienteDepartamento,$PacienteProvincia,$PacienteDistrito,$PacienteCondicion);
+                    $RespuestaRegistro=$mantenimiento->RegistroPaciente($idPaciente,$PacienteCodigo,$PacienteNombre,$PacienteApellidoP,$PacienteApellidoM,$PacienteFechaNacimiento,$PacienteEdad,$PacienteTipoDocumento,$PacienteNumeroDocumento,$PacienteSexo,$PacienteTelefono,$PacienteCelular,$PacienteCorreo,$PacienteDireccion,$PacienteTipoMedida,$PacienteCantidadMedida,$PacienteDX,$PacienteMedico,$PacienteDepartamento,$PacienteProvincia,$PacienteDistrito,$PacienteCondicion,$PacienteGrado,$PacienteTitulo);
                     if($RespuestaRegistro){
                         $rspta["Registro"]=true;
                         $rspta["Mensaje"]="Paciente se registro Correctamente.";
@@ -101,7 +104,7 @@ function BuscarAccion($reg)
                     }
                 }
             }else{
-                 $validarPaciente=$mantenimiento->ValidarPaciente($PacienteNumeroDocumento,$idPaciente);
+                 $validarPaciente=$mantenimiento->ValidarPaciente($PacienteNombre,$PacienteApellidoP,$PacienteApellidoM,$idPaciente);
                 if($validarPaciente>0){
                     $rspta["Mensaje"].="El Paciente ya se encuentra Registrado ";
                     $rspta["Error"]=true;
@@ -110,7 +113,7 @@ function BuscarAccion($reg)
                     $rspta["Mensaje"].="Por estas razones no se puede Actualizar el Paciente.";
                 }else{
 
-                    $RespuestaRegistro=$mantenimiento->RegistroPaciente($idPaciente,$PacienteCodigo,$PacienteNombre,$PacienteApellidoP,$PacienteApellidoM,$PacienteFechaNacimiento,$PacienteEdad,$PacienteTipoDocumento,$PacienteNumeroDocumento,$PacienteSexo,$PacienteTelefono,$PacienteCelular,$PacienteCorreo,$PacienteDireccion,$PacienteTipoMedida,$PacienteCantidadMedida,$PacienteDX,$PacienteMedico,$PacienteDepartamento,$PacienteProvincia,$PacienteDistrito,$PacienteCondicion);
+                    $RespuestaRegistro=$mantenimiento->RegistroPaciente($idPaciente,$PacienteCodigo,$PacienteNombre,$PacienteApellidoP,$PacienteApellidoM,$PacienteFechaNacimiento,$PacienteEdad,$PacienteTipoDocumento,$PacienteNumeroDocumento,$PacienteSexo,$PacienteTelefono,$PacienteCelular,$PacienteCorreo,$PacienteDireccion,$PacienteTipoMedida,$PacienteCantidadMedida,$PacienteDX,$PacienteMedico,$PacienteDepartamento,$PacienteProvincia,$PacienteDistrito,$PacienteCondicion,$PacienteGrado,$PacienteTitulo);
                     if($RespuestaRegistro){
                         $rspta["Registro"]=true;
                         $rspta["Mensaje"]="Paciente se Actualizo Correctamente.";
@@ -147,7 +150,14 @@ function BuscarAccion($reg)
 					echo '<option   value=' . $reg->idDistrito . '>' . $reg->distrito . '</option>';
          	}
        break;
+       case 'listar_Grado':
 
+      		$rpta = $general->listar_Grado();
+            echo '<option value="0">-- SELECCIONE --</option>';
+         	while ($reg = $rpta->fetch_object()){
+					echo '<option   value=' . $reg->idGradoInstruccion . '>' . $reg->Descripcion . '</option>';
+         	}
+       break;
 
 
 
