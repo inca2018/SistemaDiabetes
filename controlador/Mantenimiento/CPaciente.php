@@ -6,7 +6,6 @@
    $general = new MGeneral();
 
 
-    $idPersona=isset($_POST["idPersona"])?limpiarCadena($_POST["idPersona"]):"";
 
     $idPaciente=isset($_POST["idPaciente"])?limpiarCadena($_POST["idPaciente"]):"";
     $PacienteCodigo=isset($_POST["PacienteCodigo"])?limpiarCadena($_POST["PacienteCodigo"]):"";
@@ -282,16 +281,6 @@ function BuscarAccion($reg)
         echo json_encode($rspta);
         break;
 
-
-
-      case 'Recuperar_Paciente':
-         $rspta = array("Mensaje"=>"","Eliminar"=>false,"Error"=>false);
-         /*------ Cuando el usuario ya se esta facturando, ya no se puede eliminar --------*/
-         $rspta['Eliminar']=$mantenimiento->Eliminar_Paciente($idPersona,2,$login_idLog);
-
-         $rspta['Eliminar']?$rspta['Mensaje']="Paciente Restablecido.":$rspta['Mensaje']="Paciente no se pudo Restablecer comuniquese con el area de soporte";
-         echo json_encode($rspta);
-      break;
 
 		case 'RecuperarInformacion_Paciente':
 			$rspta=$mantenimiento->Recuperar_Paciente($idPaciente);

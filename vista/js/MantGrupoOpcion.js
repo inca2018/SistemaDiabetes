@@ -70,8 +70,8 @@ function Listar_GrupoOpcion() {
         "aServerSide": true,
         "processing": true,
         "paging": true, // Paginacion en tabla
-        "ordering": false, // Ordenamiento en columna de tabla
-        "info": false, // Informacion de cabecera tabla
+        "ordering": true, // Ordenamiento en columna de tabla
+        "info": true, // Informacion de cabecera tabla
         "responsive": true, // Accion de responsive
         "ajax": { //Solicitud Ajax Servidor
             url: '../../controlador/Mantenimiento/CGrupoOpcion.php?op=Listar_GrupoOpcion',

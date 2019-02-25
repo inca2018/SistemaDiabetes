@@ -29,6 +29,9 @@
       public function RegistroMedico($idMedico,$MedicoNombre,$MedicoApellidoP,$MedicoApellidoM,$MedicoFechaNacimiento,$MedicoEdad,$MedicoDNI,$MedicoSexo,$MedicoTelefono,$MedicoCelular,$MedicoCorreo){
         $sql="";
 
+            $MedicoNombre=ucfirst(mb_strtolower($MedicoNombre));
+            $MedicoApellidoP=ucfirst(mb_strtolower($MedicoApellidoP));
+            $MedicoApellidoM=ucfirst(mb_strtolower($MedicoApellidoM));
 
             $MedicoNombre=$this->VerificarNull($MedicoNombre);
             $MedicoApellidoP=$this->VerificarNull($MedicoApellidoP);

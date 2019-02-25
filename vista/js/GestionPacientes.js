@@ -39,7 +39,7 @@ function listar_pacientes(){
          //"lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
          "order": [[ 0, "asc" ]],//Ordenar (columna,orden),
          // cambiar el lenguaje de datatable
-         //oLanguage: español
+         oLanguage: español
       }).DataTable();
 
     tabla_pacientes.on( 'order.dt search.dt', function () {

@@ -306,6 +306,7 @@ function NuevoPaciente() {
     $("#ModalPaciente").modal("show");
     $("#tituloModalPaciente").empty();
     $("#tituloModalPaciente").append("Nuevo Paciente:");
+    LimpiarPaciente();
     RecuperarCorrelativo();
 }
 
@@ -322,7 +323,7 @@ function EditarPaciente(idPaciente, idPersona) {
 
 function RecuperarPaciente(idPaciente) {
     //solicitud de recuperar Proveedor
-
+   LimpiarPaciente();
     $("#idPaciente").val(idPaciente);
     $.post("../../controlador/Mantenimiento/CPaciente.php?op=RecuperarInformacion_Paciente", {
         "idPaciente": idPaciente,
@@ -502,12 +503,17 @@ function DesactivacionPaciente(idPaciente) {
     });
 }
 
-
-
 function LimpiarPaciente() {
     $('#FormularioPaciente')[0].reset();
     $("#idPaciente").val("");
-
+    $("#dateFechaNacimiento").datepicker("SetDate",null);
+    $("#nav-base").addClass("active");
+    $("#nav-second").removeClass("active");
+    $("#nav-second").removeClass("show");
+    $("#op_1").addClass("active");
+    $("#op_1").addClass("show");
+    $("#op_2").removeClass("active");
+    $("#op_2").removeClass("show");
 }
 
 function Cancelar() {

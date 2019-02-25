@@ -28,10 +28,6 @@
          return ejecutarConsulta($sql);
        }
 
-		public function Listar_Materiales(){
-         $sql="SELECT * FROM material";
-         return ejecutarConsulta($sql);
-       }
        public function Listar_Sexo(){
          $sql="SELECT * FROM sexo";
          return ejecutarConsulta($sql);
@@ -45,7 +41,7 @@
          return ejecutarConsulta($sql);
        }
         public function Listar_DX(){
-         $sql="SELECT * FROM tab_diagnostico";
+         $sql="SELECT * FROM tab_diagnostico where Estado_idEstado=1";
          return ejecutarConsulta($sql);
        }
         public function listar_procedencia(){
@@ -53,7 +49,7 @@
          return ejecutarConsulta($sql);
        }
        public function listar_tipoDocumento(){
-            $sql="SELECT * FROM tab_tipodocumento";
+            $sql="SELECT * FROM tab_tipodocumento where Estado_idEstado=1";
          return ejecutarConsulta($sql);
        }
 
@@ -65,18 +61,31 @@
              $sql="SELECT * FROM tab_provincia where Departamento_idDepartamento=$idDepartamento";
          return ejecutarConsulta($sql);
        }
-    public function listar_Distritos($idProvincia){
+      public function listar_Distritos($idProvincia){
              $sql="SELECT * FROM tab_distrito where Provincia_idProvincia=$idProvincia";
          return ejecutarConsulta($sql);
        }
        public function listar_tipoMedida(){
-             $sql="SELECT * FROM tab_tipomedida";
+             $sql="SELECT * FROM tab_tipomedida where Estado_idEstado=1";
          return ejecutarConsulta($sql);
        }
 
        public function listar_Grado(){
-             $sql="SELECT * FROM tab_gradoinstruccion";
+             $sql="SELECT * FROM tab_gradoinstruccion where Estado_idEstado=1";
          return ejecutarConsulta($sql);
+       }
+
+       public function Listar_Comorbilidad(){
+           $sql="SELECT * FROM tab_comorbilidad where Estado_idEstado=1";
+           return ejecutarConsulta($sql);
+       }
+       public function Listar_DiagEnfermeria(){
+            $sql="SELECT * FROM tab_diagnostico_enfermeria where Estado_idEstado=1";
+           return ejecutarConsulta($sql);
+       }
+       public function Listar_Tratamientos(){
+            $sql="SELECT * FROM tab_tratamientos where Estado_idEstado=1";
+           return ejecutarConsulta($sql);
        }
 
    }

@@ -75,7 +75,6 @@
             <div class="modal-body" id="cuerpo">
                 <form id="FormularioPaciente" method="POST" autocomplete="off">
                     <input type="hidden" name="idPaciente" id="idPaciente">
-                    <input type="hidden" name="idPersona" id="idPersona">
                      <input type="hidden" id="PacienteCodigo" name="PacienteCodigo">
                     <div class="row">
                         <div class="col-12">
@@ -83,7 +82,7 @@
                                 <ul class="nav nav-pills " role="tablist">
                                     <li class="nav-item pill-1 m-2 " role="presentation"><a id="nav-base" class="nav-link active" href="#op_1" aria-controls="home" role="tab" data-toggle="tab">Datos del Paciente</a>
                                     </li>
-                                    <li class="nav-item pill-2 m-2" role="presentation"><a class="nav-link" href="#op_2" aria-controls="profile" role="tab" data-toggle="tab">Datos Adicionales</a>
+                                    <li class="nav-item pill-2 m-2" role="presentation"><a id="nav-second" class="nav-link" href="#op_2" aria-controls="profile" role="tab" data-toggle="tab">Datos Adicionales</a>
                                     </li>
 
                                 </ul>

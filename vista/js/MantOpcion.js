@@ -1,5 +1,5 @@
 var ArregloFormula;
-var Formula="";
+var Formula = "";
 var tablaOpcion;
 
 function init() {
@@ -58,6 +58,8 @@ function Iniciar_componentes() {
                 ElementoFormulaMostrar(true);
 
                 ElementoTituloValidacion(true);
+                OpcionMinimoFormulaValidacion(true);
+                OpcionMaximoFormulaValidacion(true);
                 break;
             case "7":
                 ElementoTituloMostrar(true);
@@ -72,7 +74,7 @@ function Iniciar_componentes() {
                 OpcionTipoCampoValidacion(true);
 
                 break;
-             case "10":
+            case "10":
                 ElementoTituloMostrar(true);
                 ElementoTituloValidacion(true);
                 break;
@@ -121,14 +123,16 @@ function Listar_Opcion(idGrupoOpcion) {
         "aServerSide": true,
         "processing": true,
         "paging": true, // Paginacion en tabla
-        "ordering": false, // Ordenamiento en columna de tabla
-        "info": false, // Informacion de cabecera tabla
+        "ordering": true, // Ordenamiento en columna de tabla
+        "info": true, // Informacion de cabecera tabla
         "responsive": true, // Accion de responsive
         "ajax": { //Solicitud Ajax Servidor
             url: '../../controlador/Mantenimiento/COpcion.php?op=Listar_Opcion',
             type: "POST",
             dataType: "JSON",
-            data:{idGrupoOpcion:idGrupoOpcion},
+            data: {
+                idGrupoOpcion: idGrupoOpcion
+            },
             error: function (e) {
                 console.log(e.responseText);
             }
@@ -203,6 +207,8 @@ function OcultarElementos() {
     OpcionAtributoMujerValidacion(false);
     OpcionMinimoMujerValidacion(false);
     OpcionMaximoMujerValidacion(false);
+    OpcionMinimoFormulaValidacion(false);
+    OpcionMaximoFormulaValidacion(false);
     BorrarOperacion();
 }
 
@@ -241,16 +247,16 @@ function VerificarOpcion() {
         var camp2 = $("#OpcioneCampo2").val();
         var camp3 = $("#OpcioneCampo3").val();
         var camp4 = $("#OpcioneCampo4").val();
-        (camp1 != "") ? total=total+ 1: 0;
-        (camp2 != "") ? total=total+ 1: 0;
-        (camp3 != "") ? total=total+ 1: 0;
-        (camp4 != "") ? total=total+ 1: 0;
+        (camp1 != "") ? total = total + 1: 0;
+        (camp2 != "") ? total = total + 1: 0;
+        (camp3 != "") ? total = total + 1: 0;
+        (camp4 != "") ? total = total + 1: 0;
         if (total < 1) {
-            error = error + "- Ingrese al Menos una Variable"+ "<br>";
+            error = error + "- Ingrese al Menos una Variable" + "<br>";
         }
         if (ArregloFormula != null) {
             if (ArregloFormula.length < 2) {
-                error = error + "- Genere la Formula con minimo una Operación"+ "<br>";
+                error = error + "- Genere la Formula con minimo una Operación" + "<br>";
             }
         }
     }
@@ -268,12 +274,17 @@ function AjaxRegistroOpcion() {
 
     var Propiedad = VerificacionTipoOpcion();
     var idGrupoOpcion = $("#idGrupoOpcion").val();
-    var TipoOpcion=$("#OpcionTipo").val();
-    var OpcionTitulo=$("#OpcionTitulo").val();
+    var TipoOpcion = $("#OpcionTipo").val();
+    var OpcionTitulo = $("#OpcionTitulo").val();
     $.ajax({
         url: "../../controlador/Mantenimiento/COpcion.php?op=AccionOpcion",
         type: "POST",
-        data:{Propiedades:Propiedad,idGrupoOpcion:idGrupoOpcion,TipoOpcion:TipoOpcion,OpcionTitulo:OpcionTitulo},
+        data: {
+            Propiedades: Propiedad,
+            idGrupoOpcion: idGrupoOpcion,
+            TipoOpcion: TipoOpcion,
+            OpcionTitulo: OpcionTitulo
+        },
         success: function (data, status) {
             data = JSON.parse(data);
             console.log(data);
@@ -337,15 +348,19 @@ function VerificacionTipoOpcion() {
             var camp3 = $("#OpcioneCampo3").val();
             var camp4 = $("#OpcioneCampo4").val();
 
-            var Propiedades = '{"TipoOpcion":' + tipoOpcion + ',"CodigoOpcion":"Opcion Formula","Titulo":"'+titulo+'","variable1":"'+camp1+'","variable2":"'+camp2+'","variable3":"'+camp3+'","variable4":"'+camp4+'","Formula":"'+Formula+'"}';
+            var minimo = $("#OpcionMinimoFormula").val();
+            var maximo = $("#OpcionMaximoFormula").val();
+
+
+            var Propiedades = '{"TipoOpcion":' + tipoOpcion + ',"CodigoOpcion":"Opcion Formula","Titulo":"' + titulo + '","minimo":"'+minimo+'","maximo":"'+maximo+'","variable1":"' + camp1 + '","variable2":"' + camp2 + '","variable3":"' + camp3 + '","variable4":"' + camp4 + '","Formula":"' + Formula + '"}';
             break;
-         case "7":
+        case "7":
             var Propiedades = '{"TipoOpcion":' + tipoOpcion + ',"CodigoOpcion":"Opcion Condición","Titulo":"' + titulo + '"}';
             break;
 
-         case "9":
-            var tipoCampos=$("#OpcionTipoCampo").val();
-            var Propiedades = '{"TipoOpcion":' + tipoOpcion + ',"CodigoOpcion":"Opcion Condición Campos","Titulo":"' + titulo + '","TipoOpcion":'+tipoCampos+'}';
+        case "9":
+            var tipoCampos = $("#OpcionTipoCampo").val();
+            var Propiedades = '{"TipoOpcion":' + tipoOpcion + ',"CodigoOpcion":"Opcion Condición Campos","Titulo":"' + titulo + '","TipoCampo":' + tipoCampos + '}';
             break;
         case "10":
             var Propiedades = '{"TipoOpcion":' + tipoOpcion + ',"CodigoOpcion":"SubCabecera","Titulo":"' + titulo + '"}';
@@ -362,80 +377,85 @@ function Agregar(valor) {
     if (ArregloFormula == null) {
         ArregloFormula = new Array();
     }
+    if (ArregloFormula.length > 9) {
+        notificar_warning("No puede agregar mas de 10 Valores.");
+    } else {
 
-    area.html("");
-    switch (valor) {
-        case 1:
-            var obj = '<div class="col-md-1"><button class="OpcionBoton btn btn-info text-center" title="Suma">+</button></div>';
-            ArregloFormula.push(obj);
-            Formula=Formula+"+";
-            break;
-        case 2:
-            var obj = '<div class="col-md-1"><button class="OpcionBoton btn btn-info text-center" title="Resta">-</button> </div>';
-            ArregloFormula.push(obj);
-             Formula=Formula+"-";
-            break;
-        case 3:
-            var obj = '<div class="col-md-1"><button class="OpcionBoton btn btn-info text-center" title="Multiplicación" >*</button> </div>';
-            ArregloFormula.push(obj);
-            Formula=Formula+"*";
-            break;
-        case 4:
-            var obj = '<div class="col-md-1"><button class="OpcionBoton btn btn-info text-center" title="División">%</button> </div>';
-            ArregloFormula.push(obj);
-            Formula=Formula+"/";
-            break;
-        case 5:
-            var obj = '<div class="col-md-1"><button class="OpcionBoton btn btn-info text-center" title="Inicio Parentesís">(</button> </div>';
-            ArregloFormula.push(obj);
-            Formula=Formula+"(";
-            break;
-        case 6:
-            var obj = ' <div class="col-md-1"><button class="OpcionBoton btn btn-info text-center" title="Fin Parentesís">)</button> </div>';
-            ArregloFormula.push(obj);
-             Formula=Formula+")";
-            break;
-        case 7:
-            var obj = '<div class="col-md-1"><button class="OpcionBoton btn btn-info text-center" title="Exponente">X<sup>2</sup></button></div> ';
-            ArregloFormula.push(obj);
-            Formula=Formula+"EXP";
-            break;
-        case 8:
-            var obj = '<div class="col-md-1"><button class="OpcionBoton btn btn-success text-center" title="Variable 1">V1</button></div>';
-            ArregloFormula.push(obj);
-            Formula=Formula+"V1";
-            break;
-        case 9:
-            var obj = '<div class="col-md-1"><button class="OpcionBoton btn btn-success text-center" title="Variable 2">V2</button> </div>';
-            ArregloFormula.push(obj);
-            Formula=Formula+"V2";
-            break;
-        case 10:
-            var obj = ' <div class="col-md-1"><button class="OpcionBoton btn btn-success text-center" title="Variable 3">V3</button> </div>';
-            ArregloFormula.push(obj);
-             Formula=Formula+"V3";
-            break;
-        case 11:
-            var obj = '<div class="col-md-1"><button class="OpcionBoton btn btn-success text-center" title="Variable 4">V4</button></div> ';
-            ArregloFormula.push(obj);
-             Formula=Formula+"V4";
-            break;
 
+        area.html("");
+        switch (valor) {
+            case 1:
+                var obj = '<div class="col-md-1"><button class="OpcionBoton btn btn-info text-center" title="Suma">+</button></div>';
+                ArregloFormula.push(obj);
+                Formula = Formula + "+SEP";
+                break;
+            case 2:
+                var obj = '<div class="col-md-1"><button class="OpcionBoton btn btn-info text-center" title="Resta">-</button> </div>';
+                ArregloFormula.push(obj);
+                Formula = Formula + "-SEP";
+                break;
+            case 3:
+                var obj = '<div class="col-md-1"><button class="OpcionBoton btn btn-info text-center" title="Multiplicación" >*</button> </div>';
+                ArregloFormula.push(obj);
+                Formula = Formula + "*SEP";
+                break;
+            case 4:
+                var obj = '<div class="col-md-1"><button class="OpcionBoton btn btn-info text-center" title="División">%</button> </div>';
+                ArregloFormula.push(obj);
+                Formula = Formula + "/SEP";
+                break;
+            case 5:
+                var obj = '<div class="col-md-1"><button class="OpcionBoton btn btn-info text-center" title="Inicio Parentesís">(</button> </div>';
+                ArregloFormula.push(obj);
+                Formula = Formula + "(SEP";
+                break;
+            case 6:
+                var obj = ' <div class="col-md-1"><button class="OpcionBoton btn btn-info text-center" title="Fin Parentesís">)</button> </div>';
+                ArregloFormula.push(obj);
+                Formula = Formula + ")SEP";
+                break;
+            case 7:
+                var obj = '<div class="col-md-1"><button class="OpcionBoton btn btn-info text-center" title="Exponente">X<sup>2</sup></button></div> ';
+                ArregloFormula.push(obj);
+                Formula = Formula + "EXPSEP";
+                break;
+            case 8:
+                var obj = '<div class="col-md-1"><button class="OpcionBoton btn btn-success text-center" title="Variable 1">V1</button></div>';
+                ArregloFormula.push(obj);
+                Formula = Formula + "V1SEP";
+                break;
+            case 9:
+                var obj = '<div class="col-md-1"><button class="OpcionBoton btn btn-success text-center" title="Variable 2">V2</button> </div>';
+                ArregloFormula.push(obj);
+                Formula = Formula + "V2SEP";
+                break;
+            case 10:
+                var obj = ' <div class="col-md-1"><button class="OpcionBoton btn btn-success text-center" title="Variable 3">V3</button> </div>';
+                ArregloFormula.push(obj);
+                Formula = Formula + "V3SEP";
+                break;
+            case 11:
+                var obj = '<div class="col-md-1"><button class="OpcionBoton btn btn-success text-center" title="Variable 4">V4</button></div> ';
+                ArregloFormula.push(obj);
+                Formula = Formula + "V4SEP";
+                break;
+
+        }
+        var temporal = "";
+
+        ArregloFormula.forEach(function (element) {
+            temporal = temporal + element;
+        });
+
+        area.html(temporal);
     }
-    var temporal = "";
-
-    ArregloFormula.forEach(function (element) {
-        temporal = temporal + element;
-    });
-
-    area.html(temporal);
 }
 
 function BorrarOperacion() {
     if (ArregloFormula != null) {
         ArregloFormula = [];
         $("#area_formula").html("");
-         Formula="";
+        Formula = "";
     }
 }
 
@@ -580,7 +600,7 @@ function ElementoCondicionCampoMostrar(valor) {
 }
 
 function OpcionTipoCampoMostrar(valor) {
-     (valor) ? $("#OpcionTipoCampo").show(): $("#OpcionTipoCampo").hide();
+    (valor) ? $("#OpcionTipoCampo").show(): $("#OpcionTipoCampo").hide();
 }
 
 
@@ -633,12 +653,20 @@ function OpcionTipoCampoValidacion(valor) {
     (valor) ? $("#OpcionTipoCampo").addClass("validarPanel"): $("#OpcionTipoCampo").removeClass("validarPanel");
 }
 
+function OpcionMinimoFormulaValidacion(valor) {
+    (valor) ? $("#OpcionMinimoFormula").addClass("validarPanel"): $("#OpcionMinimoFormula").removeClass("validarPanel");
+}
+function OpcionMaximoFormulaValidacion(valor) {
+    (valor) ? $("#OpcionMaximoFormula").addClass("validarPanel"): $("#OpcionMaximoFormula").removeClass("validarPanel");
+}
 
 
-function Limpiar(){
+
+function Limpiar() {
     $('#FormularioOpcion')[0].reset();
 }
-function volver(){
-     $.redirect('../../vista/Mantenimiento/MantGrupoOpcion.php');
+
+function volver() {
+    $.redirect('../../vista/Mantenimiento/MantGrupoOpcion.php');
 }
 init();

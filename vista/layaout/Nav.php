@@ -165,6 +165,11 @@
 									</a>
 								</li>
 								<li id="" class="">
+									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Mantenimiento/MantGrupoOpcion.php';?>" title=" Grupo de Opciones">
+										<span> Grupo de Opciones </span>
+									</a>
+								</li>
+								<li id="" class="">
 									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Mantenimiento/MantDiagnostico.php';?>" title="Diagnóstico">
 										<span> Diagnóstico </span>
 									</a>
@@ -199,11 +204,7 @@
 										<span> Condición </span>
 									</a>
 								</li>
-								<li id="" class="">
-									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Mantenimiento/MantGrupoOpcion.php';?>" title=" Grupo de Opciones">
-										<span> Grupo de Opciones </span>
-									</a>
-								</li>
+
 							</ul>
 						</li>
 						<?php }}else{ };?>

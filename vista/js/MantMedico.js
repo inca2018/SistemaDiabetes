@@ -178,6 +178,7 @@ function NuevoMedico() {
     $("#ModalMedico").modal("show");
     $("#tituloModalMedico").empty();
     $("#tituloModalMedico").append("Nuevo Medico:");
+    LimpiarMedico();
     ReiniciarNav();
 }
 
@@ -195,7 +196,7 @@ function EditarMedico(idMedico, idPersona) {
 
 function RecuperarMedico(idMedico) {
     //solicitud de recuperar Proveedor
-
+  LimpiarMedico();
     $("#idMedico").val(idMedico);
     $.post("../../controlador/Mantenimiento/CMedico.php?op=RecuperarInformacion_Medico", {
         "idMedico": idMedico,
@@ -318,7 +319,7 @@ function DesactivacionMedico(idMedico) {
 function LimpiarMedico() {
     $('#FormularioMedico')[0].reset();
     $("#idMedico").val("");
-
+    $("#dateFechaNacimiento").datepicker("SetDate",null);
 }
 
 function Cancelar() {

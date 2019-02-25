@@ -12,7 +12,7 @@
 
 	 $login_idLog=$_SESSION['idUsuario'];
 
-      $id_paciente=isset($_POST["idPaciente"])? limpiarCadena($_POST["idPaciente"]):"";
+    $id_paciente=isset($_POST["idPaciente"])? limpiarCadena($_POST["idPaciente"]):"";
     $id_ano=isset($_POST["idAno"])? limpiarCadena($_POST["idAno"]):"";
     $id_mes=isset($_POST["idMes"])? limpiarCadena($_POST["idMes"]):"";
     $riesgo=isset($_POST["riesgo"])? limpiarCadena($_POST["riesgo"]):"";

@@ -181,6 +181,21 @@ if(isset($_POST["idGrupoOpcion"])){
                                     </div>
                                 </div>
                                 <div class="col-md-12" id="ElementoFormula">
+                                     <label for="" class="text-info">Ingrese Rango</label>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="OpcionMinimoFormula" class="col-form-label">Mínimo(valor minimo 1):</label>
+                                                <input class="form-control  " id="OpcionMinimoFormula" name="OpcionMinimoFormula" data-message="- Mínimo de Formula" placeholder="0" maxlength="6" type="text" onkeypress="return SoloNumerosModificado(event,4,this.id);">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="OpcionMaximoFormula" class="col-form-label">Máximo(valor maximo 9999):</label>
+                                                <input class="form-control  " id="OpcionMaximoFormula" name="OpcionMaximoFormula" data-message="- Máximo de Formula" placeholder="0" maxlength="6" type="text" onkeypress="return SoloNumerosModificado(event,4,this.id);">
+                                            </div>
+                                        </div>
+                                    </div>
                                     <label for="" class="text-info">Ingrese Campos</label>
                                     <div class="row">
                                         <div class="col-md-3">
@@ -275,6 +290,7 @@ if(isset($_POST["idGrupoOpcion"])){
                                                 <option value="3">CAMPOS DE TRATAMIENTO</option>
                                                 <option value="4">EVALUADO POR</option>
                                                 <option value="5">DIAGNOSTICO ENFERMERIA</option>
+                                                <option value="6">TRATAMIENTOS</option>
                                                 </select>
                                             </div>
                                         </div>

@@ -33,12 +33,6 @@
         break;
 
        case 'RecuperarEspecialidades':
-             $rpta = $Ficha->RecuperarEspecialidades();
-            $Especialidades=array();
-            while ($reg = $rpta->fetch_object()){
-
-            }
-
             $rpta = $Ficha->RecuperarEspecialidades();
 
             $Especialidades=array();
@@ -65,6 +59,49 @@
          	}
 
            break;
+
+       case 'RecuperarListas':
+            $Listas=array();
+            $Medicos="";
+            $Comorbilidad="";
+            $diagEnfermeria="";
+            $tratamientos="";
+
+      		$rpta = $general->Listar_Medicos();
+            $Medicos.='<option value="0">-- SELECCIONE --</option>';
+         	while ($reg = $rpta->fetch_object()){
+					$Medicos.='<option   value=' . $reg->idMedico . '>' . $reg->nombres . '</option>';
+         	}
+            $Listas["medicos"]=$Medicos;
+
+
+      		$rpta2 = $general->Listar_Comorbilidad();
+            $Comorbilidad.='<option value="0">-- SELECCIONE --</option>';
+         	while ($reg2 = $rpta2->fetch_object()){
+					$Comorbilidad.='<option   value=' . $reg2->idComorbilidad . '>' . $reg2->Descripcion . '</option>';
+         	}
+            $Listas["comorbilidad"]=$Comorbilidad;
+
+
+      		$rpta3 = $general->Listar_DiagEnfermeria();
+            $diagEnfermeria.='<option value="0">-- SELECCIONE --</option>';
+         	while ($reg3 = $rpta3->fetch_object()){
+					$diagEnfermeria.='<option   value=' . $reg3->idDiagnosticoEnfermeria . '>' . $reg3->Descripcion . '</option>';
+         	}
+            $Listas["enfermeria"]=$diagEnfermeria;
+
+
+            $rpta4 = $general->Listar_Tratamientos();
+            $tratamientos.='<option value="0">-- SELECCIONE --</option>';
+         	while ($reg4 = $rpta4->fetch_object()){
+					$tratamientos.='<option   value=' . $reg4->idTratamiento . '>' . $reg4->Descripcion . '</option>';
+         	}
+            $Listas["tratamientos"]=$tratamientos;
+
+
+
+            echo json_encode($Listas);
+       break;
 
    }
 
