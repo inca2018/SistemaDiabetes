@@ -134,7 +134,7 @@ function AjaxRegistroPaciente() {
     formData.append("PacienteEdad", PacienteEdad);
     formData.append("PacienteNumeroDocumento", numDocumento);
 
-    console.log(formData);
+
     $.ajax({
         url: "../../controlador/Mantenimiento/CPaciente.php?op=AccionPaciente",
         type: "POST",
@@ -143,7 +143,7 @@ function AjaxRegistroPaciente() {
         processData: false,
         success: function (data, status) {
             data = JSON.parse(data);
-            console.log(data);
+
             var Mensaje = data.Mensaje;
             var Error = data.Registro;
             if (!Error) {
@@ -291,7 +291,7 @@ function RecuperarCorrelativo() {
     //solicitud de recuperar Proveedor
     $.post("../../controlador/Mantenimiento/CPaciente.php?op=RecuperarCorrelativo", function (data, status) {
         data = JSON.parse(data);
-        console.log(data);
+
         $("#codigoMostrar").empty();
         $("#codigoMostrar").append("Nº 000" + (parseInt(data.correlativo) + 1));
         $("#PacienteCodigo").val("Nº 000" + (parseInt(data.correlativo) + 1));

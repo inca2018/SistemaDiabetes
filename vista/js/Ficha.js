@@ -3,6 +3,7 @@ var Lista_Medicos;
 var Listas_Comorbilidad;
 var DiagnosticoEnfermeria;
 var Tratamientos;
+var Evaluado;
 function init() {
     RecuperarListas();
 }
@@ -10,11 +11,12 @@ function init() {
 function RecuperarListas() {
     $.post("../../controlador/Gestion/CFicha.php?op=RecuperarListas", function (data, status) {
         data = JSON.parse(data);
-        console.log(data);
+
         Lista_Medicos = data.medicos;
         Listas_Comorbilidad = data.comorbilidad;
         DiagnosticoEnfermeria = data.enfermeria;
         Tratamientos=data.tratamientos;
+        Evaluado=data.evaluado;
         iniciar_funciones();
     });
 
@@ -26,7 +28,7 @@ function iniciar_funciones(){
     RecuperarDatosPaciente(idPaciente);
     RecuperarGrupos();
     RecuperarEspecialidades();
-    LanzarFuncionOpcionesPie();
+
 }
 
 function LanzarFuncionOpcionesPie() {
@@ -58,7 +60,7 @@ function RecuperarEspecialidades() {
     $("#bloqueEspecialidades")
     $.post("../../controlador/Gestion/CFicha.php?op=RecuperarEspecialidades", function (data, status) {
         data = JSON.parse(data);
-        console.log(data);
+
         $.post("../../controlador/Gestion/CFicha.php?op=ListarDiagnosticos", function (ts) {
             var diagnosticos = ts;
             var query = "";
@@ -68,16 +70,16 @@ function RecuperarEspecialidades() {
                 var especialidad = element.especialidad;
                 var medicos = element.medicos;
 
-                query = query + '<div class="row opcionEspecialidad" data-id="'+idEspecialidad+'">' +
+                query = query + '<div class="row opcionEspecialidad OpcionGeneral" data-id="'+idEspecialidad+'" data-opcion="ESPECIALIDAD">' +
                     '<div class="col-md-2 mt-5">' +
                     '<label for="">' + especialidad + '</label>' +
                     '</div>' +
                     '<div class="col-md-2 mt-5">' +
                     '<div class="row">' +
                     '<label for="" class="col-md-3 ">SI</label>' +
-                    '<input id="SI'+idEspecialidad+'" class="form-control opcion2 col-md-3 mt-1" type="radio" name="radio' + idEspecialidad + '" value="1">' +
+                    '<input id="SIE'+idEspecialidad+'" class="form-control opcion2 col-md-3 mt-1" type="radio" name="radioE' + idEspecialidad + '" value="1">' +
                     '<label for="" class="col-md-3 ">NO</label>' +
-                    '<input id="NO'+idEspecialidad+'" class="form-control opcion2 col-md-3 mt-1" type="radio" name="radio' + idEspecialidad + '" value="0" checked>' +
+                    '<input id="NOE'+idEspecialidad+'" class="form-control opcion2 col-md-3 mt-1" type="radio" name="radioE' + idEspecialidad + '" value="0" checked>' +
                     '</div>' +
                     '</div>' +
 
@@ -99,17 +101,16 @@ function RecuperarEspecialidades() {
                     '<div class="col-md-2">' +
                     ' <div class="form-group">' +
                     ' <label for="" class="col-form-label">Tratamiento:</label>' +
-                    ' <input type="text" class="form-control" placeholder="" name="" id="tratamiento' + idEspecialidad + '" disabled>' +
+                    ' <input type="text" class="form-control"  id="tratamiento' + idEspecialidad + '" disabled>' +
                     '</div>' +
                     '</div>' +
                     ' <div class="col-md-2">' +
                     ' <div class="form-group">' +
                     '<label for="" class="col-form-label">Observaciones:</label>' +
-                    ' <input type="text" class="form-control" placeholder="" name="" id="Obser' + idEspecialidad + '" disabled>' +
+                    ' <input type="text" class="form-control"  id="Obser' + idEspecialidad + '" disabled>' +
                     '</div>' +
                     '</div>' +
                     ' </div>';
-
             });
 
             $("#contenedorEspecialidades").html(query);
@@ -159,7 +160,7 @@ function RecuperarGrupos() {
             opciones.forEach(function (element2) {
                 var idOpcion = element2.id;
                 var Tipo = element2.tipo;
-                grupoOpcion = grupoOpcion + '<div class="row mt-1 ml-5 OpcionGeneral" data-id="' + idOpcion + '" data-tipo="' + Tipo + '">';
+                grupoOpcion = grupoOpcion + '<div class="row mt-1 ml-5 OpcionGeneral" data-id="' + idOpcion + '" data-tipo="' + Tipo + '" data-opcion="OPCION">';
                 var OpcionSet = RecuperarTipoOpcion(element2, contador++);
                 grupoOpcion = grupoOpcion + OpcionSet + '</div>';
             });
@@ -169,10 +170,75 @@ function RecuperarGrupos() {
 
             Html = Html + grupoOpcion;
         });
+          var especialidades='<div class="card border-primary mb-1">'+
+                                    '<div class="card-header text-white bg-primary" id="headingEspecialidad">'+
+                                        '<h4 class="mb-0"><a class="text-inherit" data-toggle="collapse" data-target="#collapseEspecialidad" aria-expanded="false" aria-controls="collapseEspecialidad" href="">OTRAS ESPECIALIDADES</a>'+
+                                        '</h4>'+
+                                    '</div>'+
+                                    '<div class="collapse" id="collapseEspecialidad" aria-labelledby="headingEspecialidad" data-parent="#accordion">'+
+                                        '<div class="card-body border-top">'+
+                                            '<div class="row" >'+
+                                               ' <div class="col-md-12" id="contenedorEspecialidades">'+
+                                                '</div>'+
+                                           ' </div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>';
+          var pie=' <div class="card border-primary mb-1">'+
+                                    '<div class="card-header text-white bg-primary" id="headingTwo">'+
+                                        '<h4 class="mb-0"><a class="text-inherit collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" href="">EXAMEN DE PIE</a>'+
+                                       ' </h4>'+
+                                    '</div>'+
+                                   ' <div class="collapse" id="collapseTwo" aria-labelledby="headingTwo" data-parent="#accordion">'+
+                                       ' <div class="card-body border-top">'+
+                                            '<div class="row" >'+
+                                               ' <div class="col-md-9 offset-3 padre">'+
+                                                   ' <div class="ImagenPie">'+
+                                                       ' <div class="OpcionPie1" id="OpcionPieN1">'+
+                                                           ' <div class="opciones Option" data-opcion="1">'+
+                                                            '</div>'+
+                                                       ' </div>'+
+                                                        '<div class="OpcionPie2" id="OpcionPieN2">'+
+                                                            '<div class="opciones Option" data-opcion="1">'+
+                                                            '</div>'+
+                                                        '</div>'+
+                                                        '<div class="OpcionPie3" id="OpcionPieN3">'+
+                                                            '<div class="opciones Option" data-opcion="1">'+
+                                                            '</div>'+
+                                                        '</div>'+
+                                                       ' <div class="OpcionPie4" id="OpcionPieN4">'+
+                                                            '<div class="opciones Option" data-opcion="1">'+
+                                                            '</div>'+
+                                                        '</div>'+
+                                                        '<div class="OpcionPie5" id="OpcionPieN5">'+
+                                                           ' <div class="opciones Option" data-opcion="1">'+
 
+                                                            '</div>'+
+                                                       ' </div>'+
+                                                       ' <div class="OpcionPie6" id="OpcionPieN6">'+
+                                                            '<div class="opciones Option" data-opcion="1">'+
+                                                            '</div>'+
+                                                        '</div>'+
+                                                       ' <div class="OpcionPie7" id="OpcionPieN7">'+
+                                                            '<div class="opciones Option" data-opcion="1">'+
+                                                            '</div>'+
+                                                        '</div>'+
+                                                        '<div class="OpcionPie8" id="OpcionPieN8">'+
+                                                           ' <div class="opciones Option" data-opcion="1">'+
+                                                           ' </div>'+
+                                                        '</div>'+
+                                                    '</div>'+
+                                               ' </div>'+
+                                           ' </div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>';
+        Html=Html+especialidades;
+        Html=Html+pie;
         $("#accordion").html(Html);
 
         LanzarFunciones();
+         LanzarFuncionOpcionesPie();
     });
 }
 
@@ -195,7 +261,7 @@ function RecuperarTipoOpcion(elemento, contador) {
         case "2":
             opcion = '<div class="col-md-4">' +
                 '<label class="">' + Titulo + ':</label>' +
-                '<input id="OP' + idOpcion + '" class="form-control  caja campo opcionCampo" data-tipo="' + Tipo + '" data-inicio="" data-fin="" type="text" step="any"  maxlength="100">' +
+                '<input id="CAM' + idOpcion + '" class="form-control  caja campo opcionCampo" data-tipo="' + Tipo + '" type="text" step="any"  maxlength="100">' +
                 '</div>';
             break;
         case "3":
@@ -243,7 +309,7 @@ function RecuperarTipoOpcion(elemento, contador) {
             } else {
                 place = '(Rango: ' + minimo + ' ' + atributo + ' - ' + maximo + ' ' + atributo + ')';
             }
-            opcion = '<input type="hidden" class="opcionOculto " id="OF' + idOpcion + '"  data-minimo="' + minimo + '" data-maximo="' + maximo + '">' +
+            opcion = '<input type="hidden" class="opcionOculto " id="OF' + idOpcion + '"  data-minimo="' + minimo + '" data-maximo="' + maximo + '" data-sexo="'+sexo+'">' +
                 '<div class="col-md-12"><label class="">' + Titulo + '(' + atributo + ') - ' + paciente + ':</label></div>' +
                 '<div class="col-md-4">' +
                 '<input id="OP' + idOpcion + '" class="form-control  caja campo FuRango" data-id="' + idOpcion + '" data-atributo="' + atributo + '" data-tipo="' + Tipo + '" data-minimo="' + minimo + '" data-maximo="' + maximo + '" type="text" step="any"  maxlength="100" placeholder="' + place + '" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
@@ -256,12 +322,12 @@ function RecuperarTipoOpcion(elemento, contador) {
             break;
         case "5":
 
-            opcion = '<input type="hidden" class="opcionOculto " id="OF' + idOpcion + '"  data-minimo="' + minimo + '" data-maximo="' + maximo + '">' +
+            opcion = '<input type="hidden" class="opcionOculto " id="OF' + idOpcion + '" >' +
                 '<div class="col-md-4">' +
                 '<div class="form-group">' +
                 ' <label for="" class="col-form-label">' + Titulo + ':</label>' +
                 '<div class="input-group date dateFecha">' +
-                ' <input class="form-control opcionFecha" type="text" id="OP' + idOpcion + '" data-tipo="' + Tipo + '" data-id="' + idOpcion + '" autocomplete="off">' +
+                ' <input class="form-control opcionFecha" type="text" id="FE' + idOpcion + '" data-tipo="' + Tipo + '" data-id="' + idOpcion + '" autocomplete="off">' +
                 ' <span class="input-group-append input-group-addon">' +
                 '     <span class="input-group-text "><i class="fa fa-calendar fa-lg"></i></span>' +
                 ' </span>' +
@@ -330,7 +396,7 @@ function RecuperarTipoOpcion(elemento, contador) {
         case "9":
             var TipoCampos = Propiedades.TipoCampo;
 
-            opcion = '<input type="hidden" class="opcionOculto opcionCondicionCampo" id="OF' + idOpcion + '" data-tipoCampo="' + TipoCampos + '">' +
+            opcion = '<input type="hidden" class="opcionOculto opcionCondicionCampo" id="OF' + idOpcion + '" data-tipocampo="' + TipoCampos + '">' +
 
                 '<div class="col-md-12"><label class="col-form-label">' + Titulo + ':</label></div>' +
                 '<div class="form-group col-md-4">' +
@@ -381,6 +447,10 @@ function LanzarFunciones() {
                  case 3 :
                      $("#DO"+id).show();
                      $("#TA"+id).show();
+                    break;
+                 case 4 :
+                      $("#area"+id).show();
+                      $("#SELECT"+id).append(Evaluado);
                     break;
                 case 5:
                      $("#area"+id).show();
@@ -498,9 +568,10 @@ function LanzarFunciones() {
 }
 
 function LanzarFuncionesEspecialidad(){
-     $(".OpcionGeneral").each(function () {
+     $(".opcionEspecialidad").each(function () {
+
           var id = $(this).data("id");
-          $('#SI'+id).change(function () {
+           $('#SIE'+id).change(function () {
                 if (this.checked == true) {
                     $("#OptionDiag"+id).removeAttr("disabled");
                     $("#OptionMedico"+id).removeAttr("disabled");
@@ -513,7 +584,7 @@ function LanzarFuncionesEspecialidad(){
                     $("#Obser"+id).attr("disabled",true);
                 }
             });
-            $('#NO'+id).change(function () {
+            $('#NOE'+id).change(function () {
                 if (this.checked == true) {
                      $("#OptionDiag"+id).attr("disabled",true);
                     $("#OptionMedico"+id).attr("disabled",true);
@@ -597,4 +668,131 @@ function quitarSeparador(valor) {
     return va;
 }
 
+function GuardarFicha(){
+
+    $(".OpcionGeneral").each(function (){
+
+        var tipoOpcion=$(this).data("opcion");
+        var id=$(this).data("id");
+        var tipoTipo=$(this).data("tipo");
+        if(tipoOpcion=="OPCION"){
+
+            switch(tipoTipo){
+                case 2:
+                    var campo=$("#CAM"+id).val();
+                    console.log("ID ="+id+" tipo="+2+" CAMPO="+campo);
+                    break;
+                case 3:
+
+                    var minimo=$("#OF"+id).data("minimo");
+                    var maximo=$("#OF"+id).data("maximo");
+                    var respuesta=$("#OP"+id).val();
+                    if(respuesta==""){
+                        respuesta=0;
+                    }
+                    var Estado=0;
+                    if(respuesta>=minimo && respuesta<=maximo){
+                        Estado=1;
+                    }else{
+                        Estado=0;
+                    }
+
+                    console.log("ID="+id+" tipo="+3+" respuesta="+respuesta+" estado="+Estado);
+
+                    break;
+                case 4:
+                    var minimo=$("#OF"+id).data("minimo");
+                    var maximo=$("#OF"+id).data("maximo");
+                    var sexo=$("#OF"+id).data("sexo");
+                    var respuesta=$("#OP"+id).val();
+                    if(respuesta==""){
+                        respuesta=0;
+                    }
+                    var Estado=0;
+                    if(respuesta>=minimo && respuesta<=maximo){
+                        Estado=1;
+                    }else{
+                        Estado=0;
+                    }
+
+                    console.log("ID="+id+" tipo="+4+" respuesta="+respuesta+" estado="+Estado+" Sexo="+sexo);
+
+                    break;
+                case 5:
+                     var campo=$("#FE"+id).val();
+                    console.log("ID ="+id+" tipo="+5+" CAMPO="+campo);
+                    break;
+                case 6:
+                    var minimo=$("#OF"+id).data("minimo");
+                    var maximo=$("#OF"+id).data("maximo");
+                    var v1=$("#V1"+id).val();
+                    var v2=$("#V2"+id).val();
+                    var v3=$("#V3"+id).val();
+                    var v4=$("#V4"+id).val();
+                    var respuesta=$("#F"+id).val();
+                    var Estado=0;
+                    if(respuesta>=minimo && respuesta<=maximo){
+                        Estado=1;
+                    }else{
+                        Estado=0;
+                    }
+
+                     console.log("ID="+id+"tipo="+6+" respuesta="+respuesta+" estado="+Estado+" v1="+v1+" V3="+v2+" v3="+v3+" v4="+v4);
+
+                    break;
+                case 7:
+                     var Estado=$('input[name=radio'+id+']:checked').val();
+                    console.log("ID="+id+" tipo="+7+" estado="+Estado);
+                    break;
+                case 9:
+
+                      var tipoCampo=$("#OF"+id).data("tipocampo");
+                      var Estado=$('input[name=radio'+id+']:checked').val();
+                      var select=$("#SELECT"+id).val();
+                      var dosis=$("#dosis"+id).val();
+                      var num=$("#tab"+id).val();
+
+                       console.log("ID="+id+" tipo="+9+" tipoCampo="+tipoCampo+" estado="+Estado+" dosis="+dosis+" num="+num);
+
+                    break;
+
+            }
+
+
+
+        }else if(tipoOpcion=="ESPECIALIDAD"){
+
+            var Estado=$('input[name=radioE'+id+']:checked').val();
+            var diagnostico=$("#OptionDiag"+id).val();
+            var medico=$("#OptionMedico"+id).val();
+            var tratamiento=$("#tratamiento"+id).val();
+            var observacion=$("#Obser"+id).val();
+
+            console.log("ID ="+id+" Estado="+Estado+" Diag="+diagnostico+" Medico="+medico+" Tratamiento="+tratamiento+" Obsr="+observacion);
+
+        }
+    });
+
+
+var hijo1=$("#OpcionPieN1").children("div");
+    var resu1=hijo1.data("opcion");
+var hijo2=$("#OpcionPieN2").children("div");
+    var resu2=hijo2.data("opcion");
+var hijo3=$("#OpcionPieN3").children("div");
+    var resu3=hijo3.data("opcion");
+var hijo4=$("#OpcionPieN4").children("div");
+    var resu4=hijo4.data("opcion");
+var hijo5=$("#OpcionPieN5").children("div");
+    var resu5=hijo5.data("opcion");
+var hijo6=$("#OpcionPieN6").children("div");
+    var resu6=hijo6.data("opcion");
+var hijo7=$("#OpcionPieN7").children("div");
+    var resu7=hijo7.data("opcion");
+var hijo8=$("#OpcionPieN8").children("div");
+    var resu8=hijo8.data("opcion");
+
+    console.log("RESULTADO PIE: R1="+resu1+" R2="+resu2+" R3="+resu3+" R4="+resu4+" R5="+resu5+" R6="+resu6+" R7="+resu7+" R8="+resu8);
+
+
+}
 init();

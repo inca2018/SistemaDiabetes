@@ -87,7 +87,10 @@
             $sql="SELECT * FROM tab_tratamientos where Estado_idEstado=1";
            return ejecutarConsulta($sql);
        }
-
+       public function Listar_Evaluado(){
+           $sql="SELECT * FROM tab_evaluado where Estado_idEstado=1";
+           return ejecutarConsulta($sql);
+       }
    }
 
 ?>

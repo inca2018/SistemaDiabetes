@@ -41,7 +41,7 @@
 
                  $rpta2 = $Ficha->RecuperarMedicos($reg->idEspecialidad);
                 $Medico="";
-                $Medico.='<option value"0">-- SELECCIONAR --</option>';
+                $Medico.='<option value="0">--- SELECCIONE ---</option>';
                  while ($reg2 = $rpta2->fetch_object()){
                      $Medico.='<option   value=' . $reg2->idMedico . '>' . $reg2->Medico . '</option>';
                 }
@@ -66,6 +66,7 @@
             $Comorbilidad="";
             $diagEnfermeria="";
             $tratamientos="";
+            $evaluado="";
 
       		$rpta = $general->Listar_Medicos();
             $Medicos.='<option value="0">-- SELECCIONE --</option>';
@@ -99,6 +100,12 @@
             $Listas["tratamientos"]=$tratamientos;
 
 
+           $rpta5 = $general->Listar_Evaluado();
+            $evaluado.='<option value="0">-- SELECCIONE --</option>';
+         	while ($reg5 = $rpta5->fetch_object()){
+					$evaluado.='<option   value=' . $reg5->idEvaluado . '>' . $reg5->Descripcion . '</option>';
+         	}
+            $Listas["evaluado"]=$evaluado;
 
             echo json_encode($Listas);
        break;

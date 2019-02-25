@@ -36,17 +36,20 @@ if(isset($_POST["idPaciente"])){
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4 text-center">
+                    <div class="col-md-3 text-center">
                         <label>Paciente:</label>
                         <h4 id="NombrePaciente"></h4>
                     </div>
-                    <div class="col-md-4 text-center">
+                    <div class="col-md-3 text-center">
                         <label>Edad:</label>
                         <h4 id="EdadPaciente"></h4>
                     </div>
-                    <div class="col-md-4 text-center">
+                    <div class="col-md-3 text-center">
                         <label>Numero de Documento:</label>
                         <h4 id="DocumentoPaciente"></h4>
+                    </div>
+                    <div class="col-md-3 text-center mt-3">
+                        <button type="button" class="btn btn-success btn-block" onclick="GuardarFicha();">GUARDAR FICHA</button>
                     </div>
                 </div>
                 <hr class="mt-2 mb-2">
@@ -58,7 +61,7 @@ if(isset($_POST["idPaciente"])){
 
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <!--<div class="col-md-12">
                             <div id="accordion2">
                                 <div class="card border-primary mb-1">
                                     <div class="card-header text-white bg-primary" id="headingOne">
@@ -68,7 +71,7 @@ if(isset($_POST["idPaciente"])){
                                     <div class="collapse" id="collapseOne" aria-labelledby="headingOne" data-parent="#accordion2">
                                         <div class="card-body border-top">
                                             <div class="row" >
-                                                <div class="col-md-12" id="contenedorEspecialidades">
+                                                <div class="col-md-12" id="contenedorEspecialidades2">
 
                                                 </div>
                                             </div>
@@ -97,7 +100,7 @@ if(isset($_POST["idPaciente"])){
                                                         </div>
                                                         <div class="OpcionPie3">
                                                             <div class="opciones Option" data-opcion="1">
-                                                                <!--<span id="x">X</span>-->
+
                                                             </div>
                                                         </div>
                                                         <div class="OpcionPie4">
@@ -132,7 +135,7 @@ if(isset($_POST["idPaciente"])){
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                 </form>
             </div>
