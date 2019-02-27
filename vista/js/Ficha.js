@@ -4,6 +4,7 @@ var Listas_Comorbilidad;
 var DiagnosticoEnfermeria;
 var Tratamientos;
 var Evaluado;
+
 function init() {
     RecuperarListas();
 }
@@ -15,16 +16,16 @@ function RecuperarListas() {
         Lista_Medicos = data.medicos;
         Listas_Comorbilidad = data.comorbilidad;
         DiagnosticoEnfermeria = data.enfermeria;
-        Tratamientos=data.tratamientos;
-        Evaluado=data.evaluado;
+        Tratamientos = data.tratamientos;
+        Evaluado = data.evaluado;
         iniciar_funciones();
     });
 
 
 }
 
-function iniciar_funciones(){
-     var idPaciente = $("#idPaciente").val();
+function iniciar_funciones() {
+    var idPaciente = $("#idPaciente").val();
     RecuperarDatosPaciente(idPaciente);
     RecuperarGrupos();
     RecuperarEspecialidades();
@@ -70,16 +71,16 @@ function RecuperarEspecialidades() {
                 var especialidad = element.especialidad;
                 var medicos = element.medicos;
 
-                query = query + '<div class="row opcionEspecialidad OpcionGeneral" data-id="'+idEspecialidad+'" data-opcion="ESPECIALIDAD">' +
+                query = query + '<div class="row opcionEspecialidad OpcionGeneral" data-id="' + idEspecialidad + '" data-opcion="ESPECIALIDAD">' +
                     '<div class="col-md-2 mt-5">' +
                     '<label for="">' + especialidad + '</label>' +
                     '</div>' +
                     '<div class="col-md-2 mt-5">' +
                     '<div class="row">' +
                     '<label for="" class="col-md-3 ">SI</label>' +
-                    '<input id="SIE'+idEspecialidad+'" class="form-control opcion2 col-md-3 mt-1" type="radio" name="radioE' + idEspecialidad + '" value="1">' +
+                    '<input id="SIE' + idEspecialidad + '" class="form-control opcion2 col-md-3 mt-1" type="radio" name="radioE' + idEspecialidad + '" value="1">' +
                     '<label for="" class="col-md-3 ">NO</label>' +
-                    '<input id="NOE'+idEspecialidad+'" class="form-control opcion2 col-md-3 mt-1" type="radio" name="radioE' + idEspecialidad + '" value="0" checked>' +
+                    '<input id="NOE' + idEspecialidad + '" class="form-control opcion2 col-md-3 mt-1" type="radio" name="radioE' + idEspecialidad + '" value="0" checked>' +
                     '</div>' +
                     '</div>' +
 
@@ -170,75 +171,75 @@ function RecuperarGrupos() {
 
             Html = Html + grupoOpcion;
         });
-          var especialidades='<div class="card border-primary mb-1">'+
-                                    '<div class="card-header text-white bg-primary" id="headingEspecialidad">'+
-                                        '<h4 class="mb-0"><a class="text-inherit" data-toggle="collapse" data-target="#collapseEspecialidad" aria-expanded="false" aria-controls="collapseEspecialidad" href="">OTRAS ESPECIALIDADES</a>'+
-                                        '</h4>'+
-                                    '</div>'+
-                                    '<div class="collapse" id="collapseEspecialidad" aria-labelledby="headingEspecialidad" data-parent="#accordion">'+
-                                        '<div class="card-body border-top">'+
-                                            '<div class="row" >'+
-                                               ' <div class="col-md-12" id="contenedorEspecialidades">'+
-                                                '</div>'+
-                                           ' </div>'+
-                                        '</div>'+
-                                    '</div>'+
-                                '</div>';
-          var pie=' <div class="card border-primary mb-1">'+
-                                    '<div class="card-header text-white bg-primary" id="headingTwo">'+
-                                        '<h4 class="mb-0"><a class="text-inherit collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" href="">EXAMEN DE PIE</a>'+
-                                       ' </h4>'+
-                                    '</div>'+
-                                   ' <div class="collapse" id="collapseTwo" aria-labelledby="headingTwo" data-parent="#accordion">'+
-                                       ' <div class="card-body border-top">'+
-                                            '<div class="row" >'+
-                                               ' <div class="col-md-9 offset-3 padre">'+
-                                                   ' <div class="ImagenPie">'+
-                                                       ' <div class="OpcionPie1" id="OpcionPieN1">'+
-                                                           ' <div class="opciones Option" data-opcion="1">'+
-                                                            '</div>'+
-                                                       ' </div>'+
-                                                        '<div class="OpcionPie2" id="OpcionPieN2">'+
-                                                            '<div class="opciones Option" data-opcion="1">'+
-                                                            '</div>'+
-                                                        '</div>'+
-                                                        '<div class="OpcionPie3" id="OpcionPieN3">'+
-                                                            '<div class="opciones Option" data-opcion="1">'+
-                                                            '</div>'+
-                                                        '</div>'+
-                                                       ' <div class="OpcionPie4" id="OpcionPieN4">'+
-                                                            '<div class="opciones Option" data-opcion="1">'+
-                                                            '</div>'+
-                                                        '</div>'+
-                                                        '<div class="OpcionPie5" id="OpcionPieN5">'+
-                                                           ' <div class="opciones Option" data-opcion="1">'+
+        var especialidades = '<div class="card border-primary mb-1">' +
+            '<div class="card-header text-white bg-primary" id="headingEspecialidad">' +
+            '<h4 class="mb-0"><a class="text-inherit" data-toggle="collapse" data-target="#collapseEspecialidad" aria-expanded="false" aria-controls="collapseEspecialidad" href="">OTRAS ESPECIALIDADES</a>' +
+            '</h4>' +
+            '</div>' +
+            '<div class="collapse" id="collapseEspecialidad" aria-labelledby="headingEspecialidad" data-parent="#accordion">' +
+            '<div class="card-body border-top">' +
+            '<div class="row" >' +
+            ' <div class="col-md-12" id="contenedorEspecialidades">' +
+            '</div>' +
+            ' </div>' +
+            '</div>' +
+            '</div>' +
+            '</div>';
+        var pie = ' <div class="card border-primary mb-1">' +
+            '<div class="card-header text-white bg-primary" id="headingTwo">' +
+            '<h4 class="mb-0"><a class="text-inherit collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" href="">EXAMEN DE PIE</a>' +
+            ' </h4>' +
+            '</div>' +
+            ' <div class="collapse" id="collapseTwo" aria-labelledby="headingTwo" data-parent="#accordion">' +
+            ' <div class="card-body border-top">' +
+            '<div class="row" >' +
+            ' <div class="col-md-9 offset-3 padre">' +
+            ' <div class="ImagenPie">' +
+            ' <div class="OpcionPie1" id="OpcionPieN1">' +
+            ' <div class="opciones Option" data-opcion="1">' +
+            '</div>' +
+            ' </div>' +
+            '<div class="OpcionPie2" id="OpcionPieN2">' +
+            '<div class="opciones Option" data-opcion="1">' +
+            '</div>' +
+            '</div>' +
+            '<div class="OpcionPie3" id="OpcionPieN3">' +
+            '<div class="opciones Option" data-opcion="1">' +
+            '</div>' +
+            '</div>' +
+            ' <div class="OpcionPie4" id="OpcionPieN4">' +
+            '<div class="opciones Option" data-opcion="1">' +
+            '</div>' +
+            '</div>' +
+            '<div class="OpcionPie5" id="OpcionPieN5">' +
+            ' <div class="opciones Option" data-opcion="1">' +
 
-                                                            '</div>'+
-                                                       ' </div>'+
-                                                       ' <div class="OpcionPie6" id="OpcionPieN6">'+
-                                                            '<div class="opciones Option" data-opcion="1">'+
-                                                            '</div>'+
-                                                        '</div>'+
-                                                       ' <div class="OpcionPie7" id="OpcionPieN7">'+
-                                                            '<div class="opciones Option" data-opcion="1">'+
-                                                            '</div>'+
-                                                        '</div>'+
-                                                        '<div class="OpcionPie8" id="OpcionPieN8">'+
-                                                           ' <div class="opciones Option" data-opcion="1">'+
-                                                           ' </div>'+
-                                                        '</div>'+
-                                                    '</div>'+
-                                               ' </div>'+
-                                           ' </div>'+
-                                        '</div>'+
-                                    '</div>'+
-                                '</div>';
-        Html=Html+especialidades;
-        Html=Html+pie;
+            '</div>' +
+            ' </div>' +
+            ' <div class="OpcionPie6" id="OpcionPieN6">' +
+            '<div class="opciones Option" data-opcion="1">' +
+            '</div>' +
+            '</div>' +
+            ' <div class="OpcionPie7" id="OpcionPieN7">' +
+            '<div class="opciones Option" data-opcion="1">' +
+            '</div>' +
+            '</div>' +
+            '<div class="OpcionPie8" id="OpcionPieN8">' +
+            ' <div class="opciones Option" data-opcion="1">' +
+            ' </div>' +
+            '</div>' +
+            '</div>' +
+            ' </div>' +
+            ' </div>' +
+            '</div>' +
+            '</div>' +
+            '</div>';
+        Html = Html + especialidades;
+        Html = Html + pie;
         $("#accordion").html(Html);
 
         LanzarFunciones();
-         LanzarFuncionOpcionesPie();
+        LanzarFuncionOpcionesPie();
     });
 }
 
@@ -309,7 +310,7 @@ function RecuperarTipoOpcion(elemento, contador) {
             } else {
                 place = '(Rango: ' + minimo + ' ' + atributo + ' - ' + maximo + ' ' + atributo + ')';
             }
-            opcion = '<input type="hidden" class="opcionOculto " id="OF' + idOpcion + '"  data-minimo="' + minimo + '" data-maximo="' + maximo + '" data-sexo="'+sexo+'">' +
+            opcion = '<input type="hidden" class="opcionOculto " id="OF' + idOpcion + '"  data-minimo="' + minimo + '" data-maximo="' + maximo + '" data-sexo="' + sexo + '">' +
                 '<div class="col-md-12"><label class="">' + Titulo + '(' + atributo + ') - ' + paciente + ':</label></div>' +
                 '<div class="col-md-4">' +
                 '<input id="OP' + idOpcion + '" class="form-control  caja campo FuRango" data-id="' + idOpcion + '" data-atributo="' + atributo + '" data-tipo="' + Tipo + '" data-minimo="' + minimo + '" data-maximo="' + maximo + '" type="text" step="any"  maxlength="100" placeholder="' + place + '" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
@@ -409,9 +410,9 @@ function RecuperarTipoOpcion(elemento, contador) {
                 '  </div> ' +
                 ' </div> ' +
                 '</div>' +
-                '<div class="col-md-4" style="display:none;" id="area'+idOpcion+'"> <select class="form-control " id="SELECT' + idOpcion + '" name="" disabled></select></div>'+
-                '<div class=" col-md-4" style="display:none;" id="DO' + idOpcion + '" ><input id="dosis'+idOpcion+'" class="form-control  caja campo opcionCampo" type="text"  maxlength="100" placeholder="DOSIS/DIA" disabled></div>'+
-                '<div class=" col-md-4" style="display:none;" id="TA' + idOpcion + '"><input id="tab'+idOpcion+'"  class="form-control  caja campo opcionCampo" type="text"  maxlength="100" placeholder="NUM. INYECC." disabled></div>';
+                '<div class="col-md-4" style="display:none;" id="area' + idOpcion + '"> <select class="form-control " id="SELECT' + idOpcion + '" name="" disabled></select></div>' +
+                '<div class=" col-md-4" style="display:none;" id="DO' + idOpcion + '" ><input id="dosis' + idOpcion + '" class="form-control  caja campo opcionCampo" type="text"  maxlength="100" placeholder="DOSIS/DIA" disabled></div>' +
+                '<div class=" col-md-4" style="display:none;" id="TA' + idOpcion + '"><input id="tab' + idOpcion + '"  class="form-control  caja campo opcionCampo" type="text"  maxlength="100" placeholder="NUM. INYECC." disabled></div>';
             break;
 
         case "10":
@@ -431,72 +432,72 @@ function LanzarFunciones() {
         var tipo = $(this).data("tipo");
         if (tipo == 9) {
 
-            var tipoCampos=$("#OF"+id).data("tipocampo");
+            var tipoCampos = $("#OF" + id).data("tipocampo");
 
-            switch(tipoCampos){
+            switch (tipoCampos) {
                 case 1:
-                    $("#area"+id).show();
-                    $("#SELECT"+id).empty();
-                    $("#SELECT"+id).append(Lista_Medicos);
+                    $("#area" + id).show();
+                    $("#SELECT" + id).empty();
+                    $("#SELECT" + id).append(Lista_Medicos);
                     break;
-                case 2 :
-                     $("#area"+id).show();
-                     $("#SELECT"+id).empty();
-                     $("#SELECT"+id).append(Listas_Comorbilidad);
+                case 2:
+                    $("#area" + id).show();
+                    $("#SELECT" + id).empty();
+                    $("#SELECT" + id).append(Listas_Comorbilidad);
                     break;
-                 case 3 :
-                     $("#DO"+id).show();
-                     $("#TA"+id).show();
+                case 3:
+                    $("#DO" + id).show();
+                    $("#TA" + id).show();
                     break;
-                 case 4 :
-                      $("#area"+id).show();
-                      $("#SELECT"+id).append(Evaluado);
+                case 4:
+                    $("#area" + id).show();
+                    $("#SELECT" + id).append(Evaluado);
                     break;
                 case 5:
-                     $("#area"+id).show();
-                    $("#SELECT"+id).append(DiagnosticoEnfermeria);
+                    $("#area" + id).show();
+                    $("#SELECT" + id).append(DiagnosticoEnfermeria);
                     break;
-                 case 6:
-                     $("#area"+id).show();
-                    $("#SELECT"+id).append(Tratamientos);
+                case 6:
+                    $("#area" + id).show();
+                    $("#SELECT" + id).append(Tratamientos);
                     break;
 
             }
 
-            $('#SI'+id).change(function () {
+            $('#SI' + id).change(function () {
                 if (this.checked == true) {
-                    if(tipoCampos==3){
-                         $("#dosis"+id).removeAttr("disabled");
-                         $("#tab"+id).removeAttr("disabled");
-                    }else{
-                        $("#SELECT"+id).removeAttr("disabled");
+                    if (tipoCampos == 3) {
+                        $("#dosis" + id).removeAttr("disabled");
+                        $("#tab" + id).removeAttr("disabled");
+                    } else {
+                        $("#SELECT" + id).removeAttr("disabled");
                     }
 
                 } else {
-                    if(tipoCampos==3){
-                        $("#dosis"+id).attr("disabled",true);
-                         $("#tab"+id).attr("disabled",true);
-                    }else{
-                       $("#SELECT"+id).attr("disabled",true);
+                    if (tipoCampos == 3) {
+                        $("#dosis" + id).attr("disabled", true);
+                        $("#tab" + id).attr("disabled", true);
+                    } else {
+                        $("#SELECT" + id).attr("disabled", true);
                     }
 
                 }
             });
-            $('#NO'+id).change(function () {
+            $('#NO' + id).change(function () {
                 if (this.checked == true) {
-                    if(tipoCampos==3){
-                          $("#dosis"+id).attr("disabled",true);
-                         $("#tab"+id).attr("disabled",true);
-                    }else{
-                       $("#SELECT"+id).attr("disabled",true);
+                    if (tipoCampos == 3) {
+                        $("#dosis" + id).attr("disabled", true);
+                        $("#tab" + id).attr("disabled", true);
+                    } else {
+                        $("#SELECT" + id).attr("disabled", true);
                     }
 
                 } else {
-                    if(tipoCampos==3){
-                         $("#dosis"+id).removeAttr("disabled");
-                         $("#tab"+id).removeAttr("disabled");
-                    }else{
-                       $("#SELECT"+id).removeAttr("disabled");
+                    if (tipoCampos == 3) {
+                        $("#dosis" + id).removeAttr("disabled");
+                        $("#tab" + id).removeAttr("disabled");
+                    } else {
+                        $("#SELECT" + id).removeAttr("disabled");
                     }
 
                 }
@@ -567,38 +568,38 @@ function LanzarFunciones() {
 
 }
 
-function LanzarFuncionesEspecialidad(){
-     $(".opcionEspecialidad").each(function () {
+function LanzarFuncionesEspecialidad() {
+    $(".opcionEspecialidad").each(function () {
 
-          var id = $(this).data("id");
-           $('#SIE'+id).change(function () {
-                if (this.checked == true) {
-                    $("#OptionDiag"+id).removeAttr("disabled");
-                    $("#OptionMedico"+id).removeAttr("disabled");
-                    $("#tratamiento"+id).removeAttr("disabled");
-                    $("#Obser"+id).removeAttr("disabled");
-                } else {
-                     $("#OptionDiag"+id).attr("disabled",true);
-                    $("#OptionMedico"+id).attr("disabled",true);
-                    $("#tratamiento"+id).attr("disabled",true);
-                    $("#Obser"+id).attr("disabled",true);
-                }
-            });
-            $('#NOE'+id).change(function () {
-                if (this.checked == true) {
-                     $("#OptionDiag"+id).attr("disabled",true);
-                    $("#OptionMedico"+id).attr("disabled",true);
-                    $("#tratamiento"+id).attr("disabled",true);
-                    $("#Obser"+id).attr("disabled",true);
+        var id = $(this).data("id");
+        $('#SIE' + id).change(function () {
+            if (this.checked == true) {
+                $("#OptionDiag" + id).removeAttr("disabled");
+                $("#OptionMedico" + id).removeAttr("disabled");
+                $("#tratamiento" + id).removeAttr("disabled");
+                $("#Obser" + id).removeAttr("disabled");
+            } else {
+                $("#OptionDiag" + id).attr("disabled", true);
+                $("#OptionMedico" + id).attr("disabled", true);
+                $("#tratamiento" + id).attr("disabled", true);
+                $("#Obser" + id).attr("disabled", true);
+            }
+        });
+        $('#NOE' + id).change(function () {
+            if (this.checked == true) {
+                $("#OptionDiag" + id).attr("disabled", true);
+                $("#OptionMedico" + id).attr("disabled", true);
+                $("#tratamiento" + id).attr("disabled", true);
+                $("#Obser" + id).attr("disabled", true);
 
-                } else {
-                  $("#OptionDiag"+id).removeAttr("disabled");
-                    $("#OptionMedico"+id).removeAttr("disabled");
-                    $("#tratamiento"+id).removeAttr("disabled");
-                    $("#Obser"+id).removeAttr("disabled");
-                }
-            });
-     });
+            } else {
+                $("#OptionDiag" + id).removeAttr("disabled");
+                $("#OptionMedico" + id).removeAttr("disabled");
+                $("#tratamiento" + id).removeAttr("disabled");
+                $("#Obser" + id).removeAttr("disabled");
+            }
+        });
+    });
 }
 
 function examinarFormula(id, v1, v2, v3, v4, formula, min, max) {
@@ -668,131 +669,193 @@ function quitarSeparador(valor) {
     return va;
 }
 
-function GuardarFicha(){
+function GuardarFicha() {
 
-    $(".OpcionGeneral").each(function (){
+    var Resultados = new Array();
 
-        var tipoOpcion=$(this).data("opcion");
-        var id=$(this).data("id");
-        var tipoTipo=$(this).data("tipo");
-        if(tipoOpcion=="OPCION"){
+    $(".OpcionGeneral").each(function () {
 
-            switch(tipoTipo){
+        var tipoOpcion = $(this).data("opcion");
+        var id = $(this).data("id");
+        var tipoTipo = $(this).data("tipo");
+
+        var Resultado = new Array();
+
+        if (tipoOpcion == "OPCION") {
+
+            switch (tipoTipo) {
                 case 2:
-                    var campo=$("#CAM"+id).val();
-                    console.log("ID ="+id+" tipo="+2+" CAMPO="+campo);
+                    var campo = $("#CAM" + id).val();
+                    console.log("ID =" + id + " tipo=" + 2 + " CAMPO=" + campo);
+
+                    Resultado.push(id);
+                    Resultado.push("OPCION");
+                    Resultado.push(2);
+                    Resultado.push(campo);
                     break;
                 case 3:
-
-                    var minimo=$("#OF"+id).data("minimo");
-                    var maximo=$("#OF"+id).data("maximo");
-                    var respuesta=$("#OP"+id).val();
-                    if(respuesta==""){
-                        respuesta=0;
+                    var minimo = $("#OF" + id).data("minimo");
+                    var maximo = $("#OF" + id).data("maximo");
+                    var respuesta = $("#OP" + id).val();
+                    if (respuesta == "") {
+                        respuesta = 0;
                     }
-                    var Estado=0;
-                    if(respuesta>=minimo && respuesta<=maximo){
-                        Estado=1;
-                    }else{
-                        Estado=0;
+                    var Estado = 0;
+                    if (respuesta >= minimo && respuesta <= maximo) {
+                        Estado = 1;
+                    } else {
+                        Estado = 0;
                     }
+                    console.log("ID=" + id + " tipo=" + 3 + " respuesta=" + respuesta + " estado=" + Estado);
 
-                    console.log("ID="+id+" tipo="+3+" respuesta="+respuesta+" estado="+Estado);
-
+                    Resultado.push(id);
+                    Resultado.push("OPCION");
+                    Resultado.push(3);
+                    Resultado.push(respuesta);
+                    Resultado.push(Estado);
                     break;
                 case 4:
-                    var minimo=$("#OF"+id).data("minimo");
-                    var maximo=$("#OF"+id).data("maximo");
-                    var sexo=$("#OF"+id).data("sexo");
-                    var respuesta=$("#OP"+id).val();
-                    if(respuesta==""){
-                        respuesta=0;
+                    var minimo = $("#OF" + id).data("minimo");
+                    var maximo = $("#OF" + id).data("maximo");
+                    var sexo = $("#OF" + id).data("sexo");
+                    var respuesta = $("#OP" + id).val();
+                    if (respuesta == "") {
+                        respuesta = 0;
                     }
-                    var Estado=0;
-                    if(respuesta>=minimo && respuesta<=maximo){
-                        Estado=1;
-                    }else{
-                        Estado=0;
+                    var Estado = 0;
+                    if (respuesta >= minimo && respuesta <= maximo) {
+                        Estado = 1;
+                    } else {
+                        Estado = 0;
                     }
+                    console.log("ID=" + id + " tipo=" + 4 + " respuesta=" + respuesta + " estado=" + Estado + " Sexo=" + sexo);
 
-                    console.log("ID="+id+" tipo="+4+" respuesta="+respuesta+" estado="+Estado+" Sexo="+sexo);
-
+                    Resultado.push(id);
+                    Resultado.push("OPCION");
+                    Resultado.push(4);
+                    Resultado.push(respuesta);
+                    Resultado.push(Estado);
+                    Resultado.push(sexo);
                     break;
                 case 5:
-                     var campo=$("#FE"+id).val();
-                    console.log("ID ="+id+" tipo="+5+" CAMPO="+campo);
+                    var campo = $("#FE" + id).val();
+
+                    console.log("ID =" + id + " tipo=" + 5 + " CAMPO=" + campo);
+
+                    Resultado.push(id);
+                    Resultado.push("OPCION");
+                    Resultado.push(5);
+                    Resultado.push(campo);
                     break;
                 case 6:
-                    var minimo=$("#OF"+id).data("minimo");
-                    var maximo=$("#OF"+id).data("maximo");
-                    var v1=$("#V1"+id).val();
-                    var v2=$("#V2"+id).val();
-                    var v3=$("#V3"+id).val();
-                    var v4=$("#V4"+id).val();
-                    var respuesta=$("#F"+id).val();
-                    var Estado=0;
-                    if(respuesta>=minimo && respuesta<=maximo){
-                        Estado=1;
-                    }else{
-                        Estado=0;
+                    var minimo = $("#OF" + id).data("minimo");
+                    var maximo = $("#OF" + id).data("maximo");
+                    var v1 = $("#V1" + id).val();
+                    var v2 = $("#V2" + id).val();
+                    var v3 = $("#V3" + id).val();
+                    var v4 = $("#V4" + id).val();
+                    var respuesta = $("#F" + id).val();
+                    var Estado = 0;
+                    if (respuesta >= minimo && respuesta <= maximo) {
+                        Estado = 1;
+                    } else {
+                        Estado = 0;
                     }
-
-                     console.log("ID="+id+"tipo="+6+" respuesta="+respuesta+" estado="+Estado+" v1="+v1+" V3="+v2+" v3="+v3+" v4="+v4);
+                    console.log("ID=" + id + "tipo=" + 6 + " respuesta=" + respuesta + " estado=" + Estado + " v1=" + v1 + " V3=" + v2 + " v3=" + v3 + " v4=" + v4);
+                    Resultado.push(id);
+                    Resultado.push("OPCION");
+                    Resultado.push(6);
+                    Resultado.push(respuesta);
+                    Resultado.push(Estado);
+                    Resultado.push(v1);
+                    Resultado.push(v2);
+                    Resultado.push(v3);
+                    Resultado.push(v4);
 
                     break;
                 case 7:
-                     var Estado=$('input[name=radio'+id+']:checked').val();
-                    console.log("ID="+id+" tipo="+7+" estado="+Estado);
+                    var Estado = $('input[name=radio' + id + ']:checked').val();
+                    console.log("ID=" + id + " tipo=" + 7 + " estado=" + Estado);
+
+                    Resultado.push(id);
+                    Resultado.push("OPCION");
+                    Resultado.push(7);
+                    Resultado.push(Estado);
                     break;
                 case 9:
+                    var tipoCampo = $("#OF" + id).data("tipocampo");
+                    var Estado = $('input[name=radio' + id + ']:checked').val();
+                    var select = $("#SELECT" + id).val();
+                    var dosis = $("#dosis" + id).val();
+                    var num = $("#tab" + id).val();
+                    console.log("ID=" + id + " tipo=" + 9 + " tipoCampo=" + tipoCampo + " estado=" + Estado + " dosis=" + dosis + " num=" + num);
 
-                      var tipoCampo=$("#OF"+id).data("tipocampo");
-                      var Estado=$('input[name=radio'+id+']:checked').val();
-                      var select=$("#SELECT"+id).val();
-                      var dosis=$("#dosis"+id).val();
-                      var num=$("#tab"+id).val();
+                    Resultado.push(id);
+                    Resultado.push("OPCION");
+                    Resultado.push(9);
+                    Resultado.push(tipoCampo);
+                    Resultado.push(Estado);
+                    Resultado.push(dosis);
+                    Resultado.push(num);
 
-                       console.log("ID="+id+" tipo="+9+" tipoCampo="+tipoCampo+" estado="+Estado+" dosis="+dosis+" num="+num);
 
                     break;
-
             }
 
+        } else if (tipoOpcion == "ESPECIALIDAD") {
 
+            var Estado = $('input[name=radioE' + id + ']:checked').val();
+            var diagnostico = $("#OptionDiag" + id).val();
+            var medico = $("#OptionMedico" + id).val();
+            var tratamiento = $("#tratamiento" + id).val();
+            var observacion = $("#Obser" + id).val();
 
-        }else if(tipoOpcion=="ESPECIALIDAD"){
-
-            var Estado=$('input[name=radioE'+id+']:checked').val();
-            var diagnostico=$("#OptionDiag"+id).val();
-            var medico=$("#OptionMedico"+id).val();
-            var tratamiento=$("#tratamiento"+id).val();
-            var observacion=$("#Obser"+id).val();
-
-            console.log("ID ="+id+" Estado="+Estado+" Diag="+diagnostico+" Medico="+medico+" Tratamiento="+tratamiento+" Obsr="+observacion);
+            console.log("ID =" + id + " Estado=" + Estado + " Diag=" + diagnostico + " Medico=" + medico + " Tratamiento=" + tratamiento + " Obsr=" + observacion);
+            Resultado.push(id);
+            Resultado.push("ESPECIALIDAD");
+            Resultado.push(Estado);
+            Resultado.push(diagnostico);
+            Resultado.push(medico);
+            Resultado.push(tratamiento);
 
         }
+
+        Resultados.push(Resultado);
     });
 
 
-var hijo1=$("#OpcionPieN1").children("div");
-    var resu1=hijo1.data("opcion");
-var hijo2=$("#OpcionPieN2").children("div");
-    var resu2=hijo2.data("opcion");
-var hijo3=$("#OpcionPieN3").children("div");
-    var resu3=hijo3.data("opcion");
-var hijo4=$("#OpcionPieN4").children("div");
-    var resu4=hijo4.data("opcion");
-var hijo5=$("#OpcionPieN5").children("div");
-    var resu5=hijo5.data("opcion");
-var hijo6=$("#OpcionPieN6").children("div");
-    var resu6=hijo6.data("opcion");
-var hijo7=$("#OpcionPieN7").children("div");
-    var resu7=hijo7.data("opcion");
-var hijo8=$("#OpcionPieN8").children("div");
-    var resu8=hijo8.data("opcion");
+  var ResultadoPie = new Array();
 
-    console.log("RESULTADO PIE: R1="+resu1+" R2="+resu2+" R3="+resu3+" R4="+resu4+" R5="+resu5+" R6="+resu6+" R7="+resu7+" R8="+resu8);
+    var hijo1 = $("#OpcionPieN1").children("div");
+    var resu1 = hijo1.data("opcion");
+    var hijo2 = $("#OpcionPieN2").children("div");
+    var resu2 = hijo2.data("opcion");
+    var hijo3 = $("#OpcionPieN3").children("div");
+    var resu3 = hijo3.data("opcion");
+    var hijo4 = $("#OpcionPieN4").children("div");
+    var resu4 = hijo4.data("opcion");
+    var hijo5 = $("#OpcionPieN5").children("div");
+    var resu5 = hijo5.data("opcion");
+    var hijo6 = $("#OpcionPieN6").children("div");
+    var resu6 = hijo6.data("opcion");
+    var hijo7 = $("#OpcionPieN7").children("div");
+    var resu7 = hijo7.data("opcion");
+    var hijo8 = $("#OpcionPieN8").children("div");
+    var resu8 = hijo8.data("opcion");
 
+    console.log("RESULTADO PIE: R1=" + resu1 + " R2=" + resu2 + " R3=" + resu3 + " R4=" + resu4 + " R5=" + resu5 + " R6=" + resu6 + " R7=" + resu7 + " R8=" + resu8);
 
+     ResultadoPie.push("PIE");
+    ResultadoPie.push(resu1);
+    ResultadoPie.push(resu2);
+    ResultadoPie.push(resu3);
+    ResultadoPie.push(resu4);
+    ResultadoPie.push(resu5);
+    ResultadoPie.push(resu6);
+    ResultadoPie.push(resu7);
+    ResultadoPie.push(resu8);
+
+ Resultados.push(ResultadoPie);
+     console.log(Resultados);
 }
 init();
