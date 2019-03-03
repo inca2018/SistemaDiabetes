@@ -86,14 +86,14 @@ function RecuperarEspecialidades() {
                     '<div class="col-md-2">' +
                     ' <div class="form-group">' +
                     '<label for="OpcionTipoCampo" class="col-form-label">Diagnosticos:</label>' +
-                    '<select class="form-control" id="OptionDiag' + idEspecialidad + '" name="OpcionTipoCampo" disabled>' +
+                    '<select class="form-control" id="OptionDiag' + idEspecialidad + '" data-message="'+especialidad+' - Diagnostico" name="OpcionTipoCampo" disabled>' +
                     diagnosticos + '</select>' +
                     ' </div>' +
                     ' </div>' +
                     '<div class="col-md-2">' +
                     ' <div class="form-group">' +
                     ' <label for="OpcionTipoCampo" class="col-form-label">Medico:</label>' +
-                    '<select class="form-control  " id="OptionMedico' + idEspecialidad + '" name="OpcionTipoCampo"  disabled>' + medicos +
+                    '<select class="form-control  " id="OptionMedico' + idEspecialidad + '" data-message="'+especialidad+' - Medico" name="OpcionTipoCampo"  disabled>' + medicos +
 
                     '</select>' +
                     '</div>' +
@@ -101,13 +101,13 @@ function RecuperarEspecialidades() {
                     '<div class="col-md-2">' +
                     ' <div class="form-group">' +
                     ' <label for="" class="col-form-label">Tratamiento:</label>' +
-                    ' <input type="text" class="form-control"  id="tratamiento' + idEspecialidad + '" disabled>' +
+                    ' <input type="text" class="form-control"  data-message="'+especialidad+' - Tratamiento" id="tratamiento' + idEspecialidad + '" disabled>' +
                     '</div>' +
                     '</div>' +
                     ' <div class="col-md-2">' +
                     ' <div class="form-group">' +
                     '<label for="" class="col-form-label">Observaciones:</label>' +
-                    ' <input type="text" class="form-control"  id="Obser' + idEspecialidad + '" disabled>' +
+                    ' <input type="text" class="form-control" data-message="'+especialidad+' - Observaciones" id="Obser' + idEspecialidad + '" disabled>' +
                     '</div>' +
                     '</div>' +
                     ' </div>';
@@ -161,7 +161,7 @@ function RecuperarGrupos() {
                 var idOpcion = element2.id;
                 var Tipo = element2.tipo;
                 grupoOpcion = grupoOpcion + '<div class="row mt-1 ml-5 OpcionGeneral" data-id="' + idOpcion + '" data-tipo="' + Tipo + '" data-opcion="OPCION">';
-                var OpcionSet = RecuperarTipoOpcion(element2, contador++);
+                var OpcionSet = RecuperarTipoOpcion(element2, contador++,grupo);
                 grupoOpcion = grupoOpcion + OpcionSet + '</div>';
             });
 
@@ -242,7 +242,7 @@ function RecuperarGrupos() {
     });
 }
 
-function RecuperarTipoOpcion(elemento, contador) {
+function RecuperarTipoOpcion(elemento, contador,grupo) {
 
     var idOpcion = elemento.id;
     var Titulo = elemento.titulo;
@@ -251,6 +251,7 @@ function RecuperarTipoOpcion(elemento, contador) {
     var Propiedades = JSON.parse(Propiedades);
     var Tipo = elemento.tipo;
 
+    grupo="";
     var opcion = "";
     switch (Tipo) {
         case "1":
@@ -278,7 +279,7 @@ function RecuperarTipoOpcion(elemento, contador) {
 
                 '<div class="col-md-12"><label class="">' + Titulo + '(' + atributo + '):</label></div>' +
                 '<div class="col-md-4">' +
-                '<input id="OP' + idOpcion + '" class="form-control  caja campo FuRango" data-id="' + idOpcion + '" data-atributo="' + atributo + '" data-tipo="' + Tipo + '" data-minimo="' + minimo + '" data-maximo="' + maximo + '" type="text" step="any"  maxlength="100" placeholder="' + place + '" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
+                '<input id="OP' + idOpcion + '" class="form-control  caja campo FuRango validar" data-message="'+grupo+' - '+Titulo+'" data-id="' + idOpcion + '" data-atributo="' + atributo + '" data-tipo="' + Tipo + '" data-minimo="' + minimo + '" data-maximo="' + maximo + '" type="text" step="any"  maxlength="100" placeholder="' + place + '" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
                 '</div>' +
                 '<div class="col-md-2">' +
                 '<button style="display:none;" id="SI' + idOpcion + '" class="btn btn-success  btn-sm"type="button"><i class="fa fa-sm fa-check"></i></button>' +
@@ -312,9 +313,9 @@ function RecuperarTipoOpcion(elemento, contador) {
             opcion = '<input type="hidden" class="opcionOculto " id="OF' + idOpcion + '"  data-minimo="' + minimo + '" data-maximo="' + maximo + '" data-sexo="'+sexo+'">' +
                 '<div class="col-md-12"><label class="">' + Titulo + '(' + atributo + ') - ' + paciente + ':</label></div>' +
                 '<div class="col-md-4">' +
-                '<input id="OP' + idOpcion + '" class="form-control  caja campo FuRango" data-id="' + idOpcion + '" data-atributo="' + atributo + '" data-tipo="' + Tipo + '" data-minimo="' + minimo + '" data-maximo="' + maximo + '" type="text" step="any"  maxlength="100" placeholder="' + place + '" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
+                '<input id="OP' + idOpcion + '" class="form-control  caja campo FuRango validar" data-message="'+grupo+' - '+Titulo+'" data-id="' + idOpcion + '" data-atributo="' + atributo + '" data-tipo="' + Tipo + '" data-minimo="' + minimo + '" data-maximo="' + maximo + '" type="text" step="any"  maxlength="100" placeholder="' + place + '" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
                 '</div>' +
-                '<div class="col-md-2 mt-4">' +
+                '<div class="col-md-2 ">' +
                 '<button style="display:none;" id="SI' + idOpcion + '" class="btn btn-success  btn-sm"type="button"><i class="fa fa-sm fa-check"></i></button>' +
                 '<button style="display:none;" id="NO' + idOpcion + '" class="btn btn-danger  btn-sm"type="button"><i class="fa fa-sm fa-times"></i>' + '</button>' +
                 '</div> ';
@@ -327,7 +328,7 @@ function RecuperarTipoOpcion(elemento, contador) {
                 '<div class="form-group">' +
                 ' <label for="" class="col-form-label">' + Titulo + ':</label>' +
                 '<div class="input-group date dateFecha">' +
-                ' <input class="form-control opcionFecha" type="text" id="FE' + idOpcion + '" data-tipo="' + Tipo + '" data-id="' + idOpcion + '" autocomplete="off">' +
+                ' <input class="form-control opcionFecha validar" type="text" id="FE' + idOpcion + '" data-message="'+grupo+' - '+Titulo+'" data-tipo="' + Tipo + '" data-id="' + idOpcion + '" autocomplete="off">' +
                 ' <span class="input-group-append input-group-addon">' +
                 '     <span class="input-group-text "><i class="fa fa-calendar fa-lg"></i></span>' +
                 ' </span>' +
@@ -344,25 +345,33 @@ function RecuperarTipoOpcion(elemento, contador) {
             var formula = Propiedades.Formula;
             var minimo = Propiedades.minimo;
             var maximo = Propiedades.maximo;
+            var vv1="";
+            (v1=="")? vv1="":vv1="validar";
+            var vv2="";
+            (v2=="")? vv2="":vv2="validar";
+            var vv3="";
+            (v3=="")? vv3="":vv3="validar";
+            var vv4="";
+            (v4=="")? vv4="":vv4="validar";
 
             opcion =
-                '<input type="hidden" class="opcionOculto " id="OF' + idOpcion + '" data-formula="' + formula + '" data-minimo="' + minimo + '" data-maximo="' + maximo + '">' +
+                '<input type="hidden" class="opcionOculto " id="OF' + idOpcion + '" data-formula="' + formula + '" data-minimo="' + minimo + '" data-maximo="' + maximo + '" data-v1="'+v1+'" data-v2="'+v2+'"  data-v3="'+v3+'" data-v4="'+v4+'">' +
 
                 '<div class="col-md-2 opcionFormula" style="display:none;"  data-id="' + v1 + '"> ' +
                 '<label class="">' + v1 + ':</label>' +
-                '<input  class="form-control caja campo  campoV" id="V1' + idOpcion + '" type="text" step="any"  maxlength="100" onkeypress="return SoloNumerosModificado(event,4,this.id);"> ' +
+                '<input  class="form-control caja campo  campoV '+vv1+' " data-message="'+grupo+' - '+v1+'" id="V1' + idOpcion + '" type="text" step="any"  maxlength="100" onkeypress="return SoloNumerosModificado(event,4,this.id);"> ' +
                 '</div>' +
                 ' <div class="col-md-2 opcionFormula" style="display:none;"  data-id="' + v2 + '"> ' +
                 ' <label class="">' + v2 + ':</label> ' +
-                '<input  class="form-control caja campo  campoV" id="V2' + idOpcion + '" type="text" step="any"  maxlength="100" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
+                '<input  class="form-control caja campo  campoV '+vv2+' " data-message="'+grupo+' - '+v2+'" id="V2' + idOpcion + '" type="text" step="any"  maxlength="100" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
                 '</div>' +
                 '<div class="col-md-2 opcionFormula" style="display:none;"  data-id="' + v3 + '"> ' +
                 '<label class="">' + v3 + ':</label> ' +
-                '<input  class="form-control caja campo  campoV" id="V3' + idOpcion + '"  type="text" step="any"  maxlength="100" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
+                '<input  class="form-control caja campo  campoV '+vv3+' " data-message="'+grupo+' - '+v3+'" id="V3' + idOpcion + '"  type="text" step="any"  maxlength="100" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
                 '</div>' +
                 '<div class="col-md-2 opcionFormula" style="display:none;" data-id="' + v4 + '"> ' +
                 '<label class="">' + v4 + ':</label>' +
-                '<input   class="form-control caja campo  campoV" id="V4' + idOpcion + '"type="text" step="any"  maxlength="100" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
+                '<input   class="form-control caja campo  campoV '+vv4+' " data-message="'+grupo+' - '+v4+'" id="V4' + idOpcion + '"type="text" step="any"  maxlength="100" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
                 '</div>' +
                 '<div class="col-md-4"> ' +
                 '<label class="">' + Titulo + ' Rango(' + minimo + '-' + maximo + '):</label>' +
@@ -409,7 +418,7 @@ function RecuperarTipoOpcion(elemento, contador) {
                 '  </div> ' +
                 ' </div> ' +
                 '</div>' +
-                '<div class="col-md-4" style="display:none;" id="area'+idOpcion+'"> <select class="form-control " id="SELECT' + idOpcion + '" name="" disabled></select></div>'+
+                '<div class="col-md-4" style="display:none;" id="area'+idOpcion+'"> <select class="form-control " data-message="'+grupo+' - '+Titulo+' - Listado" id="SELECT' + idOpcion + '" name="" disabled></select></div>'+
                 '<div class=" col-md-4" style="display:none;" id="DO' + idOpcion + '" ><input id="dosis'+idOpcion+'" class="form-control  caja campo opcionCampo" type="text"  maxlength="100" placeholder="DOSIS/DIA" disabled></div>'+
                 '<div class=" col-md-4" style="display:none;" id="TA' + idOpcion + '"><input id="tab'+idOpcion+'"  class="form-control  caja campo opcionCampo" type="text"  maxlength="100" placeholder="NUM. INYECC." disabled></div>';
             break;
@@ -468,16 +477,20 @@ function LanzarFunciones() {
                     if(tipoCampos==3){
                          $("#dosis"+id).removeAttr("disabled");
                          $("#tab"+id).removeAttr("disabled");
+                         $("#SELECT"+id).removeClass("validar");
                     }else{
                         $("#SELECT"+id).removeAttr("disabled");
+                        $("#SELECT"+id).addClass("validar");
                     }
 
                 } else {
                     if(tipoCampos==3){
-                        $("#dosis"+id).attr("disabled",true);
+                         $("#dosis"+id).attr("disabled",true);
                          $("#tab"+id).attr("disabled",true);
+                         $("#SELECT"+id).addClass("validar");
                     }else{
                        $("#SELECT"+id).attr("disabled",true);
+                       $("#SELECT"+id).removeClass("validar");
                     }
 
                 }
@@ -489,14 +502,17 @@ function LanzarFunciones() {
                          $("#tab"+id).attr("disabled",true);
                     }else{
                        $("#SELECT"+id).attr("disabled",true);
+                       $("#SELECT"+id).removeClass("validar");
                     }
 
                 } else {
                     if(tipoCampos==3){
                          $("#dosis"+id).removeAttr("disabled");
                          $("#tab"+id).removeAttr("disabled");
+                         $("#SELECT"+id).removeClass("validar");
                     }else{
                        $("#SELECT"+id).removeAttr("disabled");
+                         $("#SELECT"+id).addClass("validar");
                     }
 
                 }
@@ -565,6 +581,7 @@ function LanzarFunciones() {
         examinarFormula(buscadoId, v1, v2, v3, v4, formula, min, max);
     });
 
+
 }
 
 function LanzarFuncionesEspecialidad(){
@@ -577,11 +594,21 @@ function LanzarFuncionesEspecialidad(){
                     $("#OptionMedico"+id).removeAttr("disabled");
                     $("#tratamiento"+id).removeAttr("disabled");
                     $("#Obser"+id).removeAttr("disabled");
+
+                     $("#OptionDiag"+id).addClass("validar");
+                    $("#OptionMedico"+id).addClass("validar");
+                     $("#tratamiento"+id).addClass("validar");
+                    $("#Obser"+id).addClass("validar");
                 } else {
                      $("#OptionDiag"+id).attr("disabled",true);
                     $("#OptionMedico"+id).attr("disabled",true);
                     $("#tratamiento"+id).attr("disabled",true);
                     $("#Obser"+id).attr("disabled",true);
+
+                     $("#OptionDiag"+id).removeClass("validar");
+                    $("#OptionMedico"+id).removeClass("validar");
+                     $("#tratamiento"+id).removeClass("validar");
+                    $("#Obser"+id).removeClass("validar");
                 }
             });
             $('#NOE'+id).change(function () {
@@ -591,11 +618,20 @@ function LanzarFuncionesEspecialidad(){
                     $("#tratamiento"+id).attr("disabled",true);
                     $("#Obser"+id).attr("disabled",true);
 
+                    $("#OptionDiag"+id).removeClass("validar");
+                    $("#OptionMedico"+id).removeClass("validar");
+                     $("#tratamiento"+id).removeClass("validar");
+                    $("#Obser"+id).removeClass("validar");
                 } else {
                   $("#OptionDiag"+id).removeAttr("disabled");
                     $("#OptionMedico"+id).removeAttr("disabled");
                     $("#tratamiento"+id).removeAttr("disabled");
                     $("#Obser"+id).removeAttr("disabled");
+
+                    $("#OptionDiag"+id).addClass("validar");
+                    $("#OptionMedico"+id).addClass("validar");
+                     $("#tratamiento"+id).addClass("validar");
+                    $("#Obser"+id).addClass("validar");
                 }
             });
      });
@@ -670,6 +706,33 @@ function quitarSeparador(valor) {
 
 function GuardarFicha(){
 
+    var error="";
+
+    $(".validar").each(function(){
+			if($(this).val()==" " || $(this).val()==0){
+				error=error+$(this).data("message")+"<br>";
+			}
+    });
+
+    if(error==""){
+		$("#accordion").addClass("whirl");
+		$("#accordion").addClass("ringed");
+		setTimeout('AjaxGuardarFicha()', 2000);
+	}else{
+ 		notificar_warning("Complete :<br>"+error);
+	}
+
+}
+
+function AjaxGuardarFicha(){
+
+    $("#accordion").removeClass("whirl");
+    $("#accordion").removeClass("ringed");
+
+
+
+    var ArregloOpciones = new Array();
+
     $(".OpcionGeneral").each(function (){
 
         var tipoOpcion=$(this).data("opcion");
@@ -680,7 +743,28 @@ function GuardarFicha(){
             switch(tipoTipo){
                 case 2:
                     var campo=$("#CAM"+id).val();
-                    console.log("ID ="+id+" tipo="+2+" CAMPO="+campo);
+                    var Opcion = new Object();
+                    Opcion.id=id;
+                    Opcion.opcion="OPCION";
+                    Opcion.tipo=2;
+                    Opcion.campo=campo;
+                    Opcion.respuesta="";
+                    Opcion.estado="";
+                    Opcion.sexo="";
+                    Opcion.v1="";
+                    Opcion.v2="";
+                    Opcion.v3="";
+                    Opcion.v4="";
+                    Opcion.tipocampo="";
+                    Opcion.valorcampo="";
+                    Opcion.dosis="";
+                    Opcion.numero="";
+                    Opcion.diagnostico="";
+                    Opcion.medico="";
+                    Opcion.tratamiento="";
+                    Opcion.observacion="";
+
+                   // console.log("ID ="+id+" tipo="+2+" CAMPO="+campo);
                     break;
                 case 3:
 
@@ -697,7 +781,29 @@ function GuardarFicha(){
                         Estado=0;
                     }
 
-                    console.log("ID="+id+" tipo="+3+" respuesta="+respuesta+" estado="+Estado);
+
+                    var Opcion = new Object();
+                    Opcion.id=id;
+                    Opcion.opcion="OPCION";
+                    Opcion.tipo=3;
+                    Opcion.campo="";
+                    Opcion.respuesta=respuesta;
+                    Opcion.estado=Estado;
+                    Opcion.sexo="";
+                    Opcion.v1="";
+                    Opcion.v2="";
+                    Opcion.v3="";
+                    Opcion.v4="";
+                    Opcion.tipocampo="";
+                    Opcion.valorcampo="";
+                    Opcion.dosis="";
+                    Opcion.numero="";
+                    Opcion.diagnostico="";
+                    Opcion.medico="";
+                    Opcion.tratamiento="";
+                    Opcion.observacion="";
+
+                   // console.log("ID="+id+" tipo="+3+" respuesta="+respuesta+" estado="+Estado);
 
                     break;
                 case 4:
@@ -715,12 +821,54 @@ function GuardarFicha(){
                         Estado=0;
                     }
 
-                    console.log("ID="+id+" tipo="+4+" respuesta="+respuesta+" estado="+Estado+" Sexo="+sexo);
+                    var Opcion = new Object();
+                    Opcion.id=id;
+                    Opcion.opcion="OPCION";
+                    Opcion.tipo=4;
+                    Opcion.campo="";
+                    Opcion.respuesta=respuesta;
+                    Opcion.estado=Estado;
+                    Opcion.sexo=sexo;
+                    Opcion.v1="";
+                    Opcion.v2="";
+                    Opcion.v3="";
+                    Opcion.v4="";
+                    Opcion.tipocampo="";
+                    Opcion.valorcampo="";
+                    Opcion.dosis="";
+                    Opcion.numero="";
+                    Opcion.diagnostico="";
+                    Opcion.medico="";
+                    Opcion.tratamiento="";
+                    Opcion.observacion="";
+
+                    //console.log("ID="+id+" tipo="+4+" respuesta="+respuesta+" estado="+Estado+" Sexo="+sexo);
 
                     break;
                 case 5:
                      var campo=$("#FE"+id).val();
                     console.log("ID ="+id+" tipo="+5+" CAMPO="+campo);
+                    var Opcion = new Object();
+                    Opcion.id=id;
+                    Opcion.opcion="OPCION";
+                    Opcion.tipo=5;
+                    Opcion.campo=campo;
+                    Opcion.respuesta="";
+                    Opcion.estado=1;
+                    Opcion.sexo="";
+                    Opcion.v1="";
+                    Opcion.v2="";
+                    Opcion.v3="";
+                    Opcion.v4="";
+                    Opcion.tipocampo="";
+                    Opcion.valorcampo="";
+                    Opcion.dosis="";
+                    Opcion.numero="";
+                    Opcion.diagnostico="";
+                    Opcion.medico="";
+                    Opcion.tratamiento="";
+                    Opcion.observacion="";
+
                     break;
                 case 6:
                     var minimo=$("#OF"+id).data("minimo");
@@ -737,12 +885,56 @@ function GuardarFicha(){
                         Estado=0;
                     }
 
-                     console.log("ID="+id+"tipo="+6+" respuesta="+respuesta+" estado="+Estado+" v1="+v1+" V3="+v2+" v3="+v3+" v4="+v4);
+                     var Opcion = new Object();
+                    Opcion.id=id;
+                    Opcion.opcion="OPCION";
+                    Opcion.tipo=6;
+                    Opcion.campo="";
+                    Opcion.respuesta=respuesta;
+                    Opcion.estado=Estado;
+                    Opcion.sexo="";
+                    Opcion.v1=v1;
+                    Opcion.v2=v2;
+                    Opcion.v3=v3;
+                    Opcion.v4=v4;
+                    Opcion.tipocampo="";
+                    Opcion.valorcampo="";
+                    Opcion.dosis="";
+                    Opcion.numero="";
+                    Opcion.diagnostico="";
+                    Opcion.medico="";
+                    Opcion.tratamiento="";
+                    Opcion.observacion="";
+
+                   //  console.log("ID="+id+"tipo="+6+" respuesta="+respuesta+" estado="+Estado+" v1="+v1+" V3="+v2+" v3="+v3+" v4="+v4);
+
 
                     break;
                 case 7:
                      var Estado=$('input[name=radio'+id+']:checked').val();
-                    console.log("ID="+id+" tipo="+7+" estado="+Estado);
+
+                    var Opcion = new Object();
+                    Opcion.id=id;
+                    Opcion.opcion="OPCION";
+                    Opcion.tipo=7;
+                    Opcion.campo="";
+                    Opcion.respuesta="";
+                    Opcion.estado=Estado;
+                    Opcion.sexo="";
+                    Opcion.v1="";
+                    Opcion.v2="";
+                    Opcion.v3="";
+                    Opcion.v4="";
+                    Opcion.tipocampo="";
+                    Opcion.valorcampo="";
+                    Opcion.dosis="";
+                    Opcion.numero="";
+                    Opcion.diagnostico="";
+                    Opcion.medico="";
+                    Opcion.tratamiento="";
+                    Opcion.observacion="";
+
+                   // console.log("ID="+id+" tipo="+7+" estado="+Estado);
                     break;
                 case 9:
 
@@ -752,7 +944,28 @@ function GuardarFicha(){
                       var dosis=$("#dosis"+id).val();
                       var num=$("#tab"+id).val();
 
-                       console.log("ID="+id+" tipo="+9+" tipoCampo="+tipoCampo+" estado="+Estado+" dosis="+dosis+" num="+num);
+                    var Opcion = new Object();
+                    Opcion.id=id;
+                    Opcion.opcion="OPCION";
+                    Opcion.tipo=9;
+                    Opcion.campo="";
+                    Opcion.respuesta="";
+                    Opcion.estado=Estado;
+                    Opcion.sexo="";
+                    Opcion.v1="";
+                    Opcion.v2="";
+                    Opcion.v3="";
+                    Opcion.v4="";
+                    Opcion.tipocampo=tipoCampo;
+                    Opcion.valorcampo=select;
+                    Opcion.dosis=dosis;
+                    Opcion.numero=num;
+                     Opcion.diagnostico="";
+                    Opcion.medico="";
+                    Opcion.tratamiento="";
+                    Opcion.observacion="";
+
+                   // console.log("ID="+id+" tipo="+9+" tipoCampo="+tipoCampo+" estado="+Estado+" dosis="+dosis+" num="+num);
 
                     break;
 
@@ -768,9 +981,33 @@ function GuardarFicha(){
             var tratamiento=$("#tratamiento"+id).val();
             var observacion=$("#Obser"+id).val();
 
-            console.log("ID ="+id+" Estado="+Estado+" Diag="+diagnostico+" Medico="+medico+" Tratamiento="+tratamiento+" Obsr="+observacion);
+
+            var Opcion = new Object();
+                    Opcion.id=id;
+                    Opcion.opcion="ESPECIALIDAD";
+                    Opcion.tipo="";
+                    Opcion.campo="";
+                    Opcion.respuesta="";
+                    Opcion.estado=Estado;
+                    Opcion.sexo="";
+                    Opcion.v1="";
+                    Opcion.v2="";
+                    Opcion.v3="";
+                    Opcion.v4="";
+                    Opcion.tipocampo="";
+                    Opcion.valorcampo="";
+                    Opcion.dosis="";
+                    Opcion.numero="";
+                    Opcion.diagnostico=diagnostico;
+                    Opcion.medico=medico;
+                    Opcion.tratamiento=tratamiento;
+                    Opcion.observacion=observacion;
+
+           // console.log("ID ="+id+" Estado="+Estado+" Diag="+diagnostico+" Medico="+medico+" Tratamiento="+tratamiento+" Obsr="+observacion);
 
         }
+
+        ArregloOpciones.push();
     });
 
 
@@ -791,8 +1028,12 @@ var hijo7=$("#OpcionPieN7").children("div");
 var hijo8=$("#OpcionPieN8").children("div");
     var resu8=hijo8.data("opcion");
 
+
+
     console.log("RESULTADO PIE: R1="+resu1+" R2="+resu2+" R3="+resu3+" R4="+resu4+" R5="+resu5+" R6="+resu6+" R7="+resu7+" R8="+resu8);
 
-
 }
+
+
+
 init();
