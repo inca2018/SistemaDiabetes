@@ -11,6 +11,11 @@
 
 
     $idGrupo = isset($_POST["idGrupo"]) ? limpiarCadena($_POST["idGrupo"]) : "";
+    $OpcionesR=isset($_POST["OpcionesR"]) ? limpiarCadena($_POST["OpcionesR"]) : "";
+    $idPaciente=isset($_POST["idPaciente"]) ? limpiarCadena($_POST["idPaciente"]) : "";
+    $idAno=isset($_POST["idAno"]) ? limpiarCadena($_POST["idAno"]) : "";
+    $idMes=isset($_POST["idMes"]) ? limpiarCadena($_POST["idMes"]) : "";
+
 
    switch($_GET['op']){
 
@@ -109,6 +114,33 @@
 
             echo json_encode($Listas);
        break;
+
+       case 'GuardarFicha':
+              $rspta=array("Error"=>false,"Mensaje"=>"","Registro"=>false);
+            $resuSeguimiento = $Ficha->RegistrarSeguimiento($idPaciente,$idAno,$idMes);
+            $idSeguimiento=$resuSeguimiento["ID"];
+
+            $OpcionesR = explode('|', $OpcionesR);
+
+            $contador=count($OpcionesR);
+            for($i=0;$i<$contador;$i++){
+                $opcion=explode(',',$OpcionesR[$i]);
+                 if($i==$contador-1){
+                        $resuSeguimiento = $Ficha->RegistrarResultados($opcion,$idSeguimiento);
+                        $rspta["Registro"]=true;
+
+                     }else{
+                        $resuSeguimiento = $Ficha->RegistrarResultados($opcion,$idSeguimiento);
+                     }
+            }
+
+           if($rspta["Registro"]){
+               $rspta["Mensaje"]="Registro de Seguimiento con Exito!";
+           }else{
+               $rspta["Mensaje"]="Registro de Seguimiento no se pudo Registrar Correctamente.";
+           }
+            echo json_encode($rspta);
+           break;
 
    }
 
