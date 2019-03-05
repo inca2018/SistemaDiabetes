@@ -117,7 +117,7 @@ function Mostrar_lista(idPaciente, ano, mes) {
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
             "order": [[0, "asc"]], //Ordenar (columna,orden),
             // cambiar el lenguaje de datatable
-            //oLanguage: español
+            oLanguage: español
         }).DataTable();
 
     } else {
@@ -180,7 +180,7 @@ function Mostrar_lista(idPaciente, ano, mes) {
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
             "order": [[0, "asc"]], //Ordenar (columna,orden),
             // cambiar el lenguaje de datatable
-            //oLanguage: español
+            oLanguage: español
         }).DataTable();
 
     }
