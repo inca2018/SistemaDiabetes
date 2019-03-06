@@ -13,7 +13,7 @@
 		}
 
 	    public function listar_seguimientos($idPaciente,$ano,$mes){
-       $sql="SELECT seg.Codigo,y.year as Year,FU_RECUPERAR_MES(seg.Mes) as Mes,DATE_FORMAT(seg.fechaRegistro,'%d/%m/%Y') as fechaRegistro FROM tab_seguimiento seg inner join tab_year y on y.idYear=seg.Year where seg.Year=$ano and seg.Mes=$mes and seg.Paciente_idPaciente=$idPaciente";
+       $sql="SELECT seg.idSeguimiento,seg.Codigo,y.year as Year,FU_RECUPERAR_MES(seg.Mes) as Mes,DATE_FORMAT(seg.fechaRegistro,'%d/%m/%Y') as fechaRegistro FROM tab_seguimiento seg inner join tab_year y on y.idYear=seg.Year where seg.Year=$ano and seg.Mes=$mes and seg.Paciente_idPaciente=$idPaciente";
 
       return ejecutarConsulta($sql);
        }

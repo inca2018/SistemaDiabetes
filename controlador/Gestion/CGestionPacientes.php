@@ -42,13 +42,10 @@
 
         $resp.='
 				<button title="Fichas" class="btn btn-info  btn-sm"type="button" onclick="ficha('.$reg->idPaciente.')">
-
                  <i class="fas fa-chart-line"></i>
               </button>';
 		 return $resp;
     }
-
-
    switch($_GET['op']){
 
 	 case 'listar_pacientes':
@@ -85,15 +82,16 @@ case 'listar_seguimientos':
          $num++;
          $data[]=array(
             "0"=>$num,
-            "1"=>'
-              <button type="button"   title="Editar Seguimiento" class="btn btn-warning btn-sm" onclick="Visualizar('.$reg->idPaciente.','.$reg->idYear.','.$reg->idMes.')"><i class="fa fa-edit"></i></button>
-               <button type="button"  title="Eliminar Seguimiento" class="btn btn-danger btn-sm" onclick="EliminarSeguimiento('.$reg->idPaciente.','.$reg->idYear.','.$reg->idMes.')"><i class="fa fa-trash"></i></button>
-                ',
             "1"=>$reg->Codigo,
             "2"=>$reg->Year,
             "3"=>$reg->Mes,
             "4"=>$reg->fechaRegistro,
-
+            "5"=> '<button  class="btn btn-primary  btn-sm"type="button" title="Ver Resultados de Ficha" onclick="VerFicha('.$reg->idSeguimiento.')">
+                     <i class="fa fa-user-md" aria-hidden="true"></i>
+                   </button>
+                   <button  class="btn btn-info  btn-sm"type="button" title="Ver Resultado de Prueba Pie" onclick="VerPie('.$reg->idSeguimiento.')">
+                     <i class="fa fa-medkit" aria-hidden="true"></i>
+                   </button>'
             );
       }
       $results = array(

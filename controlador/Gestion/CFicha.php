@@ -15,7 +15,7 @@
     $idPaciente=isset($_POST["idPaciente"]) ? limpiarCadena($_POST["idPaciente"]) : "";
     $idAno=isset($_POST["idAno"]) ? limpiarCadena($_POST["idAno"]) : "";
     $idMes=isset($_POST["idMes"]) ? limpiarCadena($_POST["idMes"]) : "";
-
+    $idSeguimiento=isset($_POST["idSeguimiento"]) ? limpiarCadena($_POST["idSeguimiento"]) : "";
 
    switch($_GET['op']){
 
@@ -42,9 +42,8 @@
 
             $Especialidades=array();
             while ($reg = $rpta->fetch_object()){
-                 $Especialidad=array("id"=>$reg->idEspecialidad,"especialidad"=>$reg->Descripcion,"medicos"=>null);
-
-                 $rpta2 = $Ficha->RecuperarMedicos($reg->idEspecialidad);
+                $Especialidad=array("id"=>$reg->idEspecialidad,"especialidad"=>$reg->Descripcion,"medicos"=>null);
+                $rpta2 = $Ficha->RecuperarMedicos($reg->idEspecialidad);
                 $Medico="";
                 $Medico.='<option value="0">--- SELECCIONE ---</option>';
                  while ($reg2 = $rpta2->fetch_object()){
@@ -142,6 +141,22 @@
             echo json_encode($rspta);
            break;
 
+       case 'RecuperarResultadosEspecialidad':
+
+            $rpta = $Ficha->RecuperarResultadosEspecialidad($idSeguimiento);
+            $Resultados=array();
+            while ($reg = $rpta->fetch_object()){
+                 $Resultado=array("idEspecialidad"=>$reg->Especialidad_idEspecialidad,"idSeguimiento"=>$reg->idResultadoFicha,"idOpcion"=>$reg->Opcion_Opcion,"tipoOpcion"=>$reg->TipoOpcion,"Propiedades"=>$reg->Propiedades,"RespuestaTexto"=>$reg->RespuestaTexto,"RespuestaValor"=>$reg->RespuestaValor,"RespuestaFecha"=>$reg->RespuestaFecha,"RespuestaAdecuado"=>$reg->RespuestaAdecuado,"TipoListado"=>$reg->TipoListado,"Grupo_idGrupo"=>$reg->Grupo_idGrupo);
+                 $Resultados["Resultado"][]=$Resultado;
+            }
+
+            echo json_encode($Resultados);
+           break;
+
+       case 'RecuperarResultadoPie':
+           $rspta=$Ficha->RecuperarResultadoPie($idSeguimiento);
+            echo json_encode($rspta);
+           break;
    }
 
 

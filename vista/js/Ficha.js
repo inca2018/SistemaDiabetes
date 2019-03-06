@@ -161,7 +161,7 @@ function RecuperarGrupos() {
             opciones.forEach(function (element2) {
                 var idOpcion = element2.id;
                 var Tipo = element2.tipo;
-                grupoOpcion = grupoOpcion + '<div class="row mt-1 ml-5 OpcionGeneral" data-id="' + idOpcion + '" data-tipo="' + Tipo + '" data-opcion="OPCION">';
+                grupoOpcion = grupoOpcion + '<div class="row mt-1 ml-5 OpcionGeneral" data-grupo="'+idGrupo+'" data-id="' + idOpcion + '" data-tipo="' + Tipo + '" data-opcion="OPCION">';
                 var OpcionSet = RecuperarTipoOpcion(element2, contador++,grupo);
                 grupoOpcion = grupoOpcion + OpcionSet + '</div>';
             });
@@ -419,15 +419,10 @@ function RecuperarTipoOpcion(elemento, contador,grupo) {
                 '  </div> ' +
                 ' </div> ' +
                 '</div>' +
-<<<<<<< HEAD
-                '<div class="col-md-4" style="display:none;" id="area' + idOpcion + '"> <select class="form-control " id="SELECT' + idOpcion + '" name="" disabled></select></div>' +
-                '<div class=" col-md-4" style="display:none;" id="DO' + idOpcion + '" ><input id="dosis' + idOpcion + '" class="form-control  caja campo opcionCampo" type="text"  maxlength="100" placeholder="DOSIS/DIA" disabled></div>' +
-                '<div class=" col-md-4" style="display:none;" id="TA' + idOpcion + '"><input id="tab' + idOpcion + '"  class="form-control  caja campo opcionCampo" type="text"  maxlength="100" placeholder="NUM. INYECC." disabled></div>';
-=======
+
                 '<div class="col-md-4" style="display:none;" id="area'+idOpcion+'"> <select class="form-control " data-message="'+grupo+' - '+Titulo+' - Listado" id="SELECT' + idOpcion + '" name="" disabled></select></div>'+
                 '<div class=" col-md-4" style="display:none;" id="DO' + idOpcion + '" ><input id="dosis'+idOpcion+'" class="form-control  caja campo opcionCampo" type="text"  maxlength="100" placeholder="DOSIS/DIA" disabled></div>'+
                 '<div class=" col-md-4" style="display:none;" id="TA' + idOpcion + '"><input id="tab'+idOpcion+'"  class="form-control  caja campo opcionCampo" type="text"  maxlength="100" placeholder="NUM. INYECC." disabled></div>';
->>>>>>> origin/master
             break;
 
         case "10":
@@ -481,21 +476,7 @@ function LanzarFunciones() {
 
             $('#SI' + id).change(function () {
                 if (this.checked == true) {
-<<<<<<< HEAD
-                    if (tipoCampos == 3) {
-                        $("#dosis" + id).removeAttr("disabled");
-                        $("#tab" + id).removeAttr("disabled");
-                    } else {
-                        $("#SELECT" + id).removeAttr("disabled");
-                    }
 
-                } else {
-                    if (tipoCampos == 3) {
-                        $("#dosis" + id).attr("disabled", true);
-                        $("#tab" + id).attr("disabled", true);
-                    } else {
-                        $("#SELECT" + id).attr("disabled", true);
-=======
                     if(tipoCampos==3){
                          $("#dosis"+id).removeAttr("disabled");
                          $("#tab"+id).removeAttr("disabled");
@@ -513,28 +494,13 @@ function LanzarFunciones() {
                     }else{
                        $("#SELECT"+id).attr("disabled",true);
                        $("#SELECT"+id).removeClass("validar");
->>>>>>> origin/master
                     }
 
                 }
             });
             $('#NO' + id).change(function () {
                 if (this.checked == true) {
-<<<<<<< HEAD
-                    if (tipoCampos == 3) {
-                        $("#dosis" + id).attr("disabled", true);
-                        $("#tab" + id).attr("disabled", true);
-                    } else {
-                        $("#SELECT" + id).attr("disabled", true);
-                    }
 
-                } else {
-                    if (tipoCampos == 3) {
-                        $("#dosis" + id).removeAttr("disabled");
-                        $("#tab" + id).removeAttr("disabled");
-                    } else {
-                        $("#SELECT" + id).removeAttr("disabled");
-=======
                     if(tipoCampos==3){
                           $("#dosis"+id).attr("disabled",true);
                          $("#tab"+id).attr("disabled",true);
@@ -551,7 +517,6 @@ function LanzarFunciones() {
                     }else{
                        $("#SELECT"+id).removeAttr("disabled");
                          $("#SELECT"+id).addClass("validar");
->>>>>>> origin/master
                     }
 
                 }
@@ -626,37 +591,6 @@ function LanzarFunciones() {
 function LanzarFuncionesEspecialidad() {
     $(".opcionEspecialidad").each(function () {
 
-<<<<<<< HEAD
-        var id = $(this).data("id");
-        $('#SIE' + id).change(function () {
-            if (this.checked == true) {
-                $("#OptionDiag" + id).removeAttr("disabled");
-                $("#OptionMedico" + id).removeAttr("disabled");
-                $("#tratamiento" + id).removeAttr("disabled");
-                $("#Obser" + id).removeAttr("disabled");
-            } else {
-                $("#OptionDiag" + id).attr("disabled", true);
-                $("#OptionMedico" + id).attr("disabled", true);
-                $("#tratamiento" + id).attr("disabled", true);
-                $("#Obser" + id).attr("disabled", true);
-            }
-        });
-        $('#NOE' + id).change(function () {
-            if (this.checked == true) {
-                $("#OptionDiag" + id).attr("disabled", true);
-                $("#OptionMedico" + id).attr("disabled", true);
-                $("#tratamiento" + id).attr("disabled", true);
-                $("#Obser" + id).attr("disabled", true);
-
-            } else {
-                $("#OptionDiag" + id).removeAttr("disabled");
-                $("#OptionMedico" + id).removeAttr("disabled");
-                $("#tratamiento" + id).removeAttr("disabled");
-                $("#Obser" + id).removeAttr("disabled");
-            }
-        });
-    });
-=======
           var id = $(this).data("id");
            $('#SIE'+id).change(function () {
                 if (this.checked == true) {
@@ -705,7 +639,7 @@ function LanzarFuncionesEspecialidad() {
                 }
             });
      });
->>>>>>> origin/master
+
 }
 
 function examinarFormula(id, v1, v2, v3, v4, formula, min, max) {
@@ -777,16 +711,13 @@ function quitarSeparador(valor) {
 
 function GuardarFicha() {
 
-<<<<<<< HEAD
-    var Resultados = new Array();
-=======
     var error="";
 
-   /* $(".validar").each(function(){
+    $(".validar").each(function(){
 			if($(this).val()==" " || $(this).val()==0){
 				error=error+$(this).data("message")+"<br>";
 			}
-    });*/
+    });
 
     if(error==""){
 		$("#accordion").addClass("whirl");
@@ -800,21 +731,16 @@ function GuardarFicha() {
 
 function AjaxGuardarFicha(){
 
-    $("#accordion").removeClass("whirl");
-    $("#accordion").removeClass("ringed");
-
 
 
     var ArregloOpciones = new Array();
-
-    $(".OpcionGeneral").each(function (){
->>>>>>> origin/master
 
     $(".OpcionGeneral").each(function () {
 
         var tipoOpcion = $(this).data("opcion");
         var id = $(this).data("id");
         var tipoTipo = $(this).data("tipo");
+        var grupo=$(this).data("grupo");
 
         var Resultado = new Array();
 
@@ -822,15 +748,7 @@ function AjaxGuardarFicha(){
 
             switch (tipoTipo) {
                 case 2:
-<<<<<<< HEAD
-                    var campo = $("#CAM" + id).val();
-                    console.log("ID =" + id + " tipo=" + 2 + " CAMPO=" + campo);
 
-                    Resultado.push(id);
-                    Resultado.push("OPCION");
-                    Resultado.push(2);
-                    Resultado.push(campo);
-=======
                     var campo=$("#CAM"+id).val();
                     var Opcion ="";
                     Opcion=Opcion+""+id;//id
@@ -860,9 +778,10 @@ function AjaxGuardarFicha(){
                     Opcion=Opcion+", ";//r6
                     Opcion=Opcion+", ";//r7
                     Opcion=Opcion+", ";//r8
+                    Opcion=Opcion+","+grupo;//grupo
                     ArregloOpciones.push(Opcion);
                    // console.log("ID ="+id+" tipo="+2+" CAMPO="+campo);
->>>>>>> origin/master
+
                     break;
                 case 3:
                     var minimo = $("#OF" + id).data("minimo");
@@ -877,15 +796,7 @@ function AjaxGuardarFicha(){
                     } else {
                         Estado = 0;
                     }
-<<<<<<< HEAD
-                    console.log("ID=" + id + " tipo=" + 3 + " respuesta=" + respuesta + " estado=" + Estado);
 
-                    Resultado.push(id);
-                    Resultado.push("OPCION");
-                    Resultado.push(3);
-                    Resultado.push(respuesta);
-                    Resultado.push(Estado);
-=======
                     var Opcion ="";
                     Opcion=Opcion+""+id;//id
                     Opcion=Opcion+",OPCION";//Gneral
@@ -914,10 +825,10 @@ function AjaxGuardarFicha(){
                     Opcion=Opcion+", ";//r6
                     Opcion=Opcion+", ";//r7
                     Opcion=Opcion+", ";//r8
+                    Opcion=Opcion+","+grupo;//grupo
                     ArregloOpciones.push(Opcion);
                    // console.log("ID="+id+" tipo="+3+" respuesta="+respuesta+" estado="+Estado);
 
->>>>>>> origin/master
                     break;
                 case 4:
                     var minimo = $("#OF" + id).data("minimo");
@@ -933,26 +844,7 @@ function AjaxGuardarFicha(){
                     } else {
                         Estado = 0;
                     }
-<<<<<<< HEAD
-                    console.log("ID=" + id + " tipo=" + 4 + " respuesta=" + respuesta + " estado=" + Estado + " Sexo=" + sexo);
 
-                    Resultado.push(id);
-                    Resultado.push("OPCION");
-                    Resultado.push(4);
-                    Resultado.push(respuesta);
-                    Resultado.push(Estado);
-                    Resultado.push(sexo);
-                    break;
-                case 5:
-                    var campo = $("#FE" + id).val();
-
-                    console.log("ID =" + id + " tipo=" + 5 + " CAMPO=" + campo);
-
-                    Resultado.push(id);
-                    Resultado.push("OPCION");
-                    Resultado.push(5);
-                    Resultado.push(campo);
-=======
                     var Opcion ="";
                     Opcion=Opcion+""+id;//id
                     Opcion=Opcion+",OPCION";//Gneral
@@ -981,6 +873,7 @@ function AjaxGuardarFicha(){
                     Opcion=Opcion+", ";//r6
                     Opcion=Opcion+", ";//r7
                     Opcion=Opcion+", ";//r8
+                    Opcion=Opcion+","+grupo;//grupo
                     ArregloOpciones.push(Opcion);
                     //console.log("ID="+id+" tipo="+4+" respuesta="+respuesta+" estado="+Estado+" Sexo="+sexo);
 
@@ -1016,9 +909,9 @@ function AjaxGuardarFicha(){
                     Opcion=Opcion+", ";//r6
                     Opcion=Opcion+", ";//r7
                     Opcion=Opcion+", ";//r8
+                    Opcion=Opcion+","+grupo;//grupo
                     ArregloOpciones.push(Opcion);
 
->>>>>>> origin/master
                     break;
                 case 6:
                     var minimo = $("#OF" + id).data("minimo");
@@ -1034,29 +927,18 @@ function AjaxGuardarFicha(){
                     } else {
                         Estado = 0;
                     }
-<<<<<<< HEAD
-                    console.log("ID=" + id + "tipo=" + 6 + " respuesta=" + respuesta + " estado=" + Estado + " v1=" + v1 + " V3=" + v2 + " v3=" + v3 + " v4=" + v4);
-                    Resultado.push(id);
-                    Resultado.push("OPCION");
-                    Resultado.push(6);
-                    Resultado.push(respuesta);
-                    Resultado.push(Estado);
-                    Resultado.push(v1);
-                    Resultado.push(v2);
-                    Resultado.push(v3);
-                    Resultado.push(v4);
-
-                    break;
-                case 7:
-                    var Estado = $('input[name=radio' + id + ']:checked').val();
-                    console.log("ID=" + id + " tipo=" + 7 + " estado=" + Estado);
-
-                    Resultado.push(id);
-                    Resultado.push("OPCION");
-                    Resultado.push(7);
-                    Resultado.push(Estado);
-=======
-
+                     if(v1==""){
+                         v1=0;
+                     }
+                    if(v2==""){
+                         v2=0;
+                     }
+                    if(v3==""){
+                         v3=0;
+                     }
+                    if(v4==""){
+                         v4=0;
+                     }
                      var Opcion ="";
                     Opcion=Opcion+""+id;//id
                     Opcion=Opcion+",OPCION";//Gneral
@@ -1085,6 +967,7 @@ function AjaxGuardarFicha(){
                     Opcion=Opcion+", ";//r6
                     Opcion=Opcion+", ";//r7
                     Opcion=Opcion+", ";//r8
+                    Opcion=Opcion+","+grupo;//grupo
                     ArregloOpciones.push(Opcion);
                    //  console.log("ID="+id+"tipo="+6+" respuesta="+respuesta+" estado="+Estado+" v1="+v1+" V3="+v2+" v3="+v3+" v4="+v4);
 
@@ -1121,34 +1004,18 @@ function AjaxGuardarFicha(){
                     Opcion=Opcion+", ";//r6
                     Opcion=Opcion+", ";//r7
                     Opcion=Opcion+", ";//r8
+                    Opcion=Opcion+","+grupo;//grupo
                     ArregloOpciones.push(Opcion);
                    // console.log("ID="+id+" tipo="+7+" estado="+Estado);
->>>>>>> origin/master
+
                     break;
                 case 9:
-                    var tipoCampo = $("#OF" + id).data("tipocampo");
-                    var Estado = $('input[name=radio' + id + ']:checked').val();
-                    var select = $("#SELECT" + id).val();
-                    var dosis = $("#dosis" + id).val();
-                    var num = $("#tab" + id).val();
-                    console.log("ID=" + id + " tipo=" + 9 + " tipoCampo=" + tipoCampo + " estado=" + Estado + " dosis=" + dosis + " num=" + num);
 
-                    Resultado.push(id);
-                    Resultado.push("OPCION");
-                    Resultado.push(9);
-                    Resultado.push(tipoCampo);
-                    Resultado.push(Estado);
-                    Resultado.push(dosis);
-                    Resultado.push(num);
-
-<<<<<<< HEAD
-=======
                       var tipoCampo=$("#OF"+id).data("tipocampo");
                       var Estado=$('input[name=radio'+id+']:checked').val();
                       var select=$("#SELECT"+id).val();
                       var dosis=$("#dosis"+id).val();
                       var num=$("#tab"+id).val();
-
 
                      var Opcion ="";
                     Opcion=Opcion+""+id;//id
@@ -1178,71 +1045,14 @@ function AjaxGuardarFicha(){
                     Opcion=Opcion+", ";//r6
                     Opcion=Opcion+", ";//r7
                     Opcion=Opcion+", ";//r8
+                    Opcion=Opcion+","+grupo;//grupo
                     ArregloOpciones.push(Opcion);
                    // console.log("ID="+id+" tipo="+9+" tipoCampo="+tipoCampo+" estado="+Estado+" dosis="+dosis+" num="+num);
->>>>>>> origin/master
+
 
                     break;
             }
 
-        } else if (tipoOpcion == "ESPECIALIDAD") {
-
-            var Estado = $('input[name=radioE' + id + ']:checked').val();
-            var diagnostico = $("#OptionDiag" + id).val();
-            var medico = $("#OptionMedico" + id).val();
-            var tratamiento = $("#tratamiento" + id).val();
-            var observacion = $("#Obser" + id).val();
-
-<<<<<<< HEAD
-            console.log("ID =" + id + " Estado=" + Estado + " Diag=" + diagnostico + " Medico=" + medico + " Tratamiento=" + tratamiento + " Obsr=" + observacion);
-            Resultado.push(id);
-            Resultado.push("ESPECIALIDAD");
-            Resultado.push(Estado);
-            Resultado.push(diagnostico);
-            Resultado.push(medico);
-            Resultado.push(tratamiento);
-
-        }
-
-        Resultados.push(Resultado);
-    });
-
-
-  var ResultadoPie = new Array();
-
-    var hijo1 = $("#OpcionPieN1").children("div");
-    var resu1 = hijo1.data("opcion");
-    var hijo2 = $("#OpcionPieN2").children("div");
-    var resu2 = hijo2.data("opcion");
-    var hijo3 = $("#OpcionPieN3").children("div");
-    var resu3 = hijo3.data("opcion");
-    var hijo4 = $("#OpcionPieN4").children("div");
-    var resu4 = hijo4.data("opcion");
-    var hijo5 = $("#OpcionPieN5").children("div");
-    var resu5 = hijo5.data("opcion");
-    var hijo6 = $("#OpcionPieN6").children("div");
-    var resu6 = hijo6.data("opcion");
-    var hijo7 = $("#OpcionPieN7").children("div");
-    var resu7 = hijo7.data("opcion");
-    var hijo8 = $("#OpcionPieN8").children("div");
-    var resu8 = hijo8.data("opcion");
-
-    console.log("RESULTADO PIE: R1=" + resu1 + " R2=" + resu2 + " R3=" + resu3 + " R4=" + resu4 + " R5=" + resu5 + " R6=" + resu6 + " R7=" + resu7 + " R8=" + resu8);
-
-     ResultadoPie.push("PIE");
-    ResultadoPie.push(resu1);
-    ResultadoPie.push(resu2);
-    ResultadoPie.push(resu3);
-    ResultadoPie.push(resu4);
-    ResultadoPie.push(resu5);
-    ResultadoPie.push(resu6);
-    ResultadoPie.push(resu7);
-    ResultadoPie.push(resu8);
-
- Resultados.push(ResultadoPie);
-     console.log(Resultados);
-}
-=======
         }else if(tipoOpcion=="ESPECIALIDAD"){
 
             var Estado=$('input[name=radioE'+id+']:checked').val();
@@ -1279,6 +1089,7 @@ function AjaxGuardarFicha(){
                     Opcion=Opcion+", ";//r6
                     Opcion=Opcion+", ";//r7
                     Opcion=Opcion+", ";//r8
+                    Opcion=Opcion+", ";//grupo
                     ArregloOpciones.push(Opcion);
 
            // console.log("ID ="+id+" Estado="+Estado+" Diag="+diagnostico+" Medico="+medico+" Tratamiento="+tratamiento+" Obsr="+observacion);
@@ -1306,34 +1117,6 @@ var hijo7=$("#OpcionPieN7").children("div");
 var hijo8=$("#OpcionPieN8").children("div");
     var resu8=hijo8.data("opcion");
 
-   var Pie = new Object();
-                Pie.id="";
-                Pie.opcion="PIE";
-                Pie.tipo="";
-                Pie.campo="";
-                Pie.respuesta="";
-                Pie.estado="";
-                Pie.sexo="";
-                Pie.v1="";
-                Pie.v2="";
-                Pie.v3="";
-                Pie.v4="";
-                Pie.tipocampo="";
-                Pie.valorcampo="";
-                Pie.dosis="";
-                Pie.numero="";
-                Pie.diagnostico="";
-                Pie.medico="";
-                Pie.tratamiento="";
-                Pie.observacion="";
-                Pie.r1=resu1;
-                Pie.r2=resu2;
-                Pie.r3=resu3;
-                Pie.r4=resu4;
-                Pie.r5=resu5;
-                Pie.r6=resu6;
-                Pie.r7=resu7;
-                Pie.r8=resu8;
 
                     var Opcion ="";
                     Opcion=Opcion+" ";//id
@@ -1363,7 +1146,7 @@ var hijo8=$("#OpcionPieN8").children("div");
                     Opcion=Opcion+","+resu6;//r6
                     Opcion=Opcion+","+resu7;//r7
                     Opcion=Opcion+","+resu8;//r8
-
+                    Opcion=Opcion+", ";//grupo
                     ArregloOpciones.push(Opcion);
    // console.log("RESULTADO PIE: R1="+resu1+" R2="+resu2+" R3="+resu3+" R4="+resu4+" R5="+resu5+" R6="+resu6+" R7="+resu7+" R8="+resu8);
 
@@ -1383,7 +1166,23 @@ var idMes=$("#idMes").val();
          var Registro=data.Registro;
          var Mensaje=data.Mensaje;
         if(Registro){
-            notificar_success(Mensaje);
+             $("#accordion").removeClass("whirl");
+             $("#accordion").removeClass("ringed");
+
+
+             swal({
+                  title: "Registro",
+                  text: "Se Registro Correctamente!",
+                  type: "info",
+                  showCancelButton: false,
+                  confirmButtonColor: "#27c24c",
+                  confirmButtonText: "Aceptar",
+                  closeOnConfirm: false
+               }, function () {
+                    $.redirect('../../vista/Operaciones/GestionFicha.php', {
+                        'idPaciente': idPaciente
+                    });
+               });
         }else{
             notificar_danger(Mensaje);
         }
@@ -1391,6 +1190,4 @@ var idMes=$("#idMes").val();
 }
 
 
-
->>>>>>> origin/master
 init();
