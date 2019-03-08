@@ -92,18 +92,11 @@ function Listar_Usuario(){
 		"aServerSide": true,
 		"processing": true,
 		"paging": true, // Paginacion en tabla
-		"ordering": false, // Ordenamiento en columna de tabla
-		"info": false, // Informacion de cabecera tabla
+		"ordering": true, // Ordenamiento en columna de tabla
+		"info": true, // Informacion de cabecera tabla
 		"responsive": true, // Accion de responsive
-	   "ajax": { //Solicitud Ajax Servidor
-			url: '../../controlador/Mantenimiento/CUsuario.php?op=Listar_Usuario',
-			type: "POST",
-			dataType: "JSON",
-			error: function (e) {
-				console.log(e.responseText);
-			}
-		},
-		"bDestroy": true
+       "dom": 'lBfrtip',
+       "bDestroy": true
         , "columnDefs": [
             {
                "className": "text-center"
@@ -112,6 +105,9 @@ function Listar_Usuario(){
             , {
                "className": "text-left"
                , "targets": [0]
+            },{
+               "className": "text-right"
+               , "targets": []
             }
          , ]
          , buttons: [
@@ -126,18 +122,27 @@ function Listar_Usuario(){
             , {
                extend: 'excel'
                , className: 'btn-info'
-               , title: 'Facturacion'
+               , title: 'Reporte de Usuarios'
             }
             , {
                extend: 'pdf'
                , className: 'btn-info'
-               , title: $('title').text()
+               , title: 'Reporte de Usuarios'
             }
             , {
                extend: 'print'
                , className: 'btn-info'
             }
             ],
+	   "ajax": { //Solicitud Ajax Servidor
+			url: '../../controlador/Mantenimiento/CUsuario.php?op=Listar_Usuario',
+			type: "POST",
+			dataType: "JSON",
+			error: function (e) {
+				console.log(e.responseText);
+			}
+		},
+
 		// cambiar el lenguaje de datatable
 		oLanguage: español,
 	}).DataTable();

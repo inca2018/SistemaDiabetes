@@ -70,18 +70,11 @@ function Listar_GradoInstruccion() {
         "aServerSide": true,
         "processing": true,
         "paging": true, // Paginacion en tabla
-        "ordering": false, // Ordenamiento en columna de tabla
-        "info": false, // Informacion de cabecera tabla
+        "ordering": true, // Ordenamiento en columna de tabla
+        "info": true, // Informacion de cabecera tabla
         "responsive": true, // Accion de responsive
-        "ajax": { //Solicitud Ajax Servidor
-            url: '../../controlador/Mantenimiento/CGradoInstruccion.php?op=Listar_GradoInstruccion',
-            type: "POST",
-            dataType: "JSON",
-            error: function (e) {
-                console.log(e.responseText);
-            }
-        },
-        "bDestroy": true,
+            dom: 'lBfrtip',
+         "bDestroy": true,
         "columnDefs": [
             {
                 "className": "text-center",
@@ -104,18 +97,27 @@ function Listar_GradoInstruccion() {
             , {
                 extend: 'excel',
                 className: 'btn-info',
-                title: 'Facturacion'
+                title: 'Reporte Grado de Instrucción'
             }
             , {
                 extend: 'pdf',
                 className: 'btn-info',
-                title: $('title').text()
+                title: 'Reporte Grado de Instrucción'
             }
             , {
                 extend: 'print',
                 className: 'btn-info'
             }
             ],
+        "ajax": { //Solicitud Ajax Servidor
+            url: '../../controlador/Mantenimiento/CGradoInstruccion.php?op=Listar_GradoInstruccion',
+            type: "POST",
+            dataType: "JSON",
+            error: function (e) {
+                console.log(e.responseText);
+            }
+        },
+
         // cambiar el lenguaje de datatable
         oLanguage: español,
     }).DataTable();

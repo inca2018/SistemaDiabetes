@@ -1,18 +1,18 @@
-var tablaComorbilidad;
+var tablaDiagnosticoEspecialidad;
 
 function init() {
     Iniciar_Componentes();
-    Listar_Comorbilidad();
+    Listar_DiagnosticoEspecialidad();
 }
 
 function Iniciar_Componentes() {
-    $("#FormularioComorbilidad").on("submit", function (e) {
-        RegistroComorbilidad(e);
+    $("#FormularioDiagnosticoEspecialidad").on("submit", function (e) {
+        RegistroDiagnosticoEspecialidad(e);
     });
 
 }
 
-function RegistroComorbilidad(event) {
+function RegistroDiagnosticoEspecialidad(event) {
     event.preventDefault();
     var error = "";
 
@@ -23,19 +23,19 @@ function RegistroComorbilidad(event) {
     });
 
     if (error == "") {
-        $("#ModalComorbilidad #cuerpo").addClass("whirl");
-        $("#ModalComorbilidad #cuerpo").addClass("ringed");
-        setTimeout('AjaxRegistroComorbilidad()', 1000);
+        $("#ModalDiagnosticoEspecialidad #cuerpo").addClass("whirl");
+        $("#ModalDiagnosticoEspecialidad #cuerpo").addClass("ringed");
+        setTimeout('AjaxRegistroDiagnosticoEspecialidad()', 1000);
     } else {
         notificar_warning("Complete :<br>" + error);
     }
 }
 
-function AjaxRegistroComorbilidad() {
-    var formData = new FormData($("#FormularioComorbilidad")[0]);
+function AjaxRegistroDiagnosticoEspecialidad() {
+    var formData = new FormData($("#FormularioDiagnosticoEspecialidad")[0]);
     console.log(formData);
     $.ajax({
-        url: "../../controlador/Mantenimiento/CComorbilidad.php?op=AccionComorbilidad",
+        url: "../../controlador/Mantenimiento/CDiagnosticoEspecialidad.php?op=AccionDiagnosticoEspecialidad",
         type: "POST",
         data: formData,
         contentType: false,
@@ -46,26 +46,26 @@ function AjaxRegistroComorbilidad() {
             var Mensaje = data.Mensaje;
             var Error = data.Registro;
             if (!Error) {
-                $("#ModalComorbilidad #cuerpo").removeClass("whirl");
-                $("#ModalComorbilidad #cuerpo").removeClass("ringed");
-                $("#ModalComorbilidad").modal("hide");
+                $("#ModalDiagnosticoEspecialidad #cuerpo").removeClass("whirl");
+                $("#ModalDiagnosticoEspecialidad #cuerpo").removeClass("ringed");
+                $("#ModalDiagnosticoEspecialidad").modal("hide");
                 swal("Error:", Mensaje);
-                LimpiarComorbilidad();
-                tablaComorbilidad.ajax.reload();
+                LimpiarDiagnosticoEspecialidad();
+                tablaDiagnosticoEspecialidad.ajax.reload();
             } else {
-                $("#ModalComorbilidad #cuerpo").removeClass("whirl");
-                $("#ModalComorbilidad #cuerpo").removeClass("ringed");
-                $("#ModalComorbilidad").modal("hide");
+                $("#ModalDiagnosticoEspecialidad #cuerpo").removeClass("whirl");
+                $("#ModalDiagnosticoEspecialidad #cuerpo").removeClass("ringed");
+                $("#ModalDiagnosticoEspecialidad").modal("hide");
                 swal("Acción:", Mensaje);
-                LimpiarComorbilidad();
-                tablaComorbilidad.ajax.reload();
+                LimpiarDiagnosticoEspecialidad();
+                tablaDiagnosticoEspecialidad.ajax.reload();
             }
         }
     });
 }
 
-function Listar_Comorbilidad() {
-    tablaComorbilidad = $('#tablaComorbilidad').dataTable({
+function Listar_DiagnosticoEspecialidad() {
+    tablaDiagnosticoEspecialidad = $('#tablaDiagnosticoEspecialidad').dataTable({
         "aProcessing": true,
         "aServerSide": true,
         "processing": true,
@@ -97,12 +97,12 @@ function Listar_Comorbilidad() {
             , {
                 extend: 'excel',
                 className: 'btn-info',
-                title: 'Reporte Comorbilidad'
+                title: 'Reporte Diagnostico Especialidad'
             }
             , {
                 extend: 'pdf',
                 className: 'btn-info',
-                title: 'Reporte Comorbilidad'
+                title: 'Reporte Diagnostico Especialidad'
             }
             , {
                 extend: 'print',
@@ -110,7 +110,7 @@ function Listar_Comorbilidad() {
             }
             ],
         "ajax": { //Solicitud Ajax Servidor
-            url: '../../controlador/Mantenimiento/CComorbilidad.php?op=Listar_Comorbilidad',
+            url: '../../controlador/Mantenimiento/CDiagnosticoEspecialidad.php?op=Listar_DiagnosticoEspecialidad',
             type: "POST",
             dataType: "JSON",
             error: function (e) {
@@ -122,8 +122,8 @@ function Listar_Comorbilidad() {
         oLanguage: español,
     }).DataTable();
     //Aplicar ordenamiento y autonumeracion , index
-    tablaComorbilidad.on('order.dt search.dt', function () {
-        tablaComorbilidad.column(0, {
+    tablaDiagnosticoEspecialidad.on('order.dt search.dt', function () {
+        tablaDiagnosticoEspecialidad.column(0, {
             search: 'applied',
             order: 'applied'
         }).nodes().each(function (cell, i) {
@@ -132,53 +132,53 @@ function Listar_Comorbilidad() {
     }).draw();
 }
 
-function NuevoComorbilidad() {
+function NuevoDiagnosticoEspecialidad() {
 
-    $("#ModalComorbilidad").modal({
+    $("#ModalDiagnosticoEspecialidad").modal({
         backdrop: 'static',
         keyboard: false
     });
-    $("#ModalComorbilidad").modal("show");
-    $("#tituloModalComorbilidad").empty();
-    $("#tituloModalComorbilidad").append("Nuevo Registro de Comorbilidad:");
+    $("#ModalDiagnosticoEspecialidad").modal("show");
+    $("#tituloModalDiagnosticoEspecialidad").empty();
+    $("#tituloModalDiagnosticoEspecialidad").append("Nuevo Registro de DiagnosticoEspecialidad:");
 }
 
-function EditarComorbilidad(idComorbilidad) {
-    $("#ModalComorbilidad").modal({
+function EditarDiagnosticoEspecialidad(idDiagnosticoEspecialidad) {
+    $("#ModalDiagnosticoEspecialidad").modal({
         backdrop: 'static',
         keyboard: false
     });
-    $("#ModalComorbilidad").modal("show");
-    $("#tituloModalComorbilidad").empty();
-    $("#tituloModalComorbilidad").append("Editar Registro Comorbilidad:");
-    RecuperarComorbilidad(idComorbilidad);
+    $("#ModalDiagnosticoEspecialidad").modal("show");
+    $("#tituloModalDiagnosticoEspecialidad").empty();
+    $("#tituloModalDiagnosticoEspecialidad").append("Editar Registro DiagnosticoEspecialidad:");
+    RecuperarDiagnosticoEspecialidad(idDiagnosticoEspecialidad);
 }
 
-function RecuperarComorbilidad(idComorbilidad) {
+function RecuperarDiagnosticoEspecialidad(idDiagnosticoEspecialidad) {
     //solicitud de recuperar Proveedor
-    $.post("../../controlador/Mantenimiento/CComorbilidad.php?op=RecuperarInformacion_Comorbilidad", {
-        "idComorbilidad": idComorbilidad
+    $.post("../../controlador/Mantenimiento/CDiagnosticoEspecialidad.php?op=RecuperarInformacion_DiagnosticoEspecialidad", {
+        "idDiagnosticoEspecialidad": idDiagnosticoEspecialidad
     }, function (data, status) {
         data = JSON.parse(data);
 
-        $("#idComorbilidad").val(data.idComorbilidad);
-        $("#ComorbilidadDescripcion").val(data.Descripcion);
+        $("#idDiagnosticoEspecialidad").val(data.idDiagnosticoEspecialidad);
+        $("#DiagnosticoEspecialidadDescripcion").val(data.Descripcion);
 
     });
 }
 
-function EliminarComorbilidad(idComorbilidad) {
+function EliminarDiagnosticoEspecialidad(idDiagnosticoEspecialidad) {
     swal({
         title: "Eliminar?",
-        text: "Esta Seguro que desea Eliminar Comorbilidad!",
+        text: "Esta Seguro que desea Eliminar DiagnosticoEspecialidad!",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#DD6B55",
         confirmButtonText: "Si, Eliminar!",
         closeOnConfirm: false
     }, function () {
-        $.post("../../controlador/Mantenimiento/CComorbilidad.php?op=Eliminar_Comorbilidad", {
-            idComorbilidad: idComorbilidad
+        $.post("../../controlador/Mantenimiento/CDiagnosticoEspecialidad.php?op=Eliminar_DiagnosticoEspecialidad", {
+            idDiagnosticoEspecialidad: idDiagnosticoEspecialidad
         }, function (data, e) {
             data = JSON.parse(data);
             var Error = data.Error;
@@ -187,24 +187,24 @@ function EliminarComorbilidad(idComorbilidad) {
                 swal("Error", Mensaje, "error");
             } else {
                 swal("Eliminado!", Mensaje, "success");
-                tablaComorbilidad.ajax.reload();
+                tablaDiagnosticoEspecialidad.ajax.reload();
             }
         });
     });
 }
 
-function ActivacionComorbilidad(idComorbilidad) {
+function ActivacionDiagnosticoEspecialidad(idDiagnosticoEspecialidad) {
     swal({
         title: "Activar?",
-        text: "Esta Seguro que desea Activar Comorbilidad!",
+        text: "Esta Seguro que desea Activar DiagnosticoEspecialidad!",
         type: "info",
         showCancelButton: true,
         confirmButtonColor: "#DD6B55",
         confirmButtonText: "Si, Activar!",
         closeOnConfirm: false
     }, function () {
-        $.post("../../controlador/Mantenimiento/CComorbilidad.php?op=Activacion_Comorbilidad", {
-            idComorbilidad: idComorbilidad,
+        $.post("../../controlador/Mantenimiento/CDiagnosticoEspecialidad.php?op=Activacion_DiagnosticoEspecialidad", {
+            idDiagnosticoEspecialidad: idDiagnosticoEspecialidad,
             Opcion: 1
         }, function (data, e) {
             data = JSON.parse(data);
@@ -214,24 +214,24 @@ function ActivacionComorbilidad(idComorbilidad) {
                 swal("Error", Mensaje, "error");
             } else {
                 swal("Activado !", Mensaje, "success");
-                tablaComorbilidad.ajax.reload();
+                tablaDiagnosticoEspecialidad.ajax.reload();
             }
         });
     });
 }
 
-function DesactivacionComorbilidad(idComorbilidad) {
+function DesactivacionDiagnosticoEspecialidad(idDiagnosticoEspecialidad) {
     swal({
         title: "Desactivar?",
-        text: "Esta Seguro que desea Desactivar Comorbilidad!",
+        text: "Esta Seguro que desea Desactivar DiagnosticoEspecialidad!",
         type: "info",
         showCancelButton: true,
         confirmButtonColor: "#DD6B55",
         confirmButtonText: "Si, Desactivar!",
         closeOnConfirm: false
     }, function () {
-        $.post("../../controlador/Mantenimiento/CComorbilidad.php?op=Activacion_Comorbilidad", {
-            idComorbilidad: idComorbilidad,
+        $.post("../../controlador/Mantenimiento/CDiagnosticoEspecialidad.php?op=Activacion_DiagnosticoEspecialidad", {
+            idDiagnosticoEspecialidad: idDiagnosticoEspecialidad,
             Opcion: 2
         }, function (data, e) {
             data = JSON.parse(data);
@@ -241,22 +241,22 @@ function DesactivacionComorbilidad(idComorbilidad) {
                 swal("Error", Mensaje, "error");
             } else {
                 swal("Desactivado !", Mensaje, "success");
-                tablaComorbilidad.ajax.reload();
+                tablaDiagnosticoEspecialidad.ajax.reload();
             }
         });
     });
 }
 
-function LimpiarComorbilidad() {
-    $('#FormularioComorbilidad')[0].reset();
-    $("#idComorbilidad").val("");
-    $("#ComorbilidadPersona").removeAttr("disabled");
-    $("#ComorbilidadPassword").addClass("validarPanel");
+function LimpiarDiagnosticoEspecialidad() {
+    $('#FormularioDiagnosticoEspecialidad')[0].reset();
+    $("#idDiagnosticoEspecialidad").val("");
+    $("#DiagnosticoEspecialidadPersona").removeAttr("disabled");
+    $("#DiagnosticoEspecialidadPassword").addClass("validarPanel");
 }
 
 function Cancelar() {
-    LimpiarComorbilidad();
-    $("#ModalComorbilidad").modal("hide");
+    LimpiarDiagnosticoEspecialidad();
+    $("#ModalDiagnosticoEspecialidad").modal("hide");
 
 }
 

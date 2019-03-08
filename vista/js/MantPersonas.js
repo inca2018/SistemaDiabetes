@@ -82,18 +82,11 @@ function Listar_Persona(){
 		"aServerSide": true,
 		"processing": true,
 		"paging": true, // Paginacion en tabla
-		"ordering": false, // Ordenamiento en columna de tabla
-		"info": false, // Informacion de cabecera tabla
+		"ordering": true, // Ordenamiento en columna de tabla
+		"info": true, // Informacion de cabecera tabla
 		"responsive": true, // Accion de responsive
-	   "ajax": { //Solicitud Ajax Servidor
-			url: '../../controlador/Mantenimiento/CPersona.php?op=Listar_Persona',
-			type: "POST",
-			dataType: "JSON",
-			error: function (e) {
-				console.log(e.responseText);
-			}
-		},
-		"bDestroy": true
+        dom: 'lBfrtip',
+       	"bDestroy": true
         , "columnDefs": [
             {
                "className": "text-center"
@@ -116,18 +109,27 @@ function Listar_Persona(){
             , {
                extend: 'excel'
                , className: 'btn-info'
-               , title: 'Facturacion'
+               , title: 'Reporte Personas'
             }
             , {
                extend: 'pdf'
                , className: 'btn-info'
-               , title: $('title').text()
+               , title: 'Reporte Personas'
             }
             , {
                extend: 'print'
                , className: 'btn-info'
             }
             ],
+	   "ajax": { //Solicitud Ajax Servidor
+			url: '../../controlador/Mantenimiento/CPersona.php?op=Listar_Persona',
+			type: "POST",
+			dataType: "JSON",
+			error: function (e) {
+				console.log(e.responseText);
+			}
+		},
+
 		// cambiar el lenguaje de datatable
 		oLanguage: español,
 	}).DataTable();

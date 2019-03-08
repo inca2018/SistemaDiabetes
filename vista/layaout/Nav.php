@@ -171,12 +171,17 @@
 								</li>
 								<li id="" class="">
 									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Mantenimiento/MantDiagnostico.php';?>" title="Diagnóstico">
-										<span> Diagnóstico </span>
+										<span> Diagnóstico de Paciente </span>
 									</a>
 								</li>
 								<li id="" class="">
 									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Mantenimiento/MantDiagnosticoEnfermeria.php';?>" title=" Diagnóstico Enfermeria">
 										<span> Diagnóstico Enfermeria </span>
+									</a>
+								</li>
+								<li id="" class="">
+									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Mantenimiento/MantDiagnosticoEspecialidad.php';?>" title=" Diagnóstico Especialidad">
+										<span> Diagnóstico Especialidad </span>
 									</a>
 								</li>
 								<li id="" class="">

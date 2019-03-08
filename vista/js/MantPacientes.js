@@ -227,28 +227,10 @@ function Listar_Paciente() {
         "aServerSide": true,
         "processing": true,
         "paging": true, // Paginacion en tabla
-        "ordering": false, // Ordenamiento en columna de tabla
-        "info": false, // Informacion de cabecera tabla
+        "ordering": true, // Ordenamiento en columna de tabla
+        "info": true, // Informacion de cabecera tabla
         "responsive": true, // Accion de responsive
-        "ajax": { //Solicitud Ajax Servidor
-            url: '../../controlador/Mantenimiento/CPaciente.php?op=Listar_Paciente',
-            type: "POST",
-            dataType: "JSON",
-            error: function (e) {
-                console.log(e.responseText);
-            }
-        },
-        "bDestroy": true,
-        "columnDefs": [
-            {
-                "className": "text-center",
-                "targets": [1, 2, 3, 4, 5]
-            }
-            , {
-                "className": "text-left",
-                "targets": [0]
-            }
-         , ],
+        dom: 'lBfrtip',
         buttons: [
             {
                 extend: 'copy',
@@ -261,18 +243,43 @@ function Listar_Paciente() {
             , {
                 extend: 'excel',
                 className: 'btn-info',
-                title: 'Facturacion'
+                title: 'Reporte de Paciente'
             }
             , {
                 extend: 'pdf',
                 className: 'btn-info',
-                title: $('title').text()
+                title: 'Reporte de Paciente'
             }
             , {
                 extend: 'print',
                 className: 'btn-info'
             }
             ],
+
+        "ajax": { //Solicitud Ajax Servidor
+            url: '../../controlador/Mantenimiento/CPaciente.php?op=Listar_Paciente',
+            type: "POST",
+            dataType: "JSON",
+            error: function (e) {
+                console.log(e.responseText);
+            }
+        },
+        "bDestroy": true,
+        "columnDefs": [
+            {
+                "className": "text-center",
+                "targets": [1, 2, 4, 5,6,7,8,9]
+            }
+            , {
+                "className": "text-left",
+                "targets": [0]
+            },
+            {
+                "className": "text-right",
+                "targets": [3]
+            }
+         , ],
+
         // cambiar el lenguaje de datatable
         oLanguage: español,
     }).DataTable();

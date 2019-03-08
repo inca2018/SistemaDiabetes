@@ -9,29 +9,26 @@
 <section class="section-container">
     <!-- Page content-->
     <div class="content-wrapper">
-        <!-- <div class="content-heading">
-              <div>Mantenimiento Diagnosticos</div>
-            </div> -->
-        <!-- START card-->
+
         <div class="card card-default m-1 ">
             <div class="card-body ">
                 <div class="row ">
                     <div class="col-md-12 w-100 text-center ">
-                        <h3>Mantenimiento Diagnostico de Paciente:</h3>
+                        <h3>Mantenimiento Diagnostico de Especialidad:</h3>
                     </div>
                 </div>
                 <hr class="mt-2 mb-2">
                 <div class="row">
-                    <div class="col-md-2 offset-10">
-                        <button class="btn btn-success btn-block btn-sm" onclick="NuevoDiagnostico();"><i class="fa fa-plus fa-lg mr-2"></i> Nuevo Diagnostico de Paciente</button>
+                    <div class="col-md-4 offset-8">
+                        <button class="btn btn-success btn-block btn-sm" onclick="NuevoDiagnosticoEspecialidad();"><i class="fa fa-plus fa-lg mr-2"></i> Nuevo Diagnostico de Especialidad</button>
                     </div>
                 </div>
-                <h5 class="mt-3 mb-3 titulo_area"><em><b>Lista General de Diagnostico de Paciente:</b></em></h5>
+                <h5 class="mt-3 mb-3 titulo_area"><em><b>Lista General Diagnostico de Especialidad:</b></em></h5>
                 <div class="row ">
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-12">
-                                <table class="table w-100 table-hover table-sm dt-responsive nowrap" id="tablaDiagnostico">
+                                <table class="table w-100 table-hover table-sm dt-responsive nowrap" id="tablaDiagnosticoEspecialidad">
                                     <thead class="thead-light text-center">
                                         <tr>
                                             <th data-priority="1">#</th>
@@ -59,25 +56,25 @@
 <?php require_once('../layaout/Footer.php');?>
 <!-- Fin del Footer -->
 
-<div class="modal fade " id="ModalDiagnostico" role="dialog" aria-labelledby="myModalLabelLarge" aria-hidden="true">
+<div class="modal fade " id="ModalDiagnosticoEspecialidad" role="dialog" aria-labelledby="myModalLabelLarge" aria-hidden="true">
     <div class="modal-dialog modal-lg  ">
         <div class="modal-content">
             <div class="row m-1 bb">
                 <div class="col-md-12">
-                    <h4 class="text-center text-" id="tituloModalDiagnostico"></h4>
+                    <h4 class="text-center text-" id="tituloModalDiagnosticoEspecialidad"></h4>
                 </div>
             </div>
             <div class="modal-body ">
-                <form id="FormularioDiagnostico" method="POST" autocomplete="off">
-                    <input type="hidden" name="idDiagnostico" id="idDiagnostico">
+                <form id="FormularioDiagnosticoEspecialidad" method="POST" autocomplete="off">
+                    <input type="hidden" name="idDiagnosticoEspecialidad" id="idDiagnosticoEspecialidad">
                     <div class="row" id="cuerpo">
                         <div class="col-md-12 bl">
                             <div class="row">
                                 <div class="col-md-8">
                                     <div class="form-group row">
-                                        <label for="DiagnosticoDescripcion " class="col-md-4 col-form-label  ">Diagnostico:</label>
+                                        <label for="DiagnosticoEspecialidadDescripcion " class="col-md-4 col-form-label  ">Diagnostico de Especialidad:</label>
                                         <div class="col-md-8">
-                                            <input type="text" class="form-control validarPanel" placeholder="Diagnostico" name="DiagnosticoDescripcion" id="DiagnosticoDescripcion" data-message="- Campo Diagnostico">
+                                            <input type="text" class="form-control validarPanel" placeholder="DiagnosticoEspecialidad" name="DiagnosticoEspecialidadDescripcion" id="DiagnosticoEspecialidadDescripcion" data-message="- Campo DiagnosticoEspecialidad">
                                         </div>
                                     </div>
                                 </div>
@@ -100,4 +97,4 @@
 </div>
 
 
-<script src="<?php echo $conexionConfig->rutaOP(); ?>vista/js/MantDiagnostico.js"></script>
+<script src="<?php echo $conexionConfig->rutaOP(); ?>vista/js/MantDiagnosticoEspecialidad.js"></script>

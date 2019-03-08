@@ -34,16 +34,16 @@
                                 <table class="table w-100 table-hover table-sm dt-responsive nowrap" id="tablaPaciente">
                                     <thead class="thead-light text-center">
                                         <tr>
-                                            <th data-priority="1">#</th>
-                                            <th>ESTADO</th>
-                                            <th>CODIGO</th>
-                                            <th>PACIENTE</th>
-                                            <th>EDAD</th>
-                                            <th>DOCUMENTO</th>
-                                            <th>NUMERO DOC.</th>
-                                            <th>CONDICION</th>
-                                            <th>PROCEDENCIA</th>
-                                            <th>ACCIONES</th>
+                                            <th class="text-center" data-priority="1">#</th>
+                                            <th class="text-center">ESTADO</th>
+                                            <th class="text-center">CODIGO</th>
+                                            <th class="text-center">PACIENTE</th>
+                                            <th class="text-center">EDAD</th>
+                                            <th class="text-center">DOCUMENTO</th>
+                                            <th class="text-center">NUMERO DOC.</th>
+                                            <th class="text-center">CONDICION</th>
+                                            <th class="text-center">PROCEDENCIA</th>
+                                            <th class="text-center">ACCIONES</th>
                                         </tr>
                                     </thead>
                                     <tbody>

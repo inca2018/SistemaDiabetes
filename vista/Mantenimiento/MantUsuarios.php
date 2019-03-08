@@ -34,13 +34,13 @@
                                         <table class="table w-100 table-hover table-sm dt-responsive nowrap" id="tablaUsuario">
                                             <thead class="thead-light text-center">
                                                 <tr>
-                                                    <th data-priority="1">#</th>
-                                                    <th>ESTADO</th>
-                                                    <th>PERFIL</th>
-                                                    <th>PERSONA</th>
-                                                    <th>USUARIO</th>
-                                                    <th>REGISTRO</th>
-                                                    <th>ACCION</th>
+                                                    <th class="text-center" data-priority="1">#</th>
+                                                    <th class="text-center">ESTADO</th>
+                                                    <th class="text-center">PERFIL</th>
+                                                    <th class="text-center">PERSONA</th>
+                                                    <th class="text-center">USUARIO</th>
+                                                    <th class="text-center">REGISTRO</th>
+                                                    <th class="text-center">ACCION</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

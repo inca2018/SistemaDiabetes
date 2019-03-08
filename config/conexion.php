@@ -1,11 +1,12 @@
 <?php
+require_once "global.php";
 
 class Conexion {
    public function ruta(){
-      return "http://localhost/ucv/SistemaDiabetes/app/";
+      return URI."/app/";
    }
    public function rutaOP(){
-      return "http://localhost/ucv/SistemaDiabetes/app/Gestion/";
+      return URI."/app/Gestion/";
    }
    public function convertir($string){
 	   $cant=strlen($string);

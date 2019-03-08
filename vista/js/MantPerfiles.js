@@ -79,22 +79,15 @@ function Listar_Perfil(){
 		"aServerSide": true,
 		"processing": true,
 		"paging": true, // Paginacion en tabla
-		"ordering": false, // Ordenamiento en columna de tabla
-		"info": false, // Informacion de cabecera tabla
+		"ordering": true, // Ordenamiento en columna de tabla
+		"info": true, // Informacion de cabecera tabla
 		"responsive": true, // Accion de responsive
-	   "ajax": { //Solicitud Ajax Servidor
-			url: '../../controlador/Mantenimiento/CPerfil.php?op=Listar_Perfil',
-			type: "POST",
-			dataType: "JSON",
-			error: function (e) {
-				console.log(e.responseText);
-			}
-		},
-		"bDestroy": true
+         dom: 'lBfrtip',
+       "bDestroy": true
         , "columnDefs": [
             {
                "className": "text-center"
-               , "targets": [1,2]
+               , "targets": [1,2,3,4,5]
             }
             , {
                "className": "text-left"
@@ -113,18 +106,27 @@ function Listar_Perfil(){
             , {
                extend: 'excel'
                , className: 'btn-info'
-               , title: 'Facturacion'
+               , title: 'Reporte Perfiles'
             }
             , {
                extend: 'pdf'
                , className: 'btn-info'
-               , title: $('title').text()
+               , title: 'Reporte Perfiles'
             }
             , {
                extend: 'print'
                , className: 'btn-info'
             }
             ],
+	   "ajax": { //Solicitud Ajax Servidor
+			url: '../../controlador/Mantenimiento/CPerfil.php?op=Listar_Perfil',
+			type: "POST",
+			dataType: "JSON",
+			error: function (e) {
+				console.log(e.responseText);
+			}
+		},
+
 		// cambiar el lenguaje de datatable
 		oLanguage: español,
 	}).DataTable();
