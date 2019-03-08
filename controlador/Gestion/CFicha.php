@@ -71,6 +71,7 @@
             $diagEnfermeria="";
             $tratamientos="";
             $evaluado="";
+            $satisfaccion="";
 
       		$rpta = $general->Listar_Medicos();
             $Medicos.='<option value="0">-- SELECCIONE --</option>';
@@ -110,6 +111,15 @@
 					$evaluado.='<option   value=' . $reg5->idEvaluado . '>' . $reg5->Descripcion . '</option>';
          	}
             $Listas["evaluado"]=$evaluado;
+
+
+
+            $rpta6 = $general->Listar_Satisfaccion();
+            $satisfaccion.='<option value="0">-- SELECCIONE --</option>';
+         	while ($reg6 = $rpta6->fetch_object()){
+					$satisfaccion.='<option   value=' . $reg6->idSatisfaccion . '>' . $reg6->Descripcion . '</option>';
+         	}
+            $Listas["satisfaccion"]=$satisfaccion;
 
             echo json_encode($Listas);
        break;

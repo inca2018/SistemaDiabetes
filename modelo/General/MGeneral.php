@@ -91,6 +91,12 @@
            $sql="SELECT * FROM tab_evaluado where Estado_idEstado=1";
            return ejecutarConsulta($sql);
        }
+       public function Listar_Satisfaccion(){
+           $sql="SELECT * FROM tab_satisfaccion where Estado_idEstado=1";
+           return ejecutarConsulta($sql);
+       }
+
+
    }
 
 ?>

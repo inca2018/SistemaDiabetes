@@ -23,6 +23,9 @@
     $UsuarioPassVerificar=isset($_POST["UsuarioPassVerificar"])?limpiarCadena($_POST["UsuarioPassVerificar"]):"";
     $UsuarioPassNuevo=isset($_POST["UsuarioPassNuevo"])?limpiarCadena($_POST["UsuarioPassNuevo"]):"";
 
+    $idPaciente=isset($_POST["idPaciente"])?limpiarCadena($_POST["idPaciente"]):"";
+    $year=isset($_POST["year"])?limpiarCadena($_POST["year"]):"";
+    $mes=isset($_POST["mes"])?limpiarCadena($_POST["mes"]):"";
 
     $date = str_replace('/', '-', $fechaInicio);
     $fechaInicio = date("Y-m-d", strtotime($date));
@@ -35,6 +38,12 @@
          $rspta=$gestion->RecuperarDatosPerfil($login_idLog);
          echo json_encode($rspta);
       break;
+
+
+     case 'RecuperarTotales':
+           $rspta=$gestion->RecuperarTotales($idPaciente,$year,$mes);
+           echo json_encode($rspta);
+           break;
 
      case 'ActualizarPerfil':
            $rspta = array("Mensaje"=>"","Registro"=>false,"Error"=>false);

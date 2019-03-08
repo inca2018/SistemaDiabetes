@@ -4,6 +4,7 @@ var Listas_Comorbilidad;
 var DiagnosticoEnfermeria;
 var Tratamientos;
 var Evaluado;
+var Satisfaccion;
 
 function init() {
     RecuperarListas();
@@ -18,6 +19,7 @@ function RecuperarListas() {
         DiagnosticoEnfermeria = data.enfermeria;
         Tratamientos = data.tratamientos;
         Evaluado = data.evaluado;
+        Satisfaccion= data.satisfaccion;
         iniciar_funciones();
     });
 
@@ -470,6 +472,10 @@ function LanzarFunciones() {
                 case 6:
                     $("#area" + id).show();
                     $("#SELECT" + id).append(Tratamientos);
+                    break;
+                case 7:
+                    $("#area" + id).show();
+                    $("#SELECT" + id).append(Satisfaccion);
                     break;
 
             }
@@ -927,6 +933,7 @@ function AjaxGuardarFicha(){
                     } else {
                         Estado = 0;
                     }
+
                      if(v1==""){
                          v1=0;
                      }

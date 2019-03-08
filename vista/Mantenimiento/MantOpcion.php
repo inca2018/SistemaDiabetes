@@ -291,6 +291,7 @@ if(isset($_POST["idGrupoOpcion"])){
                                                 <option value="4">EVALUADO POR</option>
                                                 <option value="5">DIAGNOSTICO ENFERMERIA</option>
                                                 <option value="6">TRATAMIENTOS</option>
+                                                <option value="7">NIVEL DE SATISFACCIÓN</option>
                                                 </select>
                                             </div>
                                         </div>

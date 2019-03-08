@@ -106,20 +106,7 @@
 			return ejecutarConsulta($sql);
        }
 
-       public function Listar_Cuotas($idPlan,$idAlumno){
-			$sql="CALL `SP_OPERACIONES_LISTAR_CUOTAS`('$idPlan','$idAlumno');";
-			return ejecutarConsulta($sql);
-		}
 
-        public function RecuperarCuotaPagar($idPlan,$idCuota){
-           $sql="CALL `SP_OPERACION_RECUPERAR_CUOTA_PAGAR`('$idPlan','$idCuota');";
-			return ejecutarConsultaSimpleFila($sql);
-       }
-		 public function RecuperarTotales($idAlumno,$year){
-           $sql="CALL `SP_OPERACIONES_RECUPERAR_TOTALES`('$idAlumno','$year');";
-
-			return ejecutarConsultaSimpleFila($sql);
-       }
 
 		  public function RecuperarParametros(){
 			  $sql1=ejecutarConsulta("CALL `SP_RECUPERAR_PARAMETROS`(@p0, @p1, @p2, @p3);");
@@ -227,6 +214,12 @@ INNER JOIN tipotarjeta tt ON tt.idTipoTarjeta=pg.TipoTarjeta_idTipoTarjeta WHERE
 
         return ejecutarConsulta($sql);
     }
+
+
+       public function RecuperarTotales($idPaciente,$year,$mes){
+            $sql="SELECT COUNT(*) as TotalFicha FROM tab_seguimiento where Paciente_idPaciente='$idPaciente' and Year='$year' and Mes='$mes';";
+			return ejecutarConsultaSimpleFila($sql);
+       }
 
 
    }

@@ -49,7 +49,7 @@ if(isset($_POST["idPaciente"])){
                     <p>1.- Seleccione el Mes en el que desea registrar Informacion de control.</p>
                     <div class="row">
                         <input type="hidden" id="idPaciente" name="idPaciente" value="<?php echo $_POST['idPaciente']?>">
-                        <div class="col-md-3 col-12 ">
+                        <div class="col-md-2 col-12 ">
                             <!-- SELECT2-->
                             <div class="form-group">
                                 <label>Seleccione Año:</label>
@@ -57,7 +57,7 @@ if(isset($_POST["idPaciente"])){
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-3 col-12 ">
+                        <div class="col-md-2 col-12 ">
                             <!-- SELECT2-->
                             <div class="form-group">
                                 <label>Seleccione Mes:</label>
@@ -78,8 +78,40 @@ if(isset($_POST["idPaciente"])){
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-3 col-12 d-flex justify-content-center align-self-center mt-3 offset-3">
-                            <button class="btn btn-success  btn-block" type="button" onclick="agregar_seguimiento()">AGREGAR</button>
+                        <div class="col-md-6 col-2">
+                            <div class="row justify-content-center">
+                                <div class="col-md-12">
+                                    <div class="d-flex align-items-center">
+                                        <div class="w-50 bb br px-3">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <em class="fas fa-notes-medical fa-2x text-green"></em>
+                                                <div class="ml-auto">
+                                                    <div class="card-body text-right">
+                                                        <h4 class="mt-0" id="totalFicha">0</h4>
+                                                        <p class="mb-0 text-muted">N° de Fichas</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="w-50 bb  px-3">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <em class="fas fa-notes-medical fa-2x text-info"></em>
+                                                <div class="ml-auto">
+                                                    <div class="card-body text-right">
+
+                                                            <h4 class="mt-0  mr-3" id="porcFicha">0.00 %</h4>
+                                                            <p class="mb-0 text-muted">Porcentaje</p>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-12 d-flex justify-content-center align-self-center mt-3 ">
+                            <button class="btn btn-success  btn-block" type="button" onclick="agregar_seguimiento()">NUEVA FICHA</button>
                         </div>
                     </div>
                     <div class="row ">

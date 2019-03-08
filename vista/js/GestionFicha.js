@@ -5,7 +5,7 @@ var Listas_Comorbilidad;
 var DiagnosticoEnfermeria;
 var Tratamientos;
 var Evaluado;
-
+var Satisfaccion;
 function init() {
     var idPaciente = $("#idPaciente").val();
     RecuperarInformacionPaciente(idPaciente);
@@ -66,8 +66,26 @@ function listar_seguimiento() {
         }
     });
 }
+function RecuperarTotales(idPaciente,ano,mes){
+    $.post("../../controlador/Gestion/CGestion.php?op=RecuperarTotales", {
+        idPaciente: idPaciente,
+        year: ano,
+        mes: mes
+    }, function (data, status) {
+         data = JSON.parse(data);
 
+      $("#totalFicha").empty();
+      $("#totalFicha").append(data.TotalFicha);
+
+     var porcentaje=Formato_Moneda(parseFloat((data.TotalFicha*100)/3),2)+" %";
+    $("#porcFicha").empty();
+      $("#porcFicha").append(porcentaje);
+
+    });
+
+}
 function Mostrar_lista(idPaciente, ano, mes) {
+    RecuperarTotales(idPaciente,ano,mes);
     if (tabla_seguimientos == null) {
         tabla_seguimientos = $('#datatable_seguimiento').dataTable({
             "aProcessing": true,
@@ -386,8 +404,6 @@ function EnvioEliminarSeguimiento(idSeguimiento, idPaciente, idAno, idMes) {
     });
 }
 
-
-
 function VerFicha(idSeguimiento) {
     $("#modal_seguimiento").modal("show");
     $.post("../../controlador/Gestion/CFicha.php?op=RecuperarListas", function (data, status) {
@@ -398,7 +414,7 @@ function VerFicha(idSeguimiento) {
         DiagnosticoEnfermeria = data.enfermeria;
         Tratamientos = data.tratamientos;
         Evaluado = data.evaluado;
-
+        Satisfaccion = data.satisfaccion;
 
         RecuperarGrupos(idSeguimiento);
         RecuperarEspecialidades(idSeguimiento);
@@ -829,6 +845,10 @@ function LanzarFunciones() {
                     $("#area" + id).show();
                     $("#SELECT" + id).append(Tratamientos);
                     break;
+                case 7:
+                    $("#area" + id).show();
+                    $("#SELECT" + id).append(Satisfaccion);
+                    break;
 
             }
 
@@ -1132,6 +1152,8 @@ function RecuperarResultadosEspecialidad(idSeguimiento){
                     }else if(tipocampo==5){
                         $("#SELECT"+element.idOpcion).val(propiedades.valorCampo);
                     }else if(tipocampo==6){
+                        $("#SELECT"+element.idOpcion).val(propiedades.valorCampo);
+                    }else if(tipocampo==7){
                         $("#SELECT"+element.idOpcion).val(propiedades.valorCampo);
                     }
                      break;
