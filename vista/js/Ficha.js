@@ -263,9 +263,9 @@ function RecuperarTipoOpcion(elemento, contador,grupo) {
                 '</div>';
             break;
         case "2":
-            opcion = '<div class="col-md-4">' +
+            opcion = '<div class="col-md-12">' +
                 '<label class="">' + Titulo + ':</label>' +
-                '<input id="CAM' + idOpcion + '" class="form-control  caja campo opcionCampo" data-tipo="' + Tipo + '" type="text" step="any"  maxlength="100">' +
+                '<textarea id="CAM' + idOpcion + '" class="form-control  caja campo opcionCampo" data-tipo="' + Tipo + '" type="text" step="any"  ></textarea>' +
                 '</div>';
             break;
         case "3":
@@ -295,12 +295,13 @@ function RecuperarTipoOpcion(elemento, contador,grupo) {
             var minimo = "";
             var maximo = "";
             var paciente = "";
+            debugger;
             if (sexo == 1 || sexo == "1") {
                 atributo = Propiedades.AtributoHombre;
                 minimo = Propiedades.MinimoHombre;
                 maximo = Propiedades.MaximoHombre;
                 paciente = "Paciente Masculino";
-            } else {
+            } else if(sexo==2 || sexo=="2") {
                 atributo = Propiedades.AtributoMujer;
                 minimo = Propiedades.MinimoMujer;
                 maximo = Propiedades.MaximoMujer;
