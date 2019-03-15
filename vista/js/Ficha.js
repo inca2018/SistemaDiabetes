@@ -434,6 +434,15 @@ function RecuperarTipoOpcion(elemento, contador,grupo) {
                 '</div>';
 
             break;
+         case "11":
+            var TipoCampos = Propiedades.TipoCampo;
+
+            opcion = '<input type="hidden" class="opcionOculto opcionCondicionCampo" id="OF' + idOpcion + '" data-tipocampo="' + TipoCampos + '">' +
+                '<div class="col-md-12"><label class="col-form-label">' + Titulo + ':</label></div>' +
+                '<div class="col-md-4" style="display:none;" id="area'+idOpcion+'"> <select class="form-control " data-message="'+grupo+' - '+Titulo+' - Listado" id="SELECT' + idOpcion + '" name=""></select></div>'+
+                '<div class=" col-md-4" style="display:none;" id="DO' + idOpcion + '" ><input id="dosis'+idOpcion+'" class="form-control  caja campo opcionCampo" type="text"  maxlength="100" placeholder="DOSIS/DIA" disabled></div>'+
+                '<div class=" col-md-4" style="display:none;" id="TA' + idOpcion + '"><input id="tab'+idOpcion+'"  class="form-control  caja campo opcionCampo" type="text"  maxlength="100" placeholder="NUM. INYECC." disabled></div>';
+            break;
     }
     return opcion;
 }
@@ -443,7 +452,7 @@ function LanzarFunciones() {
     $(".OpcionGeneral").each(function () {
         var id = $(this).data("id");
         var tipo = $(this).data("tipo");
-        if (tipo == 9) {
+        if (tipo == 9 || tipo==11) {
 
             var tipoCampos = $("#OF" + id).data("tipocampo");
 
@@ -1059,6 +1068,46 @@ function AjaxGuardarFicha(){
 
 
                     break;
+                  case 11:
+
+                      var tipoCampo=$("#OF"+id).data("tipocampo");
+                      //var Estado=$('input[name=radio'+id+']:checked').val();
+                      var select=$("#SELECT"+id).val();
+                      var dosis=$("#dosis"+id).val();
+                      var num=$("#tab"+id).val();
+
+                     var Opcion ="";
+                    Opcion=Opcion+""+id;//id
+                    Opcion=Opcion+",OPCION";//Gneral
+                    Opcion=Opcion+","+11;//tipoOpcion
+                    Opcion=Opcion+", ";//campo
+                    Opcion=Opcion+", ";//rESPUESTA
+                    Opcion=Opcion+", ";//Estado
+                    Opcion=Opcion+", ";//Sexo
+                    Opcion=Opcion+", ";//v1
+                    Opcion=Opcion+", ";//v2
+                    Opcion=Opcion+", ";//v3
+                    Opcion=Opcion+", ";//v4
+                    Opcion=Opcion+","+tipoCampo;//tipocampo
+                    Opcion=Opcion+","+select;//valorcampo
+                    Opcion=Opcion+","+dosis;//dosis
+                    Opcion=Opcion+","+num;//numero
+                    Opcion=Opcion+", ";//diagnostico
+                    Opcion=Opcion+", ";//medico
+                    Opcion=Opcion+", ";//tratamiento
+                    Opcion=Opcion+", ";//observacion
+                    Opcion=Opcion+", ";//r1
+                    Opcion=Opcion+", ";//r2
+                    Opcion=Opcion+", ";//r3
+                    Opcion=Opcion+", ";//r4
+                    Opcion=Opcion+", ";//r5
+                    Opcion=Opcion+", ";//r6
+                    Opcion=Opcion+", ";//r7
+                    Opcion=Opcion+", ";//r8
+                    Opcion=Opcion+","+grupo;//grupo
+                    ArregloOpciones.push(Opcion);
+                   console.log("ID="+id+" tipo="+11+" tipoCampo="+tipoCampo+" estado="+Estado+" dosis="+dosis+" num="+num);
+                    break;
             }
 
         }else if(tipoOpcion=="ESPECIALIDAD"){
@@ -1197,5 +1246,10 @@ var idMes=$("#idMes").val();
     });
 }
 
+function VolverGestion(idPaciente){
+    $.redirect('../../vista/Operaciones/GestionFicha.php', {
+                        'idPaciente': idPaciente
+                    });
+}
 
 init();

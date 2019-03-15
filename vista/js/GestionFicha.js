@@ -738,6 +738,15 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
                 '</div>';
 
             break;
+      case "11":
+            var TipoCampos = Propiedades.TipoCampo;
+
+            opcion = '<input type="hidden" class="opcionOculto opcionCondicionCampo" id="OF' + idOpcion + '" data-tipocampo="' + TipoCampos + '">' +
+                '<div class="col-md-12"><label class="col-form-label">' + Titulo + ':</label></div>' +
+                '<div class="col-md-4" style="display:none;" id="area'+idOpcion+'"> <select class="form-control " data-message="'+grupo+' - '+Titulo+' - Listado" id="SELECT' + idOpcion + '" name=""></select></div>'+
+                '<div class=" col-md-4" style="display:none;" id="DO' + idOpcion + '" ><input id="dosis'+idOpcion+'" class="form-control  caja campo opcionCampo" type="text"  maxlength="100" placeholder="DOSIS/DIA" disabled></div>'+
+                '<div class=" col-md-4" style="display:none;" id="TA' + idOpcion + '"><input id="tab'+idOpcion+'"  class="form-control  caja campo opcionCampo" type="text"  maxlength="100" placeholder="NUM. INYECC." disabled></div>';
+            break;
     }
     return opcion;
 }
@@ -814,7 +823,7 @@ function LanzarFunciones() {
     $(".OpcionGeneral").each(function () {
         var id = $(this).data("id");
         var tipo = $(this).data("tipo");
-        if (tipo == 9) {
+        if (tipo == 9 || tipo == 11) {
 
             var tipoCampos = $("#OF" + id).data("tipocampo");
 
@@ -1137,6 +1146,32 @@ function RecuperarResultadosEspecialidad(idSeguimiento){
 
                       $('input:radio[id=SI'+element.idOpcion+']').filter('[name=radio'+element.idOpcion+']').attr("disabled",true);
                       $('input:radio[id=NO'+element.idOpcion+']').filter('[name=radio'+element.idOpcion+']').attr("disabled",true);
+
+                    if(tipocampo==1){
+                        $("#SELECT"+element.idOpcion).val(propiedades.valorCampo);
+                    }else if(tipocampo==2){
+                        $("#SELECT"+element.idOpcion).val(propiedades.valorCampo);
+                    }else if(tipocampo==3){
+                        (propiedades.Dosis=="0")? $("#dosis"+element.idOpcion).val("") : $("#dosis"+element.idOpcion).val(propiedades.Dosis);
+                        (propiedades.Num=="0")? $("#tab"+element.idOpcion).val("") : $("#tab"+element.idOpcion).val(propiedades.Num);
+
+
+                    }else if(tipocampo==4){
+                        $("#SELECT"+element.idOpcion).val(propiedades.valorCampo);
+                    }else if(tipocampo==5){
+                        $("#SELECT"+element.idOpcion).val(propiedades.valorCampo);
+                    }else if(tipocampo==6){
+                        $("#SELECT"+element.idOpcion).val(propiedades.valorCampo);
+                    }else if(tipocampo==7){
+                        $("#SELECT"+element.idOpcion).val(propiedades.valorCampo);
+                    }
+                     break;
+
+                case '11':
+                       var propiedades=data = JSON.parse(element.Propiedades);
+                       var tipocampo=propiedades.tipocampo;
+
+                       var respuesta=element.RespuestaAdecuado;
 
                     if(tipocampo==1){
                         $("#SELECT"+element.idOpcion).val(propiedades.valorCampo);

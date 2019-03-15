@@ -78,6 +78,12 @@ function Iniciar_componentes() {
                 ElementoTituloMostrar(true);
                 ElementoTituloValidacion(true);
                 break;
+            case "11":
+                ElementoTituloMostrar(true);
+                ElementoTituloValidacion(true);
+                OpcionListados(true);
+                ElementoListados(true);
+            break;
         }
     });
 
@@ -194,12 +200,14 @@ function OcultarElementos() {
     ElementoFormulaMostrar(false);
     ElementoCondicionCampoMostrar(false);
     OpcionTipoCampoMostrar(false);
+    OpcionListados(false);
     /*validacion*/
     ElementoTituloValidacion(false);
     ElementoAtributoValidacion(false);
     ElementoMinimoValidacion(false);
     ElementoMaximoValidacion(false);
     OpcionTipoCampoValidacion(false);
+    ElementoListados(false);
 
     OpcionAtributoHombreValidacion(false);
     OpcionMinimoHombreValidacion(false);
@@ -364,6 +372,10 @@ function VerificacionTipoOpcion() {
             break;
         case "10":
             var Propiedades = '{"TipoOpcion":' + tipoOpcion + ',"CodigoOpcion":"SubCabecera","Titulo":"' + titulo + '"}';
+            break;
+        case "11":
+            var tipoCampos = $("#OpcionTipoCampo2").val();
+            var Propiedades = '{"TipoOpcion":' + tipoOpcion + ',"CodigoOpcion":"Opcion Listado","Titulo":"' + titulo + '","TipoCampo":' + tipoCampos + '}';
             break;
     }
 
@@ -603,8 +615,17 @@ function OpcionTipoCampoMostrar(valor) {
     (valor) ? $("#OpcionTipoCampo").show(): $("#OpcionTipoCampo").hide();
 }
 
+function OpcionListados(valor) {
+    (valor) ? $("#ElementoListados").show(): $("#ElementoListados").hide();
+}
+
+
 
 /** Funciones Validacion **/
+function ElementoListados(valor) {
+    (valor) ? $("#OpcionTipoCampo2").addClass("validarPanel"): $("#OpcionTipoCampo2").removeClass("validarPanel");
+}
+
 function ElementoTipoValidacion(valor) {
     (valor) ? $("#OpcionTipo").addClass("validarPanel"): $("#OpcionTipo").removeClass("validarPanel");
 }

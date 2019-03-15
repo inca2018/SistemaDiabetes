@@ -36,19 +36,22 @@ if(isset($_POST["idPaciente"])){
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3 text-center">
+                    <div class="col-md-2 text-center mt-3">
+                        <button type="button" class="btn btn-info btn-block" onclick="VolverGestion(<?php echo $_POST["idPaciente"] ;?>);"><i class="fas fa-chevron-left mr-2"></i>VOLVER</button>
+                    </div>
+                    <div class="col-md-4 text-center">
                         <label>Paciente:</label>
                         <h4 id="NombrePaciente"></h4>
                     </div>
-                    <div class="col-md-3 text-center">
+                    <div class="col-md-2 text-center">
                         <label>Edad:</label>
                         <h4 id="EdadPaciente"></h4>
                     </div>
-                    <div class="col-md-3 text-center">
+                    <div class="col-md-2 text-center">
                         <label>Numero de Documento:</label>
                         <h4 id="DocumentoPaciente"></h4>
                     </div>
-                    <div class="col-md-3 text-center mt-3">
+                    <div class="col-md-2 text-center mt-3">
                         <button type="button" class="btn btn-success btn-block" onclick="GuardarFicha();">GUARDAR FICHA</button>
                     </div>
                 </div>

@@ -18,7 +18,7 @@ define("DB_ENCODE","utf8");
 define("PRO_NOMBRE","");
 
 //Definimos ruta base
-define("URI","http://localhost/ucv/SistemaDiabetes");
+define("URI","http://localhost/SistemaDiabetes");
 
 ?>
 
