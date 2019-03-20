@@ -114,7 +114,14 @@ function RecuperarEspecialidades() {
                     '</div>' +
                     '</div>' +
                     ' </div>';
+
             });
+
+
+              query =query+'<div class="col-md-12">' +
+                '<label class="">Paciente Refiere:</label><input type="hidden" id="ocultoRefiere">' +
+                '<textarea id="RefiereOpcion" class="form-control  caja campo opcionCampo" data-tipo="20" type="text" step="any"  ></textarea>' +
+                '</div>';
 
             $("#contenedorEspecialidades").html(query);
             LanzarFuncionesEspecialidad();
@@ -655,6 +662,17 @@ function LanzarFuncionesEspecialidad() {
                 }
             });
      });
+
+    $("#RefiereOpcion").blur(function (){
+        $("#RefiereOpcion").val('"'+$("#ocultoRefiere").val()+'"');
+    });
+     $("#RefiereOpcion").change(function (){
+        $("#ocultoRefiere").val($("#RefiereOpcion").val());
+    });
+    $("#RefiereOpcion").click(function (){
+        $("#RefiereOpcion").val($("#ocultoRefiere").val());
+    });
+
 
 }
 
@@ -1208,6 +1226,37 @@ var hijo8=$("#OpcionPieN8").children("div");
    // console.log("RESULTADO PIE: R1="+resu1+" R2="+resu2+" R3="+resu3+" R4="+resu4+" R5="+resu5+" R6="+resu6+" R7="+resu7+" R8="+resu8);
 
 
+    var respuestaRefiere=$("#ocultoRefiere").val();
+     var Opcion ="";
+                    Opcion=Opcion+" ";//id
+                    Opcion=Opcion+",REFIERE";//Gneral
+                    Opcion=Opcion+", ";//tipoOpcion
+                    Opcion=Opcion+", ";//campo
+                    Opcion=Opcion+","+respuestaRefiere;//rESPUESTA
+                    Opcion=Opcion+", ";//Estado
+                    Opcion=Opcion+", ";//Sexo
+                    Opcion=Opcion+", ";//v1
+                    Opcion=Opcion+", ";//v2
+                    Opcion=Opcion+", ";//v3
+                    Opcion=Opcion+", ";//v4
+                    Opcion=Opcion+", ";//tipocampo
+                    Opcion=Opcion+", ";//valorcampo
+                    Opcion=Opcion+", ";//dosis
+                    Opcion=Opcion+", ";//numero
+                    Opcion=Opcion+", ";//diagnostico
+                    Opcion=Opcion+", ";//medico
+                    Opcion=Opcion+", ";//tratamiento
+                    Opcion=Opcion+", ";//observacion
+                    Opcion=Opcion+", ";//r1
+                    Opcion=Opcion+", ";//r2
+                    Opcion=Opcion+", ";//r3
+                    Opcion=Opcion+", ";//r4
+                    Opcion=Opcion+", ";//r5
+                    Opcion=Opcion+", ";//r6
+                    Opcion=Opcion+", ";//r7
+                    Opcion=Opcion+", ";//r8
+                    Opcion=Opcion+", ";//grupo
+                    ArregloOpciones.push(Opcion);
 
 
 var OpcionesR=ArregloOpciones.join('|');

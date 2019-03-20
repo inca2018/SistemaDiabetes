@@ -28,10 +28,11 @@ function BuscarEstado($reg)
 function BuscarAccion($reg)
 {
     if ($reg->Estado_idEstado == 1) {
-        return '<button type="button"  title="Desactivación" class="btn btn-info btn-sm" onclick="DesactivacionOpcion(' . $reg->idOpcion . ')"><i class="fa fa-arrow-circle-down"></i></button>
+        return '<button type="button"  title="Editar Opción" class="btn btn-warning btn-sm" onclick="EditarOpcion(' . $reg->idOpcion . ')"><i class="fa fa-pen"></i></button>
+        <button type="button"  title="Desactivación" class="btn btn-info btn-sm" onclick="DesactivacionOpcion(' . $reg->idOpcion . ')"><i class="fa fa-arrow-circle-down"></i></button>
                <button type="button"  title="Eliminar" class="btn btn-danger btn-sm" onclick="EliminarOpcion(' . $reg->idOpcion . ')"><i class="fa fa-trash"></i></button>';
     } elseif ($reg->Estado_idEstado == 2) {
-        return '<button type="button"  title="Activación" class="btn btn-info btn-sm" onclick="ActivacionOpcion(' . $reg->idOpcion . ')"><i class="fa fa-arrow-circle-up"></i></button>
+        return '<button type="button"  title="Editar Opción" class="btn btn-warning btn-sm" onclick="EditarOpcion(' . $reg->idOpcion . ')"><i class="fa fa-pen"></i></button><button type="button"  title="Activación" class="btn btn-info btn-sm" onclick="ActivacionOpcion(' . $reg->idOpcion . ')"><i class="fa fa-arrow-circle-up"></i></button>
             <button type="button"  title="Eliminar" class="btn btn-danger btn-sm" onclick="EliminarOpcion(' . $reg->idOpcion . ')"><i class="fa fa-trash"></i></button>';
     }
 }
@@ -59,14 +60,29 @@ switch ($_GET['op']) {
             "Registro" => false
         );
 
-        $RespuestaRegistro = $mantenimiento->RegistroOpcion($idGrupoOpcion,$Propiedades,$TipoOpcion,$OpcionTitulo);
-        if ($RespuestaRegistro) {
-            $rspta["Registro"] = true;
-            $rspta["Mensaje"]  = "Opcion se registro Correctamente.";
-        } else {
-            $rspta["Registro"] = false;
-            $rspta["Mensaje"]  = "Opcion no se puede registrar comuniquese con el area de soporte.";
+        if($idOpcion==null || $idOpcion==""){
+             $RespuestaRegistro = $mantenimiento->RegistroOpcion($idGrupoOpcion,$Propiedades,$TipoOpcion,$OpcionTitulo);
+            if ($RespuestaRegistro) {
+                $rspta["Registro"] = true;
+                $rspta["Mensaje"]  = "Opcion se registro Correctamente.";
+            } else {
+                $rspta["Registro"] = false;
+                $rspta["Mensaje"]  = "Opcion no se puede registrar comuniquese con el area de soporte.";
+            }
+
+        }else{
+             $RespuestaRegistro = $mantenimiento->ActualizarOpcion($idOpcion,$idGrupoOpcion,$Propiedades,$TipoOpcion,$OpcionTitulo);
+            if ($RespuestaRegistro) {
+                $rspta["Registro"] = true;
+                $rspta["Mensaje"]  = "Opcion se Actualizó Correctamente.";
+            } else {
+                $rspta["Registro"] = false;
+                $rspta["Mensaje"]  = "Opcion no se puede Actualizar comuniquese con el area de soporte.";
+            }
+
+
         }
+
 
 
         echo json_encode($rspta);
@@ -121,6 +137,11 @@ switch ($_GET['op']) {
         $rspta['Eliminar'] = $mantenimiento->Activacion_Opcion($idOpcion, $Opcion);
 
         $rspta['Eliminar'] ? $rspta['Mensaje'] = "Opcion " . $Mensaje : $rspta['Mensaje'] = "Opcion no se pudo Restablecer comuniquese con el area de soporte";
+        echo json_encode($rspta);
+        break;
+
+    case 'RecuperarOpcion':
+        $rspta = $mantenimiento->RecuperarOpcion($idOpcion);
         echo json_encode($rspta);
         break;
 }

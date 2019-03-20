@@ -50,6 +50,10 @@
             $sql="SELECT * FROM `tab_resultado_pie` WHERE `Seguimiento_idSeguimiento`='$idSeguimiento'";
            return ejecutarConsultaSimpleFila($sql);
        }
+       public function RecuperarResultadoRefiere($idSeguimiento){
+           $sql="SELECT * FROM `tab_extra` WHERE  `Seguimiento_idSeguimiento`=$idSeguimiento";
+           return ejecutarConsultaSimpleFila($sql);
+       }
 
    }
 

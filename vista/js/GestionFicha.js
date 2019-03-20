@@ -418,6 +418,7 @@ function VerFicha(idSeguimiento) {
 
         RecuperarGrupos(idSeguimiento);
         RecuperarEspecialidades(idSeguimiento);
+
     });
 
 }
@@ -425,6 +426,7 @@ function VerPie(idSeguimiento){
 
     $("#modal_pie").modal("show");
     RecuperarResultadoPie(idSeguimiento);
+
 }
 
 function RecuperarEspecialidades(idSeguimiento) {
@@ -483,6 +485,10 @@ function RecuperarEspecialidades(idSeguimiento) {
                     '</div>' +
                     ' </div>';
             });
+            query =query+'<div class="col-md-12">' +
+                '<label class="">Paciente Refiere:</label><input type="hidden" id="ocultoRefiere">' +
+                '<textarea id="RefiereOpcion" class="form-control  caja campo opcionCampo" data-tipo="20" type="text" step="any"  ></textarea>' +
+                '</div>';
 
             $("#contenedorEspecialidades").html(query);
             LanzarFuncionesEspecialidad();
@@ -1241,6 +1247,8 @@ function RecuperarResultadosEspecialidad(idSeguimiento){
              }
 
          });
+
+         RecuperarResultadoRefiere(idSeguimiento);
        });
 }
 function RecuperarResultadoPie(idSeguimiento){
@@ -1381,5 +1389,13 @@ function RecuperarResultadoPie(idSeguimiento){
         }
 
          });
+}
+function RecuperarResultadoRefiere(idSeguimiento){
+      $.post("../../controlador/Gestion/CFicha.php?op=RecuperarResultadoRefiere",{idSeguimiento:idSeguimiento}, function (data, status) {
+        data = JSON.parse(data);
+       console.log(data);
+          $("#ocultoRefiere").val(data.Refiere);
+          $("#RefiereOpcion").val('"'+data.Refiere+'"');
+     });
 }
 init();

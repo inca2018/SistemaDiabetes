@@ -167,6 +167,10 @@
            $rspta=$Ficha->RecuperarResultadoPie($idSeguimiento);
             echo json_encode($rspta);
            break;
+       case 'RecuperarResultadoRefiere':
+            $rspta=$Ficha->RecuperarResultadoRefiere($idSeguimiento);
+            echo json_encode($rspta);
+           break;
    }
 
 

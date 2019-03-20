@@ -27,6 +27,14 @@ class MOpcion
 
         return ejecutarConsulta($sql);
     }
+     public function ActualizarOpcion($idOpcion,$grupo,$propiedades,$TipoOpcion,$OpcionTitulo){
+        if($grupo=='' || $grupo==0){
+            $grupo=null;
+        }
+        $sql = "UPDATE `tab_opcion` SET  `TituloOpcion`='$OpcionTitulo',`Propiedades`='$propiedades',`TipoOpcion_idTipoOpcion`='$TipoOpcion',`GrupoOpcion_idGrupoOpcion`='$grupo' WHERE `idOpcion`='$idOpcion'";
+
+        return ejecutarConsulta($sql);
+    }
     public function Listar_Opcion($idGrupoOpcion){
         $sql = "SELECT op.idOpcion,op.TituloOpcion,op.fechaRegistro,op.Estado_idEstado,e.nombreEstado,tip.Descripcion as tipoOpcion FROM tab_opcion op inner join estado e ON e.idEstado=op.Estado_idEstado inner join tab_tipoopcion tip on tip.idTipoOpcion=op.TipoOpcion_idTipoOpcion where op.GrupoOpcion_idGrupoOpcion= '$idGrupoOpcion' ";
         return ejecutarConsulta($sql);
@@ -38,6 +46,10 @@ class MOpcion
     public function Activacion_Opcion($idOpcion, $Opcion){
          $sql = "UPDATE `tab_opcion` SET  `Estado_idEstado`='$Opcion'   WHERE `idOpcion`='$idOpcion'";
         return ejecutarConsulta($sql);
+    }
+    public function RecuperarOpcion($idOpcion){
+        $sql = "SELECT * FROM `tab_opcion` WHERE `idOpcion`=$idOpcion";
+        return ejecutarConsultaSimpleFila($sql);
     }
 }
 

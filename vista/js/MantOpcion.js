@@ -83,7 +83,7 @@ function Iniciar_componentes() {
                 ElementoTituloValidacion(true);
                 OpcionListados(true);
                 ElementoListados(true);
-            break;
+                break;
         }
     });
 
@@ -284,6 +284,7 @@ function AjaxRegistroOpcion() {
     var idGrupoOpcion = $("#idGrupoOpcion").val();
     var TipoOpcion = $("#OpcionTipo").val();
     var OpcionTitulo = $("#OpcionTitulo").val();
+    var idOpcion=$("#idOpcion").val();
     $.ajax({
         url: "../../controlador/Mantenimiento/COpcion.php?op=AccionOpcion",
         type: "POST",
@@ -291,7 +292,8 @@ function AjaxRegistroOpcion() {
             Propiedades: Propiedad,
             idGrupoOpcion: idGrupoOpcion,
             TipoOpcion: TipoOpcion,
-            OpcionTitulo: OpcionTitulo
+            OpcionTitulo: OpcionTitulo,
+            idOpcion:idOpcion
         },
         success: function (data, status) {
             data = JSON.parse(data);
@@ -360,7 +362,7 @@ function VerificacionTipoOpcion() {
             var maximo = $("#OpcionMaximoFormula").val();
 
 
-            var Propiedades = '{"TipoOpcion":' + tipoOpcion + ',"CodigoOpcion":"Opcion Formula","Titulo":"' + titulo + '","minimo":"'+minimo+'","maximo":"'+maximo+'","variable1":"' + camp1 + '","variable2":"' + camp2 + '","variable3":"' + camp3 + '","variable4":"' + camp4 + '","Formula":"' + Formula + '"}';
+            var Propiedades = '{"TipoOpcion":' + tipoOpcion + ',"CodigoOpcion":"Opcion Formula","Titulo":"' + titulo + '","minimo":"' + minimo + '","maximo":"' + maximo + '","variable1":"' + camp1 + '","variable2":"' + camp2 + '","variable3":"' + camp3 + '","variable4":"' + camp4 + '","Formula":"' + Formula + '"}';
             break;
         case "7":
             var Propiedades = '{"TipoOpcion":' + tipoOpcion + ',"CodigoOpcion":"Opcion Condición","Titulo":"' + titulo + '"}';
@@ -489,7 +491,6 @@ function ListarTipoOpcion() {
         $("#OpcionTipo").empty();
         $("#OpcionTipo").append(ts);
     });
-
 }
 
 function LimpiarOpcion() {
@@ -620,7 +621,6 @@ function OpcionListados(valor) {
 }
 
 
-
 /** Funciones Validacion **/
 function ElementoListados(valor) {
     (valor) ? $("#OpcionTipoCampo2").addClass("validarPanel"): $("#OpcionTipoCampo2").removeClass("validarPanel");
@@ -677,11 +677,10 @@ function OpcionTipoCampoValidacion(valor) {
 function OpcionMinimoFormulaValidacion(valor) {
     (valor) ? $("#OpcionMinimoFormula").addClass("validarPanel"): $("#OpcionMinimoFormula").removeClass("validarPanel");
 }
+
 function OpcionMaximoFormulaValidacion(valor) {
     (valor) ? $("#OpcionMaximoFormula").addClass("validarPanel"): $("#OpcionMaximoFormula").removeClass("validarPanel");
 }
-
-
 
 function Limpiar() {
     $('#FormularioOpcion')[0].reset();
@@ -690,4 +689,165 @@ function Limpiar() {
 function volver() {
     $.redirect('../../vista/Mantenimiento/MantGrupoOpcion.php');
 }
+
+function EditarOpcion(idOpcion) {
+    $("#ModalOpcion").modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    $("#ModalOpcion").modal("show");
+    $("#tituloModalOpcion").empty();
+    $("#tituloModalOpcion").append("Editar Registro de Opcion:");
+
+    RecuperarOpcion(idOpcion);
+}
+
+function RecuperarOpcion(idOpcion) {
+    OcultarElementos();
+    $.post("../../controlador/Mantenimiento/COpcion.php?op=RecuperarOpcion", {
+        idOpcion: idOpcion
+    }, function (data, e) {
+        data = JSON.parse(data);
+        console.log(data);
+
+        $.post("../../controlador/Mantenimiento/COpcion.php?op=ListarTipoOpcion", function (ts) {
+            $("#OpcionTipo").empty();
+            $("#OpcionTipo").append(ts);
+            $("#OpcionTipo").val(data.TipoOpcion_idTipoOpcion);
+            Mostrar_Informacion_Opcion(data);
+
+        });
+    });
+}
+
+function Mostrar_Informacion_Opcion(data) {
+    $("#idOpcion").val(data.idOpcion);
+    switch (data.TipoOpcion_idTipoOpcion) {
+        case "1":
+            //cabecera
+            ElementoTituloMostrar(true);
+            ElementoTituloValidacion(true);
+            $("#OpcionTitulo").val(data.TituloOpcion);
+            break;
+        case "2":
+            ElementoTituloMostrar(true);
+            ElementoTituloValidacion(true);
+            $("#OpcionTitulo").val(data.TituloOpcion);
+            //opcion campo de texto
+            break;
+        case "3":
+            ElementoTituloMostrar(true);
+            ElementoRangoMostrar(true);
+
+            ElementoTituloValidacion(true);
+            ElementoAtributoValidacion(true);
+            ElementoMinimoValidacion(true);
+            ElementoMaximoValidacion(true);
+
+
+             var Propiedades = data.Propiedades.replace(/&quot;/g, '\"');
+            var Propiedades = JSON.parse(Propiedades);
+            console.log(Propiedades);
+
+            $("#OpcionTitulo").val(Propiedades.Titulo);
+            $("#OpcionAtributo").val(Propiedades.Atributo);
+            $("#OpcionMinimo").val(Propiedades.Minimo);
+            $("#OpcionMaximo").val(Propiedades.Maximo);
+            //opcion campo de texto
+            break;
+        case "4":
+            ElementoTituloMostrar(true);
+            ElementoRangoSexoMostrar(true);
+
+            ElementoTituloValidacion(true);
+            OpcionAtributoHombreValidacion(true);
+            OpcionMinimoHombreValidacion(true);
+            OpcionMaximoHombreValidacion(true);
+            OpcionAtributoMujerValidacion(true);
+            OpcionMinimoMujerValidacion(true);
+            OpcionMaximoMujerValidacion(true);
+            //opcion campo de texto
+             var Propiedades = data.Propiedades.replace(/&quot;/g, '\"');
+            var Propiedades = JSON.parse(Propiedades);
+            console.log(Propiedades);
+
+            $("#OpcionTitulo").val(Propiedades.Titulo);
+            $("#OpcionAtributoHombre").val(Propiedades.AtributoHombre);
+            $("#OpcionMinimoHombre").val(Propiedades.MinimoHombre);
+            $("#OpcionMaximoHombre").val(Propiedades.MaximoHombre);
+
+            $("#OpcionAtributoMujer").val(Propiedades.AtributoMujer);
+            $("#OpcionMinimoMujer").val(Propiedades.MinimoMujer);
+            $("#OpcionMaximoMujer").val(Propiedades.MaximoMujer);
+
+            break;
+        case "5":
+            ElementoTituloMostrar(true);
+            ElementoTituloValidacion(true);
+             $("#OpcionTitulo").val(data.TituloOpcion);
+            //opcion campo de texto
+            break;
+        case "6":
+            if (ArregloFormula == null) {
+                ArregloFormula = new Array();
+            }
+            ElementoTituloMostrar(true);
+            ElementoTituloValidacion(true);
+            ElementoFormulaMostrar(true);
+
+            ElementoTituloValidacion(true);
+            OpcionMinimoFormulaValidacion(true);
+            OpcionMaximoFormulaValidacion(true);
+
+             $("#OpcionTitulo").val(data.TituloOpcion);
+
+              var Propiedades = data.Propiedades.replace(/&quot;/g, '\"');
+            var Propiedades = JSON.parse(Propiedades);
+            console.log(Propiedades);
+            $("#OpcionMinimoFormula").val(Propiedades.minimo);
+            $("#OpcionMaximoFormula").val(Propiedades.maximo);
+            $("#OpcioneCampo1").val(Propiedades.variable1);
+            $("#OpcioneCampo2").val(Propiedades.variable2);
+            $("#OpcioneCampo3").val(Propiedades.variable3);
+            $("#OpcioneCampo4").val(Propiedades.variable4);
+
+            //opcion campo de texto
+            break;
+        case "7":
+            ElementoTituloMostrar(true);
+            ElementoTituloValidacion(true);
+             $("#OpcionTitulo").val(data.TituloOpcion);
+            //opcion campo de texto
+            break;
+        case "9":
+            ElementoTituloMostrar(true);
+            ElementoTituloValidacion(true);
+
+            ElementoCondicionCampoMostrar(true);
+            OpcionTipoCampoMostrar(true);
+            OpcionTipoCampoValidacion(true);
+             var Propiedades = data.Propiedades.replace(/&quot;/g, '\"');
+            var Propiedades = JSON.parse(Propiedades);
+            console.log(Propiedades);
+            $("#OpcionTipoCampo").val(Propiedades.TipoOpcion);
+            $("#OpcionTitulo").val(data.TituloOpcion);
+
+            //opcion campo de texto
+            break;
+        case "10":
+            ElementoTituloMostrar(true);
+            ElementoTituloValidacion(true);
+            $("#OpcionTitulo").val(data.TituloOpcion);
+            //opcion campo de texto
+            break;
+        case "11":
+            ElementoTituloMostrar(true);
+            ElementoTituloValidacion(true);
+            OpcionListados(true);
+            ElementoListados(true);
+            $("#OpcionTitulo").val(data.TituloOpcion);
+            break;
+    }
+}
+
 init();
