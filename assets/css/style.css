@@ -195,11 +195,12 @@ input.caja:focus{
 .ImagenPie{
     align-content: center;
     text-align: center;
-    background-image: url("../image/imagenPie.png");
+    background-image: url("../image/pie2.png");
     background-repeat: no-repeat;
     height: 100vh;
     width: 100vh;
     z-index: 1;
+    margin-top:100
 }
 
 .OpcionPie1{
@@ -207,7 +208,7 @@ input.caja:focus{
     width: 20px;
 
     margin-left: 55px;
-    margin-top: 128px;
+    margin-top: 40px;
     z-index: 2;
     position: absolute;
 }
@@ -216,7 +217,7 @@ input.caja:focus{
     width: 20px;
 
     margin-left: 65px;
-    margin-top: 162px;
+    margin-top: 78px;
     z-index: 2;
     position: absolute;
 }
@@ -225,7 +226,7 @@ input.caja:focus{
     width: 20px;
 
     margin-left: 35px;
-    margin-top: 154px;
+    margin-top: 70px;
     z-index: 2;
     position: absolute;
 }
@@ -234,7 +235,7 @@ input.caja:focus{
     width: 20px;
 
     margin-left: 18px;
-    margin-top: 180px;
+    margin-top: 96px;
     z-index: 2;
     position: absolute;
 }
@@ -243,7 +244,7 @@ input.caja:focus{
     width: 20px;
 
     margin-left: 305px;
-    margin-top: 130px;
+    margin-top: 46px;
     z-index: 2;
     position: absolute;
 }
@@ -252,7 +253,7 @@ input.caja:focus{
     width: 20px;
 
     margin-left: 343px;
-    margin-top: 190px;
+    margin-top: 106px;
     z-index: 2;
     position: absolute;
 }
@@ -262,7 +263,7 @@ input.caja:focus{
     width: 20px;
 
     margin-left: 320px;
-    margin-top: 164px;
+    margin-top: 80px;
     z-index: 2;
     position: absolute;
 }
@@ -271,7 +272,7 @@ input.caja:focus{
     width: 20px;
 
     margin-left: 290px;
-    margin-top: 175px;
+    margin-top: 91px;
     z-index: 2;
     position: absolute;
 }
