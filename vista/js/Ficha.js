@@ -39,20 +39,30 @@ function LanzarFuncionOpcionesPie() {
     $(".opciones").each(function () {
         $(this).on('click', function () {
             if ($(this).data("opcion") == 1) {
-                $(this).removeClass("Option");
-                $(this).addClass("OptionX");
+                $(this).removeClass("OptionA");
+                $(this).addClass("OptionB");
                 $(this).data("opcion", 2);
-                $(this).html("<span>X</span>");
+                $(this).html('<span><i class="fa fa-times" aria-hidden="true"></i></span>');
 
             } else if ($(this).data("opcion") == 2) {
-                $(this).removeClass("OptionX");
-                $(this).addClass("OptionFull");
+                $(this).removeClass("OptionB");
+                $(this).addClass("OptionC");
                 $(this).data("opcion", 3);
                 $(this).empty();
+                $(this).html('<span><i class="fa fa-check" aria-hidden="true"></i></span>');
 
             } else if ($(this).data("opcion") == 3) {
-                $(this).removeClass("OptionFull");
-                $(this).addClass("Option");
+                $(this).removeClass("OptionC");
+                $(this).addClass("OptionD");
+                $(this).data("opcion", 4);
+                $(this).empty();
+            }else if ($(this).data("opcion") == 4) {
+                $(this).removeClass("OptionD");
+                $(this).addClass("OptionE");
+                $(this).data("opcion", 5);
+            }else if ($(this).data("opcion") == 5) {
+                $(this).removeClass("OptionE");
+                $(this).addClass("OptionA");
                 $(this).data("opcion", 1);
             }
         });
@@ -201,40 +211,43 @@ function RecuperarGrupos() {
             '</div>' +
             ' <div class="collapse" id="collapseTwo" aria-labelledby="headingTwo" data-parent="#accordion">' +
             ' <div class="card-body border-top">' +
+            '<div class="row"><div class="col-md-9 offset-3"><p>"Si no siente el monofilamento y la vibracion seguir lo siguiente:<br>'+
+                'Respuesta al monofilamento normal check  anormal x<br>'+
+                'Respuesta a la vibracion normal verde anormal rojo "</p></div></div>'+
             '<div class="row" >' +
             ' <div class="col-md-9 offset-3 padre">' +
             ' <div class="ImagenPie">' +
             ' <div class="OpcionPie1" id="OpcionPieN1">' +
-            ' <div class="opciones Option" data-opcion="1">' +
+            ' <div class="opciones OptionA" data-opcion="1">' +
             '</div>' +
             ' </div>' +
             '<div class="OpcionPie2" id="OpcionPieN2">' +
-            '<div class="opciones Option" data-opcion="1">' +
+            '<div class="opciones OptionA" data-opcion="1">' +
             '</div>' +
             '</div>' +
             '<div class="OpcionPie3" id="OpcionPieN3">' +
-            '<div class="opciones Option" data-opcion="1">' +
+            '<div class="opciones OptionA" data-opcion="1">' +
             '</div>' +
             '</div>' +
             ' <div class="OpcionPie4" id="OpcionPieN4">' +
-            '<div class="opciones Option" data-opcion="1">' +
+            '<div class="opciones OptionA" data-opcion="1">' +
             '</div>' +
             '</div>' +
             '<div class="OpcionPie5" id="OpcionPieN5">' +
-            ' <div class="opciones Option" data-opcion="1">' +
+            ' <div class="opciones OptionA" data-opcion="1">' +
 
             '</div>' +
             ' </div>' +
             ' <div class="OpcionPie6" id="OpcionPieN6">' +
-            '<div class="opciones Option" data-opcion="1">' +
+            '<div class="opciones OptionA" data-opcion="1">' +
             '</div>' +
             '</div>' +
             ' <div class="OpcionPie7" id="OpcionPieN7">' +
-            '<div class="opciones Option" data-opcion="1">' +
+            '<div class="opciones OptionA" data-opcion="1">' +
             '</div>' +
             '</div>' +
             '<div class="OpcionPie8" id="OpcionPieN8">' +
-            ' <div class="opciones Option" data-opcion="1">' +
+            ' <div class="opciones OptionA" data-opcion="1">' +
             ' </div>' +
             '</div>' +
             '</div>' +

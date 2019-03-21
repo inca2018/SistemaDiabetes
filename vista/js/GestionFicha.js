@@ -1256,139 +1256,41 @@ function RecuperarResultadoPie(idSeguimiento){
         data = JSON.parse(data);
        console.log(data);
 
-        if(data.R1==1){
-            $("#PIE1").removeClass("OptionFull");
-            $("#PIE1").addClass("Option");
-            $("#PIE1").data("opcion", 1);
-        }else if(data.R1==2){
-            $("#PIE1").removeClass("Option");
-            $("#PIE1").addClass("OptionX");
-            $("#PIE1").data("opcion", 2);
-            $("#PIE1").html("<span>X</span>");
-        }else if(data.R1==3){
-            $("#PIE1").removeClass("OptionX");
-            $("#PIE1").addClass("OptionFull");
-            $("#PIE1").data("opcion", 3);
-            $("#PIE1").empty();
-        }
-
-
-        if(data.R2==1){
-            $("#PIE2").removeClass("OptionFull");
-            $("#PIE2").addClass("Option");
-            $("#PIE2").data("opcion", 1);
-        }else if(data.R2==2){
-            $("#PIE2").removeClass("Option");
-            $("#PIE2").addClass("OptionX");
-            $("#PIE2").data("opcion", 2);
-            $("#PIE2").html("<span>X</span>");
-        }else if(data.R2==3){
-            $("#PIE2").removeClass("OptionX");
-            $("#PIE2").addClass("OptionFull");
-            $("#PIE2").data("opcion", 3);
-            $("#PIE2").empty();
-        }
-
-
-           if(data.R3==1){
-            $("#PIE3").removeClass("OptionFull");
-            $("#PIE3").addClass("Option");
-            $("#PIE3").data("opcion", 1);
-        }else if(data.R3==2){
-            $("#PIE3").removeClass("Option");
-            $("#PIE3").addClass("OptionX");
-            $("#PIE3").data("opcion", 2);
-            $("#PIE3").html("<span>X</span>");
-        }else if(data.R3==3){
-            $("#PIE3").removeClass("OptionX");
-            $("#PIE3").addClass("OptionFull");
-            $("#PIE3").data("opcion", 3);
-            $("#PIE3").empty();
-        }
-
-         if(data.R4==1){
-            $("#PIE4").removeClass("OptionFull");
-            $("#PIE4").addClass("Option");
-            $("#PIE4").data("opcion", 1);
-        }else if(data.R4==2){
-            $("#PIE4").removeClass("Option");
-            $("#PIE4").addClass("OptionX");
-            $("#PIE4").data("opcion", 2);
-            $("#PIE4").html("<span>X</span>");
-        }else if(data.R4==3){
-            $("#PIE4").removeClass("OptionX");
-            $("#PIE4").addClass("OptionFull");
-            $("#PIE4").data("opcion", 3);
-            $("#PIE4").empty();
-        }
-
-          if(data.R5==1){
-            $("#PIE5").removeClass("OptionFull");
-            $("#PIE5").addClass("Option");
-            $("#PIE5").data("opcion", 1);
-        }else if(data.R5==2){
-            $("#PIE5").removeClass("Option");
-            $("#PIE5").addClass("OptionX");
-            $("#PIE5").data("opcion", 2);
-            $("#PIE5").html("<span>X</span>");
-        }else if(data.R5==3){
-            $("#PIE5").removeClass("OptionX");
-            $("#PIE5").addClass("OptionFull");
-            $("#PIE5").data("opcion", 3);
-            $("#PIE5").empty();
-        }
-
-          if(data.R6==1){
-            $("#PIE6").removeClass("OptionFull");
-            $("#PIE6").addClass("Option");
-            $("#PIE6").data("opcion", 1);
-        }else if(data.R6==2){
-            $("#PIE6").removeClass("Option");
-            $("#PIE6").addClass("OptionX");
-            $("#PIE6").data("opcion", 2);
-            $("#PIE6").html("<span>X</span>");
-        }else if(data.R6==3){
-            $("#PIE6").removeClass("OptionX");
-            $("#PIE6").addClass("OptionFull");
-            $("#PIE6").data("opcion", 3);
-            $("#PIE6").empty();
-        }
-
-
-           if(data.R7==1){
-            $("#PIE7").removeClass("OptionFull");
-            $("#PIE7").addClass("Option");
-            $("#PIE7").data("opcion", 1);
-        }else if(data.R7==2){
-            $("#PIE7").removeClass("Option");
-            $("#PIE7").addClass("OptionX");
-            $("#PIE7").data("opcion", 2);
-            $("#PIE7").html("<span>X</span>");
-        }else if(data.R7==3){
-            $("#PIE7").removeClass("OptionX");
-            $("#PIE7").addClass("OptionFull");
-            $("#PIE7").data("opcion", 3);
-            $("#PIE7").empty();
-        }
-
-
-           if(data.R8==1){
-            $("#PIE8").removeClass("OptionFull");
-            $("#PIE8").addClass("Option");
-            $("#PIE8").data("opcion", 1);
-        }else if(data.R8==2){
-            $("#PIE8").removeClass("Option");
-            $("#PIE8").addClass("OptionX");
-            $("#PIE8").data("opcion", 2);
-            $("#PIE8").html("<span>X</span>");
-        }else if(data.R8==3){
-            $("#PIE8").removeClass("OptionX");
-            $("#PIE8").addClass("OptionFull");
-            $("#PIE8").data("opcion", 3);
-            $("#PIE8").empty();
-        }
+         VerificarOpcion(data.R1,1);
+         VerificarOpcion(data.R2,1);
+         VerificarOpcion(data.R3,1);
+         VerificarOpcion(data.R4,1);
+         VerificarOpcion(data.R5,1);
+         VerificarOpcion(data.R6,1);
+         VerificarOpcion(data.R7,1);
+         VerificarOpcion(data.R8,1);
 
          });
+}
+function VerificarOpcion(valor,num){
+
+        $("#PIE"+num).removeClass("Option");
+        $("#PIE"+num).data("opcion",num);
+        $("#PIE"+num).empty();
+    switch (valor){
+        case 1:
+            $("#PIE"+num).addClass("OptionA");
+            break;
+        case 2:
+            $("#PIE"+num).addClass("OptionB");
+            $("#PIE"+num).html('<span><i class="fa fa-times" aria-hidden="true"></i></span>');
+            break;
+        case 3:
+            $("#PIE"+num).addClass("OptionC");
+            $("#PIE"+num).html('<span><i class="fa fa-check" aria-hidden="true"></i></span>');
+            break;
+        case 4:
+            $("#PIE"+num).addClass("OptionD");
+            break;
+        case 5:
+            $("#PIE"+num).addClass("OptionE");
+            break;
+    }
 }
 function RecuperarResultadoRefiere(idSeguimiento){
       $.post("../../controlador/Gestion/CFicha.php?op=RecuperarResultadoRefiere",{idSeguimiento:idSeguimiento}, function (data, status) {
