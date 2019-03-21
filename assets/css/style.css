@@ -203,6 +203,13 @@ input.caja:focus{
     margin-top:100
 }
 
+.OpcionPie{
+    height: 20px;
+    width: 20px;
+
+    position: absolute;
+}
+
 .OpcionPie1{
     height: 20px;
     width: 20px;

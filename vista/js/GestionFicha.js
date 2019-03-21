@@ -1257,37 +1257,37 @@ function RecuperarResultadoPie(idSeguimiento){
        console.log(data);
 
          VerificarOpcion(data.R1,1);
-         VerificarOpcion(data.R2,1);
-         VerificarOpcion(data.R3,1);
-         VerificarOpcion(data.R4,1);
-         VerificarOpcion(data.R5,1);
-         VerificarOpcion(data.R6,1);
-         VerificarOpcion(data.R7,1);
-         VerificarOpcion(data.R8,1);
+         VerificarOpcion(data.R2,2);
+         VerificarOpcion(data.R3,3);
+         VerificarOpcion(data.R4,4);
+         VerificarOpcion(data.R5,5);
+         VerificarOpcion(data.R6,6);
+         VerificarOpcion(data.R7,7);
+         VerificarOpcion(data.R8,8);
 
          });
 }
 function VerificarOpcion(valor,num){
-
+    debugger;
         $("#PIE"+num).removeClass("Option");
         $("#PIE"+num).data("opcion",num);
         $("#PIE"+num).empty();
     switch (valor){
-        case 1:
+        case '1':
             $("#PIE"+num).addClass("OptionA");
             break;
-        case 2:
+        case '2':
             $("#PIE"+num).addClass("OptionB");
             $("#PIE"+num).html('<span><i class="fa fa-times" aria-hidden="true"></i></span>');
             break;
-        case 3:
+        case '3':
             $("#PIE"+num).addClass("OptionC");
             $("#PIE"+num).html('<span><i class="fa fa-check" aria-hidden="true"></i></span>');
             break;
-        case 4:
+        case '4':
             $("#PIE"+num).addClass("OptionD");
             break;
-        case 5:
+        case '5':
             $("#PIE"+num).addClass("OptionE");
             break;
     }

@@ -211,11 +211,12 @@ function RecuperarGrupos() {
             '</div>' +
             ' <div class="collapse" id="collapseTwo" aria-labelledby="headingTwo" data-parent="#accordion">' +
             ' <div class="card-body border-top">' +
-            '<div class="row"><div class="col-md-9 offset-3"><p>"Si no siente el monofilamento y la vibracion seguir lo siguiente:<br>'+
-                'Respuesta al monofilamento normal check  anormal x<br>'+
-                'Respuesta a la vibracion normal verde anormal rojo "</p></div></div>'+
+            '<div class="row">'+
+            '<div class="col-md-9 offset-3">'+
+                '<div class="row"><div class="col-md-12"><p>Si no siente el monofilamento y la vibracion seguir lo siguiente:</p></div><div class="col-md-12"><p>Respuesta al monofilamento</p></div><div class="col-md-6"><p>normal</p></div><div class="col-md-6"><span class="opciones OptionB OpcionPie"><span><i class="fa fa-check" aria-hidden="true"></i></span></span></div><div class="col-md-6"><p>anormal</p></div><div class="col-md-6"><span class="opciones OptionC OpcionPie"><i class="fa fa-times" aria-hidden="true"></i></span> </div></div>'+
+                '<div class="row"><div class="col-md-12"><p>Respuesta a la vibracion</p></div><div class="col-md-6"><p>normal</p></div><div class="col-md-6"><span class="opciones OptionD OpcionPie"></span></div><div class="col-md-6"><p>anormal</p></div><div class="col-md-6"><span class="opciones OptionE OpcionPie"></span></div></div>'+
             '<div class="row" >' +
-            ' <div class="col-md-9 offset-3 padre">' +
+            ' <div class="col-md-12 padre">' +
             ' <div class="ImagenPie">' +
             ' <div class="OpcionPie1" id="OpcionPieN1">' +
             ' <div class="opciones OptionA" data-opcion="1">' +
@@ -300,7 +301,7 @@ function RecuperarTipoOpcion(elemento, contador,grupo) {
             }
             opcion = '<input type="hidden" class="opcionOculto" id="OF' + idOpcion + '"  data-minimo="' + minimo + '" data-maximo="' + maximo + '">' +
 
-                '<div class="col-md-12"><label class="">' + Titulo + '(' + atributo + '):</label></div>' +
+                '<div class="col-md-12"><label class="">' + Titulo + '- Rango:('+minimo+' '+atributo+'-'+maximo+' '+atributo+'):</label></div>' +
                 '<div class="col-md-4">' +
                 '<input id="OP' + idOpcion + '" class="form-control  caja campo FuRango validar" data-message="'+grupo+' - '+Titulo+'" data-id="' + idOpcion + '" data-atributo="' + atributo + '" data-tipo="' + Tipo + '" data-minimo="' + minimo + '" data-maximo="' + maximo + '" type="text" step="any"  maxlength="100" placeholder="' + place + '" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
                 '</div>' +
@@ -335,7 +336,7 @@ function RecuperarTipoOpcion(elemento, contador,grupo) {
                 place = '(Rango: ' + minimo + ' ' + atributo + ' - ' + maximo + ' ' + atributo + ')';
             }
             opcion = '<input type="hidden" class="opcionOculto " id="OF' + idOpcion + '"  data-minimo="' + minimo + '" data-maximo="' + maximo + '" data-sexo="' + sexo + '">' +
-                '<div class="col-md-12"><label class="">' + Titulo + '(' + atributo + ') - ' + paciente + ':</label></div>' +
+                '<div class="col-md-12"><label class="">' + Titulo + ' Rango('+minimo+''+ atributo + ' - '+maximo+' '+atributo+') - ' + paciente + ':</label></div>' +
                 '<div class="col-md-4">' +
                 '<input id="OP' + idOpcion + '" class="form-control  caja campo FuRango validar" data-message="'+grupo+' - '+Titulo+'" data-id="' + idOpcion + '" data-atributo="' + atributo + '" data-tipo="' + Tipo + '" data-minimo="' + minimo + '" data-maximo="' + maximo + '" type="text" step="any"  maxlength="100" placeholder="' + place + '" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
                 '</div>' +
