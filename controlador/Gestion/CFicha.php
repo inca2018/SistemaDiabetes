@@ -133,7 +133,7 @@
 
             $contador=count($OpcionesR);
             for($i=0;$i<$contador;$i++){
-                $opcion=explode(',',$OpcionesR[$i]);
+                $opcion=explode('#',$OpcionesR[$i]);
                  if($i==$contador-1){
                         $resuSeguimiento = $Ficha->RegistrarResultados($opcion,$idSeguimiento);
                         $rspta["Registro"]=true;

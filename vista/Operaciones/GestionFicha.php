@@ -187,8 +187,6 @@ if(isset($_POST["idPaciente"])){
                 </button>
             </div>
             <div class="modal-body">
-
-
                 <div class="row">
                     <div class="col-md-12">
                         <div id="info_pie">

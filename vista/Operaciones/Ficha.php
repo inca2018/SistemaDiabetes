@@ -66,6 +66,7 @@ if(isset($_POST["idPaciente"])){
                         </div>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>

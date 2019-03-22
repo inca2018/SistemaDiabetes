@@ -124,124 +124,156 @@
 
                 </div>
 
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-4 p-2 text-center bb bt br bl fondo3">
+                                <b>Indicador</b>
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb bt br fondo3">
+                                <b>Masculino</b>
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb bt br fondo3">
+                               <b>Femenino</b>
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br bl fondo1">
+                                Total Pacientes
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo1" id="indMasculino">
+                                0
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo1" id="indFemenino">
+                                0
+                            </div>
+                        </div>
+                         <div class="row">
+                            <div class="col-md-4 p-2 text-center bb br bl fondo3">
+                                <b>Indicador</b>
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo3">
+                                <b>Adecuado</b>
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo3">
+                               <b>Inadecuado</b>
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br bl fondo1">
+                                Paciente con control de Glicemico
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo1" id="indPorConHG">
+                                 0
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo1" id="indPorSinHG">
+                                 0
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 p-2 text-center bb br bl fondo3">
+                                <b>Indicador</b>
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo3">
+                                <b>Con hemoglobina glucosilada</b>
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo3">
+                               <b>Sin hemoglobina glucosilada</b>
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br bl fondo1">
+                                % De Pacientes con/sin hemoglobina
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo1" id="indConHG">
+                                 0
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo1" id="indSinHG">
+                                 0
+                            </div>
+                        </div>
+                          <div class="row">
+                            <div class="col-md-4 p-2 text-center bb br bl fondo3">
+                                <b>Indicador</b>
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo3">
+                                <b>Con Colesterol</b>
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo3">
+                               <b>Sin Colesterol</b>
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br bl fondo1">
+                                Nº de Pacientes con/sin Colesterol
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo1" id="indConCol">
+                                 0
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo1" id="indSinCol">
+                                 0
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 p-2 text-center bb br bl fondo3">
+                                <b>Indicador</b>
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo3">
+                                <b>Con HDL-C Adecuado</b>
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo3">
+                               <b>Sin HDL-C Adecuado</b>
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br bl fondo1">
+                                Nº de Pacientes con/sin Colesterol HDL-C Adecuado
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo1" id="indConHDL">
+                                 0
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo1" id="indSinHDL">
+                                 0
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 p-2 text-center bb br bl fondo3">
+                                <b>Indicador</b>
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo3">
+                                <b>Con LDL-C Adecuado</b>
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo3">
+                               <b>Sin LDL-C Adecuado</b>
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br bl fondo1">
+                                Nº de Pacientes con/sin Colesterol LDL-C Adecuado
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo1" id="indConLDL">
+                                 0
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo1" id="indSinLDL">
+                                 0
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 p-2 text-center bb br bl fondo3">
+                                <b>Indicador</b>
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo3">
+                                <b>Con IMC Adecuado</b>
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo3">
+                               <b>Sin IMC Adecuado</b>
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br bl fondo1">
+                                Nº de Pacientes con/sin IMC Adecuado
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo1" id="indConIMC">
+                                 0
+                            </div>
+                            <div class="col-md-4 p-2 text-center bb br fondo1" id="indSinIMC">
+                                 0
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
                 <div class="row m-2 justify-content-center">
                     <div class="col-md-12">
                         <h4 class="text-muted m-2">- Indicadores Generales.</h4>
-                        <table class="table   table-hover table-sm dt-responsive " id="datatable_reporte">
-                            <thead class="thead">
-                                <tr>
-                                    <th class="text-left">Sexo:</th>
-                                    <th class="text-center">Masculino</th>
-                                    <th class="text-center">Femenino</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th class="text-left">Total Pacientes:</th>
-                                    <th class="text-center" id="indMasculino">0</th>
-                                    <th class="text-center" id="indFemenino">0</th>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <table class="table  table-hover table-sm dt-responsive " id="datatable_reporte">
-                            <thead class="thead">
-                                <tr>
-                                    <th class="text-left">Indicador:</th>
-                                    <th class="text-center">GLICEMICO ADECUADO</th>
-                                    <th class="text-center">GLICEMICO DESADEACUADO</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th class="text-left">PACIENTE CON CONTROL DE GLICEMICO ADECUADO O DESADECUADO:</th>
-                                    <th class="text-center" id="indPorConHG">0</th>
-                                    <th class="text-center" id="indPorSinHG">0</th>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <table class="table  table-hover table-sm dt-responsive " id="datatable_reporte">
-                            <thead class="thead">
-                                <tr>
-                                    <th class="text-left">Indicador:</th>
-                                    <th class="text-center">CON HEMOGLOBINA GLUCOSILADA</th>
-                                    <th class="text-center">SIN HEMOGLOBINA GLUCOSILADA</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th class="text-left">% DE PACIENTES CON/SIN HEMOGLOBINA:</th>
-                                    <th class="text-center" id="indConHG">0</th>
-                                    <th class="text-center" id="indSinHG">0</th>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <table class="table  table-hover table-sm dt-responsive " id="datatable_reporte">
-                            <thead class="thead">
-                                <tr>
-                                    <th class="text-left">Indicador:</th>
-                                    <th class="text-center">CON COLESTEROL</th>
-                                    <th class="text-center">SIN COLESTEROL</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th class="text-left">NUMERO DE PACIENTES CON/SIN COLESTEROL TOTAL ADECUADO:</th>
-                                    <th class="text-center" id="indConCol">0</th>
-                                    <th class="text-center" id="indSinCol">0</th>
-                                </tr>
-                            </tbody>
-                        </table>
 
-                        <table class="table  table-hover table-sm dt-responsive " id="datatable_reporte">
-                            <thead class="thead">
-                                <tr>
-                                    <th class="text-left">Indicador:</th>
-                                    <th class="text-center">CON HDL-c ADECUADO</th>
-                                    <th class="text-center">SIN HDL-c ADECUADO</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th class="text-left">NUMERO DE PACIENTES CON/SIN COLESTEROL HDL-c ADECUADO:</th>
-                                    <th class="text-center" id="indConHDL">0</th>
-                                    <th class="text-center" id="indSinHDL">0</th>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <table class="table  table-hover table-sm dt-responsive " id="datatable_reporte">
-                            <thead class="thead">
-                                <tr>
-                                    <th class="text-left">Indicador:</th>
-                                    <th class="text-center">CON LDL-c ADECUADO</th>
-                                    <th class="text-center">SIN LDL-c ADECUADO</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th class="text-left">NUMERO DE PACIENTES CON/SIN COLESTEROL LDL-c ADECUADO:</th>
-                                    <th class="text-center" id="indConLDL">0</th>
-                                    <th class="text-center" id="indSinLDL">0</th>
-                                </tr>
-                            </tbody>
-                        </table>
-                         <table class="table  table-hover table-sm dt-responsive " id="datatable_reporte">
-                            <thead class="thead">
-                                <tr>
-                                    <th class="text-left">Indicador:</th>
-                                    <th class="text-center">CON IMC ADECUADO</th>
-                                    <th class="text-center">SIN IMC ADECUADO</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th class="text-left">NUMERO DE PACIENTES CON/SIN IMC ADECUADO:</th>
-                                    <th class="text-center" id="indConIMC">0</th>
-                                    <th class="text-center" id="indSinIMC">0</th>
-                                </tr>
-                            </tbody>
-                        </table>
                          <table class="table  table-hover table-sm dt-responsive " id="datatable_reporte">
                             <thead class="thead">
                                 <tr>

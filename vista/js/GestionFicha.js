@@ -532,6 +532,43 @@ function RecuperarGrupos(idSeguimiento) {
 
             Html = Html + grupoOpcion;
         });
+            var riesgo = '<div class="card border-primary mb-1">' +
+            '<div class="card-header text-white bg-primary" id="headingEspecialidad">' +
+            '<h4 class="mb-0"><a class="text-inherit" data-toggle="collapse" data-target="#collapseRiesgo" aria-expanded="false" aria-controls="collapseRiesgo" href="">CATEGORIZACIÓN DE RIESGO</a>' +
+            '</h4>' +
+            '</div>' +
+            '<div class="collapse" id="collapseRiesgo" aria-labelledby="headingEspecialidad" data-parent="#accordion">' +
+            '<div class="card-body border-top">' +
+            '<div class="row p-3" >' +
+            '<div class="col-md-3 bb bt bl p-2 text-center fondo1">PACIENTE BAJO RIESGO<br>Todo lo siguiente</div>'+
+            '<div class="col-md-3 bt bb bl p-2 text-center fondo2">MODERADO RIESGO<br>Uno o Más de lo siguiente</div>'+
+            '<div class="col-md-3 bt bb bl p-2 text-center fondo3">ALTO RIESGO<br>Uno de los siguientes</div>'+
+            '<div class="col-md-3 bt bb br p-2 text-center fondo4">MUY ALTO RRIESGO<br>Uno de los siguientes</div>'+
+            '<div class="col-md-3 bb bl p-1 text-left "><input  type="checkbox" id="opA1" class="m-2 riesgoOpcion">Percibe Monofilamento</div>'+
+            '<div class="col-md-3 bb bl p-1 text-left "><input  type="checkbox" id="opA2" class="m-2 riesgoOpcion">No percibe monofilamento</div>'+
+            '<div class="col-md-3 bb bl br p-1 text-left "><input  type="checkbox" id="opA3" class="m-2 riesgoOpcion">No percibe diapazon</div>'+
+            '<div class="col-md-3 bb br p-1 text-left "><input  type="checkbox" id="opA4" class="m-2 riesgoOpcion">Úlcera activa</div>'+
+            '<div class="col-md-3 bb bl p-1 text-left "><input  type="checkbox" id="opB1" class="m-2 riesgoOpcion">Ninguna úlcera previa</div>'+
+            '<div class="col-md-3 bb bl p-1 text-left "><input  type="checkbox" id="opB2" class="m-2 riesgoOpcion">Piel o uñas de riesgo</div>'+
+            '<div class="col-md-3 bb bl br p-1 text-left "><input  type="checkbox" id="opB3" class="m-2 riesgoOpcion">Deformidad severa</div>'+
+            '<div class="col-md-3 bb br p-1 text-left "><input  type="checkbox" id="opB4" class="m-2 riesgoOpcion">Dedo o pie amputado</div>'+
+            '<div class="col-md-3 bb bl p-1 text-left "><input  type="checkbox" id="opC1" class="m-2 riesgoOpcion">Ninguna  deformidad severa</div>'+
+            '<div class="col-md-3 bb bl p-1 text-left "><input  type="checkbox" id="opC2" class="m-2 riesgoOpcion">Pulso tibial de dificil percepción</div>'+
+            '<div class="col-md-3 bb bl br p-1 text-left "><input  type="checkbox" id="opC3" class="m-2 riesgoOpcion">Ausencia de Pulso</div>'+
+            '<div class="col-md-3 bb br p-1 text-left "><input  type="checkbox" id="opC4" class="m-2 riesgoOpcion">Úlcera Antigua</div>'+
+            '<div class="col-md-3 bb bl p-1 text-left "><input  type="checkbox" id="opD1" class="m-2 riesgoOpcion">Pulsos pedio presentes</div>'+
+            '<div class="col-md-3 bb bl p-1 text-left "><input  type="checkbox" id="opD2" class="m-2 riesgoOpcion">Una deformidad leve</div>'+
+            '<div class="col-md-3 bb bl br p-1 text-left "></div>'+
+            '<div class="col-md-3 bb br p-1 text-left "></div>'+
+            '<div class="col-md-3 bb bl p-1 text-left "><input  type="checkbox" id="opE1" class="m-2">Ninguna Amputación</div>'+
+            '<div class="col-md-3 bb bl p-1 text-left "><input  type="checkbox" id="opE2" class="m-2">Formación de callos</div>'+
+            '<div class="col-md-3 bb bl br p-1 text-left "></div> '+
+            '<div class="col-md-3 bb br p-1 text-left "></div>'+
+
+            ' </div>' +
+            '</div>' +
+            '</div>' +
+            '</div>';
         var especialidades = '<div class="card border-primary mb-1">' +
             '<div class="card-header text-white bg-primary" id="headingEspecialidad">' +
             '<h4 class="mb-0"><a class="text-inherit" data-toggle="collapse" data-target="#collapseEspecialidad" aria-expanded="false" aria-controls="collapseEspecialidad" href="">OTRAS ESPECIALIDADES</a>' +
@@ -547,6 +584,8 @@ function RecuperarGrupos(idSeguimiento) {
             '</div>' +
             '</div>';
 
+
+        Html = Html + riesgo;
         Html = Html + especialidades;
 
         $("#accordion_info").html(Html);
@@ -1296,8 +1335,34 @@ function RecuperarResultadoRefiere(idSeguimiento){
       $.post("../../controlador/Gestion/CFicha.php?op=RecuperarResultadoRefiere",{idSeguimiento:idSeguimiento}, function (data, status) {
         data = JSON.parse(data);
        console.log(data);
+
+          var Respuestas = data.Riesgo.replace(/&quot;/g, '\"');
+          var Respuestas=JSON.parse(Respuestas);
+
+          (Respuestas.opA1==1)?$('#opA1').prop('checked', true):$('#opA1').prop('checked', false);
+          (Respuestas.opA2==1)?$('#opA2').prop('checked', true):$('#opA2').prop('checked', false);
+          (Respuestas.opA3==1)?$('#opA3').prop('checked', true):$('#opA3').prop('checked', false);
+          (Respuestas.opA4==1)?$('#opA4').prop('checked', true):$('#opA4').prop('checked', false);
+
+          (Respuestas.opB1==1)?$('#opB1').prop('checked', true):$('#opB1').prop('checked', false);
+          (Respuestas.opB2==1)?$('#opB2').prop('checked', true):$('#opB2').prop('checked', false);
+          (Respuestas.opB3==1)?$('#opB3').prop('checked', true):$('#opB3').prop('checked', false);
+          (Respuestas.opB4==1)?$('#opB4').prop('checked', true):$('#opB4').prop('checked', false);
+
+          (Respuestas.opC1==1)?$('#opC1').prop('checked', true):$('#opC1').prop('checked', false);
+          (Respuestas.opC2==1)?$('#opC2').prop('checked', true):$('#opC2').prop('checked', false);
+          (Respuestas.opC3==1)?$('#opC3').prop('checked', true):$('#opC3').prop('checked', false);
+          (Respuestas.opC4==1)?$('#opC4').prop('checked', true):$('#opC4').prop('checked', false);
+
+          (Respuestas.opD1==1)?$('#opD1').prop('checked', true):$('#opD1').prop('checked', false);
+          (Respuestas.opD2==1)?$('#opD2').prop('checked', true):$('#opD2').prop('checked', false);
+
+          (Respuestas.opE1==1)?$('#opE1').prop('checked', true):$('#opE1').prop('checked', false);
+          (Respuestas.opE2==1)?$('#opE2').prop('checked', true):$('#opE2').prop('checked', false);
+
           $("#ocultoRefiere").val(data.Refiere);
           $("#RefiereOpcion").val('"'+data.Refiere+'"');
+
      });
 }
 init();
