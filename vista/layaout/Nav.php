@@ -227,9 +227,15 @@
 										<span>Indicadores</span>
 									</a>
 								</li>
+								<li id="Asignacion" class="">
+									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Reporte/Reporte.php';?>" title="Reportes">
+										<span>Reportes</span>
+									</a>
+								</li>
 
 
 							</ul>
+
 						</li>
 						<?php  }}else{ };?>
 					</ul>

@@ -1,28 +1,12 @@
-
+var tablaReporte;
 function init(){
 
-listar_year();
 
 Mostrar_Informacion();
 
 }
-function listar_year() {
-    $.post("../../controlador/Gestion/CGestionPacientes.php?op=listar_year", function (ts) {
-        $("#select_ano").empty();
-        $("#select_ano").append(ts);
-    });
-}
-function buscar_reporte(){
 
-    var year=$("#select_ano").val();
-    var mes=$("#select_mes").val();
-    if(year=='' || mes=='' ){
-         swal("Error!", "Seleccione todos los indicadores para buscar reporte!.", "warning");
-    }else{
-         recuperar_totales(year,mes);
-    }
 
-}
 function Mostrar_Informacion(){
       $.post("../../controlador/Gestion/CReporte.php?op=recuperar_indicadores_generales" , function(data, status){
           data = JSON.parse(data);
@@ -34,12 +18,9 @@ function Mostrar_Informacion(){
             var cabCondicion="";
             var cuerpoCondicion="";
 
-            cabCondicion=cabCondicion+"<th class='text-center'>Condición</th>";
-            cuerpoCondicion=cuerpoCondicion+"<th class='text-center'>N° de Pacientes</th>";
-
             data.Condiciones.forEach(function (element) {
-                cabCondicion=cabCondicion+"<th class='text-center'>"+element.Condicion+"</th>";
-                cuerpoCondicion=cuerpoCondicion+"<th class='text-center'>"+element.TotalPaciente+"</th>";
+                 cabCondicion=cabCondicion+'<div class="col-md-12 p-2 text-center bb fondo2"><b>'+element.Condicion+'</b></div>';
+                 cuerpoCondicion=cuerpoCondicion+'<div class="col-md-12 p-2 text-center bb  fondo1">'+element.TotalPaciente+'<button class="btn btn-warning  btn-sm ml-3" onclick="PacienteCondicion('+element.idCondicion+')"><i class="fa fa-share"></i></button></div>';
             });
 
             $("#cabeceraCondicion").html(cabCondicion);
@@ -53,12 +34,11 @@ function Mostrar_Informacion(){
             var cabDiagnostico="";
             var cuerpoDiagnostico="";
 
-            cabDiagnostico=cabDiagnostico+"<th class='text-center'>Diagnostico</th>";
-            cuerpoDiagnostico=cuerpoDiagnostico+"<th class='text-center'>N° de Pacientes</th>";
-
             data.Diagnosticos.forEach(function (element) {
-                cabDiagnostico=cabDiagnostico+"<th class='text-center'>"+element.Diagnostico+"</th>";
-                cuerpoDiagnostico=cuerpoDiagnostico+"<th class='text-center'>"+element.TotalPaciente+"</th>";
+
+                 cabDiagnostico=cabDiagnostico+'<div class="col-md-12 p-2 text-center bb fondo2"><b>'+element.Diagnostico+'</b></div>';
+                 cuerpoDiagnostico=cuerpoDiagnostico+'<div class="col-md-12 p-2 text-center bb  fondo1">'+element.TotalPaciente+'<button class="btn btn-warning  btn-sm ml-3" onclick="PacienteDiagnostico('+element.idDiagnostico+')"><i class="fa fa-share"></i></button></div>';
+
             });
 
             $("#cabeceraDiagnostico").html(cabDiagnostico);
@@ -72,12 +52,10 @@ function Mostrar_Informacion(){
             var cabgradoInstruccion="";
             var cuerpogradoInstruccion="";
 
-            cabgradoInstruccion=cabgradoInstruccion+"<th class='text-center'>Grado de Instrucción</th>";
-            cuerpogradoInstruccion=cuerpogradoInstruccion+"<th class='text-center'>N° de Pacientes</th>";
-
             data.GradoInstruccion.forEach(function (element) {
-                cabgradoInstruccion=cabgradoInstruccion+"<th class='text-center'>"+element.Grado+"</th>";
-                cuerpogradoInstruccion=cuerpogradoInstruccion+"<th class='text-center'>"+element.TotalPaciente+"</th>";
+
+                cabgradoInstruccion=cabgradoInstruccion+'<div class="col-md-12 p-2 text-center bb fondo2"><b>'+element.Grado+'</b></div>';
+                cuerpogradoInstruccion=cuerpogradoInstruccion+'<div class="col-md-12 p-2 text-center bb  fondo1">'+element.TotalPaciente+'<button class="btn btn-warning  btn-sm ml-3" onclick="PacienteGradoInstruccion('+element.idGradoInstruccion+')"><i class="fa fa-share"></i></button></div>';
             });
 
             $("#cabeceraGradoInstruccion").html(cabgradoInstruccion);
@@ -85,70 +63,443 @@ function Mostrar_Informacion(){
 
         });
 }
-function recuperar_totales(year,mes){
-    $.post("../../controlador/Gestion/CReporte.php?op=recuperar_totales",{Year:year,Mes:mes}, function(data, status){
-      data = JSON.parse(data);
-      console.log(data);
 
-        $("#total1").empty();
-        $("#total1").append(parseInt(data.TotalPaciente));
+function PacienteCondicion(idCondicion){
 
-        $("#total2").empty();
-        $("#total2").append(parseInt(data.totalMedico));
-
-        $("#total3").empty();
-        $("#total3").append(parseInt(data.totalFichasGeneral));
-
-        $("#total4").empty();
-        $("#total4").append(parseInt(data.totalFichasYear));
+    var Opcion="CONDICION";
+    var id=idCondicion;
 
 
-        $("#indMasculino").empty();
-        $("#indFemenino").empty();
-        $("#indPorConHG").empty();
-        $("#indPorSinHG").empty();
-        $("#indConHG").empty();
-        $("#indSinHG").empty();
-        $("#indConCol").empty();
-        $("#indSinCol").empty();
-        $("#indConHDL").empty();
-        $("#indSinHDL").empty();
-        $("#indConLDL").empty();
-        $("#indSinLDL").empty();
-        $("#indConIMC").empty();
-        $("#indSinIMC").empty();
+    $("#ModalReporte").modal("show");
 
-        $("#indMasculino").append(parseInt(data.TotalPacienteMasculino));
-        $("#indFemenino").append(parseInt(data.TotalPacienteFemenino));
-        $("#indPorConHG").append(parseFloat(data.PorcentajeHgCon));
-        $("#indPorSinHG").append(parseFloat(data.PorcentajeHgSin));
-        $("#indConHG").append(parseInt(data.CantidadHgSI));
-        $("#indSinHG").append(parseInt(data.CantidadHgNO));
-        $("#indConCol").append(parseInt(data.totalColesterolSI));
-        $("#indSinCol").append(parseInt(data.totalColesterolNO));
-        $("#indConHDL").append(parseInt(data.totalHDLSI));
-        $("#indSinHDL").append(parseInt(data.totalHDLNO));
-        $("#indConLDL").append(parseInt(data.totalLDLSI));
-        $("#indSinLDL").append(parseInt(data.totalLDLNO));
-        $("#indConIMC").append(parseInt(data.totalIMCSI));
-        $("#indSinIMC").append(parseInt(data.totalIMCNO));
+    if(tablaReporte==null){
+         tablaReporte = $('#tablaPacientes').dataTable({
+        "aProcessing": true,
+        "aServerSide": true,
+        "processing": true,
+        "paging": true, // Paginacion en tabla
+        "ordering": true, // Ordenamiento en columna de tabla
+        "info": true, // Informacion de cabecera tabla
+        "responsive": true, // Accion de responsive
+          dom: 'lBfrtip',
+         "bDestroy": true,
+        "columnDefs": [
+            {
+                "className": "text-center",
+                "targets": [1, 2, 3]
+            }
+            , {
+                "className": "text-left",
+                "targets": [0]
+            }
+         , ],
+        buttons: [
+            {
+                extend: 'copy',
+                className: 'btn-info'
+            }
+            , {
+                extend: 'csv',
+                className: 'btn-info'
+            }
+            , {
+                extend: 'excel',
+                className: 'btn-info',
+                title: 'Reporte'
+            }
+            , {
+                extend: 'pdf',
+                className: 'btn-info',
+                title: 'Reporte '
+            }
+            , {
+                extend: 'print',
+                className: 'btn-info'
+            }
+            ],
+        "ajax": { //Solicitud Ajax Servidor
+            url: '../../controlador/Gestion/CReporte.php?op=ListarReporte',
+            type: "POST",
+            dataType: "JSON",
+            data:{"Opcion":Opcion,"id":id},
+            error: function (e) {
+                console.log(e.responseText);
+            }
+        },
+
+        // cambiar el lenguaje de datatable
+        oLanguage: español,
+    }).DataTable();
+    //Aplicar ordenamiento y autonumeracion , index
+    tablaReporte.on('order.dt search.dt', function () {
+        tablaReporte.column(0, {
+            search: 'applied',
+            order: 'applied'
+        }).nodes().each(function (cell, i) {
+            cell.innerHTML = i + 1;
+        });
+    }).draw();
+    }else{
+        tablaReporte.destroy();
+         tablaReporte = $('#tablaPacientes').dataTable({
+        "aProcessing": true,
+        "aServerSide": true,
+        "processing": true,
+        "paging": true, // Paginacion en tabla
+        "ordering": true, // Ordenamiento en columna de tabla
+        "info": true, // Informacion de cabecera tabla
+        "responsive": true, // Accion de responsive
+          dom: 'lBfrtip',
+         "bDestroy": true,
+        "columnDefs": [
+            {
+                "className": "text-center",
+                "targets": [1, 2, 3]
+            }
+            , {
+                "className": "text-left",
+                "targets": [0]
+            }
+         , ],
+        buttons: [
+            {
+                extend: 'copy',
+                className: 'btn-info'
+            }
+            , {
+                extend: 'csv',
+                className: 'btn-info'
+            }
+            , {
+                extend: 'excel',
+                className: 'btn-info',
+                title: 'Reporte'
+            }
+            , {
+                extend: 'pdf',
+                className: 'btn-info',
+                title: 'Reporte '
+            }
+            , {
+                extend: 'print',
+                className: 'btn-info'
+            }
+            ],
+        "ajax": { //Solicitud Ajax Servidor
+            url: '../../controlador/Gestion/CReporte.php?op=ListarReporte',
+            type: "POST",
+            dataType: "JSON",
+            data:{"Opcion":Opcion,"id":id},
+            error: function (e) {
+                console.log(e.responseText);
+            }
+        },
+
+        // cambiar el lenguaje de datatable
+        oLanguage: español,
+    }).DataTable();
+    //Aplicar ordenamiento y autonumeracion , index
+    tablaReporte.on('order.dt search.dt', function () {
+        tablaReporte.column(0, {
+            search: 'applied',
+            order: 'applied'
+        }).nodes().each(function (cell, i) {
+            cell.innerHTML = i + 1;
+        });
+    }).draw();
+    }
 
 
-        $("#indTaller1").empty();
-        $("#indTaller2").empty();
-        $("#indTaller3").empty();
-        $("#indTaller4").empty();
-        $("#indTaller5").empty();
-        $("#indTaller6").empty();
 
-         $("#indTaller1").append("SI-> "+data.tallerGLUCSI+" NO ->"+data.tallerGLUCNO);
-        $("#indTaller2").append("SI-> "+data.tallerNUTSI+" NO ->"+data.tallerNUTNO);
-        $("#indTaller3").append("SI-> "+data.tallerDIASI+" NO ->"+data.tallerDIANO);
-        $("#indTaller4").append("SI-> "+data.tallerINSSI+" NO ->"+data.tallerINSNO);
-        $("#indTaller5").append("SI-> "+data.tallerPODSI+" NO ->"+data.tallerPODNO);
-        $("#indTaller6").append("SI-> "+data.tallerPSISI+" NO ->"+data.tallerPSINO);
+}
+function PacienteDiagnostico(idDiagnostico){
+    var Opcion="DIAGNOSTICO";
+    var id=idDiagnostico;
+       $("#ModalReporte").modal("show");
 
-    });
+    if(tablaReporte==null){
+         tablaReporte = $('#tablaPacientes').dataTable({
+        "aProcessing": true,
+        "aServerSide": true,
+        "processing": true,
+        "paging": true, // Paginacion en tabla
+        "ordering": true, // Ordenamiento en columna de tabla
+        "info": true, // Informacion de cabecera tabla
+        "responsive": true, // Accion de responsive
+          dom: 'lBfrtip',
+         "bDestroy": true,
+        "columnDefs": [
+            {
+                "className": "text-center",
+                "targets": [1, 2, 3]
+            }
+            , {
+                "className": "text-left",
+                "targets": [0]
+            }
+         , ],
+        buttons: [
+            {
+                extend: 'copy',
+                className: 'btn-info'
+            }
+            , {
+                extend: 'csv',
+                className: 'btn-info'
+            }
+            , {
+                extend: 'excel',
+                className: 'btn-info',
+                title: 'Reporte'
+            }
+            , {
+                extend: 'pdf',
+                className: 'btn-info',
+                title: 'Reporte '
+            }
+            , {
+                extend: 'print',
+                className: 'btn-info'
+            }
+            ],
+        "ajax": { //Solicitud Ajax Servidor
+            url: '../../controlador/Gestion/CReporte.php?op=ListarReporte',
+            type: "POST",
+            dataType: "JSON",
+            data:{"Opcion":Opcion,"id":id},
+            error: function (e) {
+                console.log(e.responseText);
+            }
+        },
+
+        // cambiar el lenguaje de datatable
+        oLanguage: español,
+    }).DataTable();
+    //Aplicar ordenamiento y autonumeracion , index
+    tablaReporte.on('order.dt search.dt', function () {
+        tablaReporte.column(0, {
+            search: 'applied',
+            order: 'applied'
+        }).nodes().each(function (cell, i) {
+            cell.innerHTML = i + 1;
+        });
+    }).draw();
+    }else{
+        tablaReporte.destroy();
+         tablaReporte = $('#tablaPacientes').dataTable({
+        "aProcessing": true,
+        "aServerSide": true,
+        "processing": true,
+        "paging": true, // Paginacion en tabla
+        "ordering": true, // Ordenamiento en columna de tabla
+        "info": true, // Informacion de cabecera tabla
+        "responsive": true, // Accion de responsive
+          dom: 'lBfrtip',
+         "bDestroy": true,
+        "columnDefs": [
+            {
+                "className": "text-center",
+                "targets": [1, 2, 3]
+            }
+            , {
+                "className": "text-left",
+                "targets": [0]
+            }
+         , ],
+        buttons: [
+            {
+                extend: 'copy',
+                className: 'btn-info'
+            }
+            , {
+                extend: 'csv',
+                className: 'btn-info'
+            }
+            , {
+                extend: 'excel',
+                className: 'btn-info',
+                title: 'Reporte'
+            }
+            , {
+                extend: 'pdf',
+                className: 'btn-info',
+                title: 'Reporte '
+            }
+            , {
+                extend: 'print',
+                className: 'btn-info'
+            }
+            ],
+        "ajax": { //Solicitud Ajax Servidor
+            url: '../../controlador/Gestion/CReporte.php?op=ListarReporte',
+            type: "POST",
+            dataType: "JSON",
+            data:{"Opcion":Opcion,"id":id},
+            error: function (e) {
+                console.log(e.responseText);
+            }
+        },
+
+        // cambiar el lenguaje de datatable
+        oLanguage: español,
+    }).DataTable();
+    //Aplicar ordenamiento y autonumeracion , index
+    tablaReporte.on('order.dt search.dt', function () {
+        tablaReporte.column(0, {
+            search: 'applied',
+            order: 'applied'
+        }).nodes().each(function (cell, i) {
+            cell.innerHTML = i + 1;
+        });
+    }).draw();
+    }
+
+
+}
+function PacienteGradoInstruccion(idGradoInstruccion){
+     var Opcion="GRADO";
+    var id=idGradoInstruccion;
+
+
+     $("#ModalReporte").modal("show");
+
+    if(tablaReporte==null){
+         tablaReporte = $('#tablaPacientes').dataTable({
+        "aProcessing": true,
+        "aServerSide": true,
+        "processing": true,
+        "paging": true, // Paginacion en tabla
+        "ordering": true, // Ordenamiento en columna de tabla
+        "info": true, // Informacion de cabecera tabla
+        "responsive": true, // Accion de responsive
+          dom: 'lBfrtip',
+         "bDestroy": true,
+        "columnDefs": [
+            {
+                "className": "text-center",
+                "targets": [1, 2, 3]
+            }
+            , {
+                "className": "text-left",
+                "targets": [0]
+            }
+         , ],
+        buttons: [
+            {
+                extend: 'copy',
+                className: 'btn-info'
+            }
+            , {
+                extend: 'csv',
+                className: 'btn-info'
+            }
+            , {
+                extend: 'excel',
+                className: 'btn-info',
+                title: 'Reporte'
+            }
+            , {
+                extend: 'pdf',
+                className: 'btn-info',
+                title: 'Reporte '
+            }
+            , {
+                extend: 'print',
+                className: 'btn-info'
+            }
+            ],
+        "ajax": { //Solicitud Ajax Servidor
+            url: '../../controlador/Gestion/CReporte.php?op=ListarReporte',
+            type: "POST",
+            dataType: "JSON",
+            data:{"Opcion":Opcion,"id":id},
+            error: function (e) {
+                console.log(e.responseText);
+            }
+        },
+
+        // cambiar el lenguaje de datatable
+        oLanguage: español,
+    }).DataTable();
+    //Aplicar ordenamiento y autonumeracion , index
+    tablaReporte.on('order.dt search.dt', function () {
+        tablaReporte.column(0, {
+            search: 'applied',
+            order: 'applied'
+        }).nodes().each(function (cell, i) {
+            cell.innerHTML = i + 1;
+        });
+    }).draw();
+    }else{
+        tablaReporte.destroy();
+         tablaReporte = $('#tablaPacientes').dataTable({
+        "aProcessing": true,
+        "aServerSide": true,
+        "processing": true,
+        "paging": true, // Paginacion en tabla
+        "ordering": true, // Ordenamiento en columna de tabla
+        "info": true, // Informacion de cabecera tabla
+        "responsive": true, // Accion de responsive
+          dom: 'lBfrtip',
+         "bDestroy": true,
+        "columnDefs": [
+            {
+                "className": "text-center",
+                "targets": [1, 2, 3]
+            }
+            , {
+                "className": "text-left",
+                "targets": [0]
+            }
+         , ],
+        buttons: [
+            {
+                extend: 'copy',
+                className: 'btn-info'
+            }
+            , {
+                extend: 'csv',
+                className: 'btn-info'
+            }
+            , {
+                extend: 'excel',
+                className: 'btn-info',
+                title: 'Reporte'
+            }
+            , {
+                extend: 'pdf',
+                className: 'btn-info',
+                title: 'Reporte '
+            }
+            , {
+                extend: 'print',
+                className: 'btn-info'
+            }
+            ],
+        "ajax": { //Solicitud Ajax Servidor
+            url: '../../controlador/Gestion/CReporte.php?op=ListarReporte',
+            type: "POST",
+            dataType: "JSON",
+            data:{"Opcion":Opcion,"id":id},
+            error: function (e) {
+                console.log(e.responseText);
+            }
+        },
+
+        // cambiar el lenguaje de datatable
+        oLanguage: español,
+    }).DataTable();
+    //Aplicar ordenamiento y autonumeracion , index
+    tablaReporte.on('order.dt search.dt', function () {
+        tablaReporte.column(0, {
+            search: 'applied',
+            order: 'applied'
+        }).nodes().each(function (cell, i) {
+            cell.innerHTML = i + 1;
+        });
+    }).draw();
+    }
+
 }
 
 init();
