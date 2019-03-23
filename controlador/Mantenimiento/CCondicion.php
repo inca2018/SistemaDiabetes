@@ -20,6 +20,7 @@ function BuscarEstado($reg)
         return '<div class="badge badge-primary">' . $reg->nombreEstado . '</div>';
     }
 }
+
 function BuscarAccion($reg)
 {
     if ($reg->Estado_idEstado == 1) {
