@@ -6,6 +6,7 @@ var DiagnosticoEnfermeria;
 var Tratamientos;
 var Evaluado;
 var Satisfaccion;
+var idSeguimiento;
 function init() {
     var idPaciente = $("#idPaciente").val();
     RecuperarInformacionPaciente(idPaciente);
@@ -404,7 +405,8 @@ function EnvioEliminarSeguimiento(idSeguimiento, idPaciente, idAno, idMes) {
     });
 }
 
-function VerFicha(idSeguimiento) {
+function VerFicha(idSeguimientoR) {
+    idSeguimiento=idSeguimientoR;
     $("#modal_seguimiento").modal("show");
     $.post("../../controlador/Gestion/CFicha.php?op=RecuperarListas", function (data, status) {
         data = JSON.parse(data);
@@ -416,16 +418,16 @@ function VerFicha(idSeguimiento) {
         Evaluado = data.evaluado;
         Satisfaccion = data.satisfaccion;
 
-        RecuperarGrupos(idSeguimiento);
-        RecuperarEspecialidades(idSeguimiento);
+        RecuperarGrupos(idSeguimientoR);
+        RecuperarEspecialidades(idSeguimientoR);
 
     });
 
 }
-function VerPie(idSeguimiento){
-
+function VerPie(idSeguimientoR){
+    idSeguimiento=idSeguimientoR;
     $("#modal_pie").modal("show");
-    RecuperarResultadoPie(idSeguimiento);
+    RecuperarResultadoPie(idSeguimientoR);
 
 }
 
@@ -630,7 +632,7 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
             }
             opcion = '<input type="hidden" class="opcionOculto" id="OF' + idOpcion + '"  data-minimo="' + minimo + '" data-maximo="' + maximo + '">' +
 
-                '<div class="col-md-12"><label class="">' + Titulo + '(' + atributo + '):</label></div>' +
+                '<div class="col-md-12"><label class="">' + Titulo  + place +':</label></div>' +
                 '<div class="col-md-4">' +
                 '<input id="OP' + idOpcion + '" class="form-control  caja campo FuRango validar" data-message="' + grupo + ' - ' + Titulo + '" data-id="' + idOpcion + '" data-atributo="' + atributo + '" data-tipo="' + Tipo + '" data-minimo="' + minimo + '" data-maximo="' + maximo + '" type="text" step="any"  maxlength="100" placeholder="' + place + '" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
                 '</div>' +
@@ -1085,7 +1087,7 @@ function RecuperarResultadosEspecialidad(idSeguimiento){
                  switch(element.tipoOpcion){
                 case '2':
                       $("#CAM"+element.idOpcion).val(element.RespuestaTexto);
-                     $("#CAM"+element.idOpcion).attr("disabled",true);
+                     //$("#CAM"+element.idOpcion).attr("disabled",true);
                      break;
                 case '3':
                      var min=$("#OF"+element.idOpcion).data("minimo");
@@ -1097,7 +1099,7 @@ function RecuperarResultadosEspecialidad(idSeguimiento){
                         }else{
                         $("#NO"+element.idOpcion).show();
                         }
-                       $("#OP"+element.idOpcion).attr("disabled",true);
+                       //$("#OP"+element.idOpcion).attr("disabled",true);
                      break;
                 case '4':
                      var min=$("#OF"+element.idOpcion).data("minimo");
@@ -1109,11 +1111,11 @@ function RecuperarResultadosEspecialidad(idSeguimiento){
                         }else{
                         $("#NO"+element.idOpcion).show();
                         }
-                       $("#OP"+element.idOpcion).attr("disabled",true);
+                       //$("#OP"+element.idOpcion).attr("disabled",true);
                      break;
                  case '5':
                      $("#FE"+element.idOpcion).val(element.RespuestaFecha);
-                      $("#FE"+element.idOpcion).attr("disabled",true);
+                      //$("#FE"+element.idOpcion).attr("disabled",true);
                      break;
                 case '6':
                     var propiedades=data = JSON.parse(element.Propiedades);
@@ -1125,7 +1127,7 @@ function RecuperarResultadosEspecialidad(idSeguimiento){
                     var max=$("#OF"+element.idOpcion).data("max");
 
                      $("#F"+element.idOpcion).val(element.RespuestaValor);
-                     $("#F"+element.idOpcion).attr("disabled",true);
+                     //$("#F"+element.idOpcion).attr("disabled",true);
                      if(element.RespuestaAdecuado>=min && element.RespuestaAdecuado<=max){
                         $("#SI"+element.idOpcion).show();
                         }else{
@@ -1144,19 +1146,19 @@ function RecuperarResultadosEspecialidad(idSeguimiento){
                     });
                      if(v1!=0){
                          $("#V1"+element.idOpcion).val(v1);
-                         $("#V1"+element.idOpcion).attr("disabled",true);
+                         //$("#V1"+element.idOpcion).attr("disabled",true);
                      }
                       if(v2!=0){
                          $("#V2"+element.idOpcion).val(v2);
-                           $("#V2"+element.idOpcion).attr("disabled",true);
+                           //$("#V2"+element.idOpcion).attr("disabled",true);
                      }
                      if(v3!=0){
                          $("#V3"+element.idOpcion).val(v3);
-                          $("#V3"+element.idOpcion).attr("disabled",true);
+                          //$("#V3"+element.idOpcion).attr("disabled",true);
                      }
                     if(v4!=0){
                          $("#V4"+element.idOpcion).val(v4);
-                         $("#V4"+element.idOpcion).attr("disabled",true);
+                         //$("#V4"+element.idOpcion).attr("disabled",true);
                      }
 
                      break;
@@ -1171,8 +1173,8 @@ function RecuperarResultadosEspecialidad(idSeguimiento){
                                $('input:radio[id=radio2]').filter('[name=radio'+element.idOpcion+']').attr('checked', true);
                          }
 
-                      $('input:radio[id=radio1]').filter('[name=radio'+element.idOpcion+']').attr("disabled",true);
-                     $('input:radio[id=radio2]').filter('[name=radio'+element.idOpcion+']').attr("disabled",true);
+                      //$('input:radio[id=radio1]').filter('[name=radio'+element.idOpcion+']').attr("disabled",true);
+                    // $('input:radio[id=radio2]').filter('[name=radio'+element.idOpcion+']').attr("disabled",true);
 
                      break;
 
@@ -1189,8 +1191,8 @@ function RecuperarResultadosEspecialidad(idSeguimiento){
                                $('input:radio[id=NO'+element.idOpcion+']').filter('[name=radio'+element.idOpcion+']').attr('checked', true);
                          }
 
-                      $('input:radio[id=SI'+element.idOpcion+']').filter('[name=radio'+element.idOpcion+']').attr("disabled",true);
-                      $('input:radio[id=NO'+element.idOpcion+']').filter('[name=radio'+element.idOpcion+']').attr("disabled",true);
+                      //$('input:radio[id=SI'+element.idOpcion+']').filter('[name=radio'+element.idOpcion+']').attr("disabled",true);
+                      //$('input:radio[id=NO'+element.idOpcion+']').filter('[name=radio'+element.idOpcion+']').attr("disabled",true);
 
                     if(tipocampo==1){
                         $("#SELECT"+element.idOpcion).val(propiedades.valorCampo);
@@ -1256,8 +1258,8 @@ function RecuperarResultadosEspecialidad(idSeguimiento){
                                $('input:radio[id=NOE'+id+']').filter('[name=radioE'+id+']').attr('checked', true);
                          }
 
-                      $('input:radio[id=SIE'+id+']').filter('[name=radioE'+id+']').attr("disabled",true);
-                      $('input:radio[id=NOE'+id+']').filter('[name=radioE'+id+']').attr("disabled",true);
+                      //$('input:radio[id=SIE'+id+']').filter('[name=radioE'+id+']').attr("disabled",true);
+                      //$('input:radio[id=NOE'+id+']').filter('[name=radioE'+id+']').attr("disabled",true);
 
                     if(Diagnostico==0 || Diagnostico=='0'){
                         $("#OptionDiag"+id).attr("disabled",true);
@@ -1266,17 +1268,17 @@ function RecuperarResultadosEspecialidad(idSeguimiento){
                     }
 
                  if(Medico==0 || Medico=='0'){
-                        $("#OptionMedico"+id).attr("disabled",true);
+                        //$("#OptionMedico"+id).attr("disabled",true);
                     }else{
                         $("#OptionMedico"+id).val(Medico);
                     }
                  if(Tratamiento==0 || Tratamiento=='0'){
-                        $("#tratamiento"+id).attr("disabled",true);
+                        //$("#tratamiento"+id).attr("disabled",true);
                     }else{
                         $("#tratamiento"+id).val(Tratamiento);
                     }
                  if(Observacion==0 || Observacion=='0'){
-                        $("#Obser"+id).attr("disabled",true);
+                        //$("#Obser"+id).attr("disabled",true);
                     }else{
                         $("#Obser"+id).val(Observacion);
                     }
@@ -1365,4 +1367,579 @@ function RecuperarResultadoRefiere(idSeguimiento){
 
      });
 }
+
+
+function actualizar(){
+   var error="";
+
+    $(".validar").each(function(){
+			if($(this).val()==" " || $(this).val()==0){
+				error=error+$(this).data("message")+"<br>";
+			}
+    });
+
+    if(error==""){
+		$("#accordion_info").addClass("whirl");
+		$("#accordion_info").addClass("ringed");
+		setTimeout('AjaxActualizarFicha()', 2000);
+	}else{
+ 		notificar_warning("Complete :<br>"+error);
+	}
+
+}
+
+function AjaxActualizarFicha(){
+
+    var ArregloOpciones = new Array();
+
+    $(".OpcionGeneral").each(function () {
+
+        var tipoOpcion = $(this).data("opcion");
+        var id = $(this).data("id");
+        var tipoTipo = $(this).data("tipo");
+        var grupo=$(this).data("grupo");
+
+        var Resultado = new Array();
+
+        if (tipoOpcion == "OPCION") {
+
+            switch (tipoTipo) {
+                case 2:
+
+                    var campo=$("#CAM"+id).val();
+                    var Opcion ="";
+                    Opcion=Opcion+""+id;//id
+                    Opcion=Opcion+"#OPCION";//Gneral
+                    Opcion=Opcion+"#"+2;//tipoOpcion
+                    Opcion=Opcion+"#"+campo;//campo
+                    Opcion=Opcion+"# ";//rESPUESTA
+                    Opcion=Opcion+"# ";//Estado
+                    Opcion=Opcion+"# ";//Sexo
+                    Opcion=Opcion+"# ";//v1
+                    Opcion=Opcion+"# ";//v2
+                    Opcion=Opcion+"# ";//v3
+                    Opcion=Opcion+"# ";//v4
+                    Opcion=Opcion+"# ";//tipocampo
+                    Opcion=Opcion+"# ";//valorcampo
+                    Opcion=Opcion+"# ";//dosis
+                    Opcion=Opcion+"# ";//numero
+                    Opcion=Opcion+"# ";//diagnostico
+                    Opcion=Opcion+"# ";//medico
+                    Opcion=Opcion+"# ";//tratamiento
+                    Opcion=Opcion+"# ";//observacion
+                    Opcion=Opcion+"# ";//r1
+                    Opcion=Opcion+"# ";//r2
+                    Opcion=Opcion+"# ";//r3
+                    Opcion=Opcion+"# ";//r4
+                    Opcion=Opcion+"# ";//r5
+                    Opcion=Opcion+"# ";//r6
+                    Opcion=Opcion+"# ";//r7
+                    Opcion=Opcion+"# ";//r8
+                    Opcion=Opcion+"#"+grupo;//grupo
+                    ArregloOpciones.push(Opcion);
+                   // console.log("ID ="+id+" tipo="+2+" CAMPO="+campo);
+
+                    break;
+                case 3:
+                    var minimo = $("#OF" + id).data("minimo");
+                    var maximo = $("#OF" + id).data("maximo");
+                    var respuesta = $("#OP" + id).val();
+                    if (respuesta == "") {
+                        respuesta = 0;
+                    }
+                    var Estado = 0;
+                    if (respuesta >= minimo && respuesta <= maximo) {
+                        Estado = 1;
+                    } else {
+                        Estado = 0;
+                    }
+
+                    var Opcion ="";
+                    Opcion=Opcion+""+id;//id
+                    Opcion=Opcion+"#OPCION";//Gneral
+                    Opcion=Opcion+"#"+3;//tipoOpcion
+                    Opcion=Opcion+"# ";//campo
+                    Opcion=Opcion+"#"+respuesta;//rESPUESTA
+                    Opcion=Opcion+"#"+Estado;//Estado
+                    Opcion=Opcion+"# ";//Sexo
+                    Opcion=Opcion+"# ";//v1
+                    Opcion=Opcion+"# ";//v2
+                    Opcion=Opcion+"# ";//v3
+                    Opcion=Opcion+"# ";//v4
+                    Opcion=Opcion+"# ";//tipocampo
+                    Opcion=Opcion+"# ";//valorcampo
+                    Opcion=Opcion+"# ";//dosis
+                    Opcion=Opcion+"# ";//numero
+                    Opcion=Opcion+"# ";//diagnostico
+                    Opcion=Opcion+"# ";//medico
+                    Opcion=Opcion+"# ";//tratamiento
+                    Opcion=Opcion+"# ";//observacion
+                    Opcion=Opcion+"# ";//r1
+                    Opcion=Opcion+"# ";//r2
+                    Opcion=Opcion+"# ";//r3
+                    Opcion=Opcion+"# ";//r4
+                    Opcion=Opcion+"# ";//r5
+                    Opcion=Opcion+"# ";//r6
+                    Opcion=Opcion+"# ";//r7
+                    Opcion=Opcion+"# ";//r8
+                    Opcion=Opcion+"#"+grupo;//grupo
+                    ArregloOpciones.push(Opcion);
+                   // console.log("ID="+id+" tipo="+3+" respuesta="+respuesta+" estado="+Estado);
+
+                    break;
+                case 4:
+                    var minimo = $("#OF" + id).data("minimo");
+                    var maximo = $("#OF" + id).data("maximo");
+                    var sexo = $("#OF" + id).data("sexo");
+                    var respuesta = $("#OP" + id).val();
+                    if (respuesta == "") {
+                        respuesta = 0;
+                    }
+                    var Estado = 0;
+                    if (respuesta >= minimo && respuesta <= maximo) {
+                        Estado = 1;
+                    } else {
+                        Estado = 0;
+                    }
+
+                    var Opcion ="";
+                    Opcion=Opcion+""+id;//id
+                    Opcion=Opcion+"#OPCION";//Gneral
+                    Opcion=Opcion+"#"+4;//tipoOpcion
+                    Opcion=Opcion+"# ";//campo
+                    Opcion=Opcion+"#"+respuesta;//rESPUESTA
+                    Opcion=Opcion+"#"+Estado;//Estado
+                    Opcion=Opcion+"#"+sexo;//Sexo
+                    Opcion=Opcion+"# ";//v1
+                    Opcion=Opcion+"# ";//v2
+                    Opcion=Opcion+"# ";//v3
+                    Opcion=Opcion+"# ";//v4
+                    Opcion=Opcion+"# ";//tipocampo
+                    Opcion=Opcion+"# ";//valorcampo
+                    Opcion=Opcion+"# ";//dosis
+                    Opcion=Opcion+"# ";//numero
+                    Opcion=Opcion+"# ";//diagnostico
+                    Opcion=Opcion+"# ";//medico
+                    Opcion=Opcion+"# ";//tratamiento
+                    Opcion=Opcion+"# ";//observacion
+                    Opcion=Opcion+"# ";//r1
+                    Opcion=Opcion+"# ";//r2
+                    Opcion=Opcion+"# ";//r3
+                    Opcion=Opcion+"# ";//r4
+                    Opcion=Opcion+"# ";//r5
+                    Opcion=Opcion+"# ";//r6
+                    Opcion=Opcion+"# ";//r7
+                    Opcion=Opcion+"# ";//r8
+                    Opcion=Opcion+"#"+grupo;//grupo
+                    ArregloOpciones.push(Opcion);
+                    //console.log("ID="+id+" tipo="+4+" respuesta="+respuesta+" estado="+Estado+" Sexo="+sexo);
+
+                    break;
+                case 5:
+                     var campo=$("#FE"+id).val();
+                    //console.log("ID ="+id+" tipo="+5+" CAMPO="+campo);
+                     var Opcion ="";
+                    Opcion=Opcion+""+id;//id
+                    Opcion=Opcion+"#OPCION";//Gneral
+                    Opcion=Opcion+"#"+5;//tipoOpcion
+                    Opcion=Opcion+"#"+campo;//campo
+                    Opcion=Opcion+"# ";//rESPUESTA
+                    Opcion=Opcion+"# ";//Estado
+                    Opcion=Opcion+"# ";//Sexo
+                    Opcion=Opcion+"# ";//v1
+                    Opcion=Opcion+"# ";//v2
+                    Opcion=Opcion+"# ";//v3
+                    Opcion=Opcion+"# ";//v4
+                    Opcion=Opcion+"# ";//tipocampo
+                    Opcion=Opcion+"# ";//valorcampo
+                    Opcion=Opcion+"# ";//dosis
+                    Opcion=Opcion+"# ";//numero
+                    Opcion=Opcion+"# ";//diagnostico
+                    Opcion=Opcion+"# ";//medico
+                    Opcion=Opcion+"# ";//tratamiento
+                    Opcion=Opcion+"# ";//observacion
+                    Opcion=Opcion+"# ";//r1
+                    Opcion=Opcion+"# ";//r2
+                    Opcion=Opcion+"# ";//r3
+                    Opcion=Opcion+"# ";//r4
+                    Opcion=Opcion+"# ";//r5
+                    Opcion=Opcion+"# ";//r6
+                    Opcion=Opcion+"# ";//r7
+                    Opcion=Opcion+"# ";//r8
+                    Opcion=Opcion+"#"+grupo;//grupo
+                    ArregloOpciones.push(Opcion);
+
+                    break;
+                case 6:
+                    var minimo = $("#OF" + id).data("minimo");
+                    var maximo = $("#OF" + id).data("maximo");
+                    var v1 = $("#V1" + id).val();
+                    var v2 = $("#V2" + id).val();
+                    var v3 = $("#V3" + id).val();
+                    var v4 = $("#V4" + id).val();
+                    var respuesta = $("#F" + id).val();
+                    var Estado = 0;
+                    if (respuesta >= minimo && respuesta <= maximo) {
+                        Estado = 1;
+                    } else {
+                        Estado = 0;
+                    }
+
+                     if(v1==""){
+                         v1=0;
+                     }
+                    if(v2==""){
+                         v2=0;
+                     }
+                    if(v3==""){
+                         v3=0;
+                     }
+                    if(v4==""){
+                         v4=0;
+                     }
+                     var Opcion ="";
+                    Opcion=Opcion+""+id;//id
+                    Opcion=Opcion+"#OPCION";//Gneral
+                    Opcion=Opcion+"#"+6;//tipoOpcion
+                    Opcion=Opcion+"# ";//campo
+                    Opcion=Opcion+"#"+respuesta;//rESPUESTA
+                    Opcion=Opcion+"#"+Estado;//Estado
+                    Opcion=Opcion+"# ";//Sexo
+                    Opcion=Opcion+"#"+v1;//v1
+                    Opcion=Opcion+"#"+v2;//v2
+                    Opcion=Opcion+"#"+v3;//v3
+                    Opcion=Opcion+"#"+v4;//v4
+                    Opcion=Opcion+"# ";//tipocampo
+                    Opcion=Opcion+"# ";//valorcampo
+                    Opcion=Opcion+"# ";//dosis
+                    Opcion=Opcion+"# ";//numero
+                    Opcion=Opcion+"# ";//diagnostico
+                    Opcion=Opcion+"# ";//medico
+                    Opcion=Opcion+"# ";//tratamiento
+                    Opcion=Opcion+"# ";//observacion
+                    Opcion=Opcion+"# ";//r1
+                    Opcion=Opcion+"# ";//r2
+                    Opcion=Opcion+"# ";//r3
+                    Opcion=Opcion+"# ";//r4
+                    Opcion=Opcion+"# ";//r5
+                    Opcion=Opcion+"# ";//r6
+                    Opcion=Opcion+"# ";//r7
+                    Opcion=Opcion+"# ";//r8
+                    Opcion=Opcion+"#"+grupo;//grupo
+                    ArregloOpciones.push(Opcion);
+                   //  console.log("ID="+id+"tipo="+6+" respuesta="+respuesta+" estado="+Estado+" v1="+v1+" V3="+v2+" v3="+v3+" v4="+v4);
+
+
+                    break;
+                case 7:
+                     var Estado=$('input[name=radio'+id+']:checked').val();
+
+                      var Opcion ="";
+                    Opcion=Opcion+""+id;//id
+                    Opcion=Opcion+"#OPCION";//Gneral
+                    Opcion=Opcion+"#"+7;//tipoOpcion
+                    Opcion=Opcion+"# ";//campo
+                    Opcion=Opcion+"# ";//rESPUESTA
+                    Opcion=Opcion+"#"+Estado;//Estado
+                    Opcion=Opcion+"# ";//Sexo
+                    Opcion=Opcion+"# ";//v1
+                    Opcion=Opcion+"# ";//v2
+                    Opcion=Opcion+"# ";//v3
+                    Opcion=Opcion+"# ";//v4
+                    Opcion=Opcion+"# ";//tipocampo
+                    Opcion=Opcion+"# ";//valorcampo
+                    Opcion=Opcion+"# ";//dosis
+                    Opcion=Opcion+"# ";//numero
+                    Opcion=Opcion+"# ";//diagnostico
+                    Opcion=Opcion+"# ";//medico
+                    Opcion=Opcion+"# ";//tratamiento
+                    Opcion=Opcion+"# ";//observacion
+                    Opcion=Opcion+"# ";//r1
+                    Opcion=Opcion+"# ";//r2
+                    Opcion=Opcion+"# ";//r3
+                    Opcion=Opcion+"# ";//r4
+                    Opcion=Opcion+"# ";//r5
+                    Opcion=Opcion+"# ";//r6
+                    Opcion=Opcion+"# ";//r7
+                    Opcion=Opcion+"# ";//r8
+                    Opcion=Opcion+"#"+grupo;//grupo
+                    ArregloOpciones.push(Opcion);
+                   // console.log("ID="+id+" tipo="+7+" estado="+Estado);
+
+                    break;
+                case 9:
+
+                      var tipoCampo=$("#OF"+id).data("tipocampo");
+                      var Estado=$('input[name=radio'+id+']:checked').val();
+                      var select=$("#SELECT"+id).val();
+                      var dosis=$("#dosis"+id).val();
+                      var num=$("#tab"+id).val();
+
+                     var Opcion ="";
+                    Opcion=Opcion+""+id;//id
+                    Opcion=Opcion+"#OPCION";//Gneral
+                    Opcion=Opcion+"#"+9;//tipoOpcion
+                    Opcion=Opcion+"# ";//campo
+                    Opcion=Opcion+"# ";//rESPUESTA
+                    Opcion=Opcion+"#"+Estado;//Estado
+                    Opcion=Opcion+"# ";//Sexo
+                    Opcion=Opcion+"# ";//v1
+                    Opcion=Opcion+"# ";//v2
+                    Opcion=Opcion+"# ";//v3
+                    Opcion=Opcion+"# ";//v4
+                    Opcion=Opcion+"#"+tipoCampo;//tipocampo
+                    Opcion=Opcion+"#"+select;//valorcampo
+                    Opcion=Opcion+"#"+dosis;//dosis
+                    Opcion=Opcion+"#"+num;//numero
+                    Opcion=Opcion+"# ";//diagnostico
+                    Opcion=Opcion+"# ";//medico
+                    Opcion=Opcion+"# ";//tratamiento
+                    Opcion=Opcion+"# ";//observacion
+                    Opcion=Opcion+"# ";//r1
+                    Opcion=Opcion+"# ";//r2
+                    Opcion=Opcion+"# ";//r3
+                    Opcion=Opcion+"# ";//r4
+                    Opcion=Opcion+"# ";//r5
+                    Opcion=Opcion+"# ";//r6
+                    Opcion=Opcion+"# ";//r7
+                    Opcion=Opcion+"# ";//r8
+                    Opcion=Opcion+"#"+grupo;//grupo
+                    ArregloOpciones.push(Opcion);
+                   // console.log("ID="+id+" tipo="+9+" tipoCampo="+tipoCampo+" estado="+Estado+" dosis="+dosis+" num="+num);
+
+
+                    break;
+                  case 11:
+
+                      var tipoCampo=$("#OF"+id).data("tipocampo");
+                      //var Estado=$('input[name=radio'+id+']:checked').val();
+                      var select=$("#SELECT"+id).val();
+                      var dosis=$("#dosis"+id).val();
+                      var num=$("#tab"+id).val();
+
+                     var Opcion ="";
+                    Opcion=Opcion+""+id;//id
+                    Opcion=Opcion+"#OPCION";//Gneral
+                    Opcion=Opcion+"#"+11;//tipoOpcion
+                    Opcion=Opcion+"# ";//campo
+                    Opcion=Opcion+"# ";//rESPUESTA
+                    Opcion=Opcion+"# ";//Estado
+                    Opcion=Opcion+"# ";//Sexo
+                    Opcion=Opcion+"# ";//v1
+                    Opcion=Opcion+"# ";//v2
+                    Opcion=Opcion+"# ";//v3
+                    Opcion=Opcion+"# ";//v4
+                    Opcion=Opcion+"#"+tipoCampo;//tipocampo
+                    Opcion=Opcion+"#"+select;//valorcampo
+                    Opcion=Opcion+"#"+dosis;//dosis
+                    Opcion=Opcion+"#"+num;//numero
+                    Opcion=Opcion+"# ";//diagnostico
+                    Opcion=Opcion+"# ";//medico
+                    Opcion=Opcion+"# ";//tratamiento
+                    Opcion=Opcion+"# ";//observacion
+                    Opcion=Opcion+"# ";//r1
+                    Opcion=Opcion+"# ";//r2
+                    Opcion=Opcion+"# ";//r3
+                    Opcion=Opcion+"# ";//r4
+                    Opcion=Opcion+"# ";//r5
+                    Opcion=Opcion+"# ";//r6
+                    Opcion=Opcion+"# ";//r7
+                    Opcion=Opcion+"# ";//r8
+                    Opcion=Opcion+"#"+grupo;//grupo
+                    ArregloOpciones.push(Opcion);
+                   console.log("ID="+id+" tipo="+11+" tipoCampo="+tipoCampo+" estado="+Estado+" dosis="+dosis+" num="+num);
+                    break;
+            }
+
+        }else if(tipoOpcion=="ESPECIALIDAD"){
+
+            var Estado=$('input[name=radioE'+id+']:checked').val();
+            var diagnostico=$("#OptionDiag"+id).val();
+            var medico=$("#OptionMedico"+id).val();
+            var tratamiento=$("#tratamiento"+id).val();
+            var observacion=$("#Obser"+id).val();
+
+            var Opcion ="";
+                    Opcion=Opcion+""+id;//id
+                    Opcion=Opcion+"#ESPECIALIDAD";//Gneral
+                    Opcion=Opcion+"# ";//tipoOpcion
+                    Opcion=Opcion+"# ";//campo
+                    Opcion=Opcion+"# ";//rESPUESTA
+                    Opcion=Opcion+"#"+Estado;//Estado
+                    Opcion=Opcion+"# ";//Sexo
+                    Opcion=Opcion+"# ";//v1
+                    Opcion=Opcion+"# ";//v2
+                    Opcion=Opcion+"# ";//v3
+                    Opcion=Opcion+"# ";//v4
+                    Opcion=Opcion+"# ";//tipocampo
+                    Opcion=Opcion+"# ";//valorcampo
+                    Opcion=Opcion+"# ";//dosis
+                    Opcion=Opcion+"# ";//numero
+                    Opcion=Opcion+"#"+diagnostico;//diagnostico
+                    Opcion=Opcion+"#"+medico;//medico
+                    Opcion=Opcion+"#"+tratamiento;//tratamiento
+                    Opcion=Opcion+"#"+observacion;//observacion
+                    Opcion=Opcion+"# ";//r1
+                    Opcion=Opcion+"# ";//r2
+                    Opcion=Opcion+"# ";//r3
+                    Opcion=Opcion+"# ";//r4
+                    Opcion=Opcion+"# ";//r5
+                    Opcion=Opcion+"# ";//r6
+                    Opcion=Opcion+"# ";//r7
+                    Opcion=Opcion+"# ";//r8
+                    Opcion=Opcion+"# ";//grupo
+                    ArregloOpciones.push(Opcion);
+
+           // console.log("ID ="+id+" Estado="+Estado+" Diag="+diagnostico+" Medico="+medico+" Tratamiento="+tratamiento+" Obsr="+observacion);
+
+        }
+
+
+    });
+
+/*var hijo1=$("#OpcionPieN1").children("div");
+    var resu1=hijo1.data("opcion");
+var hijo2=$("#OpcionPieN2").children("div");
+    var resu2=hijo2.data("opcion");
+var hijo3=$("#OpcionPieN3").children("div");
+    var resu3=hijo3.data("opcion");
+var hijo4=$("#OpcionPieN4").children("div");
+    var resu4=hijo4.data("opcion");
+var hijo5=$("#OpcionPieN5").children("div");
+    var resu5=hijo5.data("opcion");
+var hijo6=$("#OpcionPieN6").children("div");
+    var resu6=hijo6.data("opcion");
+var hijo7=$("#OpcionPieN7").children("div");
+    var resu7=hijo7.data("opcion");
+var hijo8=$("#OpcionPieN8").children("div");
+    var resu8=hijo8.data("opcion");*/
+
+
+                 /*   var Opcion ="";
+                    Opcion=Opcion+" ";//id
+                    Opcion=Opcion+"#PIE";//Gneral
+                    Opcion=Opcion+"# ";//tipoOpcion
+                    Opcion=Opcion+"# ";//campo
+                    Opcion=Opcion+"# ";//rESPUESTA
+                    Opcion=Opcion+"# ";//Estado
+                    Opcion=Opcion+"# ";//Sexo
+                    Opcion=Opcion+"# ";//v1
+                    Opcion=Opcion+"# ";//v2
+                    Opcion=Opcion+"# ";//v3
+                    Opcion=Opcion+"# ";//v4
+                    Opcion=Opcion+"# ";//tipocampo
+                    Opcion=Opcion+"# ";//valorcampo
+                    Opcion=Opcion+"# ";//dosis
+                    Opcion=Opcion+"# ";//numero
+                    Opcion=Opcion+"# ";//diagnostico
+                    Opcion=Opcion+"# ";//medico
+                    Opcion=Opcion+"# ";//tratamiento
+                    Opcion=Opcion+"# ";//observacion
+                    Opcion=Opcion+"#"+resu1;//r1
+                    Opcion=Opcion+"#"+resu2;//r2
+                    Opcion=Opcion+"#"+resu3;//r3
+                    Opcion=Opcion+"#"+resu4;//r4
+                    Opcion=Opcion+"#"+resu5;//r5
+                    Opcion=Opcion+"#"+resu6;//r6
+                    Opcion=Opcion+"#"+resu7;//r7
+                    Opcion=Opcion+"#"+resu8;//r8
+                    Opcion=Opcion+"# ";//grupo
+                    ArregloOpciones.push(Opcion);*/
+   // console.log("RESULTADO PIE: R1="+resu1+" R2="+resu2+" R3="+resu3+" R4="+resu4+" R5="+resu5+" R6="+resu6+" R7="+resu7+" R8="+resu8);
+
+ var opA1=0,opA2=0,opA3=0,opA4=0;
+    ($('#opA1').prop('checked'))?opA1=1:opA1=0;
+    ($('#opA2').prop('checked'))?opA2=1:opA2=0;
+    ($('#opA3').prop('checked'))?opA3=1:opA3=0;
+    ($('#opA4').prop('checked'))?opA4=1:opA4=0;
+     var opB1=0,opB2=0,opB3=0,opB4=0;
+    ($('#opB1').prop('checked'))?opB1=1:opB1=0;
+    ($('#opB2').prop('checked'))?opB2=1:opB2=0;
+    ($('#opB3').prop('checked'))?opB3=1:opB3=0;
+    ($('#opB4').prop('checked'))?opB4=1:opB4=0;
+    var opC1=0,opC2=0,opC3=0,opC4=0;
+    ($('#opC1').prop('checked'))?opC1=1:opC1=0;
+    ($('#opC2').prop('checked'))?opC2=1:opC2=0;
+    ($('#opC3').prop('checked'))?opC3=1:opC3=0;
+    ($('#opC4').prop('checked'))?opC4=1:opC4=0;
+
+    var opD1=0,opD2=0;
+    ($('#opD1').prop('checked'))?opD1=1:opD1=0;
+    ($('#opD2').prop('checked'))?opD2=1:opD2=0;
+     var opE1=0,opE2=0;
+    ($('#opE1').prop('checked'))?opE1=1:opE1=0;
+    ($('#opE2').prop('checked'))?opE2=1:opE2=0;
+
+     var Respuestas = '{"opA1":'+opA1+',"opA2":'+opA2+',"opA3":'+opA3+',"opA4":'+opA4+',"opB1":'+opB1+',"opB2":'+opB2+',"opB3":'+opB3+',"opB4":'+opB4+',"opC1":'+opC1+',"opC2":'+opC2+',"opC3":'+opC3+',"opC4":'+opC4+',"opD1":'+opD1+',"opD2":'+opD2+',"opE1":'+opE1+',"opE2":'+opE2+'}';
+
+
+
+    var respuestaRefiere=$("#ocultoRefiere").val();
+     var Opcion ="";
+                    Opcion=Opcion+" ";//id
+                    Opcion=Opcion+"#REFIERE";//Gneral
+                    Opcion=Opcion+"# ";//tipoOpcion
+                    Opcion=Opcion+"#"+Respuestas;//campo
+                    Opcion=Opcion+"#"+respuestaRefiere;//rESPUESTA
+                    Opcion=Opcion+"# ";//Estado
+                    Opcion=Opcion+"# ";//Sexo
+                    Opcion=Opcion+"# ";//v1
+                    Opcion=Opcion+"# ";//v2
+                    Opcion=Opcion+"# ";//v3
+                    Opcion=Opcion+"# ";//v4
+                    Opcion=Opcion+"# ";//tipocampo
+                    Opcion=Opcion+"# ";//valorcampo
+                    Opcion=Opcion+"# ";//dosis
+                    Opcion=Opcion+"# ";//numero
+                    Opcion=Opcion+"# ";//diagnostico
+                    Opcion=Opcion+"# ";//medico
+                    Opcion=Opcion+"# ";//tratamiento
+                    Opcion=Opcion+"# ";//observacion
+                    Opcion=Opcion+"# ";//r1
+                    Opcion=Opcion+"# ";//r2
+                    Opcion=Opcion+"# ";//r3
+                    Opcion=Opcion+"# ";//r4
+                    Opcion=Opcion+"# ";//r5
+                    Opcion=Opcion+"# ";//r6
+                    Opcion=Opcion+"# ";//r7
+                    Opcion=Opcion+"# ";//r8
+                    Opcion=Opcion+"# ";//grupo
+
+                    ArregloOpciones.push(Opcion);
+
+var OpcionesR=ArregloOpciones.join('|');
+
+
+var idPaciente=$("#idPaciente").val();
+var idAno=$("#idAno").val();
+var idMes=$("#idMes").val();
+
+    $.post("../../controlador/Gestion/CFicha.php?op=ActualizarFicha",{idSeguimiento:idSeguimiento,OpcionesR:OpcionesR,idPaciente:idPaciente,idAno:idAno,idMes:idMes}, function (data, status) {
+        data = JSON.parse(data);
+        console.log(data);
+
+         var Registro=data.Registro;
+         var Mensaje=data.Mensaje;
+        if(Registro){
+             $("#accordion_info").removeClass("whirl");
+             $("#accordion_info").removeClass("ringed");
+
+
+             swal({
+                  title: "Actualización",
+                  text: "Se Actualizo Correctamente!",
+                  type: "info",
+                  showCancelButton: false,
+                  confirmButtonColor: "#27c24c",
+                  confirmButtonText: "Aceptar",
+                  closeOnConfirm: false
+               });
+            $("#modal_seguimiento").hide();
+        }else{
+            notificar_danger(Mensaje);
+        }
+    });
+}
+
+
 init();

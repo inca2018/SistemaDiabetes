@@ -91,13 +91,13 @@
                     </div>
                 </div>
                 <br>
-               <div class="row justify-content-center">
-                    <div class="col-md-10">
+               <div class="row  m-4">
+                    <div class="col-md-12">
                         <div class="row">
-                            <div class="col-md-4 col-12">
+                            <div class="col-md-3 col-12">
                                 <div class="form-group row">
-                                    <label for="inicio1" class="col-md-5 col-form-label"><i class="far fa-calendar-check fa-lg mr-2"></i>Fecha Inicio:<span class="red">*</span>:</label>
-                                    <div class="col-md-7">
+                                    <label for="inicio1" class="col-md-12 col-form-label"><i class="far fa-calendar-check fa-lg mr-2"></i>Fecha Inicio:</label>
+                                    <div class="col-md-12">
                                         <div class=" row">
                                             <div class="input-group date  col-md-12" id="date_inicio1">
                                                 <input class="form-control validarPanel" type="text" id="inicio1" name="inicio1" autocomplete="off" data-message="- Fecha de Nacimiento">
@@ -109,10 +109,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-12">
+                            <div class="col-md-3 col-12">
                                 <div class="form-group row">
-                                    <label for="fin1" class="col-md-5 col-form-label"><i class="far fa-calendar-check fa-lg mr-2"></i>Fecha Fin:<span class="red">*</span>:</label>
-                                    <div class="col-md-7">
+                                    <label for="fin1" class="col-md-12 col-form-label"><i class="far fa-calendar-check fa-lg mr-2"></i>Fecha Fin: </label>
+                                    <div class="col-md-12">
                                         <div class=" row">
                                             <div class="input-group date  col-md-12" id="date_fin1">
                                                 <input class="form-control validarPanel" type="text" id="fin1" name="fin1" autocomplete="off" data-message="- Fecha de Nacimiento">
@@ -124,8 +124,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <button type="button" class="btn btn-success col-md-6" onclick="buscar_reporte()">BUSCAR RESULTADOS</button>
+                            <div class="col-md-3 col-12">
+                                                <div class="form-group">
+                                                    <label for="IndicadorSexo" class="col-form-label">Sexo:</label>
+                                                    <select class="form-control validarPanel" id="IndicadorSexo" name="IndicadorSexo">
+                                                    </select>
+                                                </div>
+                            </div>
+                            <div class="col-md-3 col-12">
+                                <button type="button" class="btn btn-success col-md-12 my-4" onclick="buscar_reporte()">BUSCAR RESULTADOS</button>
                             </div>
                         </div>
                     </div>

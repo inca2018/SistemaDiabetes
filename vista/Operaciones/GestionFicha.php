@@ -167,6 +167,7 @@ if(isset($_POST["idPaciente"])){
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button class="btn btn-warning" type="button" data-dismiss="modal" onclick="actualizar();">Actualizar</button>
                     <button class="btn btn-primary" type="button" data-dismiss="modal" onclick="limpiar_modal();">Cerrar</button>
                 </div>
 
@@ -243,6 +244,7 @@ if(isset($_POST["idPaciente"])){
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button class="btn btn-warning" type="button" data-dismiss="modal" onclick="actualizarPie();">Actualizar</button>
                     <button class="btn btn-primary" type="button" data-dismiss="modal" onclick="limpiar_modal();">Cerrar</button>
                 </div>
 

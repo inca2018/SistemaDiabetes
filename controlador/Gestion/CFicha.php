@@ -151,6 +151,32 @@
             echo json_encode($rspta);
            break;
 
+        case 'ActualizarFicha':
+              $rspta=array("Error"=>false,"Mensaje"=>"","Registro"=>false);
+
+
+            $OpcionesR = explode('|', $OpcionesR);
+
+            $contador=count($OpcionesR);
+            for($i=0;$i<$contador;$i++){
+                $opcion=explode('#',$OpcionesR[$i]);
+                 if($i==$contador-1){
+                        $resuSeguimiento = $Ficha->ActualizarResultados($opcion,$idSeguimiento);
+                        $rspta["Registro"]=true;
+
+                     }else{
+                        $resuSeguimiento = $Ficha->ActualizarResultados($opcion,$idSeguimiento);
+                     }
+            }
+
+           if($rspta["Registro"]){
+               $rspta["Mensaje"]="Seguimiento se Actualizo con Exito!";
+           }else{
+               $rspta["Mensaje"]="Seguimiento no se pudo Actualizar Correctamente.";
+           }
+            echo json_encode($rspta);
+           break;
+
        case 'RecuperarResultadosEspecialidad':
 
             $rpta = $Ficha->RecuperarResultadosEspecialidad($idSeguimiento);

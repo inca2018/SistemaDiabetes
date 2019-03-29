@@ -41,6 +41,14 @@
            return ejecutarConsulta($sql);
 
        }
+       public function ActualizarResultados($opcion,$idSeguimiento){
+           $sql="CALL `SP_ACTUALIZAR_RESULTADOS`('$opcion[0]','$opcion[1]','$opcion[2]','$opcion[3]','$opcion[4]','$opcion[5]','$opcion[6]','$opcion[7]','$opcion[8]','$opcion[9]','$opcion[10]','$opcion[11]','$opcion[12]','$opcion[13]','$opcion[14]','$opcion[15]','$opcion[16]','$opcion[17]','$opcion[18]','$opcion[19]','$opcion[20]','$opcion[21]','$opcion[22]','$opcion[23]','$opcion[24]','$opcion[25]','$opcion[26]','$opcion[27]','$idSeguimiento');";
+
+           return ejecutarConsulta($sql);
+
+       }
+
+
        public function RecuperarResultadosEspecialidad($idSeguimiento){
          $sql = "SELECT * FROM `tab_resultado_ficha` WHERE `Seguimiento_idSeguimiento`='$idSeguimiento'";
          return ejecutarConsulta($sql);

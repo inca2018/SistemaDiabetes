@@ -7,8 +7,8 @@ class MReporte {
 
    }
 
-     public function RecuperarIndicadores($Inicio,$Fin){
-        $sql="CALL `SP_REPORTE_GENERAL`('$Inicio','$Fin');";
+     public function RecuperarIndicadores($Inicio,$Fin,$Sexo){
+        $sql="CALL `SP_REPORTE_GENERAL`('$Inicio','$Fin','$Sexo');";
         return ejecutarConsultaSimpleFila($sql);
     }
 

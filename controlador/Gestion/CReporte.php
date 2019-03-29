@@ -24,6 +24,8 @@
     $Opcion=isset($_POST["Opcion"])? limpiarCadena($_POST["Opcion"]):"";
     $id=isset($_POST["id"])? limpiarCadena($_POST["id"]):"";
 
+ $Sexo=isset($_POST["Sexo"])? limpiarCadena($_POST["Sexo"]):"";
+
 
  $num=isset($_POST["num"])? limpiarCadena($_POST["num"]):"";
 
@@ -38,7 +40,7 @@
 switch ($_GET["op"]){
 
     case 'recuperar_totales':
-        $rspta=$control->RecuperarIndicadores($Inicio,$Fin);
+        $rspta=$control->RecuperarIndicadores($Inicio,$Fin,$Sexo);
         echo json_encode($rspta);
     break;
 

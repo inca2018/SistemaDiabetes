@@ -16,10 +16,16 @@ var tablaReporte;
 function init(){
 
 	iniciar();
-
+    Listar_Sexo();
 }
 
 
+function Listar_Sexo() {
+    $.post("../../controlador/Mantenimiento/CMedico.php?op=listar_sexo", function (ts) {
+        $("#IndicadorSexo").empty();
+        $("#IndicadorSexo").append(ts);
+    });
+}
 function iniciar(){
 
 		$('#date_inicio1').datepicker({
@@ -56,16 +62,16 @@ function buscar_reporte(){
 
    var f_inicio=$("#inicio1").val();
    var f_fin=$("#fin1").val();
-
+   var sexo =$("#IndicadorSexo").val();
 	if(f_inicio=='' || f_fin==''){
 		  	notificar_warning("Seleccione Fechas")
 		}else{
-			buscarReporte(f_inicio,f_fin);
+			buscarReporte(f_inicio,f_fin,sexo);
         }
 }
 
-function buscarReporte(Inicio,Fin){
-    $.post("../../controlador/Gestion/CReporte.php?op=recuperar_totales",{Inicio:Inicio,Fin:Fin}, function(data, status){
+function buscarReporte(Inicio,Fin,Sexo){
+    $.post("../../controlador/Gestion/CReporte.php?op=recuperar_totales",{Inicio:Inicio,Fin:Fin,Sexo:Sexo}, function(data, status){
       data = JSON.parse(data);
       console.log(data);
 
@@ -99,10 +105,10 @@ function buscarReporte(Inicio,Fin){
 
         $("#indMasculino").append(parseInt(data.TotalPacienteMasculino));
         $("#indFemenino").append(parseInt(data.TotalPacienteFemenino));
-        $("#indPorConHG").append(parseFloat(data.PorcentajeHgCon));
-        $("#indPorSinHG").append(parseFloat(data.PorcentajeHgSin));
-        $("#indConHG").append(parseInt(data.CantidadHgSI));
-        $("#indSinHG").append(parseInt(data.CantidadHgNO));
+        $("#indPorConHG").append(parseFloat(data.CantidadHgSI));
+        $("#indPorSinHG").append(parseFloat(data.CantidadHgNO));
+        $("#indConHG").append(parseInt(data.PorcentajeHgCon));
+        $("#indSinHG").append(parseInt(data.PorcentajeHgSin));
         $("#indConCol").append(parseInt(data.totalColesterolSI));
         $("#indSinCol").append(parseInt(data.totalColesterolNO));
         $("#indConHDL").append(parseInt(data.totalHDLSI));
