@@ -26,6 +26,12 @@
 			return ejecutarConsulta($sql);
 		}
 
+       public function EliminarResultados($idSeguimiento){
+            $sql="CALL `SP_ELIMINAR_RESULTADOS`('$idSeguimiento');";
+
+           return ejecutarConsulta($sql);
+       }
+
 
    }
 

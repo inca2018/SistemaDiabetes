@@ -14,7 +14,7 @@
 	 $mes=isset($_POST["mes"])? limpiarCadena($_POST["mes"]):"";
 
 	 $login_idLog=$_SESSION['idUsuario'];
-
+    $idSeguimiento=isset($_POST["idSeguimiento"])? limpiarCadena($_POST["idSeguimiento"]):"";
 
     function BuscarEstado($reg){
 
@@ -91,6 +91,9 @@ case 'listar_seguimientos':
                    </button>
                    <button  class="btn btn-info  btn-sm"type="button" title="Ver Resultado de Prueba Pie" onclick="VerPie('.$reg->idSeguimiento.')">
                      <i class="fa fa-medkit" aria-hidden="true"></i>
+                   </button>
+                   <button  class="btn btn-danger  btn-sm"type="button" title="Eliminar Resultados" onclick="Eliminar('.$reg->idSeguimiento.')">
+                     <i class="fa fa-times" aria-hidden="true"></i>
                    </button>'
             );
       }
@@ -114,6 +117,19 @@ case 'listar_seguimientos':
 					echo '<option   value=' . $reg->idYear . '>' . $reg->year . '</option>';
          	}
        break;
+
+       case 'EliminarResultados':
+           $rspta = array(
+            "Mensaje" => "",
+            "Eliminar" => false,
+            "Error" => false
+        );
+
+        $rspta['Eliminar'] = $gestion->EliminarResultados($idSeguimiento);
+
+        $rspta['Eliminar'] ? $rspta['Mensaje'] = "Resultados Eliminados." : $rspta['Mensaje'] = "Resultados no se pudieron eliminar comuniquese con el area de soporte";
+        echo json_encode($rspta);
+        break;
    }
 
 

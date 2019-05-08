@@ -430,6 +430,32 @@ function VerPie(idSeguimientoR){
     RecuperarResultadoPie(idSeguimientoR);
 
 }
+function Eliminar(idSeguimientoR){
+     swal({
+      title: "Eliminar?",
+      text: "Esta Seguro que desea Eliminar Resultados!",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Si, Eliminar!",
+      closeOnConfirm: false
+   }, function () {
+      ajaxEliminarResultados(idSeguimientoR);
+   });
+}
+function ajaxEliminarResultados(idSeguimientoR){
+    $.post("../../controlador/Gestion/CGestionPacientes.php?op=EliminarResultados", {'idSeguimiento': idSeguimientoR}, function (data, e) {
+      data = JSON.parse(data);
+      var Error = data.Error;
+      var Mensaje = data.Mensaje;
+      if (Error) {
+         swal("Error", Mensaje, "error");
+      } else {
+         swal("Eliminado!", Mensaje, "success");
+         tabla_seguimientos.ajax.reload();
+      }
+   });
+}
 
 function RecuperarEspecialidades(idSeguimiento) {
     $("#bloqueEspecialidades")
@@ -593,7 +619,7 @@ function RecuperarGrupos(idSeguimiento) {
         $("#accordion_info").html(Html);
 
         LanzarFunciones();
-        //LanzarFuncionOpcionesPie();
+
     });
 }
 
@@ -1306,12 +1332,13 @@ function RecuperarResultadoPie(idSeguimiento){
          VerificarOpcion(data.R7,7);
          VerificarOpcion(data.R8,8);
 
+          LanzarFuncionOpcionesPie();
          });
 }
 function VerificarOpcion(valor,num){
-    debugger;
+
         $("#PIE"+num).removeClass("Option");
-        $("#PIE"+num).data("opcion",num);
+        $("#PIE"+num).data("opcion",valor);
         $("#PIE"+num).empty();
     switch (valor){
         case '1':
@@ -1368,6 +1395,57 @@ function RecuperarResultadoRefiere(idSeguimiento){
      });
 }
 
+function LanzarFuncionOpcionesPie() {
+
+    $(".opciones").each(function () {
+        $(this).on('click', function () {
+            debugger;
+            console.log("click");
+            if ($(this).data("opcion") == 1) {
+                $(this).removeClass("OptionA");
+                $(this).removeClass("OptionC");
+                $(this).removeClass("OptionD");
+                $(this).removeClass("OptionE");
+                $(this).addClass("OptionB");
+                $(this).data("opcion",2);
+                $(this).html('<span><i class="fa fa-times" aria-hidden="true"></i></span>');
+
+            } else if ($(this).data("opcion") == 2) {
+                $(this).removeClass("OptionB");
+                $(this).removeClass("OptionA");
+                $(this).removeClass("OptionD");
+                $(this).removeClass("OptionE");
+                $(this).addClass("OptionC");
+                $(this).data("opcion", 3);
+                $(this).empty();
+                $(this).html('<span><i class="fa fa-check" aria-hidden="true"></i></span>');
+
+            } else if ($(this).data("opcion") == 3) {
+                $(this).removeClass("OptionC");
+                $(this).removeClass("OptionA");
+                $(this).removeClass("OptionB");
+                $(this).removeClass("OptionE");
+                $(this).addClass("OptionD");
+                $(this).data("opcion", 4);
+                $(this).empty();
+            }else if ($(this).data("opcion") == 4) {
+                $(this).removeClass("OptionD");
+                $(this).removeClass("OptionA");
+                $(this).removeClass("OptionB");
+                $(this).removeClass("OptionC");
+                $(this).addClass("OptionE");
+                $(this).data("opcion", 5);
+            }else if ($(this).data("opcion") == 5) {
+                $(this).removeClass("OptionE");
+                $(this).removeClass("OptionB");
+                $(this).removeClass("OptionC");
+                $(this).removeClass("OptionD");
+                $(this).addClass("OptionA");
+                $(this).data("opcion", 1);
+            }
+        });
+    });
+}
 
 function actualizar(){
    var error="";
@@ -1797,54 +1875,7 @@ function AjaxActualizarFicha(){
 
     });
 
-/*var hijo1=$("#OpcionPieN1").children("div");
-    var resu1=hijo1.data("opcion");
-var hijo2=$("#OpcionPieN2").children("div");
-    var resu2=hijo2.data("opcion");
-var hijo3=$("#OpcionPieN3").children("div");
-    var resu3=hijo3.data("opcion");
-var hijo4=$("#OpcionPieN4").children("div");
-    var resu4=hijo4.data("opcion");
-var hijo5=$("#OpcionPieN5").children("div");
-    var resu5=hijo5.data("opcion");
-var hijo6=$("#OpcionPieN6").children("div");
-    var resu6=hijo6.data("opcion");
-var hijo7=$("#OpcionPieN7").children("div");
-    var resu7=hijo7.data("opcion");
-var hijo8=$("#OpcionPieN8").children("div");
-    var resu8=hijo8.data("opcion");*/
 
-
-                 /*   var Opcion ="";
-                    Opcion=Opcion+" ";//id
-                    Opcion=Opcion+"#PIE";//Gneral
-                    Opcion=Opcion+"# ";//tipoOpcion
-                    Opcion=Opcion+"# ";//campo
-                    Opcion=Opcion+"# ";//rESPUESTA
-                    Opcion=Opcion+"# ";//Estado
-                    Opcion=Opcion+"# ";//Sexo
-                    Opcion=Opcion+"# ";//v1
-                    Opcion=Opcion+"# ";//v2
-                    Opcion=Opcion+"# ";//v3
-                    Opcion=Opcion+"# ";//v4
-                    Opcion=Opcion+"# ";//tipocampo
-                    Opcion=Opcion+"# ";//valorcampo
-                    Opcion=Opcion+"# ";//dosis
-                    Opcion=Opcion+"# ";//numero
-                    Opcion=Opcion+"# ";//diagnostico
-                    Opcion=Opcion+"# ";//medico
-                    Opcion=Opcion+"# ";//tratamiento
-                    Opcion=Opcion+"# ";//observacion
-                    Opcion=Opcion+"#"+resu1;//r1
-                    Opcion=Opcion+"#"+resu2;//r2
-                    Opcion=Opcion+"#"+resu3;//r3
-                    Opcion=Opcion+"#"+resu4;//r4
-                    Opcion=Opcion+"#"+resu5;//r5
-                    Opcion=Opcion+"#"+resu6;//r6
-                    Opcion=Opcion+"#"+resu7;//r7
-                    Opcion=Opcion+"#"+resu8;//r8
-                    Opcion=Opcion+"# ";//grupo
-                    ArregloOpciones.push(Opcion);*/
    // console.log("RESULTADO PIE: R1="+resu1+" R2="+resu2+" R3="+resu3+" R4="+resu4+" R5="+resu5+" R6="+resu6+" R7="+resu7+" R8="+resu8);
 
  var opA1=0,opA2=0,opA3=0,opA4=0;
@@ -1907,6 +1938,7 @@ var hijo8=$("#OpcionPieN8").children("div");
 
                     ArregloOpciones.push(Opcion);
 
+
 var OpcionesR=ArregloOpciones.join('|');
 
 
@@ -1940,6 +1972,93 @@ var idMes=$("#idMes").val();
         }
     });
 }
+function actualizarPie(){
 
+  var ArregloOpciones = new Array();
+
+
+    var hijo1=$("#OpcionPieN1").children("div");
+    var resu1=hijo1.data("opcion");
+var hijo2=$("#OpcionPieN2").children("div");
+    var resu2=hijo2.data("opcion");
+var hijo3=$("#OpcionPieN3").children("div");
+    var resu3=hijo3.data("opcion");
+var hijo4=$("#OpcionPieN4").children("div");
+    var resu4=hijo4.data("opcion");
+var hijo5=$("#OpcionPieN5").children("div");
+    var resu5=hijo5.data("opcion");
+var hijo6=$("#OpcionPieN6").children("div");
+    var resu6=hijo6.data("opcion");
+var hijo7=$("#OpcionPieN7").children("div");
+    var resu7=hijo7.data("opcion");
+var hijo8=$("#OpcionPieN8").children("div");
+    var resu8=hijo8.data("opcion");
+
+
+                   var Opcion ="";
+                    Opcion=Opcion+" ";//id
+                    Opcion=Opcion+"#PIE";//Gneral
+                    Opcion=Opcion+"# ";//tipoOpcion
+                    Opcion=Opcion+"# ";//campo
+                    Opcion=Opcion+"# ";//rESPUESTA
+                    Opcion=Opcion+"# ";//Estado
+                    Opcion=Opcion+"# ";//Sexo
+                    Opcion=Opcion+"# ";//v1
+                    Opcion=Opcion+"# ";//v2
+                    Opcion=Opcion+"# ";//v3
+                    Opcion=Opcion+"# ";//v4
+                    Opcion=Opcion+"# ";//tipocampo
+                    Opcion=Opcion+"# ";//valorcampo
+                    Opcion=Opcion+"# ";//dosis
+                    Opcion=Opcion+"# ";//numero
+                    Opcion=Opcion+"# ";//diagnostico
+                    Opcion=Opcion+"# ";//medico
+                    Opcion=Opcion+"# ";//tratamiento
+                    Opcion=Opcion+"# ";//observacion
+                    Opcion=Opcion+"#"+resu1;//r1
+                    Opcion=Opcion+"#"+resu2;//r2
+                    Opcion=Opcion+"#"+resu3;//r3
+                    Opcion=Opcion+"#"+resu4;//r4
+                    Opcion=Opcion+"#"+resu5;//r5
+                    Opcion=Opcion+"#"+resu6;//r6
+                    Opcion=Opcion+"#"+resu7;//r7
+                    Opcion=Opcion+"#"+resu8;//r8
+                    Opcion=Opcion+"# ";//grupo
+                    ArregloOpciones.push(Opcion);
+
+
+var OpcionesR=ArregloOpciones.join('|');
+
+
+var idPaciente=$("#idPaciente").val();
+var idAno=$("#idAno").val();
+var idMes=$("#idMes").val();
+
+    $.post("../../controlador/Gestion/CFicha.php?op=ActualizarFicha",{idSeguimiento:idSeguimiento,OpcionesR:OpcionesR,idPaciente:idPaciente,idAno:idAno,idMes:idMes}, function (data, status) {
+        data = JSON.parse(data);
+        console.log(data);
+
+         var Registro=data.Registro;
+         var Mensaje=data.Mensaje;
+        if(Registro){
+             $("#accordion_info").removeClass("whirl");
+             $("#accordion_info").removeClass("ringed");
+
+
+             swal({
+                  title: "Actualización",
+                  text: "Se Actualizo Correctamente!",
+                  type: "info",
+                  showCancelButton: false,
+                  confirmButtonColor: "#27c24c",
+                  confirmButtonText: "Aceptar",
+                  closeOnConfirm: false
+               });
+            $("#modal_seguimiento").hide();
+        }else{
+            notificar_danger(Mensaje);
+        }
+    });
+}
 
 init();

@@ -62,7 +62,7 @@ if(isset($_POST["idPaciente"])){
                             <div class="form-group">
                                 <label>Seleccione Mes:</label>
                                 <select class="form-control" id="select_mes" name="select_mes" required>
-                                    <option value="">-- SELECCIONAR --</option>
+                                    <option value="0">-- SELECCIONAR --</option>
                                     <option value="1">ENERO</option>
                                     <option value="2">FEBRERO</option>
                                     <option value="3">MARZO</option>
