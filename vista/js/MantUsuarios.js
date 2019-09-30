@@ -11,6 +11,14 @@ function Iniciar_Componentes(){
 
 	//$('#date_fecha_comprobante').datepicker('setDate',fecha);
 
+    $('#UsuarioPersona').select2({
+            theme: 'bootstrap'
+        });
+     $('#UsuarioPerfil').select2({
+            theme: 'bootstrap'
+        });
+
+
     $("#FormularioUsuario").on("submit",function(e)
 	{
 	      RegistroUsuario(e);

@@ -61,6 +61,7 @@
 <?php require_once('../layaout/Footer.php');?>
 <!-- Fin del Footer -->
 
+
 <div class="modal fade " id="ModalUsuario" role="dialog" aria-labelledby="myModalLabelLarge" aria-hidden="true">
 	<div class="modal-dialog modal-lg  ">
 		<div class="modal-content">
