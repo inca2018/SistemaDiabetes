@@ -28,10 +28,10 @@ function Listar_Sexo() {
 }
 function iniciar(){
 
-		$('#date_inicio1').datepicker({
+    $('#date_inicio1').datepicker({
 			 format: 'dd/mm/yyyy',
 
-        });
+    });
 	$('#date_fin1').datepicker({
 
 		    format: 'dd/mm/yyyy',

@@ -460,6 +460,7 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
                 '<div class="col-md-4">' +
                 '<input id="OP' + idOpcion + '" class="form-control  caja campo FuRango validar" data-message="' + grupo + ' - ' + Titulo + '" data-id="' + idOpcion + '" data-atributo="' + atributo + '" data-tipo="' + Tipo + '" data-minimo="' + minimo + '" data-maximo="' + maximo + '" type="text" step="any"  maxlength="100" placeholder="' + place + '" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
                 '</div>' +
+
                 '<div class="col-md-2 ">' +
                 '<img style="display:none;" id="SI' + idOpcion + '" src="../../assets/image/emoticon2.png" alt="Resultado Bueno" height="30" width="30">' +
                 '<img style="display:none;" id="NO' + idOpcion + '" src="../../assets/image/emoticon1.png" alt="Resultado Malo" height="30" width="30">' +
@@ -498,6 +499,7 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
                 '<div class="col-md-4">' +
                 '<input id="OP' + idOpcion + '" class="form-control  caja campo FuRango validar" data-message="' + grupo + ' - ' + Titulo + '" data-id="' + idOpcion + '" data-atributo="' + atributo + '" data-tipo="' + Tipo + '" data-minimo="' + minimo + '" data-maximo="' + maximo + '" type="text" step="any"  maxlength="100" placeholder="' + place + '" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
                 '</div>' +
+
                 '<div class="col-md-2 ">' +
                 '<img style="display:none;" id="SI' + idOpcion + '" src="../../assets/image/emoticon2.png" alt="Resultado Bueno" height="30" width="30">' +
                 '<img style="display:none;" id="NO' + idOpcion + '" src="../../assets/image/emoticon1.png" alt="Resultado Malo" height="30" width="30">' +

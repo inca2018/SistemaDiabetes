@@ -671,10 +671,14 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
                 '<div class="col-md-4">' +
                 '<input id="OP' + idOpcion + '" class="form-control  caja campo FuRango validar" data-message="' + grupo + ' - ' + Titulo + '" data-id="' + idOpcion + '" data-atributo="' + atributo + '" data-tipo="' + Tipo + '" data-minimo="' + minimo + '" data-maximo="' + maximo + '" type="text" step="any"  maxlength="100" placeholder="' + place + '" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
                 '</div>' +
-                '<div class="col-md-2">' +
-                '<button style="display:none;" id="SI' + idOpcion + '" class="btn btn-success  btn-sm"type="button"><i class="fa fa-sm fa-check"></i></button>' +
-                '<button style="display:none;" id="NO' + idOpcion + '" class="btn btn-danger  btn-sm"type="button"><i class="fa fa-sm fa-times"></i>' + '</button>' +
+
+                '<div class="col-md-2 ">' +
+                '<img style="display:none;" id="SI' + idOpcion + '" src="../../assets/image/emoticon2.png" alt="Resultado Bueno" height="30" width="30">' +
+                '<img style="display:none;" id="NO' + idOpcion + '" src="../../assets/image/emoticon1.png" alt="Resultado Malo" height="30" width="30">' +
                 '</div> ';
+            /*'<button style="display:none;" id="SI' + idOpcion + '" class="btn btn-success  btn-sm"type="button"><i class="fa fa-sm fa-check"></i></button>' +
+            '<button style="display:none;" id="NO' + idOpcion + '" class="btn btn-danger  btn-sm"type="button"><i class="fa fa-sm fa-times"></i>' + '</button>' +
+            '</div> ';*/
 
             break;
         case "4":
@@ -705,10 +709,14 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
                 '<div class="col-md-4">' +
                 '<input id="OP' + idOpcion + '" class="form-control  caja campo FuRango validar" data-message="' + grupo + ' - ' + Titulo + '" data-id="' + idOpcion + '" data-atributo="' + atributo + '" data-tipo="' + Tipo + '" data-minimo="' + minimo + '" data-maximo="' + maximo + '" type="text" step="any"  maxlength="100" placeholder="' + place + '" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
                 '</div>' +
-                '<div class="col-md-2">' +
-                '<button style="display:none;" id="SI' + idOpcion + '" class="btn btn-success  btn-sm"type="button"><i class="fa fa-sm fa-check"></i></button>' +
-                '<button style="display:none;" id="NO' + idOpcion + '" class="btn btn-danger  btn-sm"type="button"><i class="fa fa-sm fa-times"></i>' + '</button>' +
+
+                '<div class="col-md-2 ">' +
+                '<img style="display:none;" id="SI' + idOpcion + '" src="../../assets/image/emoticon2.png" alt="Resultado Bueno" height="30" width="30">' +
+                '<img style="display:none;" id="NO' + idOpcion + '" src="../../assets/image/emoticon1.png" alt="Resultado Malo" height="30" width="30">' +
                 '</div> ';
+            /*'<button style="display:none;" id="SI' + idOpcion + '" class="btn btn-success  btn-sm"type="button"><i class="fa fa-sm fa-check"></i></button>' +
+            '<button style="display:none;" id="NO' + idOpcion + '" class="btn btn-danger  btn-sm"type="button"><i class="fa fa-sm fa-times"></i>' + '</button>' +
+            '</div> ';*/
 
             break;
         case "5":
@@ -768,10 +776,14 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
                 '<input id="F' + idOpcion + '" class="form-control caja campo opcionCampo "  type="text" step="any" placeholder="' + quitarSeparador(formula) + '"  maxlength="100"  disabled>' +
                 '</div>' +
 
-                '<div class="col-md-2 mt-4">' +
-                '<button style="display:none;" id="SI' + idOpcion + '" class="btn btn-success  btn-sm"type="button"><i class="fa fa-sm fa-check"></i></button>' +
-                '<button style="display:none;" id="NO' + idOpcion + '" class="btn btn-danger  btn-sm"type="button"><i class="fa fa-sm fa-times"></i>' + '</button>' +
+
+                '<div class="col-md-2 ">' +
+                '<img style="display:none;" id="SI' + idOpcion + '" src="../../assets/image/emoticon2.png" alt="Resultado Bueno" height="30" width="30">' +
+                '<img style="display:none;" id="NO' + idOpcion + '" src="../../assets/image/emoticon1.png" alt="Resultado Malo" height="30" width="30">' +
                 '</div> ';
+            /*'<button style="display:none;" id="SI' + idOpcion + '" class="btn btn-success  btn-sm"type="button"><i class="fa fa-sm fa-check"></i></button>' +
+            '<button style="display:none;" id="NO' + idOpcion + '" class="btn btn-danger  btn-sm"type="button"><i class="fa fa-sm fa-times"></i>' + '</button>' +
+            '</div> ';*/
 
             break;
 
@@ -2034,7 +2046,7 @@ function AjaxActualizarFicha() {
             $("#accordion_info").removeClass("whirl");
             $("#accordion_info").removeClass("ringed");
 
-
+            $("#modal_seguimiento").hide();
             swal({
                 title: "Actualización",
                 text: "Se Actualizo Correctamente!",
@@ -2044,7 +2056,7 @@ function AjaxActualizarFicha() {
                 confirmButtonText: "Aceptar",
                 closeOnConfirm: false
             });
-            $("#modal_seguimiento").hide();
+
         } else {
             notificar_danger(Mensaje);
         }

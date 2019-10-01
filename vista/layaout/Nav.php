@@ -232,6 +232,11 @@
 										<span>Reportes</span>
 									</a>
 								</li>
+								<li id="Asignacion" class="">
+									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Reporte/ReporteRiesgo.php';?>" title="Reporte Categorización de Riesgo">
+										<span>Reporte Categorización de Riesgo</span>
+									</a>
+								</li>
 
 
 							</ul>
