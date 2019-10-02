@@ -180,6 +180,60 @@ if(isset($_POST["idGrupoOpcion"])){
                                         </div>
                                     </div>
                                 </div>
+                                   <div class="col-md-12" id="ElementoRangoCriterio">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="OpcionCriterioA" class="col-form-label">Criterio A:</label>
+                                                <input class="form-control" id="OpcionCriterioA" name="OpcionCriterioA" data-message="- Criterio A" placeholder="" maxlength="60" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="OpcionAtributoCriterioA" class="col-form-label">Atributo:</label>
+                                                <input class="form-control" id="OpcionAtributoCriterioA" name="OpcionAtributoCriterioA" data-message="- Atributo (Criterio A)" placeholder="Kg." maxlength="6" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="OpcionMinimoCriterioA" class="col-form-label">Mínimo(valor minimo 1):</label>
+                                                <input class="form-control  " id="OpcionMinimoCriterioA" name="OpcionMinimoCriterioA" data-message="- Mínimo de Rango (Criterio A)" placeholder="0" maxlength="6" type="text" onkeypress="return SoloNumerosModificado(event,4,this.id);">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="OpcionMaximoCriterioA" class="col-form-label">Máximo(valor maximo 9999):</label>
+                                                <input class="form-control  " id="OpcionMaximoCriterioA" name="OpcionMaximoCriterioA" data-message="- Máximo de Rango (Criterio A)" placeholder="0" maxlength="6" type="text" onkeypress="return SoloNumerosModificado(event,4,this.id);">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="OpcionCriterioB" class="col-form-label">Criterio B:</label>
+                                                <input class="form-control" id="OpcionCriterioB" name="OpcionCriterioB" data-message="- Criterio B" placeholder="" maxlength="60" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="OpcionAtributoCriterioB" class="col-form-label">Atributo:</label>
+                                                <input class="form-control" id="OpcionAtributoCriterioB" name="OpcionAtributoCriterioB" data-message="- Atributo (Criterio B)" placeholder="Kg." maxlength="6" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="OpcionMinimoCriterioB" class="col-form-label">Mínimo(valor minimo 1):</label>
+                                                <input class="form-control  " id="OpcionMinimoCriterioB" name="OpcionMinimoCriterioB" data-message="- Mínimo de Rango (Criterio B)" placeholder="0" maxlength="6" type="text" onkeypress="return SoloNumerosModificado(event,4,this.id);">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="OpcionMaximoCriterioB" class="col-form-label">Máximo(valor maximo 9999):</label>
+                                                <input class="form-control  " id="OpcionMaximoCriterioB" name="OpcionMaximoCriterioB" data-message="- Máximo de Rango (Criterio B)" placeholder="0" maxlength="6" type="text" onkeypress="return SoloNumerosModificado(event,4,this.id);">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-md-12" id="ElementoFormula">
                                      <label for="" class="text-info">Ingrese Rango</label>
                                     <div class="row">
@@ -314,6 +368,12 @@ if(isset($_POST["idGrupoOpcion"])){
                                                 </select>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" >
+                                    <div class="form-group">
+                                        <label for="OpcionInfo" class="col-form-label">Información de Opción:</label>
+                                        <textarea class="form-control  " id="OpcionInfo" name="OpcionTitulo" placeholder="Información de Opción"></textarea>
                                     </div>
                                 </div>
                             </div>

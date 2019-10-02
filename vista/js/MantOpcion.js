@@ -27,7 +27,6 @@ function Iniciar_componentes() {
             case "3":
                 ElementoTituloMostrar(true);
                 ElementoRangoMostrar(true);
-
                 ElementoTituloValidacion(true);
                 ElementoAtributoValidacion(true);
                 ElementoMinimoValidacion(true);
@@ -36,7 +35,6 @@ function Iniciar_componentes() {
             case "4":
                 ElementoTituloMostrar(true);
                 ElementoRangoSexoMostrar(true);
-
                 ElementoTituloValidacion(true);
                 OpcionAtributoHombreValidacion(true);
                 OpcionMinimoHombreValidacion(true);
@@ -84,10 +82,22 @@ function Iniciar_componentes() {
                 OpcionListados(true);
                 ElementoListados(true);
                 break;
+            case "16":
+                ElementoTituloMostrar(true);
+                ElementoRangoCriterioMostrar(true);
+                ElementoTituloValidacion(true);
+                OpcionAtributoCriterioAValidacion(true);
+                OpcionMinimoCriterioAValidacion(true);
+                OpcionMaximoCriterioAValidacion(true);
+                OpcionAtributoCriterioBValidacion(true);
+                OpcionMinimoCriterioBValidacion(true);
+                OpcionMaximoCriterioBValidacion(true);
+
+                OpcionCriterioAValidacion(true);
+                OpcionCriterioBValidacion(true);
+                break;
         }
     });
-
-
     $("#OpcioneCampo1").on("blur", function () {
         var val = $("#OpcioneCampo1").val();
         if (val == "") {
@@ -197,6 +207,7 @@ function OcultarElementos() {
     ElementoTituloMostrar(false);
     ElementoRangoMostrar(false);
     ElementoRangoSexoMostrar(false);
+    ElementoRangoCriterioMostrar(false);
     ElementoFormulaMostrar(false);
     ElementoCondicionCampoMostrar(false);
     OpcionTipoCampoMostrar(false);
@@ -208,7 +219,6 @@ function OcultarElementos() {
     ElementoMaximoValidacion(false);
     OpcionTipoCampoValidacion(false);
     ElementoListados(false);
-
     OpcionAtributoHombreValidacion(false);
     OpcionMinimoHombreValidacion(false);
     OpcionMaximoHombreValidacion(false);
@@ -217,6 +227,16 @@ function OcultarElementos() {
     OpcionMaximoMujerValidacion(false);
     OpcionMinimoFormulaValidacion(false);
     OpcionMaximoFormulaValidacion(false);
+
+    OpcionAtributoCriterioAValidacion(false);
+    OpcionMinimoCriterioAValidacion(false);
+    OpcionMaximoCriterioAValidacion(false);
+    OpcionAtributoCriterioBValidacion(false);
+    OpcionMinimoCriterioBValidacion(false);
+    OpcionMaximoCriterioBValidacion(false);
+    OpcionCriterioAValidacion(false);
+    OpcionCriterioBValidacion(false);
+
     BorrarOperacion();
 }
 
@@ -284,7 +304,8 @@ function AjaxRegistroOpcion() {
     var idGrupoOpcion = $("#idGrupoOpcion").val();
     var TipoOpcion = $("#OpcionTipo").val();
     var OpcionTitulo = $("#OpcionTitulo").val();
-    var idOpcion=$("#idOpcion").val();
+    var idOpcion = $("#idOpcion").val();
+    var OpcionInfo = $("#OpcionInfo").val();
     $.ajax({
         url: "../../controlador/Mantenimiento/COpcion.php?op=AccionOpcion",
         type: "POST",
@@ -293,7 +314,8 @@ function AjaxRegistroOpcion() {
             idGrupoOpcion: idGrupoOpcion,
             TipoOpcion: TipoOpcion,
             OpcionTitulo: OpcionTitulo,
-            idOpcion:idOpcion
+            idOpcion: idOpcion,
+            OpcionInfo:OpcionInfo
         },
         success: function (data, status) {
             data = JSON.parse(data);
@@ -378,6 +400,18 @@ function VerificacionTipoOpcion() {
         case "11":
             var tipoCampos = $("#OpcionTipoCampo2").val();
             var Propiedades = '{"TipoOpcion":' + tipoOpcion + ',"CodigoOpcion":"Opcion Listado","Titulo":"' + titulo + '","TipoCampo":' + tipoCampos + '}';
+            break;
+        case "16":
+            var atributoCriterioA = $("#OpcionAtributoCriterioA").val();
+            var minimoCriterioA = $("#OpcionMinimoCriterioA").val();
+            var maximoCriterioA = $("#OpcionMaximoCriterioA").val();
+            var atributoCriterioB = $("#OpcionAtributoCriterioB").val();
+            var minimoCriterioB = $("#OpcionMinimoCriterioB").val();
+            var maximoCriterioB = $("#OpcionMaximoCriterioB").val();
+            var criterioA=$("#OpcionCriterioA").val();
+            var criterioB=$("#OpcionCriterioB").val();
+
+            var Propiedades = '{"TipoOpcion":' + tipoOpcion + ',"CodigoOpcion":"Opcion Rango-Criterio","Titulo":"' + titulo + '","AtributoCriterioA":"' + atributoCriterioA + '","MinimoCriterioA":' + minimoCriterioA + ',"MaximoCriterioA":' + maximoCriterioA + ',"AtributoCriterioB":"' + atributoCriterioB + '","MinimoCriterioB":' + minimoCriterioB + ',"MaximoCriterioB":' + maximoCriterioB + ',"CriterioA":"'+criterioA+'","CriterioB":"'+criterioB+'"}';
             break;
     }
 
@@ -603,6 +637,9 @@ function ElementoRangoMostrar(valor) {
 function ElementoRangoSexoMostrar(valor) {
     (valor) ? $("#ElementoRangoSexo").show(): $("#ElementoRangoSexo").hide();
 }
+function ElementoRangoCriterioMostrar(valor) {
+    (valor) ? $("#ElementoRangoCriterio").show(): $("#ElementoRangoCriterio").hide();
+}
 
 function ElementoFormulaMostrar(valor) {
     (valor) ? $("#ElementoFormula").show(): $("#ElementoFormula").hide();
@@ -670,6 +707,37 @@ function OpcionMaximoMujerValidacion(valor) {
     (valor) ? $("#OpcionMaximoMujer").addClass("validarPanel"): $("#OpcionMaximoMujer").removeClass("validarPanel");
 }
 
+function OpcionAtributoCriterioAValidacion(valor) {
+    (valor) ? $("#OpcionAtributoCriterioA").addClass("validarPanel"): $("#OpcionAtributoCriterioA").removeClass("validarPanel");
+}
+
+function OpcionMinimoCriterioAValidacion(valor) {
+    (valor) ? $("#OpcionMinimoCriterioA").addClass("validarPanel"): $("#OpcionMinimoCriterioA").removeClass("validarPanel");
+}
+
+function OpcionMaximoCriterioAValidacion(valor) {
+    (valor) ? $("#OpcionMaximoCriterioA").addClass("validarPanel"): $("#OpcionMaximoCriterioA").removeClass("validarPanel");
+}
+
+function OpcionAtributoCriterioBValidacion(valor) {
+    (valor) ? $("#OpcionAtributoCriterioB").addClass("validarPanel"): $("#OpcionAtributoCriterioB").removeClass("validarPanel");
+}
+
+function OpcionMinimoCriterioBValidacion(valor) {
+    (valor) ? $("#OpcionMinimoCriterioB").addClass("validarPanel"): $("#OpcionMinimoCriterioB").removeClass("validarPanel");
+}
+
+function OpcionMaximoCriterioBValidacion(valor) {
+    (valor) ? $("#OpcionMaximoCriterioB").addClass("validarPanel"): $("#OpcionMaximoCriterioB").removeClass("validarPanel");
+}
+
+function OpcionCriterioAValidacion(valor) {
+    (valor) ? $("#OpcionCriterioA").addClass("validarPanel"): $("#OpcionCriterioA").removeClass("validarPanel");
+}
+function OpcionCriterioBValidacion(valor) {
+    (valor) ? $("#OpcionCriterioB").addClass("validarPanel"): $("#OpcionCriterioB").removeClass("validarPanel");
+}
+
 function OpcionTipoCampoValidacion(valor) {
     (valor) ? $("#OpcionTipoCampo").addClass("validarPanel"): $("#OpcionTipoCampo").removeClass("validarPanel");
 }
@@ -722,6 +790,7 @@ function RecuperarOpcion(idOpcion) {
 
 function Mostrar_Informacion_Opcion(data) {
     $("#idOpcion").val(data.idOpcion);
+    $("#OpcionInfo").val(data.Informacion);
     switch (data.TipoOpcion_idTipoOpcion) {
         case "1":
             //cabecera
@@ -745,7 +814,7 @@ function Mostrar_Informacion_Opcion(data) {
             ElementoMaximoValidacion(true);
 
 
-             var Propiedades = data.Propiedades.replace(/&quot;/g, '\"');
+            var Propiedades = data.Propiedades.replace(/&quot;/g, '\"');
             var Propiedades = JSON.parse(Propiedades);
             console.log(Propiedades);
 
@@ -767,7 +836,7 @@ function Mostrar_Informacion_Opcion(data) {
             OpcionMinimoMujerValidacion(true);
             OpcionMaximoMujerValidacion(true);
             //opcion campo de texto
-             var Propiedades = data.Propiedades.replace(/&quot;/g, '\"');
+            var Propiedades = data.Propiedades.replace(/&quot;/g, '\"');
             var Propiedades = JSON.parse(Propiedades);
             console.log(Propiedades);
 
@@ -784,7 +853,7 @@ function Mostrar_Informacion_Opcion(data) {
         case "5":
             ElementoTituloMostrar(true);
             ElementoTituloValidacion(true);
-             $("#OpcionTitulo").val(data.TituloOpcion);
+            $("#OpcionTitulo").val(data.TituloOpcion);
             //opcion campo de texto
             break;
         case "6":
@@ -799,9 +868,9 @@ function Mostrar_Informacion_Opcion(data) {
             OpcionMinimoFormulaValidacion(true);
             OpcionMaximoFormulaValidacion(true);
 
-             $("#OpcionTitulo").val(data.TituloOpcion);
+            $("#OpcionTitulo").val(data.TituloOpcion);
 
-              var Propiedades = data.Propiedades.replace(/&quot;/g, '\"');
+            var Propiedades = data.Propiedades.replace(/&quot;/g, '\"');
             var Propiedades = JSON.parse(Propiedades);
             console.log(Propiedades);
             $("#OpcionMinimoFormula").val(Propiedades.minimo);
@@ -816,7 +885,7 @@ function Mostrar_Informacion_Opcion(data) {
         case "7":
             ElementoTituloMostrar(true);
             ElementoTituloValidacion(true);
-             $("#OpcionTitulo").val(data.TituloOpcion);
+            $("#OpcionTitulo").val(data.TituloOpcion);
             //opcion campo de texto
             break;
         case "9":
@@ -826,7 +895,7 @@ function Mostrar_Informacion_Opcion(data) {
             ElementoCondicionCampoMostrar(true);
             OpcionTipoCampoMostrar(true);
             OpcionTipoCampoValidacion(true);
-             var Propiedades = data.Propiedades.replace(/&quot;/g, '\"');
+            var Propiedades = data.Propiedades.replace(/&quot;/g, '\"');
             var Propiedades = JSON.parse(Propiedades);
             console.log(Propiedades);
             $("#OpcionTipoCampo").val(Propiedades.TipoOpcion);
@@ -846,6 +915,41 @@ function Mostrar_Informacion_Opcion(data) {
             OpcionListados(true);
             ElementoListados(true);
             $("#OpcionTitulo").val(data.TituloOpcion);
+
+            break;
+        case "16":
+            ElementoTituloMostrar(true);
+            ElementoRangoCriterioMostrar(true);
+
+            ElementoTituloValidacion(true);
+            OpcionAtributoCriterioAValidacion(true);
+            OpcionMinimoCriterioAValidacion(true);
+            OpcionMaximoCriterioAValidacion(true);
+            OpcionAtributoCriterioBValidacion(true);
+            OpcionMinimoCriterioBValidacion(true);
+            OpcionMaximoCriterioBValidacion(true);
+
+            OpcionCriterioAValidacion(true);
+            OpcionCriterioBValidacion(true);
+
+            //opcion campo de texto
+            var Propiedades = data.Propiedades.replace(/&quot;/g, '\"');
+            var Propiedades = JSON.parse(Propiedades);
+            console.log(Propiedades);
+
+            $("#OpcionTitulo").val(Propiedades.Titulo);
+            $("#OpcionAtributoCriterioA").val(Propiedades.AtributoCriterioA);
+            $("#OpcionMinimoCriterioA").val(Propiedades.MinimoCriterioA);
+            $("#OpcionMaximoCriterioA").val(Propiedades.MaximoCriterioA);
+
+            $("#OpcionAtributoCriterioB").val(Propiedades.AtributoCriterioB);
+            $("#OpcionMinimoCriterioB").val(Propiedades.MinimoCriterioB);
+            $("#OpcionMaximoCriterioB").val(Propiedades.MaximoCriterioB);
+
+            $("#OpcionCriterioA").val(Propiedades.CriterioA);
+            $("#OpcionCriterioB").val(Propiedades.CriterioB);
+
+
             break;
     }
 }

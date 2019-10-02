@@ -6,7 +6,6 @@ if(isset($_POST["idPaciente"])){
     header('Location: ../../vista/Operaciones/GestionPacientes.php');
 }
 
-
 ?>
 <!-- Inicio de Cabecera-->
 <?php require_once('../layaout/Header.php');?>
@@ -158,7 +157,17 @@ if(isset($_POST["idPaciente"])){
                 </button>
             </div>
             <div class="modal-body">
-
+                <div class="row">
+                       <div class="col-md-8 text-left mt-3">
+                       <h4 class="  titulo_area"><em><b>Grupo de Opciones:</b></em></h4>
+                    </div>
+                    <div class="col-md-3 text-right mt-3">
+                       <h4 class=" "><em><b>Porcentaje de Avance:</b></em></h4>
+                    </div>
+                    <div class="col-md-1 text-left  mt-3">
+                       <h4 id="totalAvance"></h4>
+                    </div>
+                   </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div id="accordion_info">

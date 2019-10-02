@@ -19,19 +19,19 @@ class MOpcion
         $sql = "SELECT tab.Descripcion as TituloGrupoOpciones FROM tab_grupoopcion tab WHERE  tab.idGrupoOpcion='$idGrupoOpcion'";
         return ejecutarConsultaSimpleFila($sql);
     }
-    public function RegistroOpcion($grupo,$propiedades,$TipoOpcion,$OpcionTitulo){
+    public function RegistroOpcion($grupo,$propiedades,$TipoOpcion,$OpcionTitulo,$OpcionInfo){
         if($grupo=='' || $grupo==0){
             $grupo=null;
         }
-        $sql = "INSERT INTO `tab_opcion`(`idOpcion`,`TituloOpcion`, `Propiedades`, `fechaRegistro`, `Estado_idEstado`, `TipoOpcion_idTipoOpcion`, `GrupoOpcion_idGrupoOpcion`) VALUES (NULL,'$OpcionTitulo','$propiedades',NOW(),1,'$TipoOpcion','$grupo')";
+        $sql = "INSERT INTO `tab_opcion`(`idOpcion`,`TituloOpcion`, `Propiedades`, `fechaRegistro`,`Informacion`, `Estado_idEstado`, `TipoOpcion_idTipoOpcion`, `GrupoOpcion_idGrupoOpcion`) VALUES (NULL,'$OpcionTitulo','$propiedades',NOW(),'$OpcionInfo',1,'$TipoOpcion','$grupo')";
 
         return ejecutarConsulta($sql);
     }
-     public function ActualizarOpcion($idOpcion,$grupo,$propiedades,$TipoOpcion,$OpcionTitulo){
+     public function ActualizarOpcion($idOpcion,$grupo,$propiedades,$TipoOpcion,$OpcionTitulo,$OpcionInfo){
         if($grupo=='' || $grupo==0){
             $grupo=null;
         }
-        $sql = "UPDATE `tab_opcion` SET  `TituloOpcion`='$OpcionTitulo',`Propiedades`='$propiedades',`TipoOpcion_idTipoOpcion`='$TipoOpcion',`GrupoOpcion_idGrupoOpcion`='$grupo' WHERE `idOpcion`='$idOpcion'";
+        $sql = "UPDATE `tab_opcion` SET  `TituloOpcion`='$OpcionTitulo',`Propiedades`='$propiedades',`TipoOpcion_idTipoOpcion`='$TipoOpcion',`Informacion`='$OpcionInfo',`GrupoOpcion_idGrupoOpcion`='$grupo' WHERE `idOpcion`='$idOpcion'";
 
         return ejecutarConsulta($sql);
     }

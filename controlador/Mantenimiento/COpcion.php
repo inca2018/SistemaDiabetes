@@ -14,6 +14,10 @@ $idGrupoOpcion = isset($_POST["idGrupoOpcion"]) ? limpiarCadena($_POST["idGrupoO
 $Propiedades = isset($_POST["Propiedades"]) ? limpiarCadena($_POST["Propiedades"]) : "";
 $TipoOpcion = isset($_POST["TipoOpcion"]) ? limpiarCadena($_POST["TipoOpcion"]) : "";
 $OpcionTitulo =isset($_POST["OpcionTitulo"]) ? limpiarCadena($_POST["OpcionTitulo"]) : "";
+
+$OpcionInfo =isset($_POST["OpcionInfo"]) ? limpiarCadena($_POST["OpcionInfo"]) : "";
+
+
 function BuscarEstado($reg)
 {
     if ($reg->Estado_idEstado == '1' || $reg->Estado_idEstado == 1) {
@@ -61,7 +65,7 @@ switch ($_GET['op']) {
         );
 
         if($idOpcion==null || $idOpcion==""){
-             $RespuestaRegistro = $mantenimiento->RegistroOpcion($idGrupoOpcion,$Propiedades,$TipoOpcion,$OpcionTitulo);
+             $RespuestaRegistro = $mantenimiento->RegistroOpcion($idGrupoOpcion,$Propiedades,$TipoOpcion,$OpcionTitulo,$OpcionInfo);
             if ($RespuestaRegistro) {
                 $rspta["Registro"] = true;
                 $rspta["Mensaje"]  = "Opcion se registro Correctamente.";
@@ -71,7 +75,7 @@ switch ($_GET['op']) {
             }
 
         }else{
-             $RespuestaRegistro = $mantenimiento->ActualizarOpcion($idOpcion,$idGrupoOpcion,$Propiedades,$TipoOpcion,$OpcionTitulo);
+             $RespuestaRegistro = $mantenimiento->ActualizarOpcion($idOpcion,$idGrupoOpcion,$Propiedades,$TipoOpcion,$OpcionTitulo,$OpcionInfo);
             if ($RespuestaRegistro) {
                 $rspta["Registro"] = true;
                 $rspta["Mensaje"]  = "Opcion se Actualizó Correctamente.";

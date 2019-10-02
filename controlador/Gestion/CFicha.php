@@ -27,7 +27,7 @@
                  $rpta2 = $Ficha->RecuperarOpciones($reg->idGrupoOpcion);
                  $Opciones=array();
                  while ($reg2 = $rpta2->fetch_object()){
-                    $Opcion=array("id"=>$reg2->idOpcion,"titulo"=>$reg2->TituloOpcion,"propiedades"=>$reg2->Propiedades,"tipo"=>$reg2->TipoOpcion_idTipoOpcion);
+                    $Opcion=array("id"=>$reg2->idOpcion,"titulo"=>$reg2->TituloOpcion,"propiedades"=>$reg2->Propiedades,"tipo"=>$reg2->TipoOpcion_idTipoOpcion,"Informacion"=>$reg2->Informacion);
                     $Opciones[]=$Opcion;
                     $Grupo["opciones"]=$Opciones;
                 }

@@ -8,6 +8,9 @@ var Evaluado;
 var Satisfaccion;
 var idSeguimiento;
 
+var totalPreguntas = 0;
+var totalAvance = $("#totalAvance");
+
 function init() {
     var idPaciente = $("#idPaciente").val();
     RecuperarInformacionPaciente(idPaciente);
@@ -636,6 +639,11 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
 
     var idOpcion = elemento.id;
     var Titulo = elemento.titulo;
+    var Informacion=elemento.Informacion;
+    if(Informacion=='null' || Informacion==null){
+        Informacion="";
+    }
+
 
     var Propiedades = elemento.propiedades.replace(/&quot;/g, '\"');
     var Propiedades = JSON.parse(Propiedades);
@@ -651,9 +659,10 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
             break;
         case "2":
             opcion = '<div class="col-md-4">' +
-                '<label class="">' + Titulo + ':</label>' +
+                '<label class="">' + Titulo + ':</label><span class="ml-3 badge badge-primary" title="'+Informacion+'"><i class="fa fa-info-circle fa2x"></i></span>' +
                 '<input id="CAM' + idOpcion + '" class="form-control  caja campo opcionCampo" data-tipo="' + Tipo + '" type="text" step="any"  maxlength="100">' +
                 '</div>';
+            totalPreguntas = totalPreguntas + 1;
             break;
         case "3":
             var atributo = Propiedades.Atributo;
@@ -667,7 +676,7 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
             }
             opcion = '<input type="hidden" class="opcionOculto" id="OF' + idOpcion + '"  data-minimo="' + minimo + '" data-maximo="' + maximo + '">' +
 
-                '<div class="col-md-12"><label class="">' + Titulo + place + ':</label></div>' +
+                '<div class="col-md-12"><label class="">' + Titulo + place + ':</label><span class="ml-3 badge badge-primary" title="'+Informacion+'"><i class="fa fa-info-circle fa2x"></i></span></div>' +
                 '<div class="col-md-4">' +
                 '<input id="OP' + idOpcion + '" class="form-control  caja campo FuRango validar" data-message="' + grupo + ' - ' + Titulo + '" data-id="' + idOpcion + '" data-atributo="' + atributo + '" data-tipo="' + Tipo + '" data-minimo="' + minimo + '" data-maximo="' + maximo + '" type="text" step="any"  maxlength="100" placeholder="' + place + '" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
                 '</div>' +
@@ -679,7 +688,7 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
             /*'<button style="display:none;" id="SI' + idOpcion + '" class="btn btn-success  btn-sm"type="button"><i class="fa fa-sm fa-check"></i></button>' +
             '<button style="display:none;" id="NO' + idOpcion + '" class="btn btn-danger  btn-sm"type="button"><i class="fa fa-sm fa-times"></i>' + '</button>' +
             '</div> ';*/
-
+            totalPreguntas = totalPreguntas + 1;
             break;
         case "4":
             var atributo = "";
@@ -705,7 +714,7 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
                 place = '(Rango: ' + minimo + ' ' + atributo + ' - ' + maximo + ' ' + atributo + ')';
             }
             opcion = '<input type="hidden" class="opcionOculto " id="OF' + idOpcion + '"  data-minimo="' + minimo + '" data-maximo="' + maximo + '" data-sexo="">' +
-                '<div class="col-md-12"><label class="">' + Titulo + '(' + atributo + ') - ' + paciente + ':</label></div>' +
+                '<div class="col-md-12"><label class="">' + Titulo + '(' + atributo + ') - ' + paciente + ':</label><span class="ml-3 badge badge-primary" title="'+Informacion+'"><i class="fa fa-info-circle fa2x"></i></span></div>' +
                 '<div class="col-md-4">' +
                 '<input id="OP' + idOpcion + '" class="form-control  caja campo FuRango validar" data-message="' + grupo + ' - ' + Titulo + '" data-id="' + idOpcion + '" data-atributo="' + atributo + '" data-tipo="' + Tipo + '" data-minimo="' + minimo + '" data-maximo="' + maximo + '" type="text" step="any"  maxlength="100" placeholder="' + place + '" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
                 '</div>' +
@@ -717,14 +726,14 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
             /*'<button style="display:none;" id="SI' + idOpcion + '" class="btn btn-success  btn-sm"type="button"><i class="fa fa-sm fa-check"></i></button>' +
             '<button style="display:none;" id="NO' + idOpcion + '" class="btn btn-danger  btn-sm"type="button"><i class="fa fa-sm fa-times"></i>' + '</button>' +
             '</div> ';*/
-
+            totalPreguntas = totalPreguntas + 1;
             break;
         case "5":
 
             opcion = '<input type="hidden" class="opcionOculto " id="OF' + idOpcion + '" >' +
                 '<div class="col-md-4">' +
                 '<div class="form-group">' +
-                ' <label for="" class="col-form-label">' + Titulo + ':</label>' +
+                ' <label for="" class="col-form-label">' + Titulo + ':</label><span class="ml-3 badge badge-primary" title="'+Informacion+'"><i class="fa fa-info-circle fa2x"></i></span>' +
                 '<div class="input-group date dateFecha">' +
                 ' <input class="form-control opcionFecha validar" type="text" id="FE' + idOpcion + '" data-message="' + grupo + ' - ' + Titulo + '" data-tipo="' + Tipo + '" data-id="' + idOpcion + '" autocomplete="off">' +
                 ' <span class="input-group-append input-group-addon">' +
@@ -733,7 +742,7 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
                 '</div>' +
                 '</div>' +
                 '</div>';
-
+            totalPreguntas = totalPreguntas + 1;
             break;
         case "6":
             var v1 = Propiedades.variable1;
@@ -772,7 +781,7 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
                 '<input   class="form-control caja campo  campoV ' + vv4 + ' " data-message="' + grupo + ' - ' + v4 + '" id="V4' + idOpcion + '"type="text" step="any"  maxlength="100" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
                 '</div>' +
                 '<div class="col-md-4"> ' +
-                '<label class="">' + Titulo + ' Rango(' + minimo + '-' + maximo + '):</label>' +
+                '<label class="">' + Titulo + ' Rango(' + minimo + '-' + maximo + '):</label><span class="ml-3 badge badge-primary" title="'+Informacion+'"><i class="fa fa-info-circle fa2x"></i></span>' +
                 '<input id="F' + idOpcion + '" class="form-control caja campo opcionCampo "  type="text" step="any" placeholder="' + quitarSeparador(formula) + '"  maxlength="100"  disabled>' +
                 '</div>' +
 
@@ -784,7 +793,7 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
             /*'<button style="display:none;" id="SI' + idOpcion + '" class="btn btn-success  btn-sm"type="button"><i class="fa fa-sm fa-check"></i></button>' +
             '<button style="display:none;" id="NO' + idOpcion + '" class="btn btn-danger  btn-sm"type="button"><i class="fa fa-sm fa-times"></i>' + '</button>' +
             '</div> ';*/
-
+            totalPreguntas = totalPreguntas + 1;
             break;
 
         case "7":
@@ -792,7 +801,7 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
 
             opcion = '<input type="hidden" class="opcionOculto " id="OF' + idOpcion + '">' +
 
-                '<div class="col-md-12"><label class="col-form-label">' + Titulo + ':</label></div>' +
+                '<div class="col-md-12"><label class="col-form-label">' + Titulo + ':</label><span class="ml-3 badge badge-primary" title="'+Informacion+'"><i class="fa fa-info-circle fa2x"></i></span></div>' +
                 '<div class="form-group  col-md-8"> ' +
                 '<div class="row">' +
                 ' <label for="" class="col-md-2">SI</label>' +
@@ -801,7 +810,7 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
                 ' <input id="radio2" class="form-control opcion2 col-md-2" type="radio" name="radio' + idOpcion + '" value="0" checked> ' +
                 '  </div> ' +
                 ' </div> ';
-
+                totalPreguntas = totalPreguntas + 1;
             break;
 
         case "9":
@@ -809,7 +818,7 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
 
             opcion = '<input type="hidden" class="opcionOculto opcionCondicionCampo" id="OF' + idOpcion + '" data-tipocampo="' + TipoCampos + '">' +
 
-                '<div class="col-md-12"><label class="col-form-label">' + Titulo + ':</label></div>' +
+                '<div class="col-md-12"><label class="col-form-label">' + Titulo + ':</label><span class="ml-3 badge badge-primary" title="'+Informacion+'"><i class="fa fa-info-circle fa2x"></i></span></div>' +
                 '<div class="form-group col-md-4">' +
                 '<div class="col-md-12 col-form-label"> ' +
                 '<div class="row">' +
@@ -824,6 +833,7 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
                 '<div class="col-md-4" style="display:none;" id="area' + idOpcion + '"> <select class="form-control " data-message="' + grupo + ' - ' + Titulo + ' - Listado" id="SELECT' + idOpcion + '" name="" disabled></select></div>' +
                 '<div class=" col-md-4" style="display:none;" id="DO' + idOpcion + '" ><input id="dosis' + idOpcion + '" class="form-control  caja campo opcionCampo" type="text"  maxlength="100" placeholder="DOSIS/DIA" disabled></div>' +
                 '<div class=" col-md-4" style="display:none;" id="TA' + idOpcion + '"><input id="tab' + idOpcion + '"  class="form-control  caja campo opcionCampo" type="text"  maxlength="100" placeholder="NUM. INYECC." disabled></div>';
+            totalPreguntas = totalPreguntas + 1;
             break;
 
         case "10":
@@ -836,10 +846,70 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
             var TipoCampos = Propiedades.TipoCampo;
 
             opcion = '<input type="hidden" class="opcionOculto opcionCondicionCampo" id="OF' + idOpcion + '" data-tipocampo="' + TipoCampos + '">' +
-                '<div class="col-md-12"><label class="col-form-label">' + Titulo + ':</label></div>' +
+                '<div class="col-md-12"><label class="col-form-label">' + Titulo + ':</label><span class="ml-3 badge badge-primary" title="'+Informacion+'"><i class="fa fa-info-circle fa2x"></i></span></div>' +
                 '<div class="col-md-4" style="display:none;" id="area' + idOpcion + '"> <select class="form-control " data-message="' + grupo + ' - ' + Titulo + ' - Listado" id="SELECT' + idOpcion + '" name=""></select></div>' +
                 '<div class=" col-md-4" style="display:none;" id="DO' + idOpcion + '" ><input id="dosis' + idOpcion + '" class="form-control  caja campo opcionCampo" type="text"  maxlength="100" placeholder="DOSIS/DIA" disabled></div>' +
                 '<div class=" col-md-4" style="display:none;" id="TA' + idOpcion + '"><input id="tab' + idOpcion + '"  class="form-control  caja campo opcionCampo" type="text"  maxlength="100" placeholder="NUM. INYECC." disabled></div>';
+              totalPreguntas = totalPreguntas + 1;
+            break;
+         case "16":
+            var atributoCriterioA = "";
+            var minimoCriterioA = "";
+            var maximoCriterioA = "";
+            var atributoCriterioB = "";
+            var minimoCriterioB = "";
+            var maximoCriterioB = "";
+            var CriterioA = "";
+            var CriterioB = "";
+
+            atributoCriterioA = Propiedades.AtributoCriterioA;
+            minimoCriterioA = Propiedades.MinimoCriterioA;
+            maximoCriterioA = Propiedades.MaximoCriterioA;
+            CriterioA = Propiedades.CriterioA;
+
+            atributoCriterioB = Propiedades.AtributoCriterioB;
+            minimoCriterioB = Propiedades.MinimoCriterioB;
+            maximoCriterioB = Propiedades.MaximoCriterioB;
+            CriterioB = Propiedades.CriterioB;
+
+
+            var placeA = '';
+            if (maximo == 9999) {
+                placeA = '(Rango: >' + minimoCriterioA + ' ' + atributoCriterioA + ')';
+            } else {
+                placeA = '(Rango: ' + minimoCriterioA + ' ' + atributoCriterioA + ' - ' + maximoCriterioA + ' ' + atributoCriterioA + ')';
+            }
+
+            var placeB = '';
+            if (maximo == 9999) {
+                placeB = '(Rango: >' + minimoCriterioB + ' ' + atributoCriterioB + ')';
+            } else {
+                placeB = '(Rango: ' + minimoCriterioB + ' ' + atributoCriterioB + ' - ' + maximoCriterioB + ' ' + atributoCriterioB + ')';
+            }
+
+
+            opcion = '<input type="hidden" class="opcionOculto " id="OFA' + idOpcion + '"  data-minimo="' + minimoCriterioA + '" data-maximo="' + maximoCriterioA + '" data-sexo="' + sexo + '">' +
+
+                '<div class="col-md-12"><label class="">' + Titulo + '</label><span class="ml-3 badge badge-primary" title="' + Informacion + '"><i class="fa fa-info-circle fa2x"></i></span></div>' +
+                '<div class="col-md-4">' +
+                '<label>' + CriterioA + ' - Rango(' + minimoCriterioA + '' + atributoCriterioA + ' - ' + maximoCriterioA + ' ' + atributoCriterioA + '):</label>' +
+                '<input id="OPA' + idOpcion + '" class="form-control  caja campo FuRango validar fuTextoCaja  " data-message="' + grupo + ' - ' + Titulo + '" data-id="' + idOpcion + '" data-atributo="' + atributoCriterioA + '" data-tipo="' + Tipo + '" data-minimo="' + minimoCriterioA + '" data-maximo="' + maximoCriterioA + '" type="text" step="any"  maxlength="100" placeholder="' + placeA + '" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
+                '</div>' +
+
+                '<input type="hidden" class="opcionOculto " id="OFB' + idOpcion + '"  data-minimo="' + minimoCriterioB + '" data-maximo="' + maximoCriterioB + '" data-sexo="' + sexo + '">' +
+                '<div class="col-md-12"><label class="">' + CriterioB + ' Rango(' + minimoCriterioB + '' + atributoCriterioB + ' - ' + maximoCriterioB + ' ' + atributoCriterioB + '):</label></div>' +
+                '<div class="col-md-4">' +
+                '<input id="OPB' + idOpcion + '" class="form-control  caja campo FuRango validar fuTextoCaja  " data-message="' + grupo + ' - ' + Titulo + '" data-id="' + idOpcion + '" data-atributo="' + atributoCriterioB + '" data-tipo="' + Tipo + '" data-minimo="' + minimoCriterioB + '" data-maximo="' + maximoCriterioB + '" type="text" step="any"  maxlength="100" placeholder="' + placeB + '" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
+                '</div>' +
+
+                '<div class="col-md-2 ">' +
+                '<img style="display:none;" id="SI' + idOpcion + '" src="../../assets/image/emoticon2.png" alt="Resultado Bueno" height="30" width="30">' +
+                '<img style="display:none;" id="NO' + idOpcion + '" src="../../assets/image/emoticon1.png" alt="Resultado Malo" height="30" width="30">' +
+                '</div> ';
+            /*'<button style="display:none;" id="SI' + idOpcion + '" class="btn btn-success  btn-sm"type="button"><i class="fa fa-sm fa-check"></i></button>' +
+            '<button style="display:none;" id="NO' + idOpcion + '" class="btn btn-danger  btn-sm"type="button"><i class="fa fa-sm fa-times"></i>' + '</button>' +
+            '</div> ';*/
+            totalPreguntas = totalPreguntas + 1;
             break;
     }
     return opcion;
@@ -1066,6 +1136,15 @@ function LanzarFunciones() {
         examinarFormula(buscadoId, v1, v2, v3, v4, formula, min, max);
     });
 
+    $(".fuTextoSelect").change(function () {
+          debugger;
+        VerificarPorcentajeAvance();
+    });
+
+    $('input').change(function(){
+         debugger;
+        VerificarPorcentajeAvance();
+    });
 
 }
 
@@ -1287,6 +1366,22 @@ function RecuperarResultadosEspecialidad(idSeguimiento) {
                         } else if (tipocampo == 7) {
                             $("#SELECT" + element.idOpcion).val(propiedades.valorCampo);
                         }
+                        break;
+                     case '16':
+                        //Revisar ...
+                        var minA = $("#OFA" + element.idOpcion).data("minimo");
+                        var maxA = $("#OFA" + element.idOpcion).data("maximo");
+                        $("#OPA" + element.idOpcion).val(element.RespuestaValor);
+
+                        var propiedades = data = JSON.parse(element.Propiedades);
+                        var resp2 = propiedades.tipocampo;
+
+                        if (element.RespuestaValor >= min && element.RespuestaValor <= max) {
+                            $("#SI" + element.idOpcion).show();
+                        } else {
+                            $("#NO" + element.idOpcion).show();
+                        }
+                        //$("#OP"+element.idOpcion).attr("disabled",true);
                         break;
                 }
 
@@ -1900,6 +1995,69 @@ function AjaxActualizarFicha() {
                     ArregloOpciones.push(Opcion);
                     console.log("ID=" + id + " tipo=" + 11 + " tipoCampo=" + tipoCampo + " estado=" + Estado + " dosis=" + dosis + " num=" + num);
                     break;
+                  case 16:
+                    var minimoCriterioA = $("#OFA" + id).data("minimo");
+                    var maximoCriterioA = $("#OFA" + id).data("maximo");
+                    //var sexo = $("#OF" + id).data("sexo");
+                    var respuestaCriterioA = $("#OPA" + id).val();
+
+                    var minimoCriterioB = $("#OFB" + id).data("minimo");
+                    var maximoCriterioB = $("#OFB" + id).data("maximo");
+                    var sexo = $("#OF" + id).data("sexo");
+                    var respuestaCriterioB = $("#OPB" + id).val();
+
+                    if (respuestaCriterioA == "") {
+                        respuestaCriterioA = 0;
+                    }
+                    if (respuestaCriterioB == "") {
+                        respuestaCriterioB = 0;
+                    }
+                    var EstadoCriterioA = 0;
+                    if (respuestaCriterioA >= minimoCriterioA && respuestaCriterioA <= maximoCriterioA) {
+                        EstadoCriterioA = 1;
+                    } else {
+                        EstadoCriterioA = 0;
+                    }
+                    var EstadoCriterioB = 0;
+                    if (respuestaCriterioB >= minimoCriterioB && respuestaCriterioB <= maximoCriterioB) {
+                        EstadoCriterioB = 1;
+                    } else {
+                        EstadoCriterioB = 0;
+                    }
+
+                    var Opcion = "";
+                    Opcion = Opcion + "" + id; //id
+                    Opcion = Opcion + "#OPCION"; //Gneral
+                    Opcion = Opcion + "#" + 16; //tipoOpcion
+                    Opcion = Opcion + "# "; //campo
+                    Opcion = Opcion + "#" + respuestaCriterioA; //rESPUESTA
+                    Opcion = Opcion + "#" + EstadoCriterioA; //Estado
+                    Opcion = Opcion + "#" + sexo; //Sexo
+                    Opcion = Opcion + "#" + respuestaCriterioB; //v1
+                    Opcion = Opcion + "#" + EstadoCriterioB; //v2
+                    Opcion = Opcion + "# "; //v3
+                    Opcion = Opcion + "# "; //v4
+                    Opcion = Opcion + "# "; //tipocampo
+                    Opcion = Opcion + "# "; //valorcampo
+                    Opcion = Opcion + "# "; //dosis
+                    Opcion = Opcion + "# "; //numero
+                    Opcion = Opcion + "# "; //diagnostico
+                    Opcion = Opcion + "# "; //medico
+                    Opcion = Opcion + "# "; //tratamiento
+                    Opcion = Opcion + "# "; //observacion
+                    Opcion = Opcion + "# "; //r1
+                    Opcion = Opcion + "# "; //r2
+                    Opcion = Opcion + "# "; //r3
+                    Opcion = Opcion + "# "; //r4
+                    Opcion = Opcion + "# "; //r5
+                    Opcion = Opcion + "# "; //r6
+                    Opcion = Opcion + "# "; //r7
+                    Opcion = Opcion + "# "; //r8
+                    Opcion = Opcion + "#" + grupo; //grupo
+                    ArregloOpciones.push(Opcion);
+                    //console.log("ID="+id+" tipo="+4+" respuesta="+respuesta+" estado="+Estado+" Sexo="+sexo);
+
+                    break;
             }
 
         } else if (tipoOpcion == "ESPECIALIDAD") {
@@ -2158,4 +2316,158 @@ function actualizarPie() {
     });
 }
 
+function VerificarPorcentajeAvance() {
+    //totalPreguntas
+    var totalCompleta = 0;
+    $(".OpcionGeneral").each(function () {
+        var tipoOpcion = $(this).data("opcion");
+        var id = $(this).data("id");
+        var tipoTipo = $(this).data("tipo");
+        var grupo = $(this).data("grupo");
+
+        if (tipoOpcion == "OPCION") {
+            switch (tipoTipo) {
+                case 2:
+                    var campo = $("#CAM" + id).val();
+                    if (campo.length > 0) {
+                        totalCompleta++;
+                    }
+                    break;
+                case 3:
+                    var minimo = $("#OF" + id).data("minimo");
+                    var maximo = $("#OF" + id).data("maximo");
+                    var respuesta = $("#OP" + id).val();
+                    if (respuesta == "") {
+                        respuesta = 0;
+                    }
+                    var Estado = 0;
+                    if (respuesta >= minimo && respuesta <= maximo) {
+                        Estado = 1;
+                        totalCompleta++;
+                    } else {
+                        Estado = 0;
+                    }
+
+                    break;
+                case 4:
+                    var minimo = $("#OF" + id).data("minimo");
+                    var maximo = $("#OF" + id).data("maximo");
+                    var sexo = $("#OF" + id).data("sexo");
+                    var respuesta = $("#OP" + id).val();
+                    if (respuesta == "") {
+                        respuesta = 0;
+                    }
+                    var Estado = 0;
+                    if (respuesta >= minimo && respuesta <= maximo) {
+                        Estado = 1;
+                        totalCompleta++;
+                    } else {
+                        Estado = 0;
+                    }
+
+
+                    break;
+                case 5:
+                    var campo = $("#FE" + id).val();
+                    if (campo.length > 0) {
+                        totalCompleta++;
+                    }
+                    break;
+                case 6:
+                    var minimo = $("#OF" + id).data("minimo");
+                    var maximo = $("#OF" + id).data("maximo");
+                    var v1 = $("#V1" + id).val();
+                    var v2 = $("#V2" + id).val();
+                    var v3 = $("#V3" + id).val();
+                    var v4 = $("#V4" + id).val();
+                    var respuesta = $("#F" + id).val();
+                    var Estado = 0;
+                    if (respuesta >= minimo && respuesta <= maximo) {
+                        Estado = 1;
+                        totalCompleta++;
+                    } else {
+                        Estado = 0;
+                    }
+
+                    if (v1 == "") {
+                        v1 = 0;
+                    }
+                    if (v2 == "") {
+                        v2 = 0;
+                    }
+                    if (v3 == "") {
+                        v3 = 0;
+                    }
+                    if (v4 == "") {
+                        v4 = 0;
+                    }
+
+                    break;
+                case 7:
+                    var Estado = $('input[name=radio' + id + ']:checked').val();
+                    if (Estado == 1) {
+                        totalCompleta++;
+                    }
+
+                    break;
+                case 9:
+
+                    var tipoCampo = $("#OF" + id).data("tipocampo");
+                    var Estado = $('input[name=radio' + id + ']:checked').val();
+                    var select = $("#SELECT" + id).val();
+                    var dosis = $("#dosis" + id).val();
+                    var num = $("#tab" + id).val();
+
+                    if (Estado == 1) {
+                        totalCompleta++;
+                    }
+
+                    break;
+                case 11:
+
+                    var tipoCampo = $("#OF" + id).data("tipocampo");
+                    //var Estado=$('input[name=radio'+id+']:checked').val();
+                    var select = $("#SELECT" + id).val();
+                    var dosis = $("#dosis" + id).val();
+                    var num = $("#tab" + id).val();
+
+                    if (select > 0) {
+                        totalCompleta++;
+                    }
+
+                    break;
+                case 16:
+                    var minimoCriterioA = $("#OFA" + id).data("minimo");
+                    var maximoCriterioA = $("#OFA" + id).data("maximo");
+                    //var sexo = $("#OFA" + id).data("sexo");
+                    var respuestaCriterioA = $("#OPA" + id).val();
+
+                    var minimoCriterioB = $("#OFB" + id).data("minimo");
+                    var maximoCriterioB = $("#OFB" + id).data("maximo");
+                    //var sexo = $("#OFA" + id).data("sexo");
+                    var respuestaCriterioB = $("#OPB" + id).val();
+
+                    if (respuestaCriterioA == "") {
+                        respuestaCriterioA = 0;
+                    }
+                    if (respuestaCriterioB == "") {
+                        respuestaCriterioB = 0;
+                    }
+                    var Estado = 0;
+                    if ((respuestaCriterioA >= minimoCriterioA && respuestaCriterioA <= maximoCriterioA) && (respuestaCriterioB >= minimoCriterioB && respuestaCriterioB <= maximoCriterioB)) {
+                        Estado = 1;
+                        totalCompleta++;
+                    } else {
+                        Estado = 0;
+                    }
+
+
+                    break;
+            }
+            var porcentaje=parseFloat((totalCompleta*100)/totalPreguntas).toFixed(2);
+            totalAvance.empty();
+            totalAvance.text(porcentaje+ "%");
+        }
+    });
+}
 init();
