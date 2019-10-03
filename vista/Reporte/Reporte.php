@@ -309,23 +309,23 @@
                               <div class="col-md-2 p-2 text-center bb br bl fondo2">
                                  <b>T.Psicologia</b>
                             </div>
-                            <div class="col-md-2 p-2 text-center bb br fondo1" id="indTaller1">
-                                 0
+                            <div class="col-md-2 p-2 text-center bb br fondo1"  >
+                                <h5 id="indTaller1">0</h5>
                             </div>
-                            <div class="col-md-2 p-2 text-center bb br fondo1" id="indTaller2">
-                                 0
+                            <div class="col-md-2 p-2 text-center bb br fondo1" >
+                                <h5 id="indTaller2" >0</h5>
                             </div>
-                            <div class="col-md-2 p-2 text-center bb br fondo1" id="indTaller3">
-                                 0
+                            <div class="col-md-2 p-2 text-center bb br fondo1" >
+                                 <h5 id="indTaller3" >0</h5>
                             </div>
-                            <div class="col-md-2 p-2 text-center bb br fondo1" id="indTaller4">
-                                0
+                            <div class="col-md-2 p-2 text-center bb br fondo1" >
+                                 <h5 id="indTaller4" >0</h5>
                             </div>
-                             <div class="col-md-2 p-2 text-center bb br fondo1" id="indTaller5">
-                                 0
+                             <div class="col-md-2 p-2 text-center bb br fondo1" >
+                                 <h5 id="indTaller5" >0</h5>
                             </div>
-                            <div class="col-md-2 p-2 text-center bb br fondo1" id="indTaller6">
-                                 0
+                            <div class="col-md-2 p-2 text-center bb br fondo1" >
+                                 <h5 id="indTaller6" >0</h5>
                             </div>
                         </div>
                      </div>

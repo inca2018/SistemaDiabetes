@@ -1,21 +1,21 @@
 var datos;
 var datos2;
-var sumaDisponible=0;
-var sumaNoDisponible=0;
-var sumaDisponible2=0;
-var sumaNoDisponible2=0;
-var cuerpo="";
-var cuerpo2="";
-var cont=0;
+var sumaDisponible = 0;
+var sumaNoDisponible = 0;
+var sumaDisponible2 = 0;
+var sumaNoDisponible2 = 0;
+var cuerpo = "";
+var cuerpo2 = "";
+var cont = 0;
 
 
 var tabladetalle1;
 var tabladetalle2;
 var tablaReporte;
 
-function init(){
+function init() {
 
-	iniciar();
+    iniciar();
     Listar_Sexo();
 }
 
@@ -26,54 +26,59 @@ function Listar_Sexo() {
         $("#IndicadorSexo").append(ts);
     });
 }
-function iniciar(){
+
+function iniciar() {
 
     $('#date_inicio1').datepicker({
-			 format: 'dd/mm/yyyy',
+        format: 'dd/mm/yyyy',
 
     });
-	$('#date_fin1').datepicker({
+    $('#date_fin1').datepicker({
 
-		    format: 'dd/mm/yyyy',
+        format: 'dd/mm/yyyy',
     });
 
-	$('#date_inicio1').datepicker().on('changeDate', function (ev) {
-	    var f_inicio=$("#inicio1").val();
-		 var f_fin=$("#fin1").val();
-	   var day = parseInt(f_inicio.substr(0,2));
-		var month = parseInt(f_inicio.substr(3,2));
-		var year = parseInt(f_inicio.substr(6,8));
-	 $('#date_fin1').datepicker('setStartDate',new Date(year,(month-1),day));
-   });
+    $('#date_inicio1').datepicker().on('changeDate', function (ev) {
+        var f_inicio = $("#inicio1").val();
+        var f_fin = $("#fin1").val();
+        var day = parseInt(f_inicio.substr(0, 2));
+        var month = parseInt(f_inicio.substr(3, 2));
+        var year = parseInt(f_inicio.substr(6, 8));
+        $('#date_fin1').datepicker('setStartDate', new Date(year, (month - 1), day));
+    });
 
-	$('#date_fin1').datepicker().on('changeDate', function (ev) {
-	    var f_inicio=$("#inicio1").val();
-		 var f_fin=$("#fin1").val();
-		var day = parseInt(f_fin.substr(0,2));
-		var month = parseInt(f_fin.substr(3,2));
-		var year = parseInt(f_fin.substr(6,8));
+    $('#date_fin1').datepicker().on('changeDate', function (ev) {
+        var f_inicio = $("#inicio1").val();
+        var f_fin = $("#fin1").val();
+        var day = parseInt(f_fin.substr(0, 2));
+        var month = parseInt(f_fin.substr(3, 2));
+        var year = parseInt(f_fin.substr(6, 8));
 
-	 $('#date_inicio1').datepicker('setEndDate',new Date(year,(month-1),day));
-   });
+        $('#date_inicio1').datepicker('setEndDate', new Date(year, (month - 1), day));
+    });
 
 }
 
-function buscar_reporte(){
+function buscar_reporte() {
 
-   var f_inicio=$("#inicio1").val();
-   var f_fin=$("#fin1").val();
-   var sexo =$("#IndicadorSexo").val();
-	if(f_inicio=='' || f_fin==''){
-		  	notificar_warning("Seleccione Fechas")
-		}else{
-			buscarReporte(f_inicio,f_fin,sexo);
-        }
+    var f_inicio = $("#inicio1").val();
+    var f_fin = $("#fin1").val();
+    var sexo = $("#IndicadorSexo").val();
+    if (f_inicio == '' || f_fin == '') {
+        notificar_warning("Seleccione Fechas")
+    } else {
+        buscarReporte(f_inicio, f_fin, sexo);
+    }
 }
 
-function buscarReporte(Inicio,Fin,Sexo){
-    $.post("../../controlador/Gestion/CReporte.php?op=recuperar_totales",{Inicio:Inicio,Fin:Fin,Sexo:Sexo}, function(data, status){
-      data = JSON.parse(data);
-      console.log(data);
+function buscarReporte(Inicio, Fin, Sexo) {
+    $.post("../../controlador/Gestion/CReporte.php?op=recuperar_totales", {
+        Inicio: Inicio,
+        Fin: Fin,
+        Sexo: Sexo
+    }, function (data, status) {
+        data = JSON.parse(data);
+        console.log(data);
 
         $("#total1").empty();
         $("#total1").append(parseInt(data.TotalPaciente));
@@ -103,20 +108,20 @@ function buscarReporte(Inicio,Fin,Sexo){
         $("#indConIMC").empty();
         $("#indSinIMC").empty();
 
-        $("#indMasculino").append(parseInt(data.TotalPacienteMasculino));
-        $("#indFemenino").append(parseInt(data.TotalPacienteFemenino));
-        $("#indPorConHG").append(parseFloat(data.CantidadHgSI));
-        $("#indPorSinHG").append(parseFloat(data.CantidadHgNO));
-        $("#indConHG").append(parseInt(data.PorcentajeHgCon));
-        $("#indSinHG").append(parseInt(data.PorcentajeHgSin));
-        $("#indConCol").append(parseInt(data.totalColesterolSI));
-        $("#indSinCol").append(parseInt(data.totalColesterolNO));
-        $("#indConHDL").append(parseInt(data.totalHDLSI));
-        $("#indSinHDL").append(parseInt(data.totalHDLNO));
-        $("#indConLDL").append(parseInt(data.totalLDLSI));
-        $("#indSinLDL").append(parseInt(data.totalLDLNO));
-        $("#indConIMC").append(parseInt(data.totalIMCSI));
-        $("#indSinIMC").append(parseInt(data.totalIMCNO));
+        $("#indMasculino").append(parseInt(data.TotalPacienteMasculino)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(1);"><i class="fa fa-share"></i></button> ');
+        $("#indFemenino").append(parseInt(data.TotalPacienteFemenino)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(2);"><i class="fa fa-share"></i></button> ');
+        $("#indPorConHG").append(parseFloat(data.CantidadHgSI)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(3);"><i class="fa fa-share"></i></button> ');
+        $("#indPorSinHG").append(parseFloat(data.CantidadHgNO)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(4);"><i class="fa fa-share"></i></button> ');
+        $("#indConHG").append(parseInt(data.PorcentajeHgCon)+" %");
+        $("#indSinHG").append(parseInt(data.PorcentajeHgSin)+" %");
+        $("#indConCol").append(parseInt(data.totalColesterolSI)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(5);"><i class="fa fa-share"></i></button> ');
+        $("#indSinCol").append(parseInt(data.totalColesterolNO)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(6);"><i class="fa fa-share"></i></button> ');
+        $("#indConHDL").append(parseInt(data.totalHDLSI)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(7);"><i class="fa fa-share"></i></button> ');
+        $("#indSinHDL").append(parseInt(data.totalHDLNO)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(8);"><i class="fa fa-share"></i></button> ');
+        $("#indConLDL").append(parseInt(data.totalLDLSI)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(9);"><i class="fa fa-share"></i></button> ');
+        $("#indSinLDL").append(parseInt(data.totalLDLNO)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(10);"><i class="fa fa-share"></i></button> ');
+        $("#indConIMC").append(parseInt(data.totalIMCSI)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(11);"><i class="fa fa-share"></i></button> ');
+        $("#indSinIMC").append(parseInt(data.totalIMCNO)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(12);"><i class="fa fa-share"></i></button> ');
 
 
         $("#indTaller1").empty();
@@ -126,173 +131,198 @@ function buscarReporte(Inicio,Fin,Sexo){
         $("#indTaller5").empty();
         $("#indTaller6").empty();
 
-        $("#indTaller1").append("SI-> "+data.tallerGLUCSI+" NO ->"+data.tallerGLUCNO);
-        $("#indTaller2").append("SI-> "+data.tallerNUTSI+" NO ->"+data.tallerNUTNO);
-        $("#indTaller3").append("SI-> "+data.tallerDIASI+" NO ->"+data.tallerDIANO);
-        $("#indTaller4").append("SI-> "+data.tallerINSSI+" NO ->"+data.tallerINSNO);
-        $("#indTaller5").append("SI-> "+data.tallerPODSI+" NO ->"+data.tallerPODNO);
-        $("#indTaller6").append("SI-> "+data.tallerPSISI+" NO ->"+data.tallerPSINO);
+        $("#indTaller1").append("SI = " + parseInt(data.tallerGLUCSI) + " NO = " + parseInt(data.tallerGLUCNO)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(13);"><i class="fa fa-share"></i></button> ');
+        $("#indTaller2").append("SI = " + parseInt(data.tallerNUTSI) + " NO = " + parseInt(data.tallerNUTNO)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(14);"><i class="fa fa-share"></i></button> ');
+        $("#indTaller3").append("SI = " + parseInt(data.tallerDIASI) + " NO = " + parseInt(data.tallerDIANO)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(15);"><i class="fa fa-share"></i></button> ');
+        $("#indTaller4").append("SI = " + parseInt(data.tallerINSSI) + " NO = " + parseInt(data.tallerINSNO)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(16);"><i class="fa fa-share"></i></button> ');
+        $("#indTaller5").append("SI = " + parseInt(data.tallerPODSI) + " NO = " + parseInt(data.tallerPODNO)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(17);"><i class="fa fa-share"></i></button> ');
+        $("#indTaller6").append("SI = " + parseInt(data.tallerPSISI) + " NO = " + parseInt(data.tallerPSINO)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(18);"><i class="fa fa-share"></i></button> ');
 
     });
 }
-function verificar(dato){
-    if(isNaN(dato)){
+
+function verificar(dato) {
+    if (isNaN(dato)) {
         return 0;
-    }else{
-        var dato_Redondenado=Math.round(dato * 100) / 100;
+    } else {
+        var dato_Redondenado = Math.round(dato * 100) / 100;
         return dato_Redondenado;
     }
 }
 
-function PacienteReporte(num){
-    var f_inicio=$("#inicio1").val();
-   var f_fin=$("#fin1").val();
+function PacienteReporte(num) {
+    debugger;
+    var f_inicio = $("#inicio1").val();
+    var f_fin = $("#fin1").val();
+    var sexo = $("#IndicadorSexo").val();
 
-	if(f_inicio=='' || f_fin==''){
-		  	notificar_warning("Seleccione Fechas")
-		}else{
-		  BuscarReporte(num,f_inicio,f_fin);
-        }
+    if (f_inicio == '' || f_fin == '') {
+        notificar_warning("Seleccione Fechas")
+    } else {
+        BuscarReporte(num, f_inicio, f_fin,sexo);
+    }
 }
-function BuscarReporte(num,inicio,fin){
+
+function BuscarReporte(num, inicio, fin, sexo) {
 
     $("#ModalReporte").modal("show");
 
-    if(tablaReporte==null){
-         tablaReporte = $('#tablaPacientes').dataTable({
-        "aProcessing": true,
-        "aServerSide": true,
-        "processing": true,
-        "paging": true, // Paginacion en tabla
-        "ordering": true, // Ordenamiento en columna de tabla
-        "info": true, // Informacion de cabecera tabla
-        "responsive": true, // Accion de responsive
-          dom: 'lBfrtip',
-         "bDestroy": true,
-        "columnDefs": [
-            {
-                "className": "text-center",
-                "targets": [1, 2, 3]
+    if (tablaReporte == null) {
+        tablaReporte = $('#tablaPacientes').dataTable({
+            "aProcessing": true,
+            "aServerSide": true,
+            "processing": true,
+            "paging": true, // Paginacion en tabla
+            "ordering": true, // Ordenamiento en columna de tabla
+            "info": true, // Informacion de cabecera tabla
+            "responsive": true, // Accion de responsive
+            dom: 'lBfrtip',
+            "bDestroy": true,
+            "columnDefs": [
+                {
+                    "className": "text-center",
+                    "targets": [1, 2, 3]
             }
             , {
-                "className": "text-left",
-                "targets": [0]
+                    "className": "text-left",
+                    "targets": [0]
             }
          , ],
-        buttons: [
-            {
-                extend: 'copy',
-                className: 'btn-info'
+            buttons: [
+                {
+                    extend: 'copy',
+                    className: 'btn-info'
             }
             , {
-                extend: 'csv',
-                className: 'btn-info'
+                    extend: 'csv',
+                    className: 'btn-info'
             }
             , {
-                extend: 'excel',
-                className: 'btn-info',
-                title: 'Reporte'
+                    extend: 'excel',
+                    className: 'btn-info',
+                    title: 'Reporte'
             }
             , {
-                extend: 'pdf',
-                className: 'btn-info',
-                title: 'Reporte '
+                    extend: 'pdf',
+                    className: 'btn-info',
+                    title: 'Reporte '
             }
             , {
-                extend: 'print',
-                className: 'btn-info'
+                    extend: 'print',
+                    className: 'btn-info'
             }
             ],
-        "ajax": { //Solicitud Ajax Servidor
-            url: '../../controlador/Gestion/CReporte.php?op=ListarReporte2',
-            type: "POST",
-            dataType: "JSON",
-            data:{"num":num,"Inicio":inicio,"Fin":fin},
-            error: function (e) {
-                console.log(e.responseText);
-            }
-        },
+            "ajax": { //Solicitud Ajax Servidor
+                url: '../../controlador/Gestion/CReporte.php?op=ListarReporte2',
+                type: "POST",
+                dataType: "JSON",
+                data: {
+                    "num": num,
+                    "Inicio": inicio,
+                    "Fin": fin,
+                    "Sexo":sexo
+                },
+                error: function (e) {
+                    console.log(e.responseText);
+                }
+            },
 
-        // cambiar el lenguaje de datatable
-        oLanguage: español,
-    }).DataTable();
-    //Aplicar ordenamiento y autonumeracion , index
-    tablaReporte.on('order.dt search.dt', function () {
-        tablaReporte.column(0, {
-            search: 'applied',
-            order: 'applied'
-        }).nodes().each(function (cell, i) {
-            cell.innerHTML = i + 1;
-        });
-    }).draw();
-    }else{
+            // cambiar el lenguaje de datatable
+            oLanguage: español,
+        }).DataTable();
+        //Aplicar ordenamiento y autonumeracion , index
+        tablaReporte.on('order.dt search.dt', function () {
+            tablaReporte.column(0, {
+                search: 'applied',
+                order: 'applied'
+            }).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1;
+            });
+        }).draw();
+    } else {
         tablaReporte.destroy();
-         tablaReporte = $('#tablaPacientes').dataTable({
-        "aProcessing": true,
-        "aServerSide": true,
-        "processing": true,
-        "paging": true, // Paginacion en tabla
-        "ordering": true, // Ordenamiento en columna de tabla
-        "info": true, // Informacion de cabecera tabla
-        "responsive": true, // Accion de responsive
-          dom: 'lBfrtip',
-         "bDestroy": true,
-        "columnDefs": [
-            {
-                "className": "text-center",
-                "targets": [1, 2, 3]
+        tablaReporte = $('#tablaPacientes').dataTable({
+            "aProcessing": true,
+            "aServerSide": true,
+            "processing": true,
+            "paging": true, // Paginacion en tabla
+            "ordering": true, // Ordenamiento en columna de tabla
+            "info": true, // Informacion de cabecera tabla
+            "responsive": true, // Accion de responsive
+            dom: 'lBfrtip',
+            "bDestroy": true,
+            "columnDefs": [
+                {
+                    "className": "text-center",
+                    "targets": [1, 2, 3]
             }
             , {
-                "className": "text-left",
-                "targets": [0]
+                    "className": "text-left",
+                    "targets": [0]
             }
          , ],
-        buttons: [
-            {
-                extend: 'copy',
-                className: 'btn-info'
+            buttons: [
+                {
+                    extend: 'copy',
+                    className: 'btn-info'
             }
             , {
-                extend: 'csv',
-                className: 'btn-info'
+                    extend: 'csv',
+                    className: 'btn-info'
             }
             , {
-                extend: 'excel',
-                className: 'btn-info',
-                title: 'Reporte'
+                    extend: 'excel',
+                    className: 'btn-info',
+                    title: 'Reporte'
             }
             , {
-                extend: 'pdf',
-                className: 'btn-info',
-                title: 'Reporte '
+                    extend: 'pdf',
+                    className: 'btn-info',
+                    title: 'Reporte '
             }
             , {
-                extend: 'print',
-                className: 'btn-info'
+                    extend: 'print',
+                    className: 'btn-info'
             }
             ],
-        "ajax": { //Solicitud Ajax Servidor
-            url: '../../controlador/Gestion/CReporte.php?op=ListarReporte2',
-            type: "POST",
-            dataType: "JSON",
-             data:{"num":num,"Inicio":inicio,"Fin":fin},
-            error: function (e) {
-                console.log(e.responseText);
-            }
-        },
+            "ajax": { //Solicitud Ajax Servidor
+                url: '../../controlador/Gestion/CReporte.php?op=ListarReporte2',
+                type: "POST",
+                dataType: "JSON",
+                data: {
+                    "num": num,
+                    "Inicio": inicio,
+                    "Fin": fin,
+                     "Sexo":sexo
+                },
+                error: function (e) {
+                    console.log(e.responseText);
+                }
+            },
 
-        // cambiar el lenguaje de datatable
-        oLanguage: español,
-    }).DataTable();
-    //Aplicar ordenamiento y autonumeracion , index
-    tablaReporte.on('order.dt search.dt', function () {
-        tablaReporte.column(0, {
-            search: 'applied',
-            order: 'applied'
-        }).nodes().each(function (cell, i) {
-            cell.innerHTML = i + 1;
-        });
-    }).draw();
+            // cambiar el lenguaje de datatable
+            oLanguage: español,
+        }).DataTable();
+        //Aplicar ordenamiento y autonumeracion , index
+        tablaReporte.on('order.dt search.dt', function () {
+            tablaReporte.column(0, {
+                search: 'applied',
+                order: 'applied'
+            }).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1;
+            });
+        }).draw();
     }
 }
+
+function BuscarTaller(taller) {
+    $.post("../../controlador/Gestion/CReporte.php?op=recuperarPacientesTaller", {
+        idOpcionTaller: taller
+    }, function (data, status) {
+        data = JSON.parse(data);
+
+
+    });
+}
+
 init();

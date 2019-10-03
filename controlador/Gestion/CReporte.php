@@ -24,7 +24,7 @@
     $Opcion=isset($_POST["Opcion"])? limpiarCadena($_POST["Opcion"]):"";
     $id=isset($_POST["id"])? limpiarCadena($_POST["id"]):"";
 
- $Sexo=isset($_POST["Sexo"])? limpiarCadena($_POST["Sexo"]):"";
+    $Sexo=isset($_POST["Sexo"])? limpiarCadena($_POST["Sexo"]):"";
 
 
  $num=isset($_POST["num"])? limpiarCadena($_POST["num"]):"";
@@ -125,7 +125,7 @@ switch ($_GET["op"]){
 
         break;
 
-       case 'ListarReporte':
+       case 'ListarReporte2':
         $rspta=null;
 
         switch ($num){
@@ -154,29 +154,202 @@ switch ($_GET["op"]){
                 }
             break;
                  case 3:
-                $rspta = $control->ReporteGlicemico($Inicio,$Fin,1);
+                $rspta = $control->ReporteGlicemico($Inicio,$Fin,1,$Sexo);
                 $data  = array();
                 while ($reg = $rspta->fetch_object()) {
                     $data[] = array(
                         "0" => '',
                         "1" => $reg->Paciente,
                         "2" => $reg->edad,
-                        "3" => $reg->Atributo
+                        "3" => $reg->Sexo
                     );
                 }
             break;
                  case 4:
-                $rspta = $control->ReporteGlicemico($Inicio,$Fin,2);
+                $rspta = $control->ReporteGlicemico($Inicio,$Fin,0,$Sexo);
                 $data  = array();
                 while ($reg = $rspta->fetch_object()) {
                     $data[] = array(
                         "0" => '',
                         "1" => $reg->Paciente,
                         "2" => $reg->edad,
-                        "3" => $reg->Atributo
+                        "3" => $reg->Sexo
                     );
                 }
             break;
+                case 5:
+                $rspta = $control->ReporteColesterol($Inicio,$Fin,1,$Sexo);
+                $data  = array();
+                while ($reg = $rspta->fetch_object()) {
+                    $data[] = array(
+                        "0" => '',
+                        "1" => $reg->Paciente,
+                        "2" => $reg->edad,
+                        "3" => $reg->Sexo
+                    );
+                }
+            break;
+                 case 6:
+                $rspta = $control->ReporteColesterol($Inicio,$Fin,0,$Sexo);
+                $data  = array();
+                while ($reg = $rspta->fetch_object()) {
+                    $data[] = array(
+                        "0" => '',
+                        "1" => $reg->Paciente,
+                        "2" => $reg->edad,
+                        "3" => $reg->Sexo
+                    );
+                }
+            break;
+                case 7:
+                $rspta = $control->ReporteHDL($Inicio,$Fin,1,$Sexo);
+                $data  = array();
+                while ($reg = $rspta->fetch_object()) {
+                    $data[] = array(
+                        "0" => '',
+                        "1" => $reg->Paciente,
+                        "2" => $reg->edad,
+                        "3" => $reg->Sexo
+                    );
+                }
+            break;
+                 case 8:
+                $rspta = $control->ReporteHDL($Inicio,$Fin,0,$Sexo);
+                $data  = array();
+                while ($reg = $rspta->fetch_object()) {
+                    $data[] = array(
+                        "0" => '',
+                        "1" => $reg->Paciente,
+                        "2" => $reg->edad,
+                        "3" => $reg->Sexo
+                    );
+                }
+            break;
+
+                case 9:
+                $rspta = $control->ReporteLDL($Inicio,$Fin,1,$Sexo);
+                $data  = array();
+                while ($reg = $rspta->fetch_object()) {
+                    $data[] = array(
+                        "0" => '',
+                        "1" => $reg->Paciente,
+                        "2" => $reg->edad,
+                        "3" => $reg->Sexo
+                    );
+                }
+            break;
+            case 10:
+                $rspta = $control->ReporteLDL($Inicio,$Fin,0,$Sexo);
+                $data  = array();
+                while ($reg = $rspta->fetch_object()) {
+                    $data[] = array(
+                        "0" => '',
+                        "1" => $reg->Paciente,
+                        "2" => $reg->edad,
+                        "3" => $reg->Sexo
+                    );
+                }
+            break;
+
+                 case 11:
+                $rspta = $control->ReportIMC($Inicio,$Fin,1,$Sexo);
+                $data  = array();
+                while ($reg = $rspta->fetch_object()) {
+                    $data[] = array(
+                        "0" => '',
+                        "1" => $reg->Paciente,
+                        "2" => $reg->edad,
+                        "3" => $reg->Sexo
+                    );
+                }
+            break;
+                   case 12:
+                $rspta = $control->ReportIMC($Inicio,$Fin,0,$Sexo);
+                $data  = array();
+                while ($reg = $rspta->fetch_object()) {
+                    $data[] = array(
+                        "0" => '',
+                        "1" => $reg->Paciente,
+                        "2" => $reg->edad,
+                        "3" => $reg->Sexo
+                    );
+                }
+            break;
+
+                 case 13:
+                $rspta = $control->ReporteTalleres($Inicio,$Fin,1,$Sexo);
+                $data  = array();
+                while ($reg = $rspta->fetch_object()) {
+                    $data[] = array(
+                        "0" => '',
+                        "1" => $reg->Paciente,
+                        "2" => $reg->edad,
+                        "3" => $reg->Sexo
+                    );
+                }
+            break;
+                case 14:
+                $rspta = $control->ReporteTalleres($Inicio,$Fin,2,$Sexo);
+                $data  = array();
+                while ($reg = $rspta->fetch_object()) {
+                    $data[] = array(
+                        "0" => '',
+                        "1" => $reg->Paciente,
+                        "2" => $reg->edad,
+                        "3" => $reg->Sexo
+                    );
+                }
+            break;
+                 case 15:
+                $rspta = $control->ReporteTalleres($Inicio,$Fin,3,$Sexo);
+                $data  = array();
+                while ($reg = $rspta->fetch_object()) {
+                    $data[] = array(
+                        "0" => '',
+                        "1" => $reg->Paciente,
+                        "2" => $reg->edad,
+                        "3" => $reg->Sexo
+                    );
+                }
+            break;
+                 case 16:
+                $rspta = $control->ReporteTalleres($Inicio,$Fin,4,$Sexo);
+                $data  = array();
+                while ($reg = $rspta->fetch_object()) {
+                    $data[] = array(
+                        "0" => '',
+                        "1" => $reg->Paciente,
+                        "2" => $reg->edad,
+                        "3" => $reg->Sexo
+                    );
+                }
+            break;
+                 case 17:
+                $rspta = $control->ReporteTalleres($Inicio,$Fin,5,$Sexo);
+                $data  = array();
+                while ($reg = $rspta->fetch_object()) {
+                    $data[] = array(
+                        "0" => '',
+                        "1" => $reg->Paciente,
+                        "2" => $reg->edad,
+                        "3" => $reg->Sexo
+                    );
+                }
+            break;
+                 case 18:
+                $rspta = $control->ReporteTalleres($Inicio,$Fin,6,$Sexo);
+                $data  = array();
+                while ($reg = $rspta->fetch_object()) {
+                    $data[] = array(
+                        "0" => '',
+                        "1" => $reg->Paciente,
+                        "2" => $reg->edad,
+                        "3" => $reg->Sexo
+                    );
+                }
+            break;
+
+
         }
 
         $results = array(

@@ -39,7 +39,7 @@ class MReporte {
         return ejecutarConsulta($sql);
     }
     public function ReporteMasculino(){
-        $sql="SELECT CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno) as Paciente ,pac.edad,'MACULINO' as Sexo   FROM tab_paciente pac WHERE pac.Sexo_idSexo=1";
+        $sql="SELECT CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno) as Paciente ,pac.edad,'MASCULINO' as Sexo   FROM tab_paciente pac WHERE pac.Sexo_idSexo=1";
          return ejecutarConsulta($sql);
     }
     public function ReporteFemenino(){
@@ -47,12 +47,68 @@ class MReporte {
          return ejecutarConsulta($sql);
     }
 
-    public function ReporteGlicemico($inicio,$fin,$op){
+    public function ReporteGlicemico($inicio,$fin,$op,$Sexo){
         $sql="";
+        // SI TIENES
         if($op==1){
-
+              $sql="SELECT DISTINCT(pac.idPaciente),
+                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - Resultado: ',fi.RespuestaValor,' %') as Paciente ,pac.edad,
+                    IF(pac.Sexo_idSexo=1,'MASCULINO','FEMENINO') as Sexo
+                    FROM tab_paciente pac
+                    INNER JOIN tab_seguimiento seg
+                    on seg.Paciente_idPaciente=pac.idPaciente
+                    INNER JOIN tab_resultado_ficha fi
+                    ON fi.Seguimiento_idSeguimiento=seg.idSeguimiento
+                    INNER JOIN tab_year y
+                    on y.idYear=seg.Year
+                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."')) and fi.RespuestaAdecuado=1 and fi.Opcion_Opcion=8 AND pac.Sexo_idSexo=".$Sexo.";" ;
         }else{
+             // NO TIENES
+                $sql="SELECT DISTINCT(pac.idPaciente),
+                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - Resultado: ',fi.RespuestaValor,' %') as Paciente ,pac.edad,
+                    IF(pac.Sexo_idSexo=1,'MASCULINO','FEMENINO') as Sexo
+                    FROM tab_paciente pac
+                    INNER JOIN tab_seguimiento seg
+                    on seg.Paciente_idPaciente=pac.idPaciente
+                    INNER JOIN tab_resultado_ficha fi
+                    ON fi.Seguimiento_idSeguimiento=seg.idSeguimiento
+                    INNER JOIN tab_year y
+                    on y.idYear=seg.Year
+                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."')) and fi.RespuestaAdecuado=0 and fi.Opcion_Opcion=8 AND pac.Sexo_idSexo=".$Sexo.";";
+        }
 
+         return ejecutarConsulta($sql);
+
+    }
+
+      public function ReporteColesterol($inicio,$fin,$op,$Sexo){
+        $sql="";
+        // SI TIENES
+        if($op==1){
+              $sql="SELECT DISTINCT(pac.idPaciente),
+                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - Colesterol Total: ',fi.RespuestaValor) as Paciente ,pac.edad,
+                    IF(pac.Sexo_idSexo=1,'MASCULINO','FEMENINO') as Sexo
+                    FROM tab_paciente pac
+                    INNER JOIN tab_seguimiento seg
+                    on seg.Paciente_idPaciente=pac.idPaciente
+                    INNER JOIN tab_resultado_ficha fi
+                    ON fi.Seguimiento_idSeguimiento=seg.idSeguimiento
+                    INNER JOIN tab_year y
+                    on y.idYear=seg.Year
+                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."')) and fi.RespuestaAdecuado=1 and fi.Opcion_Opcion=9 AND pac.Sexo_idSexo=".$Sexo.";" ;
+        }else{
+             // NO TIENES
+                $sql="SELECT DISTINCT(pac.idPaciente),
+                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - Colesterol Total: ',fi.RespuestaValor) as Paciente ,pac.edad,
+                    IF(pac.Sexo_idSexo=1,'MASCULINO','FEMENINO') as Sexo
+                    FROM tab_paciente pac
+                    INNER JOIN tab_seguimiento seg
+                    on seg.Paciente_idPaciente=pac.idPaciente
+                    INNER JOIN tab_resultado_ficha fi
+                    ON fi.Seguimiento_idSeguimiento=seg.idSeguimiento
+                    INNER JOIN tab_year y
+                    on y.idYear=seg.Year
+                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."')) and fi.RespuestaAdecuado=0 and fi.Opcion_Opcion=9 AND pac.Sexo_idSexo=".$Sexo.";";
         }
 
          return ejecutarConsulta($sql);
@@ -60,9 +116,194 @@ class MReporte {
     }
 
 
+   public function ReporteHDL($inicio,$fin,$op,$Sexo){
+        $sql="";
+        // SI TIENES
+        if($op==1){
+              $sql="SELECT DISTINCT(pac.idPaciente),
+                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - HDL Total: ',fi.RespuestaValor) as Paciente ,pac.edad,
+                    IF(pac.Sexo_idSexo=1,'MASCULINO','FEMENINO') as Sexo
+                    FROM tab_paciente pac
+                    INNER JOIN tab_seguimiento seg
+                    on seg.Paciente_idPaciente=pac.idPaciente
+                    INNER JOIN tab_resultado_ficha fi
+                    ON fi.Seguimiento_idSeguimiento=seg.idSeguimiento
+                    INNER JOIN tab_year y
+                    on y.idYear=seg.Year
+                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."')) and fi.RespuestaAdecuado=1 and fi.Opcion_Opcion=10 AND pac.Sexo_idSexo=".$Sexo.";" ;
+        }else{
+             // NO TIENES
+                $sql="SELECT DISTINCT(pac.idPaciente),
+                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - HDL Total: ',fi.RespuestaValor) as Paciente ,pac.edad,
+                    IF(pac.Sexo_idSexo=1,'MASCULINO','FEMENINO') as Sexo
+                    FROM tab_paciente pac
+                    INNER JOIN tab_seguimiento seg
+                    on seg.Paciente_idPaciente=pac.idPaciente
+                    INNER JOIN tab_resultado_ficha fi
+                    ON fi.Seguimiento_idSeguimiento=seg.idSeguimiento
+                    INNER JOIN tab_year y
+                    on y.idYear=seg.Year
+                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."')) and fi.RespuestaAdecuado=0 and fi.Opcion_Opcion=10 AND pac.Sexo_idSexo=".$Sexo.";";
+        }
+
+         return ejecutarConsulta($sql);
+
+    }
+
+     public function ReporteLDL($inicio,$fin,$op,$Sexo){
+        $sql="";
+        // SI TIENES
+        if($op==1){
+              $sql="SELECT DISTINCT(pac.idPaciente),
+                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - LDL Total: ',fi.RespuestaValor) as Paciente ,pac.edad,
+                    IF(pac.Sexo_idSexo=1,'MASCULINO','FEMENINO') as Sexo
+                    FROM tab_paciente pac
+                    INNER JOIN tab_seguimiento seg
+                    on seg.Paciente_idPaciente=pac.idPaciente
+                    INNER JOIN tab_resultado_ficha fi
+                    ON fi.Seguimiento_idSeguimiento=seg.idSeguimiento
+                    INNER JOIN tab_year y
+                    on y.idYear=seg.Year
+                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."')) and fi.RespuestaAdecuado=1 and fi.Opcion_Opcion=11 AND pac.Sexo_idSexo=".$Sexo.";" ;
+        }else{
+             // NO TIENES
+                $sql="SELECT DISTINCT(pac.idPaciente),
+                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - LDL Total: ',fi.RespuestaValor) as Paciente ,pac.edad,
+                    IF(pac.Sexo_idSexo=1,'MASCULINO','FEMENINO') as Sexo
+                    FROM tab_paciente pac
+                    INNER JOIN tab_seguimiento seg
+                    on seg.Paciente_idPaciente=pac.idPaciente
+                    INNER JOIN tab_resultado_ficha fi
+                    ON fi.Seguimiento_idSeguimiento=seg.idSeguimiento
+                    INNER JOIN tab_year y
+                    on y.idYear=seg.Year
+                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."')) and fi.RespuestaAdecuado=0 and fi.Opcion_Opcion=11 AND pac.Sexo_idSexo=".$Sexo.";";
+        }
+
+         return ejecutarConsulta($sql);
+
+    }
+
+     public function ReporteIMC($inicio,$fin,$op,$Sexo){
+        $sql="";
+        // SI TIENES
+        if($op==1){
+              $sql="SELECT DISTINCT(pac.idPaciente),
+                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - IMC Total: ',fi.RespuestaValor) as Paciente ,pac.edad,
+                    IF(pac.Sexo_idSexo=1,'MASCULINO','FEMENINO') as Sexo
+                    FROM tab_paciente pac
+                    INNER JOIN tab_seguimiento seg
+                    on seg.Paciente_idPaciente=pac.idPaciente
+                    INNER JOIN tab_resultado_ficha fi
+                    ON fi.Seguimiento_idSeguimiento=seg.idSeguimiento
+                    INNER JOIN tab_year y
+                    on y.idYear=seg.Year
+                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."')) and fi.RespuestaAdecuado=1 and fi.Opcion_Opcion=13 AND pac.Sexo_idSexo=".$Sexo.";" ;
+        }else{
+             // NO TIENES
+                $sql="SELECT DISTINCT(pac.idPaciente),
+                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - IMC Total: ',fi.RespuestaValor) as Paciente ,pac.edad,
+                    IF(pac.Sexo_idSexo=1,'MASCULINO','FEMENINO') as Sexo
+                    FROM tab_paciente pac
+                    INNER JOIN tab_seguimiento seg
+                    on seg.Paciente_idPaciente=pac.idPaciente
+                    INNER JOIN tab_resultado_ficha fi
+                    ON fi.Seguimiento_idSeguimiento=seg.idSeguimiento
+                    INNER JOIN tab_year y
+                    on y.idYear=seg.Year
+                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."')) and fi.RespuestaAdecuado=0 and fi.Opcion_Opcion=13 AND pac.Sexo_idSexo=".$Sexo.";";
+        }
+
+         return ejecutarConsulta($sql);
+
+    }
 
 
+     public function ReporteTalleres($inicio,$fin,$op,$Sexo){
+        $sql="";
+        // SI TIENES
+        if($op==1){
+              $sql="SELECT DISTINCT(pac.idPaciente),
+                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - T.Glucometria: ',fi.RespuestaValor) as Paciente ,pac.edad,
+                    IF(pac.Sexo_idSexo=1,'MASCULINO','FEMENINO') as Sexo
+                    FROM tab_paciente pac
+                    INNER JOIN tab_seguimiento seg
+                    on seg.Paciente_idPaciente=pac.idPaciente
+                    INNER JOIN tab_resultado_ficha fi
+                    ON fi.Seguimiento_idSeguimiento=seg.idSeguimiento
+                    INNER JOIN tab_year y
+                    on y.idYear=seg.Year
+                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."')) and fi.RespuestaAdecuado=1 and fi.Opcion_Opcion=90 AND pac.Sexo_idSexo=".$Sexo.";" ;
+        }elseif($op==2){
+             // NO TIENES
+                $sql="SELECT DISTINCT(pac.idPaciente),
+                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - T.Nutrición: ',fi.RespuestaValor) as Paciente ,pac.edad,
+                    IF(pac.Sexo_idSexo=1,'MASCULINO','FEMENINO') as Sexo
+                    FROM tab_paciente pac
+                    INNER JOIN tab_seguimiento seg
+                    on seg.Paciente_idPaciente=pac.idPaciente
+                    INNER JOIN tab_resultado_ficha fi
+                    ON fi.Seguimiento_idSeguimiento=seg.idSeguimiento
+                    INNER JOIN tab_year y
+                    on y.idYear=seg.Year
+                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."')) and fi.RespuestaAdecuado=0 and fi.Opcion_Opcion=91 AND pac.Sexo_idSexo=".$Sexo.";";
+        }elseif($op==3){
+             // NO TIENES
+                $sql="SELECT DISTINCT(pac.idPaciente),
+                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - T.Conocimiento de Diabetes: ',fi.RespuestaValor) as Paciente ,pac.edad,
+                    IF(pac.Sexo_idSexo=1,'MASCULINO','FEMENINO') as Sexo
+                    FROM tab_paciente pac
+                    INNER JOIN tab_seguimiento seg
+                    on seg.Paciente_idPaciente=pac.idPaciente
+                    INNER JOIN tab_resultado_ficha fi
+                    ON fi.Seguimiento_idSeguimiento=seg.idSeguimiento
+                    INNER JOIN tab_year y
+                    on y.idYear=seg.Year
+                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."')) and fi.RespuestaAdecuado=0 and fi.Opcion_Opcion=92 AND pac.Sexo_idSexo=".$Sexo.";";
+        } elseif($op==4){
+             // NO TIENES
+                $sql="SELECT DISTINCT(pac.idPaciente),
+                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - T.Insulinisación: ',fi.RespuestaValor) as Paciente ,pac.edad,
+                    IF(pac.Sexo_idSexo=1,'MASCULINO','FEMENINO') as Sexo
+                    FROM tab_paciente pac
+                    INNER JOIN tab_seguimiento seg
+                    on seg.Paciente_idPaciente=pac.idPaciente
+                    INNER JOIN tab_resultado_ficha fi
+                    ON fi.Seguimiento_idSeguimiento=seg.idSeguimiento
+                    INNER JOIN tab_year y
+                    on y.idYear=seg.Year
+                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."')) and fi.RespuestaAdecuado=0 and fi.Opcion_Opcion=93 AND pac.Sexo_idSexo=".$Sexo.";";
+        }elseif($op==5){
+             // NO TIENES
+                $sql="SELECT DISTINCT(pac.idPaciente),
+                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - T.Podologia: ',fi.RespuestaValor) as Paciente ,pac.edad,
+                    IF(pac.Sexo_idSexo=1,'MASCULINO','FEMENINO') as Sexo
+                    FROM tab_paciente pac
+                    INNER JOIN tab_seguimiento seg
+                    on seg.Paciente_idPaciente=pac.idPaciente
+                    INNER JOIN tab_resultado_ficha fi
+                    ON fi.Seguimiento_idSeguimiento=seg.idSeguimiento
+                    INNER JOIN tab_year y
+                    on y.idYear=seg.Year
+                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."')) and fi.RespuestaAdecuado=0 and fi.Opcion_Opcion=94 AND pac.Sexo_idSexo=".$Sexo.";";
+        } elseif($op==6){
+             // NO TIENES
+                $sql="SELECT DISTINCT(pac.idPaciente),
+                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - T.Psicologia: ',fi.RespuestaValor) as Paciente ,pac.edad,
+                    IF(pac.Sexo_idSexo=1,'MASCULINO','FEMENINO') as Sexo
+                    FROM tab_paciente pac
+                    INNER JOIN tab_seguimiento seg
+                    on seg.Paciente_idPaciente=pac.idPaciente
+                    INNER JOIN tab_resultado_ficha fi
+                    ON fi.Seguimiento_idSeguimiento=seg.idSeguimiento
+                    INNER JOIN tab_year y
+                    on y.idYear=seg.Year
+                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."')) and fi.RespuestaAdecuado=0 and fi.Opcion_Opcion=95 AND pac.Sexo_idSexo=".$Sexo.";";
+        }
 
+         return ejecutarConsulta($sql);
+
+    }
 
  }
 
