@@ -110,18 +110,42 @@ function buscarReporte(Inicio, Fin, Sexo) {
 
         $("#indMasculino").append(parseInt(data.TotalPacienteMasculino)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(1);"><i class="fa fa-share"></i></button> ');
         $("#indFemenino").append(parseInt(data.TotalPacienteFemenino)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(2);"><i class="fa fa-share"></i></button> ');
+
+
+
         $("#indPorConHG").append(parseFloat(data.CantidadHgSI)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(3);"><i class="fa fa-share"></i></button> ');
         $("#indPorSinHG").append(parseFloat(data.CantidadHgNO)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(4);"><i class="fa fa-share"></i></button> ');
+
         $("#indConHG").append(parseInt(data.PorcentajeHgCon)+" %");
         $("#indSinHG").append(parseInt(data.PorcentajeHgSin)+" %");
-        $("#indConCol").append(parseInt(data.totalColesterolSI)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(5);"><i class="fa fa-share"></i></button> ');
-        $("#indSinCol").append(parseInt(data.totalColesterolNO)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(6);"><i class="fa fa-share"></i></button> ');
-        $("#indConHDL").append(parseInt(data.totalHDLSI)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(7);"><i class="fa fa-share"></i></button> ');
-        $("#indSinHDL").append(parseInt(data.totalHDLNO)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(8);"><i class="fa fa-share"></i></button> ');
-        $("#indConLDL").append(parseInt(data.totalLDLSI)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(9);"><i class="fa fa-share"></i></button> ');
-        $("#indSinLDL").append(parseInt(data.totalLDLNO)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(10);"><i class="fa fa-share"></i></button> ');
-        $("#indConIMC").append(parseInt(data.totalIMCSI)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(11);"><i class="fa fa-share"></i></button> ');
-        $("#indSinIMC").append(parseInt(data.totalIMCNO)+'<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(12);"><i class="fa fa-share"></i></button> ');
+
+        var TotalCol=parseInt(data.totalColesterolSI)+parseInt(data.totalColesterolNO);
+        var porceA=(parseInt(data.totalColesterolSI)*100)/TotalCol;
+        var porceB=(parseInt(data.totalColesterolNO)*100)/TotalCol;
+
+        $("#indConCol").append(parseInt(data.totalColesterolSI)+' - '+porceA+' %<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(5);"><i class="fa fa-share"></i></button> ');
+        $("#indSinCol").append(parseInt(data.totalColesterolNO)+' - '+porceB+' %<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(6);"><i class="fa fa-share"></i></button> ');
+
+        var TotalCol2=parseInt(data.totalHDLSI)+parseInt(data.totalHDLNO);
+        var porceA2=(parseInt(data.totalHDLSI)*100)/TotalCol2;
+        var porceB2=(parseInt(data.totalHDLNO)*100)/TotalCol2;
+
+        $("#indConHDL").append(parseInt(data.totalHDLSI)+' - '+porceA2+' %<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(7);"><i class="fa fa-share"></i></button> ');
+        $("#indSinHDL").append(parseInt(data.totalHDLNO)+' - '+porceB2+' %<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(8);"><i class="fa fa-share"></i></button> ');
+
+        var TotalCol3=parseInt(data.totalLDLSI)+parseInt(data.totalLDLNO);
+        var porceA3=(parseInt(data.totalLDLSI)*100)/TotalCol3;
+        var porceB3=(parseInt(data.totalLDLNO)*100)/TotalCol3;
+
+        $("#indConLDL").append(parseInt(data.totalLDLSI)+' - '+porceA3+' %<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(9);"><i class="fa fa-share"></i></button> ');
+        $("#indSinLDL").append(parseInt(data.totalLDLNO)+' - '+porceB3+' %<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(10);"><i class="fa fa-share"></i></button> ');
+
+         var TotalCol4=parseInt(data.totalIMCSI)+parseInt(data.totalIMCNO);
+        var porceA4=(parseInt(data.totalIMCSI)*100)/TotalCol4;
+        var porceB4=(parseInt(data.totalIMCNO)*100)/TotalCol4;
+
+        $("#indConIMC").append(parseInt(data.totalIMCSI)+' - '+porceA4+' %<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(11);"><i class="fa fa-share"></i></button> ');
+        $("#indSinIMC").append(parseInt(data.totalIMCNO)+' - '+porceB4+' %<button class="btn btn-warning  btn-sm ml-3"  onclick="PacienteReporte(12);"><i class="fa fa-share"></i></button> ');
 
 
         $("#indTaller1").empty();

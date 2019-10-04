@@ -224,7 +224,7 @@ class MReporte {
         // SI TIENES
         if($op==1){
               $sql="SELECT DISTINCT(pac.idPaciente),
-                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - T.Glucometria: ',fi.RespuestaValor) as Paciente ,pac.edad,
+                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - T.Glucometria: ',IF(fi.RespuestaAdecuado=0,'NO','SI')) as Paciente ,pac.edad,
                     IF(pac.Sexo_idSexo=1,'MASCULINO','FEMENINO') as Sexo
                     FROM tab_paciente pac
                     INNER JOIN tab_seguimiento seg
@@ -233,11 +233,11 @@ class MReporte {
                     ON fi.Seguimiento_idSeguimiento=seg.idSeguimiento
                     INNER JOIN tab_year y
                     on y.idYear=seg.Year
-                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."')) and fi.RespuestaAdecuado=1 and fi.Opcion_Opcion=90 AND pac.Sexo_idSexo=".$Sexo.";" ;
+                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."')) and fi.Opcion_Opcion=90 AND pac.Sexo_idSexo=".$Sexo.";" ;
         }elseif($op==2){
              // NO TIENES
                 $sql="SELECT DISTINCT(pac.idPaciente),
-                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - T.Nutrición: ',fi.RespuestaValor) as Paciente ,pac.edad,
+                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - T.Nutrición: ',IF(fi.RespuestaAdecuado=0,'NO','SI')) as Paciente ,pac.edad,
                     IF(pac.Sexo_idSexo=1,'MASCULINO','FEMENINO') as Sexo
                     FROM tab_paciente pac
                     INNER JOIN tab_seguimiento seg
@@ -246,11 +246,11 @@ class MReporte {
                     ON fi.Seguimiento_idSeguimiento=seg.idSeguimiento
                     INNER JOIN tab_year y
                     on y.idYear=seg.Year
-                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."')) and fi.RespuestaAdecuado=0 and fi.Opcion_Opcion=91 AND pac.Sexo_idSexo=".$Sexo.";";
+                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."'))  and fi.Opcion_Opcion=91 AND pac.Sexo_idSexo=".$Sexo.";";
         }elseif($op==3){
              // NO TIENES
                 $sql="SELECT DISTINCT(pac.idPaciente),
-                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - T.Conocimiento de Diabetes: ',fi.RespuestaValor) as Paciente ,pac.edad,
+                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - T.Conocimiento de Diabetes: ',IF(fi.RespuestaAdecuado=0,'NO','SI')) as Paciente ,pac.edad,
                     IF(pac.Sexo_idSexo=1,'MASCULINO','FEMENINO') as Sexo
                     FROM tab_paciente pac
                     INNER JOIN tab_seguimiento seg
@@ -259,11 +259,11 @@ class MReporte {
                     ON fi.Seguimiento_idSeguimiento=seg.idSeguimiento
                     INNER JOIN tab_year y
                     on y.idYear=seg.Year
-                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."')) and fi.RespuestaAdecuado=0 and fi.Opcion_Opcion=92 AND pac.Sexo_idSexo=".$Sexo.";";
+                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."')) and fi.Opcion_Opcion=92 AND pac.Sexo_idSexo=".$Sexo.";";
         } elseif($op==4){
              // NO TIENES
                 $sql="SELECT DISTINCT(pac.idPaciente),
-                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - T.Insulinisación: ',fi.RespuestaValor) as Paciente ,pac.edad,
+                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - T.Insulinisación: ',IF(fi.RespuestaAdecuado=0,'NO','SI')) as Paciente ,pac.edad,
                     IF(pac.Sexo_idSexo=1,'MASCULINO','FEMENINO') as Sexo
                     FROM tab_paciente pac
                     INNER JOIN tab_seguimiento seg
@@ -272,11 +272,11 @@ class MReporte {
                     ON fi.Seguimiento_idSeguimiento=seg.idSeguimiento
                     INNER JOIN tab_year y
                     on y.idYear=seg.Year
-                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."')) and fi.RespuestaAdecuado=0 and fi.Opcion_Opcion=93 AND pac.Sexo_idSexo=".$Sexo.";";
+                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."'))  and fi.Opcion_Opcion=93 AND pac.Sexo_idSexo=".$Sexo.";";
         }elseif($op==5){
              // NO TIENES
                 $sql="SELECT DISTINCT(pac.idPaciente),
-                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - T.Podologia: ',fi.RespuestaValor) as Paciente ,pac.edad,
+                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - T.Podologia: ',IF(fi.RespuestaAdecuado=0,'NO','SI')) as Paciente ,pac.edad,
                     IF(pac.Sexo_idSexo=1,'MASCULINO','FEMENINO') as Sexo
                     FROM tab_paciente pac
                     INNER JOIN tab_seguimiento seg
@@ -285,11 +285,11 @@ class MReporte {
                     ON fi.Seguimiento_idSeguimiento=seg.idSeguimiento
                     INNER JOIN tab_year y
                     on y.idYear=seg.Year
-                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."')) and fi.RespuestaAdecuado=0 and fi.Opcion_Opcion=94 AND pac.Sexo_idSexo=".$Sexo.";";
+                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."'))  and fi.Opcion_Opcion=94 AND pac.Sexo_idSexo=".$Sexo.";";
         } elseif($op==6){
              // NO TIENES
                 $sql="SELECT DISTINCT(pac.idPaciente),
-                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - T.Psicologia: ',fi.RespuestaValor) as Paciente ,pac.edad,
+                    CONCAT(pac.Nombres,' ',pac.apellidoPaterno,' ',pac.apellidoMaterno,' - T.Psicologia: ',IF(fi.RespuestaAdecuado=0,'NO','SI')) as Paciente ,pac.edad,
                     IF(pac.Sexo_idSexo=1,'MASCULINO','FEMENINO') as Sexo
                     FROM tab_paciente pac
                     INNER JOIN tab_seguimiento seg
@@ -298,7 +298,7 @@ class MReporte {
                     ON fi.Seguimiento_idSeguimiento=seg.idSeguimiento
                     INNER JOIN tab_year y
                     on y.idYear=seg.Year
-                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."')) and fi.RespuestaAdecuado=0 and fi.Opcion_Opcion=95 AND pac.Sexo_idSexo=".$Sexo.";";
+                    where ((y.year BETWEEN YEAR('".$inicio."') and YEAR('".$fin."'))  and  (DATE(seg.fechaRegistro) BETWEEN '".$inicio."' AND '".$fin."'))  and fi.Opcion_Opcion=95 AND pac.Sexo_idSexo=".$Sexo.";";
         }
 
          return ejecutarConsulta($sql);

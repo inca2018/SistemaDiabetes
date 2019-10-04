@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 29-03-2019 a las 22:25:39
--- Versión del servidor: 5.7.19
--- Versión de PHP: 5.6.31
+-- Tiempo de generación: 04-10-2019 a las 14:07:40
+-- Versión del servidor: 5.7.26
+-- Versión de PHP: 5.6.40
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -28,33 +28,33 @@ DELIMITER $$
 --
 DROP PROCEDURE IF EXISTS `SP_ACTUALIZAR_RESULTADOS`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_ACTUALIZAR_RESULTADOS` (IN `id` VARCHAR(11), IN `tipoGeneral` VARCHAR(150), IN `tipoOpcion` VARCHAR(11), IN `campo` TEXT, IN `Respuesta` TEXT, IN `Estado` VARCHAR(11), IN `Sexo` VARCHAR(11), IN `v1` VARCHAR(150), IN `v2` VARCHAR(150), IN `v3` VARCHAR(150), IN `v4` VARCHAR(150), IN `tipoCampo` VARCHAR(150), IN `valorCampo` VARCHAR(150), IN `Dosis` VARCHAR(150), IN `Num` VARCHAR(150), IN `Diag` VARCHAR(11), IN `Medico` VARCHAR(11), IN `Tratamiento` VARCHAR(150), IN `Observacion` TEXT, IN `r1` VARCHAR(11), IN `r2` VARCHAR(11), IN `r3` VARCHAR(11), IN `r4` VARCHAR(11), IN `r5` VARCHAR(11), IN `r6` VARCHAR(11), IN `r7` VARCHAR(11), IN `r8` VARCHAR(11), IN `idGrupo` VARCHAR(11), IN `idSeguimiento` VARCHAR(11))  NO SQL
-BEGIN 
+BEGIN
 
 
-if(tipoGeneral="OPCION")THEN 
+if(tipoGeneral="OPCION")THEN
 
-    if(tipoOpcion="2")THEN 
+    if(tipoOpcion="2")THEN
 
-UPDATE `tab_resultado_ficha` SET  `RespuestaTexto`=campo, `Grupo_idGrupo`=idGrupo WHERE `Seguimiento_idSeguimiento`=idSeguimiento and `Opcion_Opcion`=id; 
+UPDATE `tab_resultado_ficha` SET  `RespuestaTexto`=campo, `Grupo_idGrupo`=idGrupo WHERE `Seguimiento_idSeguimiento`=idSeguimiento and `Opcion_Opcion`=id;
 
-    ELSEIF(tipoOpcion="3") THEN 
-   
-    UPDATE `tab_resultado_ficha` SET`RespuestaValor`=Respuesta,`RespuestaAdecuado`=Estado,`Grupo_idGrupo`=idGrupo  WHERE `Seguimiento_idSeguimiento`=idSeguimiento and `Opcion_Opcion`=id; 
- 
-  ELSEIF(tipoOpcion="4")THEN    
-  
+    ELSEIF(tipoOpcion="3") THEN
+
+    UPDATE `tab_resultado_ficha` SET`RespuestaValor`=Respuesta,`RespuestaAdecuado`=Estado,`Grupo_idGrupo`=idGrupo  WHERE `Seguimiento_idSeguimiento`=idSeguimiento and `Opcion_Opcion`=id;
+
+  ELSEIF(tipoOpcion="4")THEN
+
     SET @propiedades=(CONCAT('{"Sexo":',Sexo,'}'));
- 
-UPDATE `tab_resultado_ficha` SET   `Propiedades`=@propiedades,`RespuestaValor`=Respuesta,`RespuestaAdecuado`=Estado ,`Grupo_idGrupo`=idGrupo   WHERE `Seguimiento_idSeguimiento`=idSeguimiento and `Opcion_Opcion`=id; 
- 
-    ELSEIF(tipoOpcion="5")THEN 
 
-    SET @Fecha=(DATE_FORMAT(campo,"%Y-%m-%d")); 
-  
-UPDATE `tab_resultado_ficha` SET `RespuestaFecha`=@Fecha,`Grupo_idGrupo`=idGrupo  WHERE `Seguimiento_idSeguimiento`=idSeguimiento and `Opcion_Opcion`=id; 
+UPDATE `tab_resultado_ficha` SET   `Propiedades`=@propiedades,`RespuestaValor`=Respuesta,`RespuestaAdecuado`=Estado ,`Grupo_idGrupo`=idGrupo   WHERE `Seguimiento_idSeguimiento`=idSeguimiento and `Opcion_Opcion`=id;
 
-    ELSEIF(tipoOpcion="6")THEN 
-    
+    ELSEIF(tipoOpcion="5")THEN
+
+    SET @Fecha=(DATE_FORMAT(campo,"%Y-%m-%d"));
+
+UPDATE `tab_resultado_ficha` SET `RespuestaFecha`=@Fecha,`Grupo_idGrupo`=idGrupo  WHERE `Seguimiento_idSeguimiento`=idSeguimiento and `Opcion_Opcion`=id;
+
+    ELSEIF(tipoOpcion="6")THEN
+
     if(v1="")then
     SET v1=0;
     end if;
@@ -69,40 +69,17 @@ UPDATE `tab_resultado_ficha` SET `RespuestaFecha`=@Fecha,`Grupo_idGrupo`=idGrupo
     end if;
     SET @propiedades=(CONCAT('{"v1":',v1,',"v2":',v2,',"v3":',v3,',"v4":',v4,'}'));
 
- 
-UPDATE `tab_resultado_ficha` SET `Propiedades`=@propiedades,`RespuestaValor`=Respuesta,`Grupo_idGrupo`=idGrupo WHERE `Seguimiento_idSeguimiento`=idSeguimiento and `Opcion_Opcion`=id; 
+
+UPDATE `tab_resultado_ficha` SET `Propiedades`=@propiedades,`RespuestaValor`=Respuesta,`RespuestaAdecuado`=Estado,`Grupo_idGrupo`=idGrupo WHERE `Seguimiento_idSeguimiento`=idSeguimiento and `Opcion_Opcion`=id;
 
 
-  
-    ELSEIF(tipoOpcion="7")THEN 
- 
 
-	UPDATE `tab_resultado_ficha` SET  `RespuestaAdecuado`=Estado,`Grupo_idGrupo`=idGrupo  WHERE `Seguimiento_idSeguimiento`=idSeguimiento and `Opcion_Opcion`=id; 
-
-    ELSEIF(tipoOpcion="9")THEN 
-
-     if(tipoCampo="")then
-        SET tipoCampo=0;
-        end if;
-
-     if(valorCampo="")then
-    SET valorCampo=0;
-    end if;
-    
-     if(Dosis="")then
-    SET Dosis=0;
-    end if;
-    
-    if(Num="")then
-    SET Num=0;
-    end if;  
-    
-    SET @propiedades=(CONCAT('{"tipocampo":"',tipoCampo,'","valorCampo":"',valorCampo,'","Dosis":"',Dosis,'","Num":"',Num,'"}'));  
- 
-UPDATE `tab_resultado_ficha` SET `Propiedades`=@propiedades,`RespuestaAdecuado`=Estado,`Grupo_idGrupo`=idGrupo  WHERE `Seguimiento_idSeguimiento`=idSeguimiento and `Opcion_Opcion`=id;   
+    ELSEIF(tipoOpcion="7")THEN
 
 
- ELSEIF(tipoOpcion="11")THEN 
+	UPDATE `tab_resultado_ficha` SET  `RespuestaAdecuado`=Estado,`Grupo_idGrupo`=idGrupo  WHERE `Seguimiento_idSeguimiento`=idSeguimiento and `Opcion_Opcion`=id;
+
+    ELSEIF(tipoOpcion="9")THEN
 
      if(tipoCampo="")then
         SET tipoCampo=0;
@@ -111,56 +88,84 @@ UPDATE `tab_resultado_ficha` SET `Propiedades`=@propiedades,`RespuestaAdecuado`=
      if(valorCampo="")then
     SET valorCampo=0;
     end if;
-    
+
      if(Dosis="")then
     SET Dosis=0;
     end if;
-    
+
     if(Num="")then
     SET Num=0;
-    end if;  
-    
-    SET @propiedades=(CONCAT('{"tipocampo":"',tipoCampo,'","valorCampo":"',valorCampo,'","Dosis":"',Dosis,'","Num":"',Num,'"}'));  
+    end if;
+
+    SET @propiedades=(CONCAT('{"tipocampo":"',tipoCampo,'","valorCampo":"',valorCampo,'","Dosis":"',Dosis,'","Num":"',Num,'"}'));
+
+UPDATE `tab_resultado_ficha` SET `Propiedades`=@propiedades,`RespuestaAdecuado`=Estado,`Grupo_idGrupo`=idGrupo  WHERE `Seguimiento_idSeguimiento`=idSeguimiento and `Opcion_Opcion`=id;
+
+  ELSEIF(tipoOpcion="16")THEN
+
+    SET @propiedades=(CONCAT('{"CriterioA":"',r1,'","EstadoCriterioA":"',r2,'","minimoCriterioA":"',r3,'","maximoCriterioA":"',r4,'","CriterioB":"',r5,'","EstadoCriterioB":"',r6,'","minimoCriterioB":"',r7,'","maximoCriterioB":"',r8,'"}'));
+
+    UPDATE `tab_resultado_ficha` SET `Propiedades`=@propiedades,`RespuestaAdecuado`=Estado,`Grupo_idGrupo`=idGrupo  WHERE `Seguimiento_idSeguimiento`=idSeguimiento and `Opcion_Opcion`=id;
+
+ ELSEIF(tipoOpcion="11")THEN
+
+     if(tipoCampo="")then
+        SET tipoCampo=0;
+        end if;
+
+     if(valorCampo="")then
+    SET valorCampo=0;
+    end if;
+
+     if(Dosis="")then
+    SET Dosis=0;
+    end if;
+
+    if(Num="")then
+    SET Num=0;
+    end if;
+
+    SET @propiedades=(CONCAT('{"tipocampo":"',tipoCampo,'","valorCampo":"',valorCampo,'","Dosis":"',Dosis,'","Num":"',Num,'"}'));
 
 
-UPDATE `tab_resultado_ficha` SET  `Propiedades`=@propiedades,`Grupo_idGrupo`=idGrupo  WHERE `Seguimiento_idSeguimiento`=idSeguimiento and `Opcion_Opcion`=id; 
+UPDATE `tab_resultado_ficha` SET  `Propiedades`=@propiedades,`Grupo_idGrupo`=idGrupo  WHERE `Seguimiento_idSeguimiento`=idSeguimiento and `Opcion_Opcion`=id;
 
     END IF;
 
 ELSEIF(tipoGeneral="ESPECIALIDAD")THEN
 
-		  
+
     if(Diag="")then
     SET Diag=0;
-    end if;  
+    end if;
      if(Medico="")then
     SET Medico=0;
-    end if; 
+    end if;
     if(Tratamiento="")then
     SET Tratamiento=0;
-    end if;  
+    end if;
     if(Observacion="")then
     SET Observacion=0;
-    end if;     
-    
-    SET @propiedades=(CONCAT('{"Diagnostico":"',Diag,'","Medico":"',Medico,'","Tratamiento":"',Tratamiento,'","Observacion":"',Observacion,'"}'));  
+    end if;
 
-  
-    
-UPDATE `tab_resultado_ficha` SET   `Propiedades`=@propiedades,`RespuestaAdecuado`=Estado WHERE `Seguimiento_idSeguimiento`=idSeguimiento and `Especialidad_idEspecialidad`=id; 
+    SET @propiedades=(CONCAT('{"Diagnostico":"',Diag,'","Medico":"',Medico,'","Tratamiento":"',Tratamiento,'","Observacion":"',Observacion,'"}'));
 
 
-ELSEIF(tipoGeneral="PIE")THEN 
 
-   
- UPDATE `tab_resultado_pie` SET  `R1`=r1,`R2`=r2,`R3`=r3,`R4`=r4,`R5`=r5,`R6`=r6,`R7`=r7,`R8`=r8 WHERE `Seguimiento_idSeguimiento`=idSeguimiento;  
+UPDATE `tab_resultado_ficha` SET   `Propiedades`=@propiedades,`RespuestaAdecuado`=Estado WHERE `Seguimiento_idSeguimiento`=idSeguimiento and `Especialidad_idEspecialidad`=id;
 
 
-ELSEIF(tipoGeneral="REFIERE")THEN 
+ELSEIF(tipoGeneral="PIE")THEN
 
- 
+
+ UPDATE `tab_resultado_pie` SET  `R1`=r1,`R2`=r2,`R3`=r3,`R4`=r4,`R5`=r5,`R6`=r6,`R7`=r7,`R8`=r8 WHERE `Seguimiento_idSeguimiento`=idSeguimiento;
+
+
+ELSEIF(tipoGeneral="REFIERE")THEN
+
+
   UPDATE `tab_extra` SET  `Refiere`=Respuesta,`Riesgo`=campo WHERE `Seguimiento_idSeguimiento`=idSeguimiento;
-  
+
 END IF;
 
 END$$
@@ -192,16 +197,16 @@ SET Mcorreo=FU_VALIDAR_VARCHAR(Mcorreo);
 SET Msexo=FU_VALIDAR_INT(Msexo);
 
 
-if(Operacion="REGISTRAR")then 
- 
+if(Operacion="REGISTRAR")then
+
 INSERT INTO `tab_medico`(`idMedico`, `nombres`, `apellidoPaterno`, `apellidoMaterno`, `fechaNacimiento`, `edad`, `dni`, `Telefono`, `Celular`, `Correo`, `Sexo_idSexo`, `Perfil_idPerfil`, `Estado_idEstado`, `fechaRegistro`) VALUES (NULL,MNombre,MApePa,MApeMa,MFechaNa,Medad,MDNI,Mtelefo,MCel,Mcorreo,Msexo,11,1,NOW());
 
 
-ELSEIF(Operacion="EDITAR")then 
+ELSEIF(Operacion="EDITAR")then
 
 UPDATE `tab_medico` SET `nombres`=MNombre,`apellidoPaterno`=MApePa,`apellidoMaterno`=MApeMa,`fechaNacimiento`=MFechaNa,`edad`=Medad,`dni`=MDNI,`Telefono`=Mtelefo,`Celular`=MCel,`Correo`=Mcorreo,`Sexo_idSexo`=Msexo  WHERE `idMedico`=idMedicoM;
 
-ELSEIF(Operacion="ELIMINAR")then 
+ELSEIF(Operacion="ELIMINAR")then
 
 DELETE FROM `tab_medico` WHERE `idMedico`=idMedicoM;
 
@@ -209,7 +214,7 @@ ELSEIF(Operacion="HABILITAR")THEN
 
 UPDATE `tab_medico` SET `Estado_idEstado`=1 WHERE `idMedico`=idMedicoM;
 
-ELSEIF(operacion="INHABILITAR")THEN 
+ELSEIF(operacion="INHABILITAR")THEN
 
 UPDATE `tab_medico` SET `Estado_idEstado`=2 WHERE `idMedico`=idMedicoM;
 
@@ -227,9 +232,9 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_COMORBILIDAD_ACTIVACION`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_COMORBILIDAD_ACTIVACION` (IN `idComorbilidadU` INT(11), IN `codigo` INT(11))  NO SQL
-BEGIN 
+BEGIN
 
-UPDATE `tab_comorbilidad` SET  `Estado_idEstado`=codigo  WHERE  `idComorbilidad`=idComorbilidadU;   
+UPDATE `tab_comorbilidad` SET  `Estado_idEstado`=codigo  WHERE  `idComorbilidad`=idComorbilidadU;
 
 END$$
 
@@ -238,7 +243,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_COMORBILIDAD_EDITAR` (IN `d
 BEGIN
 
 UPDATE `tab_comorbilidad` SET `Descripcion`=dato WHERE `idComorbilidad`=idComorbilidadU;
- 
+
 END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_COMORBILIDAD_ELIMINAR`$$
@@ -251,15 +256,15 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_COMORBILIDAD_LISTAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_COMORBILIDAD_LISTAR` ()  NO SQL
-BEGIN 
+BEGIN
 
-SELECT tab.idComorbilidad,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_comorbilidad tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado; 
+SELECT tab.idComorbilidad,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_comorbilidad tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado;
 
 END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_COMORBILIDAD_RECUPERAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_COMORBILIDAD_RECUPERAR` (IN `idComorbilidadS` INT(11))  NO SQL
-BEGIN 
+BEGIN
 
 SELECT * FROM tab_comorbilidad tab where tab.idComorbilidad=idComorbilidadS;
 
@@ -267,7 +272,7 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_COMORBILIDAD_REGISTRO`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_COMORBILIDAD_REGISTRO` (IN `dato` VARCHAR(150))  NO SQL
-BEGIN 
+BEGIN
 
 INSERT INTO `tab_comorbilidad`(`idComorbilidad`, `Descripcion`, `Estado_idEstado`, `fechaRegistro`) VALUES (NULL,dato,1,NOW());
 
@@ -275,9 +280,9 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_CONDICION_ACTIVACION`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_CONDICION_ACTIVACION` (IN `idCONDICIONU` INT(11), IN `codigo` INT(11))  NO SQL
-BEGIN 
+BEGIN
 
-UPDATE `tab_Condicion` SET  `Estado_idEstado`=codigo  WHERE  `idCondicion`=idCONDICIONU;   
+UPDATE `tab_Condicion` SET  `Estado_idEstado`=codigo  WHERE  `idCondicion`=idCONDICIONU;
 
 END$$
 
@@ -286,7 +291,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_CONDICION_EDITAR` (IN `dato
 BEGIN
 
 UPDATE `tab_Condicion` SET `Descripcion`=dato WHERE `idCondicion`=idCONDICIONU;
- 
+
 END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_CONDICION_ELIMINAR`$$
@@ -299,15 +304,15 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_CONDICION_LISTAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_CONDICION_LISTAR` ()  NO SQL
-BEGIN 
+BEGIN
 
-SELECT tab.idCondicion,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_condicion tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado; 
+SELECT tab.idCondicion,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_condicion tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado;
 
 END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_CONDICION_RECUPERAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_CONDICION_RECUPERAR` (IN `idCONDICIONS` INT(11))  NO SQL
-BEGIN 
+BEGIN
 
 SELECT * FROM tab_condicion tab where tab.idCondicion=idCONDICIONS;
 
@@ -315,7 +320,7 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_CONDICION_REGISTRO`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_CONDICION_REGISTRO` (IN `dato` VARCHAR(150))  NO SQL
-BEGIN 
+BEGIN
 
 INSERT INTO `tab_condicion`(`idCondicion`, `Descripcion`, `Estado_idEstado`, `fechaRegistro`) VALUES (NULL,dato,1,NOW());
 
@@ -323,9 +328,9 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_DIAGNOSTICOENFERMERIA_ACTIVACION`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_DIAGNOSTICOENFERMERIA_ACTIVACION` (IN `idDiagnosticoEnfermeriaU` INT(11), IN `codigo` INT(11))  NO SQL
-BEGIN 
+BEGIN
 
-UPDATE `tab_diagnostico_enfermeria` SET  `Estado_idEstado`=codigo  WHERE  `idDiagnosticoEnfermeria`=idDiagnosticoEnfermeriaU;   
+UPDATE `tab_diagnostico_enfermeria` SET  `Estado_idEstado`=codigo  WHERE  `idDiagnosticoEnfermeria`=idDiagnosticoEnfermeriaU;
 
 END$$
 
@@ -334,7 +339,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_DIAGNOSTICOENFERMERIA_EDITA
 BEGIN
 
 UPDATE `tab_diagnostico_enfermeria` SET `Descripcion`=dato WHERE `idDiagnosticoEnfermeria`=idDiagnosticoEnfermeriaU;
- 
+
 END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_DIAGNOSTICOENFERMERIA_ELIMINAR`$$
@@ -347,15 +352,15 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_DIAGNOSTICOENFERMERIA_LISTAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_DIAGNOSTICOENFERMERIA_LISTAR` ()  NO SQL
-BEGIN 
+BEGIN
 
-SELECT tab.idDiagnosticoEnfermeria,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_diagnostico_enfermeria tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado; 
+SELECT tab.idDiagnosticoEnfermeria,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_diagnostico_enfermeria tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado;
 
 END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_DIAGNOSTICOENFERMERIA_RECUPERAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_DIAGNOSTICOENFERMERIA_RECUPERAR` (IN `idDiagnosticoEnfermeriaS` INT(11))  NO SQL
-BEGIN 
+BEGIN
 
 SELECT * FROM tab_diagnostico_enfermeria tab where tab.idDiagnosticoEnfermeria=idDiagnosticoEnfermeriaS;
 
@@ -363,7 +368,7 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_DIAGNOSTICOENFERMERIA_REGISTRO`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_DIAGNOSTICOENFERMERIA_REGISTRO` (IN `dato` VARCHAR(150))  NO SQL
-BEGIN 
+BEGIN
 
 INSERT INTO `tab_diagnostico_enfermeria`(`idDiagnosticoEnfermeria`, `Descripcion`, `Estado_idEstado`, `fechaRegistro`) VALUES (NULL,dato,1,NOW());
 
@@ -371,9 +376,9 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_DIAGNOSTICOESPECIALIDAD_ACTIVACION`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_DIAGNOSTICOESPECIALIDAD_ACTIVACION` (IN `idDiag` INT(11), IN `codigo` INT(11))  NO SQL
-BEGIN 
+BEGIN
 
-UPDATE `tab_diagnostico_especialidad` SET  `Estado_idEstado`=codigo  WHERE  `idDiagnosticoEspecialidad`=idDiag;   
+UPDATE `tab_diagnostico_especialidad` SET  `Estado_idEstado`=codigo  WHERE  `idDiagnosticoEspecialidad`=idDiag;
 
 END$$
 
@@ -382,7 +387,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_DIAGNOSTICOESPECIALIDAD_EDI
 BEGIN
 
 UPDATE `tab_diagnostico_especialidad` SET `Descripcion`=dato WHERE `idDiagnosticoEspecialidad`=idDiag;
-   
+
 END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_DIAGNOSTICOESPECIALIDAD_ELIMINAR`$$
@@ -395,15 +400,15 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_DIAGNOSTICOESPECIALIDAD_LISTAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_DIAGNOSTICOESPECIALIDAD_LISTAR` ()  NO SQL
-BEGIN 
+BEGIN
 
-SELECT tab.idDiagnosticoEspecialidad,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_diagnostico_especialidad tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado;  
+SELECT tab.idDiagnosticoEspecialidad,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_diagnostico_especialidad tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado;
 
 END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_DIAGNOSTICOESPECIALIDAD_RECUPERAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_DIAGNOSTICOESPECIALIDAD_RECUPERAR` (IN `idDiag` INT(11))  NO SQL
-BEGIN 
+BEGIN
 
 SELECT * FROM tab_diagnostico_especialidad tab where tab.idDiagnosticoEspecialidad=idDiag;
 
@@ -411,7 +416,7 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_DIAGNOSTICOESPECIALIDAD_REGISTRO`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_DIAGNOSTICOESPECIALIDAD_REGISTRO` (IN `dato` VARCHAR(150))  NO SQL
-BEGIN 
+BEGIN
 
 INSERT INTO `tab_diagnostico_especialidad`(`idDiagnosticoEspecialidad`, `Descripcion`, `Estado_idEstado`, `fechaRegistro`) VALUES (NULL,dato,1,NOW());
 
@@ -419,9 +424,9 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_DIAGNOSTICO_ACTIVACION`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_DIAGNOSTICO_ACTIVACION` (IN `idDIAGNOSTICOU` INT(11), IN `codigo` INT(11))  NO SQL
-BEGIN 
+BEGIN
 
-UPDATE `tab_Diagnostico` SET  `Estado_idEstado`=codigo  WHERE  `idDiagnostico`=idDIAGNOSTICOU;   
+UPDATE `tab_Diagnostico` SET  `Estado_idEstado`=codigo  WHERE  `idDiagnostico`=idDIAGNOSTICOU;
 
 END$$
 
@@ -430,7 +435,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_DIAGNOSTICO_EDITAR` (IN `da
 BEGIN
 
 UPDATE `tab_Diagnostico` SET `Descripcion`=dato WHERE `idDiagnostico`=idDIAGNOSTICOU;
- 
+
 END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_DIAGNOSTICO_ELIMINAR`$$
@@ -443,15 +448,15 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_DIAGNOSTICO_LISTAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_DIAGNOSTICO_LISTAR` ()  NO SQL
-BEGIN 
+BEGIN
 
-SELECT tab.idDiagnostico,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_Diagnostico tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado; 
+SELECT tab.idDiagnostico,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_Diagnostico tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado;
 
 END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_DIAGNOSTICO_RECUPERAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_DIAGNOSTICO_RECUPERAR` (IN `idDIAGNOSTICOS` INT(11))  NO SQL
-BEGIN 
+BEGIN
 
 SELECT * FROM tab_Diagnostico tab where tab.idDiagnostico=idDIAGNOSTICOS;
 
@@ -459,7 +464,7 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_DIAGNOSTICO_REGISTRO`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_DIAGNOSTICO_REGISTRO` (IN `dato` VARCHAR(150))  NO SQL
-BEGIN 
+BEGIN
 
 INSERT INTO `tab_Diagnostico`(`idDiagnostico`, `Descripcion`, `Estado_idEstado`, `fechaRegistro`) VALUES (NULL,dato,1,NOW());
 
@@ -467,9 +472,9 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_ESPECIALIDAD_ACTIVACION`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_ESPECIALIDAD_ACTIVACION` (IN `idEspecialidadU` INT(11), IN `codigo` INT(11))  NO SQL
-BEGIN 
+BEGIN
 
-UPDATE `tab_especialidad` SET  `Estado_idEstado`=codigo  WHERE  `idEspecialidad`=idEspecialidadU;   
+UPDATE `tab_especialidad` SET  `Estado_idEstado`=codigo  WHERE  `idEspecialidad`=idEspecialidadU;
 
 END$$
 
@@ -478,7 +483,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_ESPECIALIDAD_EDITAR` (IN `d
 BEGIN
 
 UPDATE `tab_especialidad` SET `Descripcion`=UPPER(dato) WHERE `idEspecialidad`=idEspecialidadU;
- 
+
 END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_ESPECIALIDAD_ELIMINAR`$$
@@ -491,15 +496,15 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_ESPECIALIDAD_LISTAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_ESPECIALIDAD_LISTAR` ()  NO SQL
-BEGIN 
+BEGIN
 
-SELECT tab.idEspecialidad,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado,(SELECT COUNT(*) FROM tab_asignacionespecialidad asig WHERE asig.Especialidad_idEspecialidad=tab.idEspecialidad) as Asignaciones FROM tab_especialidad tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado; 
+SELECT tab.idEspecialidad,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado,(SELECT COUNT(*) FROM tab_asignacionespecialidad asig WHERE asig.Especialidad_idEspecialidad=tab.idEspecialidad) as Asignaciones FROM tab_especialidad tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado;
 
 END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_ESPECIALIDAD_RECUPERAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_ESPECIALIDAD_RECUPERAR` (IN `idEspecialidadS` INT(11))  NO SQL
-BEGIN 
+BEGIN
 
 SELECT * FROM tab_especialidad tab where tab.idEspecialidad=idEspecialidadS;
 
@@ -507,7 +512,7 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_ESPECIALIDAD_REGISTRO`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_ESPECIALIDAD_REGISTRO` (IN `dato` VARCHAR(150))  NO SQL
-BEGIN 
+BEGIN
 
 INSERT INTO `tab_especialidad`(`idEspecialidad`, `Descripcion`, `Estado_idEstado`, `fechaRegistro`) VALUES (NULL,UPPER(dato),1,NOW());
 
@@ -515,9 +520,9 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_GRADOINSTRUCCION_ACTIVACION`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_GRADOINSTRUCCION_ACTIVACION` (IN `idGradoInstruccionU` INT(11), IN `codigo` INT(11))  NO SQL
-BEGIN 
+BEGIN
 
-UPDATE `tab_gradoinstruccion` SET  `Estado_idEstado`=codigo  WHERE  `idGradoInstruccion`=idGradoInstruccionU;   
+UPDATE `tab_gradoinstruccion` SET  `Estado_idEstado`=codigo  WHERE  `idGradoInstruccion`=idGradoInstruccionU;
 
 END$$
 
@@ -526,7 +531,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_GRADOINSTRUCCION_EDITAR` (I
 BEGIN
 
 UPDATE `tab_gradoinstruccion` SET `Descripcion`=dato WHERE `idGradoInstruccion`=idGradoInstruccionU;
- 
+
 END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_GRADOINSTRUCCION_ELIMINAR`$$
@@ -539,15 +544,15 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_GRADOINSTRUCCION_LISTAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_GRADOINSTRUCCION_LISTAR` ()  NO SQL
-BEGIN 
+BEGIN
 
-SELECT tab.idGradoInstruccion,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_gradoinstruccion tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado; 
+SELECT tab.idGradoInstruccion,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_gradoinstruccion tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado;
 
 END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_GRADOINSTRUCCION_RECUPERAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_GRADOINSTRUCCION_RECUPERAR` (IN `idGradoInstruccionS` INT(11))  NO SQL
-BEGIN 
+BEGIN
 
 SELECT * FROM tab_gradoinstruccion tab where tab.idGradoInstruccion=idGradoInstruccionS;
 
@@ -555,7 +560,7 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_GRADOINSTRUCCION_REGISTRO`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_GRADOINSTRUCCION_REGISTRO` (IN `dato` VARCHAR(150))  NO SQL
-BEGIN 
+BEGIN
 
 INSERT INTO `tab_gradoinstruccion`(`idGradoInstruccion`, `Descripcion`, `Estado_idEstado`, `fechaRegistro`) VALUES (NULL,dato,1,NOW());
 
@@ -563,9 +568,9 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_GRUPOOPCION_ACTIVACION`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_GRUPOOPCION_ACTIVACION` (IN `idGrupoOpcionU` INT(11), IN `codigo` INT(11))  NO SQL
-BEGIN 
+BEGIN
 
-UPDATE `tab_grupoopcion` SET  `Estado_idEstado`=codigo  WHERE  `idGrupoOpcion`=idGrupoOpcionU;   
+UPDATE `tab_grupoopcion` SET  `Estado_idEstado`=codigo  WHERE  `idGrupoOpcion`=idGrupoOpcionU;
 
 END$$
 
@@ -574,7 +579,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_GRUPOOPCION_EDITAR` (IN `da
 BEGIN
 
 UPDATE `tab_grupoopcion` SET `Descripcion`=dato WHERE `idGrupoOpcion`=idGrupoOpcionU;
- 
+
 END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_GRUPOOPCION_ELIMINAR`$$
@@ -587,15 +592,15 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_GRUPOOPCION_LISTAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_GRUPOOPCION_LISTAR` ()  NO SQL
-BEGIN 
+BEGIN
 
-SELECT tab.idGrupoOpcion,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado,(SELECT COUNT(*) FROM tab_opcion op where op.GrupoOpcion_idGrupoOpcion=tab.idGrupoOpcion) as Opciones FROM tab_grupoopcion tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado; 
+SELECT tab.idGrupoOpcion,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado,(SELECT COUNT(*) FROM tab_opcion op where op.GrupoOpcion_idGrupoOpcion=tab.idGrupoOpcion) as Opciones FROM tab_grupoopcion tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado;
 
 END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_GRUPOOPCION_RECUPERAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_GRUPOOPCION_RECUPERAR` (IN `idGrupoOpcionS` INT(11))  NO SQL
-BEGIN 
+BEGIN
 
 SELECT * FROM tab_grupoopcion tab where tab.idGrupoOpcion=idGrupoOpcionS;
 
@@ -603,7 +608,7 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_GRUPOOPCION_REGISTRO`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_GRUPOOPCION_REGISTRO` (IN `dato` VARCHAR(150))  NO SQL
-BEGIN 
+BEGIN
 
 INSERT INTO `tab_grupoopcion`(`idGrupoOpcion`, `Descripcion`, `Estado_idEstado`, `fechaRegistro`) VALUES (NULL,dato,1,NOW());
 
@@ -611,7 +616,7 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_OPCION_LISTARTIPOS`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_OPCION_LISTARTIPOS` ()  NO SQL
-BEGIN 
+BEGIN
 
 SELECT * FROM tab_tipoopcion;
 
@@ -619,9 +624,9 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_SATISFACCION_ACTIVACION`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_SATISFACCION_ACTIVACION` (IN `idSatisfaccionU` INT(11), IN `codigo` INT(11))  NO SQL
-BEGIN 
+BEGIN
 
-UPDATE `tab_satisfaccion` SET  `Estado_idEstado`=codigo  WHERE  `idSatisfaccion`=idSatisfaccionU;   
+UPDATE `tab_satisfaccion` SET  `Estado_idEstado`=codigo  WHERE  `idSatisfaccion`=idSatisfaccionU;
 
 END$$
 
@@ -630,7 +635,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_SATISFACCION_EDITAR` (IN `d
 BEGIN
 
 UPDATE `tab_satisfaccion` SET `Descripcion`=dato WHERE `idSatisfaccion`=idSatisfaccionU;
- 
+
 END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_SATISFACCION_ELIMINAR`$$
@@ -643,15 +648,15 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_SATISFACCION_LISTAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_SATISFACCION_LISTAR` ()  NO SQL
-BEGIN 
+BEGIN
 
-SELECT tab.idSatisfaccion,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_satisfaccion tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado; 
+SELECT tab.idSatisfaccion,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_satisfaccion tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado;
 
 END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_SATISFACCION_RECUPERAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_SATISFACCION_RECUPERAR` (IN `idSatisfaccionS` INT(11))  NO SQL
-BEGIN 
+BEGIN
 
 SELECT * FROM tab_satisfaccion tab where tab.idSatisfaccion=idSatisfaccionS;
 
@@ -659,7 +664,7 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_SATISFACCION_REGISTRO`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_SATISFACCION_REGISTRO` (IN `dato` VARCHAR(150))  NO SQL
-BEGIN 
+BEGIN
 
 INSERT INTO `tab_satisfaccion`(`idSatisfaccion`, `Descripcion`, `Estado_idEstado`, `fechaRegistro`) VALUES (NULL,dato,1,NOW());
 
@@ -675,7 +680,7 @@ end$$
 
 DROP PROCEDURE IF EXISTS `SP_MEDICO_RECUPERAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MEDICO_RECUPERAR` (IN `idMedicoD` INT(11))  NO SQL
-BEGIN 
+BEGIN
 
 SELECT * FROM tab_medico where idMedico=idMedicoD;
 END$$
@@ -684,7 +689,7 @@ DROP PROCEDURE IF EXISTS `SP_PACIENTE_LISTAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_PACIENTE_LISTAR` ()  NO SQL
 BEGIN
 
-SELECT 
+SELECT
 pa.idPaciente,
 pa.Codigo,
 CONCAT(pa.Nombres," ",pa.apellidoPaterno," ",pa.apellidoMaterno) as NombreCompletoPaciente,
@@ -927,33 +932,33 @@ END$$
 
 DROP PROCEDURE IF EXISTS `SP_REGISTRAR_RESULTADOS`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_REGISTRAR_RESULTADOS` (IN `id` VARCHAR(11), IN `tipoGeneral` VARCHAR(150), IN `tipoOpcion` VARCHAR(11), IN `campo` TEXT, IN `Respuesta` TEXT, IN `Estado` VARCHAR(11), IN `Sexo` VARCHAR(11), IN `v1` VARCHAR(150), IN `v2` VARCHAR(150), IN `v3` VARCHAR(150), IN `v4` VARCHAR(150), IN `tipoCampo` VARCHAR(150), IN `valorCampo` VARCHAR(150), IN `Dosis` VARCHAR(150), IN `Num` VARCHAR(150), IN `Diag` VARCHAR(11), IN `Medico` VARCHAR(11), IN `Tratamiento` VARCHAR(150), IN `Observacion` TEXT, IN `r1` VARCHAR(11), IN `r2` VARCHAR(11), IN `r3` VARCHAR(11), IN `r4` VARCHAR(11), IN `r5` VARCHAR(11), IN `r6` VARCHAR(11), IN `r7` VARCHAR(11), IN `r8` VARCHAR(11), IN `idGrupo` VARCHAR(11), IN `idSeguimiento` VARCHAR(11))  NO SQL
-BEGIN 
+BEGIN
 
 
-if(tipoGeneral="OPCION")THEN 
+if(tipoGeneral="OPCION")THEN
 
-    if(tipoOpcion="2")THEN 
+    if(tipoOpcion="2")THEN
 
 
     INSERT INTO `tab_resultado_ficha`(`idResultadoFicha`, `Seguimiento_idSeguimiento`, `Opcion_Opcion`, `Especialidad_idEspecialidad`, `TipoOpcion`, `Propiedades`, `RespuestaTexto`, `RespuestaValor`, `RespuestaFecha`, `RespuestaAdecuado`, `TipoListado`,`Grupo_idGrupo`,`fechaRegistro`) VALUES (NULL,idSeguimiento,id,NULL,2,NULL,campo,NULL,NULL,NULL,NULL,idGrupo,NOW());
 
-    ELSEIF(tipoOpcion="3") THEN 
+    ELSEIF(tipoOpcion="3") THEN
 
-    INSERT INTO `tab_resultado_ficha`(`idResultadoFicha`, `Seguimiento_idSeguimiento`, `Opcion_Opcion`, `Especialidad_idEspecialidad`, `TipoOpcion`, `Propiedades`, `RespuestaTexto`, `RespuestaValor`, `RespuestaFecha`, `RespuestaAdecuado`, `TipoListado`,`Grupo_idGrupo`,`fechaRegistro`) VALUES (NULL,idSeguimiento,id,NULL,3,NULL,NULL,Respuesta,NULL,Estado,NULL,idGrupo,NOW()); 
- 
-  ELSEIF(tipoOpcion="4")THEN    
-  
+    INSERT INTO `tab_resultado_ficha`(`idResultadoFicha`, `Seguimiento_idSeguimiento`, `Opcion_Opcion`, `Especialidad_idEspecialidad`, `TipoOpcion`, `Propiedades`, `RespuestaTexto`, `RespuestaValor`, `RespuestaFecha`, `RespuestaAdecuado`, `TipoListado`,`Grupo_idGrupo`,`fechaRegistro`) VALUES (NULL,idSeguimiento,id,NULL,3,NULL,NULL,Respuesta,NULL,Estado,NULL,idGrupo,NOW());
+
+  ELSEIF(tipoOpcion="4")THEN
+
     SET @propiedades=(CONCAT('{"Sexo":',Sexo,'}'));
 
-    INSERT INTO `tab_resultado_ficha`(`idResultadoFicha`, `Seguimiento_idSeguimiento`, `Opcion_Opcion`, `Especialidad_idEspecialidad`, `TipoOpcion`, `Propiedades`, `RespuestaTexto`, `RespuestaValor`, `RespuestaFecha`, `RespuestaAdecuado`, `TipoListado`,`Grupo_idGrupo`,`fechaRegistro`) VALUES (NULL,idSeguimiento,id,NULL,4,@propiedades,NULL,Respuesta,NULL,Estado,NULL,idGrupo,NOW()); 
+    INSERT INTO `tab_resultado_ficha`(`idResultadoFicha`, `Seguimiento_idSeguimiento`, `Opcion_Opcion`, `Especialidad_idEspecialidad`, `TipoOpcion`, `Propiedades`, `RespuestaTexto`, `RespuestaValor`, `RespuestaFecha`, `RespuestaAdecuado`, `TipoListado`,`Grupo_idGrupo`,`fechaRegistro`) VALUES (NULL,idSeguimiento,id,NULL,4,@propiedades,NULL,Respuesta,NULL,Estado,NULL,idGrupo,NOW());
 
-    ELSEIF(tipoOpcion="5")THEN 
+    ELSEIF(tipoOpcion="5")THEN
 
-    SET @Fecha=(DATE_FORMAT(campo,"%Y-%m-%d")); 
-    INSERT INTO `tab_resultado_ficha`(`idResultadoFicha`, `Seguimiento_idSeguimiento`, `Opcion_Opcion`, `Especialidad_idEspecialidad`, `TipoOpcion`, `Propiedades`, `RespuestaTexto`, `RespuestaValor`, `RespuestaFecha`, `RespuestaAdecuado`, `TipoListado`, `Grupo_idGrupo`,`fechaRegistro`) VALUES (NULL,idSeguimiento,id,NULL,5,NULL,NULL,NULL,@Fecha,NULL,NULL,idGrupo,NOW()); 
+    SET @Fecha=(DATE_FORMAT(campo,"%Y-%m-%d"));
+    INSERT INTO `tab_resultado_ficha`(`idResultadoFicha`, `Seguimiento_idSeguimiento`, `Opcion_Opcion`, `Especialidad_idEspecialidad`, `TipoOpcion`, `Propiedades`, `RespuestaTexto`, `RespuestaValor`, `RespuestaFecha`, `RespuestaAdecuado`, `TipoListado`, `Grupo_idGrupo`,`fechaRegistro`) VALUES (NULL,idSeguimiento,id,NULL,5,NULL,NULL,NULL,@Fecha,NULL,NULL,idGrupo,NOW());
 
-    ELSEIF(tipoOpcion="6")THEN 
-    
+    ELSEIF(tipoOpcion="6")THEN
+
     if(v1="")then
     SET v1=0;
     end if;
@@ -969,36 +974,14 @@ if(tipoGeneral="OPCION")THEN
     SET @propiedades=(CONCAT('{"v1":',v1,',"v2":',v2,',"v3":',v3,',"v4":',v4,'}'));
 
 
-    INSERT INTO `tab_resultado_ficha`(`idResultadoFicha`, `Seguimiento_idSeguimiento`, `Opcion_Opcion`, `Especialidad_idEspecialidad`, `TipoOpcion`, `Propiedades`, `RespuestaTexto`, `RespuestaValor`, `RespuestaFecha`, `RespuestaAdecuado`, `TipoListado`,`Grupo_idGrupo`,`fechaRegistro`) VALUES (NULL,idSeguimiento,id,NULL,6,@propiedades,NULL,Respuesta,NULL,NULL,NULL,idGrupo,NOW());   
+    INSERT INTO `tab_resultado_ficha`(`idResultadoFicha`, `Seguimiento_idSeguimiento`, `Opcion_Opcion`, `Especialidad_idEspecialidad`, `TipoOpcion`, `Propiedades`, `RespuestaTexto`, `RespuestaValor`, `RespuestaFecha`, `RespuestaAdecuado`, `TipoListado`,`Grupo_idGrupo`,`fechaRegistro`) VALUES (NULL,idSeguimiento,id,NULL,6,@propiedades,NULL,Respuesta,NULL,Estado,NULL,idGrupo,NOW());
 
-    ELSEIF(tipoOpcion="7")THEN 
+    ELSEIF(tipoOpcion="7")THEN
 
 
-    INSERT INTO `tab_resultado_ficha`(`idResultadoFicha`, `Seguimiento_idSeguimiento`, `Opcion_Opcion`, `Especialidad_idEspecialidad`, `TipoOpcion`, `Propiedades`, `RespuestaTexto`, `RespuestaValor`, `RespuestaFecha`, `RespuestaAdecuado`, `TipoListado`,`Grupo_idGrupo`,`fechaRegistro`) VALUES (NULL,idSeguimiento,id,NULL,7,NULL,NULL,NULL,NULL,Estado,NULL,idGrupo,NOW()); 
+    INSERT INTO `tab_resultado_ficha`(`idResultadoFicha`, `Seguimiento_idSeguimiento`, `Opcion_Opcion`, `Especialidad_idEspecialidad`, `TipoOpcion`, `Propiedades`, `RespuestaTexto`, `RespuestaValor`, `RespuestaFecha`, `RespuestaAdecuado`, `TipoListado`,`Grupo_idGrupo`,`fechaRegistro`) VALUES (NULL,idSeguimiento,id,NULL,7,NULL,NULL,NULL,NULL,Estado,NULL,idGrupo,NOW());
 
-    ELSEIF(tipoOpcion="9")THEN 
-
-     if(tipoCampo="")then
-        SET tipoCampo=0;
-        end if;
-
-     if(valorCampo="")then
-    SET valorCampo=0;
-    end if;
-    
-     if(Dosis="")then
-    SET Dosis=0;
-    end if;
-    
-    if(Num="")then
-    SET Num=0;
-    end if;  
-    
-    SET @propiedades=(CONCAT('{"tipocampo":"',tipoCampo,'","valorCampo":"',valorCampo,'","Dosis":"',Dosis,'","Num":"',Num,'"}'));  
-
-    INSERT INTO `tab_resultado_ficha`(`idResultadoFicha`, `Seguimiento_idSeguimiento`, `Opcion_Opcion`, `Especialidad_idEspecialidad`, `TipoOpcion`, `Propiedades`, `RespuestaTexto`, `RespuestaValor`, `RespuestaFecha`, `RespuestaAdecuado`, `TipoListado`, `Grupo_idGrupo`,`fechaRegistro`) VALUES (NULL,idSeguimiento,id,NULL,9,@propiedades,NULL,NULL,NULL,Estado,NULL,idGrupo,NOW());   
-
- ELSEIF(tipoOpcion="11")THEN 
+    ELSEIF(tipoOpcion="9")THEN
 
      if(tipoCampo="")then
         SET tipoCampo=0;
@@ -1007,50 +990,78 @@ if(tipoGeneral="OPCION")THEN
      if(valorCampo="")then
     SET valorCampo=0;
     end if;
-    
+
      if(Dosis="")then
     SET Dosis=0;
     end if;
-    
+
     if(Num="")then
     SET Num=0;
-    end if;  
-    
-    SET @propiedades=(CONCAT('{"tipocampo":"',tipoCampo,'","valorCampo":"',valorCampo,'","Dosis":"',Dosis,'","Num":"',Num,'"}'));  
+    end if;
 
-    INSERT INTO `tab_resultado_ficha`(`idResultadoFicha`, `Seguimiento_idSeguimiento`, `Opcion_Opcion`, `Especialidad_idEspecialidad`, `TipoOpcion`, `Propiedades`, `RespuestaTexto`, `RespuestaValor`, `RespuestaFecha`, `RespuestaAdecuado`, `TipoListado`, `Grupo_idGrupo`,`fechaRegistro`) VALUES (NULL,idSeguimiento,id,NULL,11,@propiedades,NULL,NULL,NULL,NULL,NULL,idGrupo,NOW());   
-  
+    SET @propiedades=(CONCAT('{"tipocampo":"',tipoCampo,'","valorCampo":"',valorCampo,'","Dosis":"',Dosis,'","Num":"',Num,'"}'));
+
+    INSERT INTO `tab_resultado_ficha`(`idResultadoFicha`, `Seguimiento_idSeguimiento`, `Opcion_Opcion`, `Especialidad_idEspecialidad`, `TipoOpcion`, `Propiedades`, `RespuestaTexto`, `RespuestaValor`, `RespuestaFecha`, `RespuestaAdecuado`, `TipoListado`, `Grupo_idGrupo`,`fechaRegistro`) VALUES (NULL,idSeguimiento,id,NULL,9,@propiedades,NULL,NULL,NULL,Estado,NULL,idGrupo,NOW());
+
+   ELSEIF(tipoOpcion="16")THEN
+
+    SET @propiedades=(CONCAT('{"CriterioA":"',r1,'","EstadoCriterioA":"',r2,'","minimoCriterioA":"',r3,'","maximoCriterioA":"',r4,'","CriterioB":"',r5,'","EstadoCriterioB":"',r6,'","minimoCriterioB":"',r7,'","maximoCriterioB":"',r8,'"}'));
+
+    INSERT INTO `tab_resultado_ficha`(`idResultadoFicha`, `Seguimiento_idSeguimiento`, `Opcion_Opcion`, `Especialidad_idEspecialidad`, `TipoOpcion`, `Propiedades`, `RespuestaTexto`, `RespuestaValor`, `RespuestaFecha`, `RespuestaAdecuado`, `TipoListado`,`Grupo_idGrupo`,`fechaRegistro`) VALUES (NULL,idSeguimiento,id,NULL,16,@propiedades,NULL,NULL,NULL,NULL,NULL,idGrupo,NOW());
+
+ ELSEIF(tipoOpcion="11")THEN
+
+     if(tipoCampo="")then
+        SET tipoCampo=0;
+        end if;
+
+     if(valorCampo="")then
+    SET valorCampo=0;
+    end if;
+
+     if(Dosis="")then
+    SET Dosis=0;
+    end if;
+
+    if(Num="")then
+    SET Num=0;
+    end if;
+
+    SET @propiedades=(CONCAT('{"tipocampo":"',tipoCampo,'","valorCampo":"',valorCampo,'","Dosis":"',Dosis,'","Num":"',Num,'"}'));
+
+    INSERT INTO `tab_resultado_ficha`(`idResultadoFicha`, `Seguimiento_idSeguimiento`, `Opcion_Opcion`, `Especialidad_idEspecialidad`, `TipoOpcion`, `Propiedades`, `RespuestaTexto`, `RespuestaValor`, `RespuestaFecha`, `RespuestaAdecuado`, `TipoListado`, `Grupo_idGrupo`,`fechaRegistro`) VALUES (NULL,idSeguimiento,id,NULL,11,@propiedades,NULL,NULL,NULL,NULL,NULL,idGrupo,NOW());
+
 
     END IF;
 
 ELSEIF(tipoGeneral="ESPECIALIDAD")THEN
 
-		  
+
     if(Diag="")then
     SET Diag=0;
-    end if;  
+    end if;
      if(Medico="")then
     SET Medico=0;
-    end if; 
+    end if;
     if(Tratamiento="")then
     SET Tratamiento=0;
-    end if;  
+    end if;
     if(Observacion="")then
     SET Observacion=0;
-    end if;     
-    
-    SET @propiedades=(CONCAT('{"Diagnostico":"',Diag,'","Medico":"',Medico,'","Tratamiento":"',Tratamiento,'","Observacion":"',Observacion,'"}'));  
+    end if;
 
-    INSERT INTO `tab_resultado_ficha`(`idResultadoFicha`, `Seguimiento_idSeguimiento`, `Opcion_Opcion`, `Especialidad_idEspecialidad`, `TipoOpcion`, `Propiedades`, `RespuestaTexto`, `RespuestaValor`, `RespuestaFecha`, `RespuestaAdecuado`, `TipoListado`,`Grupo_idGrupo`,`fechaRegistro`) VALUES (NULL,idSeguimiento,NULL,id,NULL,@propiedades,NULL,NULL,NULL,Estado,NULL,NULL,NOW());   
+    SET @propiedades=(CONCAT('{"Diagnostico":"',Diag,'","Medico":"',Medico,'","Tratamiento":"',Tratamiento,'","Observacion":"',Observacion,'"}'));
 
-ELSEIF(tipoGeneral="PIE")THEN 
+    INSERT INTO `tab_resultado_ficha`(`idResultadoFicha`, `Seguimiento_idSeguimiento`, `Opcion_Opcion`, `Especialidad_idEspecialidad`, `TipoOpcion`, `Propiedades`, `RespuestaTexto`, `RespuestaValor`, `RespuestaFecha`, `RespuestaAdecuado`, `TipoListado`,`Grupo_idGrupo`,`fechaRegistro`) VALUES (NULL,idSeguimiento,NULL,id,NULL,@propiedades,NULL,NULL,NULL,Estado,NULL,NULL,NOW());
+
+ELSEIF(tipoGeneral="PIE")THEN
 
     INSERT INTO `tab_resultado_pie`(`idResultadoPie`, `Seguimiento_idSeguimiento`, `R1`, `R2`, `R3`, `R4`, `R5`, `R6`, `R7`, `R8`) VALUES (NULL,idSeguimiento,r1,r2,r3,r4,r5,r6,r7,r8);
 
-ELSEIF(tipoGeneral="REFIERE")THEN 
+ELSEIF(tipoGeneral="REFIERE")THEN
 
    INSERT INTO `tab_extra`(`idExtra`, `Refiere`, `Riesgo`, `Seguimiento_idSeguimiento`) VALUES (NULL,Respuesta,campo,idSeguimiento);
-   
+
 END IF;
 
 END$$
@@ -1071,13 +1082,13 @@ INSERT INTO `tab_seguimiento`(`idSeguimiento`, `Codigo`, `Year`, `Mes`, `Pacient
 
 SET ID=(LAST_INSERT_ID());
 
-SELECT ID;               
+SELECT ID;
 
 END$$
 
 DROP PROCEDURE IF EXISTS `SP_REPORTE_GENERAL`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_REPORTE_GENERAL` (IN `Inicio` DATE, IN `Fin` DATE, IN `sexo` INT(11))  NO SQL
-BEGIN 
+BEGIN
 DECLARE TotalPaciente INT(11);
 DECLARE TotalPacienteFemenino INT(11);
 DECLARE TotalPacienteMasculino INT(11);
@@ -1122,13 +1133,13 @@ DECLARE tallerPSINO DECIMAL(20,3);
 DECLARE totalFichasGeneral DECIMAL(20,3);
 DECLARE totalFichasYear DECIMAL(20,3);
 
-DECLARE totalMedico DECIMAL(20,3);  
+DECLARE totalMedico DECIMAL(20,3);
 
-SET TotalPaciente=(SELECT COUNT(*) FROM tab_paciente);
+SET TotalPaciente=(SELECT COUNT(*) FROM tab_paciente pa where pa.Sexo_idSexo=Sexo );
 
-SET CantidadHgSI=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente and  resu.Opcion_Opcion=8 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=1,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);  
+SET CantidadHgSI=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente and  resu.Opcion_Opcion=8 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=1,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);
 
-SET CantidadHgNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente and resu.Opcion_Opcion=8 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);  
+SET CantidadHgNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente and resu.Opcion_Opcion=8 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);
 
 SET PorcentajeHgCon=(ROUND((CantidadHgSI*100)/TotalPaciente,2));
 SET PorcentajeHgSin=(ROUND((CantidadHgNO*100)/TotalPaciente,2));
@@ -1136,7 +1147,7 @@ SET PorcentajeHgSin=(ROUND((CantidadHgNO*100)/TotalPaciente,2));
 
 SET totalColesterolSI=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente and resu.Opcion_Opcion=9 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=1,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);
 
-SET totalColesterolNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente  and resu.Opcion_Opcion=9 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo); 
+SET totalColesterolNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente  and resu.Opcion_Opcion=9 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);
 
 SET totalHDLSI=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente  and resu.Opcion_Opcion=10 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=1,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);
 
@@ -1144,8 +1155,8 @@ SET totalHDLNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimie
 
 SET totalLDLSI=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente and resu.Opcion_Opcion=11 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=1,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);
 
-SET totalLDLNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente  and resu.Opcion_Opcion=11 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);  
- 
+SET totalLDLNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente  and resu.Opcion_Opcion=11 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);
+
 SET totalIMCSI=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente   and resu.Opcion_Opcion=13 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=1,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);
 
 SET totalIMCNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente  and resu.Opcion_Opcion=13 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);
@@ -1153,38 +1164,38 @@ SET totalIMCNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimie
 
 SET tallerGLUCSI=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente and resu.Opcion_Opcion=90 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=1,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);
 
-SET tallerGLUCNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente  and resu.Opcion_Opcion=90 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo); 
+SET tallerGLUCNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente  and resu.Opcion_Opcion=90 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);
 
 SET tallerNUTSI=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente and resu.Opcion_Opcion=91 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=1,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);
 
-SET tallerNUTNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente   and resu.Opcion_Opcion=91 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo); 
+SET tallerNUTNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente   and resu.Opcion_Opcion=91 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);
 
 SET tallerDIASI=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente  and resu.Opcion_Opcion=92 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=1,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);
 
-SET tallerDIANO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente  and resu.Opcion_Opcion=92 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo); 
+SET tallerDIANO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente  and resu.Opcion_Opcion=92 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);
 
 SET tallerINSSI=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente   and resu.Opcion_Opcion=93 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=1,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);
 
-SET tallerINSNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente  and resu.Opcion_Opcion=93 and  seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);   
+SET tallerINSNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente  and resu.Opcion_Opcion=93 and  seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);
 
 SET tallerPODSI=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente  and resu.Opcion_Opcion=94 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=1,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);
 
-SET tallerPODNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente and resu.Opcion_Opcion=94 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);  
+SET tallerPODNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente and resu.Opcion_Opcion=94 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);
 
 SET tallerPSISI=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente   and resu.Opcion_Opcion=95 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=1,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);
 
-SET tallerPSINO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente   and resu.Opcion_Opcion=95 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);    
+SET tallerPSINO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente   and resu.Opcion_Opcion=95 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);
 
 SET totalFichasGeneral=(SELECT COUNT(*) FROM tab_seguimiento);
 
-SET totalFichasYear=(SELECT COUNT(*) FROM tab_seguimiento seg where seg.Year=year);  
+SET totalFichasYear=(SELECT COUNT(*) FROM tab_seguimiento seg where seg.Year=year);
 
 SET totalMedico=(SELECT COUNT(*) FROM tab_medico);
 
 SET TotalPacienteMasculino=(SELECT COUNT(*) FROM tab_paciente pa where pa.Sexo_idSexo=1);
 SET TotalPacienteFemenino=(SELECT COUNT(*) FROM tab_paciente pa where pa.Sexo_idSexo=2);
- 
-  
+
+
 SELECT totalFichasGeneral,totalFichasYear,TotalPaciente,TotalPacienteMasculino,
 TotalPacienteFemenino,totalMedico,CantidadHgSI,CantidadHgNO,PorcentajeHgCon,PorcentajeHgSin,totalColesterolSI,totalColesterolNO,totalHDLSI,totalHDLNO,totalLDLSI,totalLDLNO,totalIMCSI,totalIMCNO,tallerGLUCSI,tallerGLUCNO,tallerNUTSI,tallerNUTNO,tallerDIASI,tallerDIANO,tallerINSSI,tallerINSNO,tallerPODSI,tallerPODNO,tallerPSISI,tallerPSINO;
 END$$
@@ -1291,7 +1302,7 @@ END$$
 --
 DROP FUNCTION IF EXISTS `FU_RECUPERAR_MES`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `FU_RECUPERAR_MES` (`mes` INT(11)) RETURNS VARCHAR(100) CHARSET latin1 NO SQL
-BEGIN 
+BEGIN
 
 DECLARE mes_regreso VARCHAR(100);
 
@@ -1327,7 +1338,7 @@ END$$
 
 DROP FUNCTION IF EXISTS `FU_VALIDAR_DATE`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `FU_VALIDAR_DATE` (`valor` VARCHAR(150)) RETURNS DATE NO SQL
-BEGIN 
+BEGIN
 
 DECLARE OUT_vALOR DATE;
 
@@ -1342,7 +1353,7 @@ END$$
 
 DROP FUNCTION IF EXISTS `FU_VALIDAR_DATETIME`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `FU_VALIDAR_DATETIME` (`valor` VARCHAR(150)) RETURNS DATETIME NO SQL
-BEGIN 
+BEGIN
 
 DECLARE OUT_vALOR DATETIME;
 
@@ -1357,7 +1368,7 @@ END$$
 
 DROP FUNCTION IF EXISTS `FU_VALIDAR_INT`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `FU_VALIDAR_INT` (`valor` INT(11)) RETURNS INT(11) NO SQL
-BEGIN 
+BEGIN
 
 DECLARE OUT_vALOR INT(11);
 
@@ -1372,7 +1383,7 @@ END$$
 
 DROP FUNCTION IF EXISTS `FU_VALIDAR_TEXT`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `FU_VALIDAR_TEXT` (`valor` TEXT) RETURNS TEXT CHARSET latin1 NO SQL
-BEGIN 
+BEGIN
 
 DECLARE OUT_vALOR TEXT;
 
@@ -1387,7 +1398,7 @@ END$$
 
 DROP FUNCTION IF EXISTS `FU_VALIDAR_VARCHAR`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `FU_VALIDAR_VARCHAR` (`valor` VARCHAR(150)) RETURNS VARCHAR(200) CHARSET latin1 NO SQL
-BEGIN 
+BEGIN
 
 DECLARE OUT_vALOR VARCHAR(200);
 
@@ -1402,7 +1413,7 @@ END$$
 
 DROP FUNCTION IF EXISTS `FU_VALIRDAR_CHAR`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `FU_VALIRDAR_CHAR` (`valor` CHAR(20)) RETURNS CHAR(20) CHARSET latin1 NO SQL
-BEGIN 
+BEGIN
 
 DECLARE OUT_vALOR CHAR(20);
 
@@ -1432,185 +1443,7 @@ CREATE TABLE IF NOT EXISTS `bitacora` (
   `Detalle` text NOT NULL,
   `fechaRegistro` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idBitacora`)
-) ENGINE=InnoDB AUTO_INCREMENT=173 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `bitacora`
---
-
-INSERT INTO `bitacora` (`idBitacora`, `usuarioAccion`, `Accion`, `tablaAccion`, `Detalle`, `fechaRegistro`) VALUES
-(1, 'JESUS INCA CARDENAS', 'INSERTAR', 'USUARIO', 'SE REGISTRO EL USUARIO:admin3', '2018-09-29 19:53:29'),
-(2, 'JESUS INCA CARDENAS', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:usuaricambia', '2018-09-29 19:56:41'),
-(3, 'JESUS INCA CARDENAS', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba', '2018-09-29 20:00:24'),
-(4, 'JESUS INCA CARDENAS', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:nuevo', '2018-09-29 20:01:47'),
-(5, 'JESUS INCA CARDENAS', 'USUARIO DESHBILITADO', 'USUARIO', 'SEUSUARIO DESHBILITADO :admin', '2018-10-03 00:56:59'),
-(6, 'JESUS INCA CARDENAS', 'USUARIO DESHBILITADO', 'USUARIO', 'SEUSUARIO DESHBILITADO :admin', '2018-10-03 01:04:58'),
-(7, 'JESUS INCA CARDENAS', 'USAURIO HABILITADO', 'USUARIO', 'SEUSAURIO HABILITADO :admin', '2018-10-03 01:09:40'),
-(8, 'JESUS INCA CARDENAS', 'USUARIO DESHBILITADO', 'USUARIO', 'SEUSUARIO DESHBILITADO :admin', '2018-10-03 01:09:44'),
-(9, 'JESUS INCA CARDENAS', 'USAURIO HABILITADO', 'USUARIO', 'SEUSAURIO HABILITADO :admin', '2018-10-03 01:09:47'),
-(10, 'JESUS INCA CARDENAS', 'ACTUALIZO', 'USUARIO', 'SE REGISTRO EL USUARIO:wdqw', '2018-10-03 02:00:09'),
-(11, 'MAJE SILVA SILVA', 'ACTUALIZO', 'USUARIO', 'SE REGISTRO EL USUARIO:msilva', '2018-10-04 13:29:08'),
-(12, 'MAJE SILVA SILVA', 'ACTUALIZO', 'USUARIO', 'SE REGISTRO EL USUARIO:JLOPEZ', '2018-10-04 13:35:15'),
-(13, 'MAJE SILVA SILVA', 'USUARIO DESHBILITADO', 'USUARIO', 'SEUSUARIO DESHBILITADO :JLOPEZ', '2018-10-04 13:35:27'),
-(14, 'MAJE SILVA SILVA', 'USAURIO HABILITADO', 'USUARIO', 'SEUSAURIO HABILITADO :JLOPEZ', '2018-10-04 13:35:36'),
-(15, 'MAJE SILVA SILVA', 'USUARIO DESHBILITADO', 'USUARIO', 'SEUSUARIO DESHBILITADO :JLOPEZ', '2018-10-04 13:35:40'),
-(16, 'MAJE SILVA SILVA', 'USAURIO HABILITADO', 'USUARIO', 'SEUSAURIO HABILITADO :JLOPEZ', '2018-10-04 13:35:42'),
-(17, 'MAJE SILVA SILVA', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba', '2018-10-04 16:38:33'),
-(18, 'MAJE SILVA SILVA', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:msilva2', '2018-10-04 16:39:27'),
-(19, 'MAJE SILVA SILVA', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:admin', '2018-10-04 16:45:08'),
-(20, 'MAJE SILVA SILVA', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba2', '2018-10-04 16:45:17'),
-(21, 'MAJE SILVA SILVA', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba2', '2018-10-04 16:45:47'),
-(22, 'MAJE SILVA SILVA', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba2', '2018-10-04 16:46:08'),
-(23, 'MAJE SILVA SILVA', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba3', '2018-10-04 16:47:16'),
-(24, 'MAJE SILVA SILVA', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba1', '2018-10-04 16:47:56'),
-(25, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba1', '2018-10-04 16:48:23'),
-(26, 'JESUS INCA CARDENAS', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba3', '2018-10-04 16:50:18'),
-(27, 'JESUS INCA CARDENAS', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba3', '2018-10-04 16:51:20'),
-(28, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:admin2', '2018-10-04 16:52:32'),
-(29, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba3', '2018-10-04 16:55:17'),
-(30, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba3', '2018-10-04 16:55:33'),
-(31, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba3', '2018-10-04 16:55:53'),
-(32, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba2', '2018-10-04 16:56:02'),
-(33, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba2', '2018-10-04 16:56:09'),
-(34, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba2', '2018-10-04 16:56:32'),
-(35, 'MAJE SILVA SILVA', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba2', '2018-10-04 16:58:27'),
-(36, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba2', '2018-10-04 16:59:13'),
-(37, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba2', '2018-10-04 17:01:09'),
-(38, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba2', '2018-10-04 17:03:37'),
-(39, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba2', '2018-10-04 17:04:28'),
-(40, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba2', '2018-10-04 17:04:43'),
-(41, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba2', '2018-10-04 17:05:07'),
-(42, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba2', '2018-10-04 17:05:52'),
-(43, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba2', '2018-10-04 17:06:14'),
-(44, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba', '2018-10-04 17:07:12'),
-(45, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba', '2018-10-04 17:08:37'),
-(46, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba', '2018-10-04 17:09:29'),
-(47, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba', '2018-10-04 17:10:33'),
-(48, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba', '2018-10-04 17:11:14'),
-(49, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba', '2018-10-04 17:12:14'),
-(50, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba', '2018-10-04 17:12:22'),
-(51, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba', '2018-10-04 17:13:03'),
-(52, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba', '2018-10-04 17:13:14'),
-(53, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba', '2018-10-04 17:14:09'),
-(54, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba', '2018-10-04 17:14:50'),
-(55, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba', '2018-10-04 17:14:50'),
-(56, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba', '2018-10-04 17:15:39'),
-(57, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba', '2018-10-04 17:15:47'),
-(58, 'JESUS INCA CARDENAS', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba', '2018-10-04 17:17:05'),
-(59, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:admin2', '2018-10-04 17:19:14'),
-(60, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:admin2', '2018-10-04 17:19:43'),
-(61, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:admin2', '2018-10-04 17:22:44'),
-(62, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:admin2', '2018-10-04 17:23:08'),
-(63, 'LUCIA TABOADA GUZMAN', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:admin2', '2018-10-04 17:24:49'),
-(64, 'MAJE SILVA SILVA', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:admin', '2018-10-04 17:29:52'),
-(65, 'JESUS INCA CARDENAS', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:admin', '2018-10-04 17:31:53'),
-(66, 'MAJE SILVA SILVA', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:admin', '2018-10-04 17:32:14'),
-(67, 'MAJE SILVA SILVA', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:admin', '2018-10-04 17:48:50'),
-(68, 'MAJE SILVA SILVA', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:admin', '2018-10-04 17:49:27'),
-(69, 'MAJE SILVA SILVA', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:admin', '2018-10-04 17:53:16'),
-(70, 'MAJE SILVA SILVA', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:admin', '2018-10-04 17:54:56'),
-(71, 'MAJE SILVA SILVA', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:admin', '2018-10-04 17:55:24'),
-(72, 'MAJE SILVA SILVA', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:admin', '2018-10-04 17:56:52'),
-(73, 'MAJE SILVA SILVA', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:admin', '2018-10-04 18:00:31'),
-(74, 'JESUS INCA CARDENAS', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:admin', '2018-10-04 18:03:17'),
-(75, 'JESUS INCA CARDENAS', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:admin', '2018-10-04 18:04:41'),
-(76, 'JESUS INCA CARDENAS', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:admin', '2018-10-04 18:06:15'),
-(77, 'JESUS INCA CARDENAS', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba2', '2018-10-05 10:02:27'),
-(78, 'JESUS INCA CARDENAS', 'ACTUALIZO', 'USUARIO', 'SE REGISTRO EL USUARIO:persona', '2018-10-05 10:14:26'),
-(79, 'JESUS INCA CARDENAS', 'ACTUALIZO', 'USUARIO', 'SE REGISTRO EL USUARIO:persona2', '2018-10-05 10:16:34'),
-(80, 'JESUS INCA CARDENAS', 'ACTUALIZO', 'USUARIO', 'SE REGISTRO EL USUARIO:prueba', '2018-10-05 10:17:48'),
-(81, 'JESUS INCA CARDENAS', 'ACTUALIZO', 'USUARIO', 'SE REGISTRO EL USUARIO:prueba1', '2018-10-05 10:18:17'),
-(82, 'JESUS INCA CARDENAS', 'ACTUALIZO', 'USUARIO', 'SE ACTUALIZO EL USUARIO:prueba2', '2018-10-05 10:39:30'),
-(83, 'JESUS INCA CARDENAS', 'INSERTAR', 'Persona', 'SE REGISTRO PERSONA:jesu werfwe fefwe', '2018-10-05 10:51:36'),
-(84, 'JESUS INCA CARDENAS', 'ACTUALIZACION', 'Persona', 'SE ACTUALIZO PERSONA:jesus inca cardenas', '2018-10-05 11:11:11'),
-(85, 'JESUS INCA CARDENAS', 'REGISTRO', 'Persona', 'SE REGISTRO PERSONA:wfwefwe werfwef frefwef', '2018-10-05 12:48:34'),
-(86, 'JESUS INCA CARDENAS', 'USUARIO DESHBILITADO', 'USUARIO', 'SEUSUARIO DESHBILITADO :admin', '2018-10-05 13:36:40'),
-(87, 'JESUS INCA CARDENAS', 'USUARIO DESHBILITADO', 'USUARIO', 'SEUSUARIO DESHBILITADO :admin', '2018-10-05 13:36:46'),
-(88, 'admin', 'PERSONA DESHBILITADO', 'USUARIO', 'SEPERSONA DESHBILITADO :JESUS INCA CARDENAS', '2018-10-05 13:38:27'),
-(89, 'admin', 'PERSONA HABILITADO', 'USUARIO', 'SEPERSONA HABILITADO :JESUS INCA CARDENAS', '2018-10-05 13:38:30'),
-(90, 'admin', 'PERSONA DESHBILITADO', 'USUARIO', 'SEPERSONA DESHBILITADO :JESUS INCA CARDENAS', '2018-10-05 13:38:32'),
-(91, 'admin', 'PERSONA DESHBILITADO', 'USUARIO', 'SEPERSONA DESHBILITADO :LUCIA TABOADA GUZMAN', '2018-10-05 13:59:32'),
-(92, 'admin', 'PERSONA HABILITADO', 'USUARIO', 'SEPERSONA HABILITADO :JESUS INCA CARDENAS', '2018-10-05 14:00:13'),
-(93, 'JESUS23 INCA23 CARDENAS', 'ACTUALIZACION', 'Persona', 'SE ACTUALIZO PERSONA:JESUS23 INCA23 CARDENAS', '2018-10-05 14:42:15'),
-(94, 'JESUS233 INCA233 CARDENAS', 'ACTUALIZACION', 'Persona', 'SE ACTUALIZO PERSONA:JESUS233 INCA233 CARDENAS', '2018-10-05 14:43:49'),
-(95, 'JESUS23331 INCA23314 CARDENAS', 'ACTUALIZACION', 'Persona', 'SE ACTUALIZO PERSONA:JESUS23331 INCA23314 CARDENAS', '2018-10-05 14:45:17'),
-(96, 'JESUS23331 INCA23314 CARDENAS', 'ACTUALIZACION', 'Persona', 'SE ACTUALIZO PERSONA:JESUS23331 INCA23314 CARDENAS', '2018-10-05 14:46:03'),
-(97, 'JESUS INCA CARDENAS', 'ACTUALIZACION', 'Persona', 'SE ACTUALIZO PERSONA:JESUS INCA CARDENAS', '2018-10-05 14:48:34'),
-(98, 'JESUS2 INCA2 CARDENAS', 'ACTUALIZACION', 'Persona', 'SE ACTUALIZO PERSONA:JESUS2 INCA2 CARDENAS', '2018-10-05 14:49:29'),
-(99, 'admin', 'PERSONA DESHBILITADO', 'USUARIO', 'SEPERSONA DESHBILITADO :JESUS2 INCA2 CARDENAS', '2018-10-05 14:49:35'),
-(100, 'JESUS2 INCA2 CARDENAS', 'INSERTAR', 'SE REGISTRO PERFIL', 'Perfil', '2018-10-05 15:42:18'),
-(101, 'JESUS2 INCA2 CARDENAS', 'INSERTAR', 'SE REGISTRO PERMISOS DE PERFIL', 'Permisos', '2018-10-05 15:42:18'),
-(102, 'JESUS2 INCA2 CARDENAS', 'INSERTAR', 'SE REGISTRO PERFIL', 'Perfil', '2018-10-05 15:42:43'),
-(103, 'JESUS2 INCA2 CARDENAS', 'INSERTAR', 'SE REGISTRO PERMISOS DE PERFIL', 'Permisos', '2018-10-05 15:42:43'),
-(104, 'admin', 'PERSONA DESHBILITADO', 'USUARIO', 'SEPERSONA DESHBILITADO :MAJE SILVA SILVA', '2018-10-05 15:42:51'),
-(105, 'admin', 'ACTUALIZACION', 'Perfil', 'SE ACTUALIZO PERFIL:fweefw', '2018-10-05 15:53:04'),
-(106, 'admin', 'ACTUALIZACION', 'Perfil', 'SE ACTUALIZO PERFIL:ADMINISTRADOR', '2018-10-05 15:53:22'),
-(107, 'admin', 'ACTUALIZACION', 'Perfil', 'SE ACTUALIZO PERFIL:wefwefew', '2018-10-05 15:54:03'),
-(108, 'admin', 'ACTUALIZACION', 'Perfil', 'SE ACTUALIZO PERFIL:wfgwf', '2018-10-05 15:54:11'),
-(109, 'admin', 'PERSONA DESHBILITADO', 'USUARIO', 'SEPERSONA DESHBILITADO :JESUS2 INCA2 CARDENAS', '2018-10-05 15:56:36'),
-(110, 'admin', 'PERSONA DESHBILITADO', 'USUARIO', 'SEPERSONA DESHBILITADO :JESUS2 INCA2 CARDENAS', '2018-10-05 15:56:44'),
-(111, 'admin', 'PERFIL DESHBILITADO', 'PERFIL', 'SEPERFIL DESHBILITADO :ADMINISTRADOR', '2018-10-05 16:02:49'),
-(112, 'admin', 'PERFIL HABILITADO', 'PERFIL', 'SEPERFIL HABILITADO :ADMINISTRADOR', '2018-10-05 16:03:01'),
-(113, 'admin', 'PERFIL HABILITADO', 'PERFIL', 'SEPERFIL HABILITADO :wefwefew', '2018-10-05 16:03:02'),
-(114, 'admin', 'PERFIL HABILITADO', 'PERFIL', 'SEPERFIL HABILITADO :wfgwf', '2018-10-05 16:03:05'),
-(115, 'JESUS2 INCA2 CARDENAS', 'INSERTAR', 'SE REGISTRO PERFIL', 'Perfil', '2018-11-08 13:25:46'),
-(116, 'JESUS2 INCA2 CARDENAS', 'INSERTAR', 'SE REGISTRO PERMISOS DE PERFIL', 'Permisos', '2018-11-08 13:25:46'),
-(117, 'admin', 'ACTUALIZACION', 'Perfil', 'SE ACTUALIZO PERFIL:ADMINISTRADOR', '2018-11-08 13:26:10'),
-(118, 'JESUS2 INCA2 CARDENAS', 'INSERTAR', 'SE REGISTRO PERFIL', 'Perfil', '2018-11-08 13:26:34'),
-(119, 'JESUS2 INCA2 CARDENAS', 'INSERTAR', 'SE REGISTRO PERMISOS DE PERFIL', 'Permisos', '2018-11-08 13:26:34'),
-(120, 'JESUS2 INCA2 CARDENAS', 'INSERTAR', 'SE REGISTRO PERFIL', 'Perfil', '2018-11-08 13:27:09'),
-(121, 'JESUS2 INCA2 CARDENAS', 'INSERTAR', 'SE REGISTRO PERMISOS DE PERFIL', 'Permisos', '2018-11-08 13:27:09'),
-(122, 'JESUS2 INCA2 CARDENAS', 'INSERTAR', 'SE REGISTRO PERFIL', 'Perfil', '2018-11-08 13:27:48'),
-(123, 'JESUS2 INCA2 CARDENAS', 'INSERTAR', 'SE REGISTRO PERMISOS DE PERFIL', 'Permisos', '2018-11-08 13:27:48'),
-(124, 'JESUS2 INCA2 CARDENAS', 'INSERTAR', 'SE REGISTRO PERFIL', 'Perfil', '2018-11-08 13:28:06'),
-(125, 'JESUS2 INCA2 CARDENAS', 'INSERTAR', 'SE REGISTRO PERMISOS DE PERFIL', 'Permisos', '2018-11-08 13:28:06'),
-(126, 'admin', 'USAURIO HABILITADO', 'USUARIO', 'SEUSAURIO HABILITADO :JESUS2 INCA2 CARDENAS', '2018-11-08 13:28:18'),
-(127, 'admin', 'PERSONA HABILITADO', 'USUARIO', 'SEPERSONA HABILITADO :JESUS2 INCA2 CARDENAS', '2018-11-08 13:29:09'),
-(128, 'ADMINISTRADOR GENERAL DEL SISTEMA', 'ACTUALIZACION', 'Persona', 'SE ACTUALIZO PERSONA:ADMINISTRADOR GENERAL DEL SISTEMA', '2018-11-08 13:29:28'),
-(129, 'ADMINISTRADOR GENERAL DEL SISTEMA', 'REGISTRO', 'Persona', 'SE REGISTRO PERSONA:JOSE RODRIGO SULCA', '2018-11-08 13:30:27'),
-(130, 'ADMINISTRADOR GENERAL DEL SISTEMA', 'REGISTRO', 'Persona', 'SE REGISTRO PERSONA:JORGE ROMAN SULCA', '2018-11-08 13:31:02'),
-(131, 'ADMINISTRADOR GENERAL DEL SISTEMA', 'REGISTRO', 'Persona', 'SE REGISTRO PERSONA:feww wef wef', '2018-11-08 14:29:45'),
-(132, 'ADMINISTRADOR GENERAL DEL SISTEMA', 'REGISTRO', 'Persona', 'SE REGISTRO PERSONA:wef wef wef', '2018-11-08 14:32:35'),
-(133, 'ADMINISTRADOR GENERAL DEL SISTEMA', 'ACTUALIZACION', 'Persona', 'SE ACTUALIZO PERSONA:wef wef wef', '2018-11-08 14:34:19'),
-(134, 'ADMINISTRADOR GENERAL DEL SISTEMA', 'REGISTRO', 'Persona', 'SE REGISTRO PERSONA:rger gwefwe gwegw', '2018-11-08 14:34:33'),
-(135, 'ADMINISTRADOR GENERAL DEL SISTEMA', 'REGISTRO', 'Persona', 'SE REGISTRO PERSONA:rf f fr', '2018-11-08 14:35:17'),
-(136, 'admin', 'MATERIAL DESHABILITADO', 'MATERIAL', 'MATERIAL ACTUALIZAR', '2018-11-08 15:42:18'),
-(137, 'admin', 'MATERIAL HABILITADO', 'MATERIAL', 'MATERIAL ACTUALIZAR', '2018-11-08 15:42:21'),
-(138, 'admin', 'ACTUALIZACION', 'Material', 'SE ACTUALIZO MATERIAL:PRIMA WOOL - 000236', '2018-11-08 15:42:32'),
-(139, 'admin', 'ACTUALIZACION', 'Material', 'SE ACTUALIZO MATERIAL:PRIMA ACRYLIC - 000235', '2018-11-08 15:43:16'),
-(140, 'admin', 'ACTUALIZACION', 'Material', 'SE ACTUALIZO MATERIAL:PRIMA COTTON - 000234', '2018-11-08 15:43:23'),
-(141, 'ADMINISTRADOR GENERAL DEL SISTEMA', 'REGISTRO', 'USUARIO', 'SE REGISTRO EL USUARIO:agarciaa', '2018-11-08 15:52:43'),
-(142, 'ADMINISTRADOR GENERAL DEL SISTEMA', 'REGISTRO', 'USUARIO', 'SE REGISTRO EL USUARIO:jgonzalezc', '2018-11-08 15:54:41'),
-(143, 'ADMINISTRADOR GENERAL DEL SISTEMA', 'REGISTRO', 'USUARIO', 'SE REGISTRO EL USUARIO:mrodriguezc', '2018-11-08 15:55:08'),
-(144, 'ADMINISTRADOR GENERAL DEL SISTEMA', 'REGISTRO', 'USUARIO', 'SE REGISTRO EL USUARIO:dlopezp', '2018-11-08 15:55:42'),
-(145, 'ADMINISTRADOR GENERAL DEL SISTEMA', 'REGISTRO', 'USUARIO', 'SE REGISTRO EL USUARIO:jmartinezs', '2018-11-08 15:56:05'),
-(146, 'admin', 'SE ACTUALIZO PERMISOS', 'PERMISOS', 'SE ACTUALIZO PERMISOS DE PERFIL:SUPERVISOR DE ENCONADO', '2018-11-08 16:02:04'),
-(147, 'admin', 'SE ACTUALIZO PERMISOS', 'PERMISOS', 'SE ACTUALIZO PERMISOS DE PERFIL:SUPERVISOR DE OVILLADO', '2018-11-08 16:03:13'),
-(148, 'admin', 'SE ACTUALIZO PERMISOS', 'PERMISOS', 'SE ACTUALIZO PERMISOS DE PERFIL:SUPERVISOR DE CALIDAD', '2018-11-08 16:03:28'),
-(149, 'admin', 'SE ACTUALIZO PERMISOS', 'PERMISOS', 'SE ACTUALIZO PERMISOS DE PERFIL:SUPERVISOR DE TINTORERIA', '2018-11-08 16:03:43'),
-(150, 'admin', 'SE ACTUALIZO PERMISOS', 'PERMISOS', 'SE ACTUALIZO PERMISOS DE PERFIL:TRABAJADOR', '2018-11-08 16:03:59'),
-(151, 'admin', 'MATERIAL DESHABILITADO', 'MATERIAL', 'MATERIAL ACTUALIZAR', '2018-11-21 01:02:36'),
-(152, 'admin', 'MATERIAL DESHABILITADO', 'MATERIAL', 'MATERIAL ACTUALIZAR', '2018-11-21 01:02:38'),
-(153, 'admin', 'MATERIAL HABILITADO', 'MATERIAL', 'MATERIAL ACTUALIZAR', '2018-11-21 01:02:40'),
-(154, 'admin', 'MATERIAL HABILITADO', 'MATERIAL', 'MATERIAL ACTUALIZAR', '2018-11-21 01:02:42'),
-(155, 'admin', 'ACTUALIZACION', 'Material', 'SE ACTUALIZO MATERIAL:ALPACA - 000234', '2018-11-21 01:02:57'),
-(156, 'admin', 'ACTUALIZACION', 'Material', 'SE ACTUALIZO MATERIAL:BABY MICROFIBRA - 000235', '2018-11-21 01:03:11'),
-(157, 'admin', 'ACTUALIZACION', 'Material', 'SE ACTUALIZO MATERIAL:COTTON WOOL - 000236', '2018-11-21 01:03:23'),
-(158, 'ADMINISTRADOR GENERAL DEL SISTEMA', 'INSERTAR', 'SE REGISTRO PERFIL', 'Perfil', '2018-11-21 20:48:11'),
-(159, 'ADMINISTRADOR GENERAL DEL SISTEMA', 'INSERTAR', 'SE REGISTRO PERMISOS DE PERFIL', 'Permisos', '2018-11-21 20:48:11'),
-(160, 'ADMINISTRADOR GENERAL DEL SISTEMA', 'INSERTAR', 'SE REGISTRO PERFIL', 'Perfil', '2018-11-21 20:48:29'),
-(161, 'ADMINISTRADOR GENERAL DEL SISTEMA', 'INSERTAR', 'SE REGISTRO PERMISOS DE PERFIL', 'Permisos', '2018-11-21 20:48:29'),
-(162, 'ADMINISTRADOR GENERAL DEL SISTEMA', 'INSERTAR', 'SE REGISTRO PERFIL', 'Perfil', '2018-11-21 20:51:02'),
-(163, 'ADMINISTRADOR GENERAL DEL SISTEMA', 'INSERTAR', 'SE REGISTRO PERMISOS DE PERFIL', 'Permisos', '2018-11-21 20:51:02'),
-(164, 'admin', 'ACTUALIZACION', 'Perfil', 'SE ACTUALIZO PERFIL:ADMINISTRADOR', '2018-11-21 20:54:22'),
-(165, 'admin', 'ACTUALIZACION', 'Perfil', 'SE ACTUALIZO PERFIL:MEDICO', '2018-11-21 20:54:41'),
-(166, 'admin', 'ACTUALIZACION', 'Perfil', 'SE ACTUALIZO PERFIL:MEDICO', '2018-11-21 20:58:41'),
-(167, 'admin', 'ACTUALIZACION', 'Perfil', 'SE ACTUALIZO PERFIL:MEDICO', '2018-11-21 20:58:52'),
-(168, 'ADMINISTRADOR GENERAL DEL SISTEMA', 'REGISTRO', 'USUARIO', 'SE REGISTRO EL USUARIO:agarciaa', '2018-11-21 22:46:32'),
-(169, 'ADMINISTRADOR GENERAL DEL SISTEMA', 'REGISTRO', 'USUARIO', 'SE REGISTRO EL USUARIO:jgonzalezc', '2018-11-21 22:46:48'),
-(170, 'ADMINISTRADOR GENERAL DEL SISTEMA', 'REGISTRO', 'USUARIO', 'SE REGISTRO EL USUARIO:mrodriguezc', '2018-11-21 22:47:07'),
-(171, 'admin', 'PACIENTE DESHABILITADO', 'PACIENTE', 'PACIENTE ACTUALIZAR', '2018-11-22 00:37:30'),
-(172, 'admin', 'PACIENTE HABILITADO', 'PACIENTE', 'PACIENTE ACTUALIZAR', '2018-11-22 00:37:32');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1693,7 +1526,7 @@ CREATE TABLE IF NOT EXISTS `login` (
 --
 
 INSERT INTO `login` (`idLogin`, `Usuario_idUsuario`, `usuarioLog`, `passwordLog`, `perfilLog`, `fechaLog`, `ip`, `fechaLogout`) VALUES
-(1, 1, 'admin', '$2a$08$RCuzW/8g2Lg4QMNCfmsa/uKp33rvDmdWrC.P40DOECJlMtPu16NMW', 'Administrador', '2018-09-29 14:03:44', '::1', '2019-03-08 16:02:22');
+(1, 1, 'admin', '$2a$08$RCuzW/8g2Lg4QMNCfmsa/uKp33rvDmdWrC.P40DOECJlMtPu16NMW', 'Administrador', '2018-09-29 14:03:44', '::1', '2019-10-04 08:44:31');
 
 -- --------------------------------------------------------
 
@@ -1773,119 +1606,14 @@ CREATE TABLE IF NOT EXISTS `persona` (
   `fechaRegistro` datetime NOT NULL,
   PRIMARY KEY (`idPersona`),
   KEY `FK_Estado_idEstado` (`Estado_idEstado`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=147 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `persona`
 --
 
 INSERT INTO `persona` (`idPersona`, `nombrePersona`, `apellidoPaterno`, `apellidoMaterno`, `DNI`, `fechaNacimiento`, `correo`, `telefono`, `direccion`, `Estado_idEstado`, `fechaRegistro`) VALUES
-(1, 'ADMINISTRADOR', 'GENERAL', 'DEL SISTEMA', '47040087', '1992-05-18', 'jic_d12@hotmail.com', '5284039', 'aahh enrique milla ochoa mz 74 lt 7 los olicvos', 1, '2018-09-29 13:45:53'),
-(40, 'ANTONIO', 'GARCIA', 'ARIAS', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(41, 'JOSE', 'GONZALEZ', 'CARMONA', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(42, 'MANUEL', 'RODRIGUEZ', 'CRESPO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(43, 'FRANCISCO', 'FERNANDEZ', 'ROMAN', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(44, 'DAVID', 'LOPEZ', 'PASTOR', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(45, 'JUAN', 'MARTINEZ', 'SOTO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(46, 'JOSE ANTONIO', 'SANCHEZ', 'SAEZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(47, 'JAVIER', 'PEREZ', 'VELASCO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(48, 'JOSE LUIS', 'GOMEZ', 'MOYA', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(49, 'DANIEL', 'MARTIN', 'SOLER', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(50, 'FRANCISCO JAVIER', 'JIMENEZ', 'PARRA', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(51, 'JESUS', 'RUIZ', 'ESTEBAN', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(52, 'CARLOS', 'HERNANDEZ', 'BRAVO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(53, 'ALEJANDRO', 'DIAZ', 'GALLARDO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(54, 'MIGUEL', 'MORENO', 'ROJAS', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(55, 'JOSE MANUEL', 'MUÑOZ', 'HERRERO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(56, 'RAFAEL', 'ALVAREZ', 'MONTERO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(57, 'PEDRO', 'ROMERO', 'LORENZO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(58, 'MIGUEL ANGEL', 'ALONSO', 'HIDALGO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(59, 'ANGEL', 'GUTIERREZ', 'GIMENEZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(60, 'PABLO', 'NAVARRO', 'IBAÑEZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(61, 'JOSE MARIA', 'TORRES', 'FERRER', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(62, 'FERNANDO', 'DOMINGUEZ', 'DURAN', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(63, 'SERGIO', 'VAZQUEZ', 'SANTIAGO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(64, 'LUIS', 'RAMOS', 'BENITEZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(65, 'JORGE', 'GIL', 'VARGAS', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(66, 'ALBERTO', 'RAMIREZ', 'MORA', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(67, 'JUAN CARLOS', 'SERRANO', 'VICENTE', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(68, 'ALVARO', 'BLANCO', 'VIDAL', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(69, 'JUAN JOSE', 'MOLINA', 'PEÑA', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(70, 'DIEGO', 'MORALES', 'FLORES', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(71, 'ADRIAN', 'SUAREZ', 'CABRERA', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(72, 'RAUL', 'ORTEGA', 'CAMPOS', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(73, 'JUAN ANTONIO', 'DELGADO', 'VEGA', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(74, 'IVAN', 'CASTRO', 'FUENTES', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(75, 'ENRIQUE', 'ORTIZ', 'CARRASCO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(76, 'RUBEN', 'RUBIO', 'DIEZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(77, 'RAMON', 'MARIN', 'REYES', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(78, 'VICENTE', 'SANZ', 'CABALLERO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(79, 'OSCAR', 'NUÑEZ', 'NIETO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(80, 'ANDRES', 'IGLESIAS', 'AGUILAR', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(81, 'JOAQUIN', 'MEDINA', 'PASCUAL', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(82, 'JUAN MANUEL', 'GARRIDO', 'SANTANA', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(83, 'SANTIAGO', 'CORTES', 'MORALES', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(84, 'EDUARDO', 'CASTILLO', 'SUAREZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(85, 'VICTOR', 'SANTOS', 'ORTEGA', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(86, 'MARIO', 'LOZANO', 'DELGADO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(87, 'ROBERTO', 'GUERRERO', 'CASTRO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(88, 'JAIME', 'CANO', 'ORTIZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(89, 'ANGELA', 'PRIETO', 'MOLINA', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(90, 'SONIA', 'MENDEZ', 'RUBIO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(91, 'SANDRA', 'CRUZ', 'MARIN', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(92, 'MARINA', 'CALVO', 'SANZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(93, 'SUSANA', 'GALLEGO', 'NUÑEZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(94, 'YOLANDA', 'HERRERA', 'IGLESIAS', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(95, 'NATALIA', 'MARQUEZ', 'MEDINA', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(96, 'MARGARITA', 'LEON', 'GARRIDO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(97, 'MARIA JOSEFA', 'VIDAL', 'CORTES', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(98, 'MARIA ROSARIO', 'PEÑA', 'CASTILLO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(99, 'EVA', 'FLORES', 'SANTOS', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(100, 'INMACULADA', 'CABRERA', 'LOZANO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(101, 'CLAUDIA', 'CAMPOS', 'GUERRERO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(102, 'MARIA MERCEDES', 'VEGA', 'CANO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(103, 'ANA ISABEL', 'FUENTES', 'PRIETO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(104, 'ESTHER', 'CARRASCO', 'MENDEZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(105, 'NOELIA', 'DIEZ', 'CRUZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(106, 'CARLA', 'REYES', 'CALVO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(107, 'VERONICA', 'CABALLERO', 'GALLEGO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(108, 'SOFIA', 'NIETO', 'HERRERA', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(109, 'ANGELES', 'AGUILAR', 'MARQUEZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(110, 'CAROLINA', 'PASCUAL', 'LEON', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(111, 'NEREA', 'SANTANA', 'ROMERO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(112, 'MARIA VICTORIA', 'HERRERO', 'ALONSO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(113, 'MARIA ROSA', 'MONTERO', 'GUTIERREZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(114, 'EVA MARIA', 'LORENZO', 'NAVARRO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(115, 'AMPARO', 'HIDALGO', 'TORRES', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(116, 'MIRIAM', 'GIMENEZ', 'DOMINGUEZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(117, 'LORENA', 'IBAÑEZ', 'VAZQUEZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(118, 'INES', 'FERRER', 'RAMOS', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(119, 'MARIA CONCEPCION', 'DURAN', 'GIL', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(120, 'ANA BELEN', 'SANTIAGO', 'RAMIREZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(121, 'MARIA ELENA', 'BENITEZ', 'SERRANO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(122, 'VICTORIA', 'VARGAS', 'BLANCO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:08:59'),
-(123, 'MARIA ANTONIA', 'MORA', 'GARCIA', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:09:00'),
-(124, 'DANIELA', 'VICENTE', 'GONZALEZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:09:00'),
-(125, 'CATALINA', 'ARIAS', 'RODRIGUEZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:09:00'),
-(126, 'CONSUELO', 'CARMONA', 'FERNANDEZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:09:00'),
-(127, 'LIDIA', 'CRESPO', 'LOPEZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:09:00'),
-(128, 'MARIA NIEVES', 'ROMAN', 'MARTINEZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:09:00'),
-(129, 'CELIA', 'PASTOR', 'SANCHEZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:09:00'),
-(130, 'ALEJANDRA', 'SOTO', 'PEREZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:09:00'),
-(131, 'OLGA', 'SAEZ', 'GOMEZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:09:00'),
-(132, 'EMILIA', 'VELASCO', 'MARTIN', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:09:00'),
-(133, 'GLORIA', 'MOYA', 'JIMENEZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:09:00'),
-(134, 'LUISA', 'SOLER', 'RUIZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:09:00'),
-(135, 'AINHOA', 'PARRA', 'HERNANDEZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:09:00'),
-(136, 'AURORA', 'ESTEBAN', 'DIAZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:09:00'),
-(137, 'MARIA SOLEDAD', 'BRAVO', 'MORENO', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:09:00'),
-(138, 'MARTINA', 'GALLARDO', 'MUÑOZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:09:00'),
-(139, 'FATIMA', 'ROJAS', 'ALVAREZ', '44444444', '1989-01-01', 'example@hotmail.com', '999999999', 'direccion ejemplo', 1, '2018-10-20 14:09:00'),
-(142, 'ROMULO', 'SANTA', 'PEREZ', '47404442', '2018-11-21', 'jic_D12@hotmail.com', '121313', 'a.a.h.h enrique milla ochoa mz 74 lt 7\r\nlos olivos- lima - lima', 1, '2018-11-21 23:39:58'),
-(143, 'LUISA', 'LUPE', 'ROMEROS', '23121231', '2018-11-13', 'WFEF@RF.COM', '312312', 'WEFWEFEWFWE', 1, '2018-11-22 00:41:25'),
-(144, 'MIRIAN', 'RODRIGUEZX', 'PORRAS', '35635454', '2018-11-27', 'wef@gew.com', '123124123', 'cqefqwfewf', 1, '2018-11-22 00:42:06'),
-(145, 'wef', 'wef', 'wef', '122321', '2018-11-14', NULL, '141', NULL, 1, '2018-11-22 15:28:08'),
-(146, 'prueba', 'fwef', 'fewf', '212312', '1999-12-25', NULL, '2112', 'wefewf', 1, '2018-12-01 17:00:18');
+(1, 'Administrador', 'General', 'del Sistema', '44444444', '1992-10-16', NULL, NULL, NULL, 1, '2019-10-04 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -1923,52 +1651,7 @@ CREATE TABLE IF NOT EXISTS `tab_asignacionespecialidad` (
   PRIMARY KEY (`idAsignacionEspecialidad`),
   KEY `FK_MEDICOAS` (`Medico_idMedico`),
   KEY `FK_ESPEAS` (`Especialidad_idEspecialidad`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `tab_asignacionespecialidad`
---
-
-INSERT INTO `tab_asignacionespecialidad` (`idAsignacionEspecialidad`, `Especialidad_idEspecialidad`, `Medico_idMedico`, `fechaRegistro`) VALUES
-(7, 4, 1, '2019-02-09 20:25:37'),
-(8, 4, 2, '2019-02-09 20:25:40'),
-(11, 5, 2, '2019-02-09 20:36:59'),
-(12, 6, 1, '2019-02-09 20:37:12'),
-(13, 5, 3, '2019-02-09 20:37:22'),
-(15, 6, 3, '2019-02-09 21:00:28'),
-(16, 7, 1, '2019-02-09 21:00:37'),
-(20, 8, 2, '2019-02-09 21:00:54'),
-(24, 9, 3, '2019-02-09 21:01:18'),
-(25, 10, 1, '2019-02-09 21:01:27'),
-(26, 10, 2, '2019-02-09 21:01:29'),
-(27, 10, 3, '2019-02-09 21:01:32'),
-(28, 11, 1, '2019-02-09 21:01:40'),
-(29, 11, 2, '2019-02-09 21:01:43'),
-(30, 11, 3, '2019-02-09 21:01:46'),
-(31, 12, 1, '2019-02-09 21:01:54'),
-(32, 12, 2, '2019-02-09 21:01:57'),
-(33, 12, 3, '2019-02-09 21:02:00'),
-(34, 13, 1, '2019-02-09 21:02:09'),
-(35, 13, 2, '2019-02-09 21:02:12'),
-(36, 13, 3, '2019-02-09 21:02:15'),
-(37, 14, 1, '2019-02-09 21:02:26'),
-(38, 14, 2, '2019-02-09 21:02:29'),
-(39, 14, 3, '2019-02-09 21:02:32'),
-(40, 15, 1, '2019-02-09 21:02:41'),
-(41, 15, 2, '2019-02-09 21:02:45'),
-(42, 15, 3, '2019-02-09 21:02:47'),
-(43, 16, 1, '2019-02-09 21:02:58'),
-(44, 16, 2, '2019-02-09 21:03:01'),
-(45, 16, 3, '2019-02-09 21:03:04'),
-(49, 18, 1, '2019-02-09 21:03:30'),
-(50, 18, 2, '2019-02-09 21:03:33'),
-(51, 18, 3, '2019-02-09 21:03:35'),
-(52, 19, 1, '2019-02-09 21:03:46'),
-(53, 19, 2, '2019-02-09 21:03:49'),
-(54, 19, 3, '2019-02-09 21:03:52'),
-(55, 20, 1, '2019-02-09 21:04:02'),
-(56, 20, 2, '2019-02-09 21:04:05'),
-(57, 20, 3, '2019-02-09 21:04:07');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -2088,16 +1771,7 @@ CREATE TABLE IF NOT EXISTS `tab_diagnostico` (
   `fechaRegistro` datetime NOT NULL,
   PRIMARY KEY (`idDiagnostico`),
   KEY `FK_DIAG_ESTADO` (`Estado_idEstado`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `tab_diagnostico`
---
-
-INSERT INTO `tab_diagnostico` (`idDiagnostico`, `Descripcion`, `Estado_idEstado`, `fechaRegistro`) VALUES
-(3, 'ANORMALIDADES A LA INTOLERANCIA A LA GLUCOSA', 1, '2019-01-19 14:04:20'),
-(4, 'HIPERGLICERINA NO ESPECIFICADA', 1, '2019-01-19 14:04:38'),
-(5, 'FACTOR RIESGO', 1, '2019-01-19 14:04:46');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -2113,16 +1787,7 @@ CREATE TABLE IF NOT EXISTS `tab_diagnostico_enfermeria` (
   `fechaRegistro` datetime NOT NULL,
   PRIMARY KEY (`idDiagnosticoEnfermeria`),
   KEY `FK_DIAG_ENF_ESTADO` (`Estado_idEstado`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `tab_diagnostico_enfermeria`
---
-
-INSERT INTO `tab_diagnostico_enfermeria` (`idDiagnosticoEnfermeria`, `Descripcion`, `Estado_idEstado`, `fechaRegistro`) VALUES
-(1, 'Diag Enfermeria 1', 1, '2019-02-24 21:50:27'),
-(2, 'Diag Enfermeria 2', 1, '2019-02-24 21:50:36'),
-(3, 'Diag Enfermeria 3', 1, '2019-02-24 21:50:43');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -2137,16 +1802,7 @@ CREATE TABLE IF NOT EXISTS `tab_diagnostico_especialidad` (
   `Estado_idEstado` int(11) NOT NULL,
   `fechaRegistro` datetime NOT NULL,
   PRIMARY KEY (`idDiagnosticoEspecialidad`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `tab_diagnostico_especialidad`
---
-
-INSERT INTO `tab_diagnostico_especialidad` (`idDiagnosticoEspecialidad`, `Descripcion`, `Estado_idEstado`, `fechaRegistro`) VALUES
-(3, 'Diagnostico Especialidad 1', 1, '2019-03-08 16:14:37'),
-(4, 'Diagnostico Especialidad 2', 1, '2019-03-08 16:14:44'),
-(5, 'Diagnostico Especialidad 3', 1, '2019-03-08 16:14:52');
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -4077,17 +3733,9 @@ CREATE TABLE IF NOT EXISTS `tab_extra` (
   `Refiere` text NOT NULL,
   `Riesgo` text,
   `Seguimiento_idSeguimiento` int(11) NOT NULL,
+  `fechaRegistro` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idExtra`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `tab_extra`
---
-
-INSERT INTO `tab_extra` (`idExtra`, `Refiere`, `Riesgo`, `Seguimiento_idSeguimiento`) VALUES
-(1, '', '{&quot;opA1&quot;:0,&quot;opA2&quot;:0,&quot;opA3&quot;:0,&quot;opA4&quot;:0,&quot;opB1&quot;:0,&quot;opB2&quot;:0,&quot;opB3&quot;:0,&quot;opB4&quot;:0,&quot;opC1&quot;:0,&quot;opC2&quot;:0,&quot;opC3&quot;:0,&quot;opC4&quot;:0,&quot;opD1&quot;:0,&quot;opD2&quot;:0,&quot;opE1&quot;:0,&quot;opE2&quot;:0}', 1),
-(2, '', '{&quot;opA1&quot;:0,&quot;opA2&quot;:0,&quot;opA3&quot;:0,&quot;opA4&quot;:0,&quot;opB1&quot;:0,&quot;opB2&quot;:0,&quot;opB3&quot;:0,&quot;opB4&quot;:0,&quot;opC1&quot;:0,&quot;opC2&quot;:0,&quot;opC3&quot;:0,&quot;opC4&quot;:0,&quot;opD1&quot;:0,&quot;opD2&quot;:0,&quot;opE1&quot;:0,&quot;opE2&quot;:0}', 2),
-(3, '', '{&quot;opA1&quot;:0,&quot;opA2&quot;:0,&quot;opA3&quot;:0,&quot;opA4&quot;:0,&quot;opB1&quot;:0,&quot;opB2&quot;:0,&quot;opB3&quot;:0,&quot;opB4&quot;:0,&quot;opC1&quot;:0,&quot;opC2&quot;:0,&quot;opC3&quot;:0,&quot;opC4&quot;:0,&quot;opD1&quot;:0,&quot;opD2&quot;:0,&quot;opE1&quot;:0,&quot;opE2&quot;:0}', 3);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -4103,18 +3751,7 @@ CREATE TABLE IF NOT EXISTS `tab_gradoinstruccion` (
   `fechaRegistro` datetime NOT NULL,
   PRIMARY KEY (`idGradoInstruccion`),
   KEY `FK_GRADOP_ESTADO` (`Estado_idEstado`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `tab_gradoinstruccion`
---
-
-INSERT INTO `tab_gradoinstruccion` (`idGradoInstruccion`, `Descripcion`, `Estado_idEstado`, `fechaRegistro`) VALUES
-(1, 'ESTUDIANTE', 1, '2019-02-07 16:15:05'),
-(2, 'UNIVERSITARIO', 1, '2019-02-07 16:15:12'),
-(3, 'PRIMARIA COMPLETA', 1, '2019-02-07 16:15:20'),
-(4, 'SECUNDARIA COMPLETA', 1, '2019-02-07 16:15:26'),
-(5, 'TRABAJADOR INDEPENDIENTE', 1, '2019-02-07 16:16:07');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -4168,18 +3805,7 @@ CREATE TABLE IF NOT EXISTS `tab_medico` (
   KEY `FK_SEXO` (`Sexo_idSexo`),
   KEY `FK_Perfil` (`Perfil_idPerfil`),
   KEY `FK_EstadoMEDIC` (`Estado_idEstado`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `tab_medico`
---
-
-INSERT INTO `tab_medico` (`idMedico`, `nombres`, `apellidoPaterno`, `apellidoMaterno`, `fechaNacimiento`, `edad`, `dni`, `Telefono`, `Celular`, `Correo`, `Sexo_idSexo`, `Perfil_idPerfil`, `Estado_idEstado`, `fechaRegistro`) VALUES
-(1, 'Lucas mario', 'Román', 'Vela', '1959-11-12', 59, '47444444', NULL, NULL, NULL, 1, 11, 1, '2019-02-09 19:19:57'),
-(2, 'Gabriel', 'Mendoza', 'Damián', '1966-11-24', 52, '23525234', NULL, NULL, NULL, 1, 11, 1, '2019-02-09 19:20:24'),
-(3, 'Joaquín', 'Miranda', 'Zuñiga', '1969-06-11', 49, '32423423', '345423524', NULL, NULL, 1, 11, 1, '2019-02-09 19:20:43'),
-(4, 'Joaquin', 'Rivera', 'Mosquera', '1955-07-27', 63, '42342342', NULL, NULL, NULL, 1, 11, 1, '2019-03-08 16:18:04'),
-(5, 'Lucia', 'River', 'Mendoza', '1955-11-30', 63, '12121212', NULL, NULL, NULL, 2, 11, 1, '2019-03-08 16:20:53');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -4193,6 +3819,7 @@ CREATE TABLE IF NOT EXISTS `tab_opcion` (
   `TituloOpcion` text NOT NULL,
   `Propiedades` text NOT NULL,
   `fechaRegistro` datetime NOT NULL,
+  `Informacion` text,
   `Estado_idEstado` int(11) NOT NULL,
   `TipoOpcion_idTipoOpcion` int(11) NOT NULL,
   `GrupoOpcion_idGrupoOpcion` int(11) DEFAULT NULL,
@@ -4200,112 +3827,113 @@ CREATE TABLE IF NOT EXISTS `tab_opcion` (
   KEY `FK_GrupoOpcion` (`GrupoOpcion_idGrupoOpcion`),
   KEY `FK_EstadoFK` (`Estado_idEstado`),
   KEY `FK_TIPOOPCION` (`TipoOpcion_idTipoOpcion`)
-) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=126 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `tab_opcion`
 --
 
-INSERT INTO `tab_opcion` (`idOpcion`, `TituloOpcion`, `Propiedades`, `fechaRegistro`, `Estado_idEstado`, `TipoOpcion_idTipoOpcion`, `GrupoOpcion_idGrupoOpcion`) VALUES
-(4, 'Consejería Diabeto Lógica', '{&quot;TipoOpcion&quot;:1,&quot;CodigoOpcion&quot;:&quot;Cabecera&quot;,&quot;Titulo&quot;:&quot;Consejería Diabeto Lógica&quot;}', '2019-02-10 10:43:10', 1, 1, 1),
-(5, 'Glucosa Ayunas', '{&quot;TipoOpcion&quot;:3,&quot;CodigoOpcion&quot;:&quot;Opcion Rango&quot;,&quot;Titulo&quot;:&quot;Glucosa Ayunas&quot;,&quot;Atributo&quot;:&quot;mg/dl.&quot;,&quot;Minimo&quot;:70,&quot;Maximo&quot;:130}', '2019-02-10 10:44:55', 1, 3, 1),
-(6, 'Glucosa al Azar', '{&quot;TipoOpcion&quot;:3,&quot;CodigoOpcion&quot;:&quot;Opcion Rango&quot;,&quot;Titulo&quot;:&quot;Glucosa al Azar&quot;,&quot;Atributo&quot;:&quot;mg/dl.&quot;,&quot;Minimo&quot;:70,&quot;Maximo&quot;:130}', '2019-02-10 10:47:59', 1, 3, 1),
-(7, 'Glucosa Post prandial', '{&quot;TipoOpcion&quot;:3,&quot;CodigoOpcion&quot;:&quot;Opcion Rango&quot;,&quot;Titulo&quot;:&quot;Glucosa Post prandial&quot;,&quot;Atributo&quot;:&quot;mg/dl.&quot;,&quot;Minimo&quot;:1,&quot;Maximo&quot;:180}', '2019-02-10 10:49:55', 1, 3, 1),
-(8, 'Hemoglobina Glicosilada', '{&quot;TipoOpcion&quot;:3,&quot;CodigoOpcion&quot;:&quot;Opcion Rango&quot;,&quot;Titulo&quot;:&quot;Hemoglobina Glicosilada&quot;,&quot;Atributo&quot;:&quot;%&quot;,&quot;Minimo&quot;:5,&quot;Maximo&quot;:7}', '2019-02-10 10:50:43', 1, 3, 1),
-(9, 'Colesterol Total', '{&quot;TipoOpcion&quot;:3,&quot;CodigoOpcion&quot;:&quot;Opcion Rango&quot;,&quot;Titulo&quot;:&quot;Colesterol Total&quot;,&quot;Atributo&quot;:&quot;mg/dl.&quot;,&quot;Minimo&quot;:1,&quot;Maximo&quot;:200}', '2019-02-10 10:51:07', 1, 3, 1),
-(10, 'HDL-c', '{&quot;TipoOpcion&quot;:4,&quot;CodigoOpcion&quot;:&quot;Opcion Rango-Sexo&quot;,&quot;Titulo&quot;:&quot;HDL-c&quot;,&quot;AtributoHombre&quot;:&quot;mg/dl.&quot;,&quot;MinimoHombre&quot;:40,&quot;MaximoHombre&quot;:9999,&quot;AtributoMujer&quot;:&quot;mg/dl.&quot;,&quot;MinimoMujer&quot;:50,&quot;MaximoMujer&quot;:9999}', '2019-02-10 10:52:31', 1, 4, 1),
-(11, 'LDL-c', '{&quot;TipoOpcion&quot;:3,&quot;CodigoOpcion&quot;:&quot;Opcion Rango&quot;,&quot;Titulo&quot;:&quot;LDL-c&quot;,&quot;Atributo&quot;:&quot;mg/dl.&quot;,&quot;Minimo&quot;:1,&quot;Maximo&quot;:100}', '2019-02-10 10:53:04', 1, 3, 1),
-(12, 'Triglicérios', '{&quot;TipoOpcion&quot;:3,&quot;CodigoOpcion&quot;:&quot;Opcion Rango&quot;,&quot;Titulo&quot;:&quot;Triglicérios&quot;,&quot;Atributo&quot;:&quot;mg/dl.&quot;,&quot;Minimo&quot;:1,&quot;Maximo&quot;:150}', '2019-02-10 10:54:05', 1, 3, 1),
-(13, 'IMC(P/T**)', '{&quot;TipoOpcion&quot;:6,&quot;CodigoOpcion&quot;:&quot;Opcion Formula&quot;,&quot;Titulo&quot;:&quot;IMC(P/T**)&quot;,&quot;minimo&quot;:&quot;18.5&quot;,&quot;maximo&quot;:&quot;24.9&quot;,&quot;variable1&quot;:&quot;TALLA&quot;,&quot;variable2&quot;:&quot;PESO&quot;,&quot;variable3&quot;:&quot;&quot;,&quot;variable4&quot;:&quot;&quot;,&quot;Formula&quot;:&quot;V2SEP/SEP(SEPV1SEPEXPSEP)SEP&quot;}', '2019-02-10 10:56:15', 1, 6, 1),
-(16, 'Circunferencia Abdominal', '{&quot;TipoOpcion&quot;:3,&quot;CodigoOpcion&quot;:&quot;Opcion Rango&quot;,&quot;Titulo&quot;:&quot;Circunferencia Abdominal&quot;,&quot;Atributo&quot;:&quot;cm.&quot;,&quot;Minimo&quot;:30,&quot;Maximo&quot;:50}', '2019-02-10 10:59:39', 1, 3, 1),
-(17, 'Microalbumimuria', '{&quot;TipoOpcion&quot;:3,&quot;CodigoOpcion&quot;:&quot;Opcion Rango&quot;,&quot;Titulo&quot;:&quot;Microalbumimuria&quot;,&quot;Atributo&quot;:&quot;mg/24h&quot;,&quot;Minimo&quot;:1,&quot;Maximo&quot;:30}', '2019-02-10 11:00:24', 1, 3, 1),
-(18, 'Creatinina en Sangre', '{&quot;TipoOpcion&quot;:3,&quot;CodigoOpcion&quot;:&quot;Opcion Rango&quot;,&quot;Titulo&quot;:&quot;Creatinina en Sangre&quot;,&quot;Atributo&quot;:&quot;mg/dl.&quot;,&quot;Minimo&quot;:0.6,&quot;Maximo&quot;:1.1}', '2019-02-10 11:00:53', 1, 3, 1),
-(19, 'Presión Arterial', '{&quot;TipoOpcion&quot;:3,&quot;CodigoOpcion&quot;:&quot;Opcion Rango&quot;,&quot;Titulo&quot;:&quot;Presión Arterial&quot;,&quot;Atributo&quot;:&quot;/80 mHg.&quot;,&quot;Minimo&quot;:1,&quot;Maximo&quot;:130}', '2019-02-10 11:01:57', 1, 3, 1),
-(20, 'Comorbilidad al Momento de la Captación del caso (Evaluado por el personal capacitado)', '{&quot;TipoOpcion&quot;:1,&quot;CodigoOpcion&quot;:&quot;Cabecera&quot;,&quot;Titulo&quot;:&quot;Comorbilidad al Momento de la Captación del caso (Evaluado por el personal capacitado)&quot;}', '2019-02-10 11:32:38', 1, 1, 5),
-(21, 'Comorbilidad', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;Comorbilidad&quot;,&quot;TipoCampo&quot;:2}', '2019-02-10 11:33:21', 1, 9, 5),
-(22, 'Complicaciones al momento de la Captación del caso (Evaluado por personal de salud entrenado)', '{&quot;TipoOpcion&quot;:1,&quot;CodigoOpcion&quot;:&quot;Cabecera&quot;,&quot;Titulo&quot;:&quot;Complicaciones al momento de la Captación del caso (Evaluado por personal de salud entrenado)&quot;}', '2019-02-10 11:34:03', 1, 1, 5),
-(23, 'Neuropatía Sensitiva Periférica', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Neuropatía Sensitiva Periférica&quot; }', '2019-02-10 11:34:42', 1, 7, 5),
-(24, 'Retinopatía no proliferativa', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Retinopatía no proliferativa&quot;}', '2019-02-10 11:35:24', 1, 7, 5),
-(25, 'Retinopatía  proliferativa', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Retinopatía  proliferativa&quot;}', '2019-02-10 11:35:34', 1, 7, 5),
-(26, 'Pie Diabetico sin Amputación', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Pie Diabetico sin Amputación&quot;}', '2019-02-10 11:36:07', 1, 7, 5),
-(27, 'Pie con Amputación  menor', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Pie con Amputación  menor&quot;}', '2019-02-10 11:36:43', 1, 7, 5),
-(28, 'Pie con Amputación  mayor', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Pie con Amputación  mayor&quot;}', '2019-02-10 11:36:59', 1, 7, 5),
-(29, 'Hipoglicemia en ultimo año', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Hipoglicemia en ultimo año&quot;}', '2019-02-10 11:40:46', 1, 7, 5),
-(30, 'Hospitalización en el año previo', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Hospitalización en el año previo&quot;}', '2019-02-10 11:41:12', 1, 7, 5),
-(31, 'Infarto Agudo Miocardio', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Infarto Agudo Miocardio&quot;}', '2019-02-10 11:41:32', 1, 7, 5),
-(32, 'Enf. Cerebro Vascular', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Enf Cerebro Vascular&quot;}', '2019-02-10 11:42:07', 1, 7, 5),
-(33, 'Enf. Arterial Periférica', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Enf Arterial Periférica&quot;}', '2019-02-10 11:42:29', 1, 7, 5),
-(34, 'Tratamiento (Evaluado por personal de salud entrenado)', '{&quot;TipoOpcion&quot;:1,&quot;CodigoOpcion&quot;:&quot;Cabecera&quot;,&quot;Titulo&quot;:&quot;Tratamiento (Evaluado por personal de salud entrenado)&quot;}', '2019-02-10 11:42:56', 1, 1, 5),
-(35, '¿Cumple dieta saludable?', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;¿Cumple dieta saludable?&quot;}', '2019-02-10 11:43:16', 1, 7, 5),
-(36, '¿Camina 30 minutos diarios?', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;¿Camina  minutos diarios?&quot;}', '2019-02-10 11:43:33', 1, 7, 5),
-(37, 'Tipo de Medicamento (una o más)', '{&quot;TipoOpcion&quot;:1,&quot;CodigoOpcion&quot;:&quot;Cabecera&quot;,&quot;Titulo&quot;:&quot;Tipo de Medicamento (una o más)&quot;}', '2019-02-10 11:44:33', 1, 1, 5),
-(38, '- Metformina', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;- Metformina&quot;,&quot;TipoCampo&quot;:3}', '2019-02-10 11:45:10', 1, 9, 5),
-(39, '- Sulfonilureas : Glibenclamida', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;- Sulfonilureas : Glibenclamida&quot;,&quot;TipoCampo&quot;:3}', '2019-02-10 11:45:47', 1, 9, 5),
-(40, '- Glimepirida', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;- Glimepirida&quot;,&quot;TipoCampo&quot;:3}', '2019-02-10 11:46:17', 1, 9, 5),
-(41, '- Inhibidores de la DPP4', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;- Inhibidores de la DPP&quot;,&quot;TipoCampo&quot;:3}', '2019-02-10 11:46:44', 1, 9, 5),
-(42, '- Pioglitazonas', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;- Pioglitazonas&quot;,&quot;TipoCampo&quot;:3}', '2019-02-10 11:47:28', 1, 9, 5),
-(43, '- Glifozinas (Empa Dapaglifozina)', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;- Glifozinas (Empa Dapaglifozina)&quot;,&quot;TipoCampo&quot;:3}', '2019-02-10 11:48:04', 1, 9, 5),
-(44, 'Agonistas de Receptores GLP1  INSULINAS', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;Agonistas de Receptores GLP  INSULINAS&quot;,&quot;TipoCampo&quot;:3}', '2019-02-10 11:48:26', 1, 9, 5),
-(45, 'Insulinas Humanas : Cristalinas', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;Insulinas Humanas : Cristalinas&quot;,&quot;TipoCampo&quot;:3}', '2019-02-10 11:48:59', 1, 9, 5),
-(46, '- NPH', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;- NPH&quot;,&quot;TipoCampo&quot;:3}', '2019-02-10 11:49:08', 1, 9, 5),
-(47, 'Insulinas Análogas Rápidas', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;Insulinas Análogas Rápidas&quot;,&quot;TipoCampo&quot;:3}', '2019-02-10 11:49:35', 1, 9, 5),
-(48, '- Basal', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;- Basal&quot;,&quot;TipoCampo&quot;:3}', '2019-02-10 11:49:46', 1, 9, 5),
-(49, 'Examen de Pie Diabetico (Realizado por personal de salud entrenado)', '{&quot;TipoOpcion&quot;:1,&quot;CodigoOpcion&quot;:&quot;Cabecera&quot;,&quot;Titulo&quot;:&quot;Examen de Pie Diabetico (Realizado por personal de salud entrenado)&quot;}', '2019-02-10 11:52:45', 1, 1, 5),
-(50, '¿Fue Evaluado del pie en el ultimo año?', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;¿Fue Evaluado del pie en el ultimo año?&quot;,&quot;TipoCampo&quot;:4}', '2019-02-10 11:53:10', 1, 9, 5),
-(51, '¿Sabe usted como evaluarse los pies?', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;¿Sabe usted como evaluarse los pies?&quot;}', '2019-02-10 12:20:14', 1, 7, 5),
-(52, 'Examen Objetivo del Pie', '{&quot;TipoOpcion&quot;:10,&quot;CodigoOpcion&quot;:&quot;SubCabecera&quot;,&quot;Titulo&quot;:&quot;Examen Objetivo del Pie&quot;}', '2019-02-10 11:55:31', 1, 10, 5),
-(53, 'Uñas micoticas,distroficas o encarnadas', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Uñas micoticas,distroficas o encarnadas&quot;}', '2019-02-10 11:56:11', 1, 7, 5),
-(54, 'Resequedad de la Piel', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Resequedad de Piel&quot;}', '2019-02-10 11:57:00', 1, 7, 5),
-(55, 'Lesión Severa : Evalué', '{&quot;TipoOpcion&quot;:10,&quot;CodigoOpcion&quot;:&quot;SubCabecera&quot;,&quot;Titulo&quot;:&quot;Lesión Severa : Evalué&quot;}', '2019-02-10 11:57:42', 1, 10, 5),
-(56, 'Dedos en Martillo , en garra', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Dedos en Martillo , en garra&quot;}', '2019-02-10 11:58:00', 1, 7, 5),
-(57, 'Dedos Superpuestos', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Dedos Superpuestos&quot;}', '2019-02-10 11:58:13', 1, 7, 5),
-(58, 'Amputación Previa', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Amputación Previa&quot;}', '2019-02-10 11:58:26', 1, 7, 5),
-(59, 'Juanetes o Hallux Vlagus', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Juanetes o Hallux Vlagus&quot;}', '2019-02-10 11:58:48', 1, 7, 5),
-(60, 'Pie de Charcot o Plano o Cavo', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Pie de Charcot o Plano o Calvo&quot;}', '2019-02-10 11:59:10', 1, 7, 5),
-(61, 'Úlcera aguda  en pie', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Úlcera aguda  en pie&quot;}', '2019-02-10 11:59:37', 1, 7, 5),
-(62, 'Gangrena en pie', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Gangrena en pie&quot;}', '2019-02-10 11:59:54', 1, 7, 5),
-(63, 'Pulsos', '{&quot;TipoOpcion&quot;:10,&quot;CodigoOpcion&quot;:&quot;SubCabecera&quot;,&quot;Titulo&quot;:&quot;Pulsos&quot;}', '2019-02-10 12:00:03', 1, 10, 5),
-(64, 'Pedio Der. Ausente', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Pedio Der Ausente&quot;}', '2019-02-10 12:00:24', 1, 7, 5),
-(65, 'Pedio Izq. Ausente', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Pedio Izq Ausente&quot;}', '2019-02-10 12:00:38', 1, 7, 5),
-(66, 'Tibial Der. Ausente', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Tibial Der Ausente&quot;}', '2019-02-10 12:00:51', 1, 7, 5),
-(67, 'Tibial Izq. Ausente', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Tibial Izq Ausente&quot;}', '2019-02-10 12:01:04', 1, 7, 5),
-(68, 'AutoEvaluación del Pie Diabetico', '{&quot;TipoOpcion&quot;:1,&quot;CodigoOpcion&quot;:&quot;Cabecera&quot;,&quot;Titulo&quot;:&quot;Evaluación de la Educación&quot; }', '2019-02-10 12:06:15', 1, 1, 5),
-(69, 'Ha tenido el paciente educación sobre el cuidado de los pies', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Ha tenido el paciente educación sobre el cuidado de los pies&quot;}', '2019-02-10 12:06:44', 1, 7, 5),
-(70, 'Ha recibido educación en diabetes (3  ó más sesiones )', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Ha recibido educación en diabetes (  ó más sesiones )&quot;}', '2019-02-10 12:07:21', 1, 7, 5),
-(71, 'Se realiza automonitoreo de glucosa', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Se realiza automonitoreo de glucosa&quot;}', '2019-02-10 12:07:58', 1, 7, 5),
-(72, 'Valoración del Calzado', '{&quot;TipoOpcion&quot;:1,&quot;CodigoOpcion&quot;:&quot;Cabecera&quot;,&quot;Titulo&quot;:&quot;Valoración del Calzado&quot;}', '2019-02-10 12:08:18', 1, 1, 5),
-(73, 'Calzado en mal estado,roto,desgastado, o deforme por el uso', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Calzado en mal estado,roto,desgastado, o deforme por el uso&quot;}', '2019-02-10 12:08:43', 1, 7, 5),
-(74, 'Calzado que deja descubierto los dedos o el Talón', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Calzado que deja descubierto los dedos o el Talón&quot;}', '2019-02-10 12:09:07', 1, 7, 5),
-(75, 'Calzado de punta estrecha  que comprimiera los dedos', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Calzado de punta estrecha  que comprimiera los dedos&quot;}', '2019-02-10 12:09:32', 1, 7, 5),
-(76, 'Calzado demasiado ancho que no permitiera un ajuste adecuado al pie', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Calzado demasiado ancho que no permitiera un ajuste adecuado al pie&quot;}', '2019-02-10 12:10:07', 1, 7, 5),
-(77, 'Calzado de un Tacón de altura  superior a 2.5 cm', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Calzado de un Tacón de altura  superori a  cm&quot;}', '2019-02-10 12:10:33', 1, 7, 5),
-(78, 'Calzado con costuras o imperfecciones en su interior que favorecen roces', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Calzado con costuras o imperfecciones en su interior que favorecen roces&quot;}', '2019-02-10 12:11:24', 1, 7, 5),
-(80, 'RIESGO', '{&quot;TipoOpcion&quot;:2,&quot;CodigoOpcion&quot;:&quot;Opcion Campo Texto&quot;,&quot;Titulo&quot;:&quot;RIESGO&quot;}', '2019-02-10 19:13:31', 1, 2, 6),
-(81, 'FECHA DE INICIO', '{&quot;TipoOpcion&quot;:5,&quot;CodigoOpcion&quot;:&quot;Opcion Campo Fecha&quot;,&quot;Titulo&quot;:&quot;FECHA DE INICIO&quot;}', '2019-02-10 19:13:43', 1, 5, 6),
-(82, 'OBSERVACIONES', '{&quot;TipoOpcion&quot;:2,&quot;CodigoOpcion&quot;:&quot;Opcion Campo Texto&quot;,&quot;Titulo&quot;:&quot;OBSERVACIONES&quot;}', '2019-02-10 19:13:53', 1, 2, 6),
-(89, 'DIAGNOSTICO DE ENFERMERIA', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;DIAGNOSTICO DE ENFERMERIA&quot;,&quot;TipoCampo&quot;:5}', '2019-02-10 19:17:26', 1, 9, 6),
-(90, 'TALLER DE GLUCOMETRIA', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;TALLER DE GLUCOMETRIA&quot;}', '2019-02-10 19:17:40', 1, 7, 6),
-(91, 'TALLER DE NUTRICIÓN', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;TALLER DE NUTRICIÓN&quot;}', '2019-02-10 19:17:53', 1, 7, 6),
-(92, 'TALLER DE CONOCIMIENTO DE DIABETES', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;TALLER DE CONOCIMIENTO DE DIABETES&quot;} ', '2019-02-10 19:18:06', 1, 7, 6),
-(93, 'TALLER DE INSULINISACIÓN', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;TALLER DE INSULINISACIÓN&quot;}', '2019-02-10 19:18:24', 1, 7, 6),
-(94, 'TALLER DE PODOLOGIA', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;TALLER DE PODOLOGIA&quot;}', '2019-02-10 19:18:35', 1, 7, 6),
-(95, 'TALLER DE PSICOLOGÍA', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;TALLER DE PSICOLOGÍA&quot;}', '2019-02-10 19:18:46', 1, 7, 6),
-(96, 'PLAN DE ACCIÓN', '{&quot;TipoOpcion&quot;:2,&quot;CodigoOpcion&quot;:&quot;Opcion Campo Texto&quot;,&quot;Titulo&quot;:&quot;PLAN DE ACCIÓN&quot;}', '2019-02-10 19:19:25', 1, 2, 6),
-(97, 'PRÓXIMA CITA', '{&quot;TipoOpcion&quot;:5,&quot;CodigoOpcion&quot;:&quot;Opcion Campo Fecha&quot;,&quot;Titulo&quot;:&quot;PRÓXIMA CITA&quot;}', '2019-02-10 19:21:12', 1, 5, 6),
-(98, 'FECHA DE SEGUIMIENTO', '{&quot;TipoOpcion&quot;:5,&quot;CodigoOpcion&quot;:&quot;Opcion Campo Fecha&quot;,&quot;Titulo&quot;:&quot;FECHA DE SEGUIMIENTO&quot;}', '2019-02-11 13:47:44', 1, 5, 7),
-(99, 'CUMPLE DIETA', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;CUMPLE DIETA&quot;}', '2019-02-11 13:47:59', 1, 7, 7),
-(100, 'CUMPLE CAMINATA', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;CUMPLE CAMINATA&quot;}', '2019-02-11 13:48:10', 1, 7, 7),
-(101, 'CUMPLE MEDICACIÓN', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;CUMPLE MEDICACIÓN&quot;}', '2019-02-11 13:48:21', 1, 7, 7),
-(102, 'CUMPLE MEDICACIÓN DM', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;CUMPLE MEDICACIÓN DM&quot;}', '2019-02-11 13:48:38', 1, 7, 7),
-(103, 'RECIBIÓ EDUCACIÓN', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;RECIBIÓ EDUCACIÓN&quot;}', '2019-02-11 13:48:56', 1, 7, 7),
-(104, 'TUVO HIPOGLICEMIA', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;TUVO HIPOGLICEMIA&quot;}', '2019-02-11 13:49:13', 1, 7, 7),
-(105, 'TIENE ULCERA EN EL PIE', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;TIENE ULCERA EN EL PIE&quot;}', '2019-02-11 14:37:18', 1, 7, 7),
-(106, 'AUTOMONITOREO DE GLUCOSA', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;AUTOMONITOREO DE GLUCOSA&quot;}', '2019-02-11 14:37:40', 1, 7, 7),
-(107, 'SE HOSPITALIZÓ', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;SE HOSPITALIZÓ&quot;}', '2019-02-11 14:37:56', 1, 7, 7),
-(108, 'ELECTROCARDIOGRAMA', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;ELECTROCARDIOGRAMA&quot;}', '2019-02-11 14:38:12', 1, 7, 7),
-(109, 'CHEQUEO DE RETINOPATÍA', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;CHEQUEO DE RETINOPATÍA&quot;}', '2019-02-11 14:38:50', 1, 7, 7),
-(112, 'OTROS TRATAMIENTOS', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;OTROS TRATAMIENTOS&quot;,&quot;TipoCampo&quot;:6}', '2019-02-24 21:12:36', 1, 9, 5),
-(117, 'NIVEL DE SATISFACCIÓN', '{&quot;TipoOpcion&quot;:11,&quot;CodigoOpcion&quot;:&quot;Opcion Listado&quot;,&quot;Titulo&quot;:&quot;NIVEL DE SATISFACCIÓN&quot;,&quot;TipoCampo&quot;:7}', '2019-03-15 16:35:24', 1, 11, 7);
+INSERT INTO `tab_opcion` (`idOpcion`, `TituloOpcion`, `Propiedades`, `fechaRegistro`, `Informacion`, `Estado_idEstado`, `TipoOpcion_idTipoOpcion`, `GrupoOpcion_idGrupoOpcion`) VALUES
+(4, 'Consejería Diabeto Lógica', '{&quot;TipoOpcion&quot;:1,&quot;CodigoOpcion&quot;:&quot;Cabecera&quot;,&quot;Titulo&quot;:&quot;Consejería Diabeto Lógica&quot;}', '2019-02-10 10:43:10', NULL, 1, 1, 1),
+(5, 'Glucosa Ayunas', '{&quot;TipoOpcion&quot;:3,&quot;CodigoOpcion&quot;:&quot;Opcion Rango&quot;,&quot;Titulo&quot;:&quot;Glucosa Ayunas&quot;,&quot;Atributo&quot;:&quot;mg/dl.&quot;,&quot;Minimo&quot;:70,&quot;Maximo&quot;:130}', '2019-02-10 10:44:55', NULL, 1, 3, 1),
+(6, 'Glucosa al Azar', '{&quot;TipoOpcion&quot;:3,&quot;CodigoOpcion&quot;:&quot;Opcion Rango&quot;,&quot;Titulo&quot;:&quot;Glucosa al Azar&quot;,&quot;Atributo&quot;:&quot;mg/dl.&quot;,&quot;Minimo&quot;:70,&quot;Maximo&quot;:130}', '2019-02-10 10:47:59', NULL, 1, 3, 1),
+(7, 'Glucosa Post prandial', '{&quot;TipoOpcion&quot;:3,&quot;CodigoOpcion&quot;:&quot;Opcion Rango&quot;,&quot;Titulo&quot;:&quot;Glucosa Post prandial&quot;,&quot;Atributo&quot;:&quot;mg/dl.&quot;,&quot;Minimo&quot;:1,&quot;Maximo&quot;:180}', '2019-02-10 10:49:55', NULL, 1, 3, 1),
+(8, 'Hemoglobina Glicosilada', '{&quot;TipoOpcion&quot;:3,&quot;CodigoOpcion&quot;:&quot;Opcion Rango&quot;,&quot;Titulo&quot;:&quot;Hemoglobina Glicosilada&quot;,&quot;Atributo&quot;:&quot;%&quot;,&quot;Minimo&quot;:5,&quot;Maximo&quot;:7}', '2019-02-10 10:50:43', NULL, 1, 3, 1),
+(9, 'Colesterol Total', '{&quot;TipoOpcion&quot;:3,&quot;CodigoOpcion&quot;:&quot;Opcion Rango&quot;,&quot;Titulo&quot;:&quot;Colesterol Total&quot;,&quot;Atributo&quot;:&quot;mg/dl.&quot;,&quot;Minimo&quot;:1,&quot;Maximo&quot;:200}', '2019-02-10 10:51:07', NULL, 1, 3, 1),
+(10, 'HDL-c', '{&quot;TipoOpcion&quot;:4,&quot;CodigoOpcion&quot;:&quot;Opcion Rango-Sexo&quot;,&quot;Titulo&quot;:&quot;HDL-c&quot;,&quot;AtributoHombre&quot;:&quot;mg/dl.&quot;,&quot;MinimoHombre&quot;:40,&quot;MaximoHombre&quot;:9999,&quot;AtributoMujer&quot;:&quot;mg/dl.&quot;,&quot;MinimoMujer&quot;:50,&quot;MaximoMujer&quot;:9999}', '2019-02-10 10:52:31', NULL, 1, 4, 1),
+(11, 'LDL-c', '{&quot;TipoOpcion&quot;:3,&quot;CodigoOpcion&quot;:&quot;Opcion Rango&quot;,&quot;Titulo&quot;:&quot;LDL-c&quot;,&quot;Atributo&quot;:&quot;mg/dl.&quot;,&quot;Minimo&quot;:1,&quot;Maximo&quot;:100}', '2019-02-10 10:53:04', NULL, 1, 3, 1),
+(12, 'Triglicérios', '{&quot;TipoOpcion&quot;:3,&quot;CodigoOpcion&quot;:&quot;Opcion Rango&quot;,&quot;Titulo&quot;:&quot;Triglicérios&quot;,&quot;Atributo&quot;:&quot;mg/dl.&quot;,&quot;Minimo&quot;:1,&quot;Maximo&quot;:150}', '2019-02-10 10:54:05', 'Información de Rango de Triglicérios', 1, 3, 1),
+(13, 'IMC(P/T**)', '{&quot;TipoOpcion&quot;:6,&quot;CodigoOpcion&quot;:&quot;Opcion Formula&quot;,&quot;Titulo&quot;:&quot;IMC(P/T**)&quot;,&quot;minimo&quot;:&quot;18.5&quot;,&quot;maximo&quot;:&quot;24.9&quot;,&quot;variable1&quot;:&quot;TALLA&quot;,&quot;variable2&quot;:&quot;PESO&quot;,&quot;variable3&quot;:&quot;&quot;,&quot;variable4&quot;:&quot;&quot;,&quot;Formula&quot;:&quot;V2SEP/SEP(SEPV1SEPEXPSEP)SEP&quot;}', '2019-02-10 10:56:15', NULL, 1, 6, 1),
+(16, 'Circunferencia Abdominal', '{&quot;TipoOpcion&quot;:4,&quot;CodigoOpcion&quot;:&quot;Opcion Rango-Sexo&quot;,&quot;Titulo&quot;:&quot;Circunferencia Abdominal&quot;,&quot;AtributoHombre&quot;:&quot;cm&quot;,&quot;MinimoHombre&quot;:1,&quot;MaximoHombre&quot;:94,&quot;AtributoMujer&quot;:&quot;cm&quot;,&quot;MinimoMujer&quot;:1,&quot;MaximoMujer&quot;:80}', '2019-02-10 10:59:39', NULL, 1, 4, 1),
+(17, 'Microalbumimuria', '{&quot;TipoOpcion&quot;:3,&quot;CodigoOpcion&quot;:&quot;Opcion Rango&quot;,&quot;Titulo&quot;:&quot;Microalbumimuria&quot;,&quot;Atributo&quot;:&quot;mg/24h&quot;,&quot;Minimo&quot;:1,&quot;Maximo&quot;:30}', '2019-02-10 11:00:24', NULL, 1, 3, 1),
+(18, 'Creatinina en Sangre', '{&quot;TipoOpcion&quot;:3,&quot;CodigoOpcion&quot;:&quot;Opcion Rango&quot;,&quot;Titulo&quot;:&quot;Creatinina en Sangre&quot;,&quot;Atributo&quot;:&quot;mg/dl.&quot;,&quot;Minimo&quot;:0.6,&quot;Maximo&quot;:1.1}', '2019-02-10 11:00:53', NULL, 1, 3, 1),
+(19, 'Presión Arterial', '{&quot;TipoOpcion&quot;:3,&quot;CodigoOpcion&quot;:&quot;Opcion Rango&quot;,&quot;Titulo&quot;:&quot;Presión Arterial&quot;,&quot;Atributo&quot;:&quot;/80 mHg.&quot;,&quot;Minimo&quot;:1,&quot;Maximo&quot;:130}', '2019-02-10 11:01:57', NULL, 1, 3, 1),
+(20, 'Comorbilidad al Momento de la Captación del caso (Evaluado por el personal capacitado)', '{&quot;TipoOpcion&quot;:1,&quot;CodigoOpcion&quot;:&quot;Cabecera&quot;,&quot;Titulo&quot;:&quot;Comorbilidad al Momento de la Captación del caso (Evaluado por el personal capacitado)&quot;}', '2019-02-10 11:32:38', NULL, 1, 1, 5),
+(21, 'Comorbilidad', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;Comorbilidad&quot;,&quot;TipoCampo&quot;:2}', '2019-02-10 11:33:21', NULL, 1, 9, 5),
+(22, 'Complicaciones al momento de la Captación del caso (Evaluado por personal de salud entrenado)', '{&quot;TipoOpcion&quot;:1,&quot;CodigoOpcion&quot;:&quot;Cabecera&quot;,&quot;Titulo&quot;:&quot;Complicaciones al momento de la Captación del caso (Evaluado por personal de salud entrenado)&quot;}', '2019-02-10 11:34:03', NULL, 1, 1, 5),
+(23, 'Neuropatía Sensitiva Periférica', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Neuropatía Sensitiva Periférica&quot; }', '2019-02-10 11:34:42', NULL, 1, 7, 5),
+(24, 'Retinopatía no proliferativa', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Retinopatía no proliferativa&quot;}', '2019-02-10 11:35:24', NULL, 1, 7, 5),
+(25, 'Retinopatía  proliferativa', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Retinopatía  proliferativa&quot;}', '2019-02-10 11:35:34', NULL, 1, 7, 5),
+(26, 'Pie Diabetico sin Amputación', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Pie Diabetico sin Amputación&quot;}', '2019-02-10 11:36:07', NULL, 1, 7, 5),
+(27, 'Pie con Amputación  menor', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Pie con Amputación  menor&quot;}', '2019-02-10 11:36:43', NULL, 1, 7, 5),
+(28, 'Pie con Amputación  mayor', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Pie con Amputación  mayor&quot;}', '2019-02-10 11:36:59', NULL, 1, 7, 5),
+(29, 'Hipoglicemia en ultimo año', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Hipoglicemia en ultimo año&quot;}', '2019-02-10 11:40:46', NULL, 1, 7, 5),
+(30, 'Hospitalización en el año previo', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Hospitalización en el año previo&quot;}', '2019-02-10 11:41:12', NULL, 1, 7, 5),
+(31, 'Infarto Agudo Miocardio', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Infarto Agudo Miocardio&quot;}', '2019-02-10 11:41:32', NULL, 1, 7, 5),
+(32, 'Enf. Cerebro Vascular', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Enf Cerebro Vascular&quot;}', '2019-02-10 11:42:07', NULL, 1, 7, 5),
+(33, 'Enf. Arterial Periférica', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Enf Arterial Periférica&quot;}', '2019-02-10 11:42:29', NULL, 1, 7, 5),
+(34, 'Tratamiento (Evaluado por personal de salud entrenado)', '{&quot;TipoOpcion&quot;:1,&quot;CodigoOpcion&quot;:&quot;Cabecera&quot;,&quot;Titulo&quot;:&quot;Tratamiento (Evaluado por personal de salud entrenado)&quot;}', '2019-02-10 11:42:56', NULL, 1, 1, 5),
+(35, '¿Cumple dieta saludable?', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;¿Cumple dieta saludable?&quot;}', '2019-02-10 11:43:16', NULL, 1, 7, 5),
+(36, '¿Camina 30 minutos diarios?', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;¿Camina  minutos diarios?&quot;}', '2019-02-10 11:43:33', NULL, 1, 7, 5),
+(37, 'Tipo de Medicamento (una o más)', '{&quot;TipoOpcion&quot;:1,&quot;CodigoOpcion&quot;:&quot;Cabecera&quot;,&quot;Titulo&quot;:&quot;Tipo de Medicamento (una o más)&quot;}', '2019-02-10 11:44:33', NULL, 1, 1, 5),
+(38, '- Metformina', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;- Metformina&quot;,&quot;TipoCampo&quot;:3}', '2019-02-10 11:45:10', NULL, 1, 9, 5),
+(39, '- Sulfonilureas : Glibenclamida', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;- Sulfonilureas : Glibenclamida&quot;,&quot;TipoCampo&quot;:3}', '2019-02-10 11:45:47', NULL, 1, 9, 5),
+(40, '- Glimepirida', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;- Glimepirida&quot;,&quot;TipoCampo&quot;:3}', '2019-02-10 11:46:17', NULL, 1, 9, 5),
+(41, '- Inhibidores de la DPP4', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;- Inhibidores de la DPP&quot;,&quot;TipoCampo&quot;:3}', '2019-02-10 11:46:44', NULL, 1, 9, 5),
+(42, '- Pioglitazonas', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;- Pioglitazonas&quot;,&quot;TipoCampo&quot;:3}', '2019-02-10 11:47:28', NULL, 1, 9, 5),
+(43, '- Glifozinas (Empa Dapaglifozina)', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;- Glifozinas (Empa Dapaglifozina)&quot;,&quot;TipoCampo&quot;:3}', '2019-02-10 11:48:04', NULL, 1, 9, 5),
+(44, 'Agonistas de Receptores GLP1  INSULINAS', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;Agonistas de Receptores GLP  INSULINAS&quot;,&quot;TipoCampo&quot;:3}', '2019-02-10 11:48:26', NULL, 1, 9, 5),
+(45, 'Insulinas Humanas : Cristalinas', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;Insulinas Humanas : Cristalinas&quot;,&quot;TipoCampo&quot;:3}', '2019-02-10 11:48:59', NULL, 1, 9, 5),
+(46, '- NPH', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;- NPH&quot;,&quot;TipoCampo&quot;:3}', '2019-02-10 11:49:08', NULL, 1, 9, 5),
+(47, 'Insulinas Análogas Rápidas', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;Insulinas Análogas Rápidas&quot;,&quot;TipoCampo&quot;:3}', '2019-02-10 11:49:35', NULL, 1, 9, 5),
+(48, '- Basal', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;- Basal&quot;,&quot;TipoCampo&quot;:3}', '2019-02-10 11:49:46', NULL, 1, 9, 5),
+(49, 'Examen de Pie Diabetico (Realizado por personal de salud entrenado)', '{&quot;TipoOpcion&quot;:1,&quot;CodigoOpcion&quot;:&quot;Cabecera&quot;,&quot;Titulo&quot;:&quot;Examen de Pie Diabetico (Realizado por personal de salud entrenado)&quot;}', '2019-02-10 11:52:45', NULL, 1, 1, 5),
+(50, '¿Fue Evaluado del pie en el ultimo año?', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;¿Fue Evaluado del pie en el ultimo año?&quot;,&quot;TipoCampo&quot;:4}', '2019-02-10 11:53:10', NULL, 1, 9, 5),
+(51, '¿Sabe usted como evaluarse los pies?', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;¿Sabe usted como evaluarse los pies?&quot;}', '2019-02-10 12:20:14', NULL, 1, 7, 5),
+(52, 'Examen Objetivo del Pie', '{&quot;TipoOpcion&quot;:10,&quot;CodigoOpcion&quot;:&quot;SubCabecera&quot;,&quot;Titulo&quot;:&quot;Examen Objetivo del Pie&quot;}', '2019-02-10 11:55:31', NULL, 1, 10, 5),
+(53, 'Uñas micoticas,distroficas o encarnadas', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Uñas micoticas,distroficas o encarnadas&quot;}', '2019-02-10 11:56:11', NULL, 1, 7, 5),
+(54, 'Resequedad de la Piel', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Resequedad de Piel&quot;}', '2019-02-10 11:57:00', NULL, 1, 7, 5),
+(55, 'Lesión Severa : Evalué', '{&quot;TipoOpcion&quot;:10,&quot;CodigoOpcion&quot;:&quot;SubCabecera&quot;,&quot;Titulo&quot;:&quot;Lesión Severa : Evalué&quot;}', '2019-02-10 11:57:42', NULL, 1, 10, 5),
+(56, 'Dedos en Martillo , en garra', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Dedos en Martillo , en garra&quot;}', '2019-02-10 11:58:00', NULL, 1, 7, 5),
+(57, 'Dedos Superpuestos', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Dedos Superpuestos&quot;}', '2019-02-10 11:58:13', NULL, 1, 7, 5),
+(58, 'Amputación Previa', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Amputación Previa&quot;}', '2019-02-10 11:58:26', NULL, 1, 7, 5),
+(59, 'Juanetes o Hallux Vlagus', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Juanetes o Hallux Vlagus&quot;}', '2019-02-10 11:58:48', NULL, 1, 7, 5),
+(60, 'Pie de Charcot o Plano o Cavo', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Pie de Charcot o Plano o Calvo&quot;}', '2019-02-10 11:59:10', NULL, 1, 7, 5),
+(61, 'Úlcera aguda  en pie', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Úlcera aguda  en pie&quot;}', '2019-02-10 11:59:37', NULL, 1, 7, 5),
+(62, 'Gangrena en pie', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Gangrena en pie&quot;}', '2019-02-10 11:59:54', NULL, 1, 7, 5),
+(63, 'Pulsos', '{&quot;TipoOpcion&quot;:10,&quot;CodigoOpcion&quot;:&quot;SubCabecera&quot;,&quot;Titulo&quot;:&quot;Pulsos&quot;}', '2019-02-10 12:00:03', NULL, 1, 10, 5),
+(64, 'Pedio Der. Ausente', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Pedio Der Ausente&quot;}', '2019-02-10 12:00:24', NULL, 1, 7, 5),
+(65, 'Pedio Izq. Ausente', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Pedio Izq Ausente&quot;}', '2019-02-10 12:00:38', NULL, 1, 7, 5),
+(66, 'Tibial Der. Ausente', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Tibial Der Ausente&quot;}', '2019-02-10 12:00:51', NULL, 1, 7, 5),
+(67, 'Tibial Izq. Ausente', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Tibial Izq Ausente&quot;}', '2019-02-10 12:01:04', NULL, 1, 7, 5),
+(68, 'AutoEvaluación del Pie Diabetico', '{&quot;TipoOpcion&quot;:1,&quot;CodigoOpcion&quot;:&quot;Cabecera&quot;,&quot;Titulo&quot;:&quot;Evaluación de la Educación&quot; }', '2019-02-10 12:06:15', NULL, 1, 1, 5),
+(69, 'Ha tenido el paciente educación sobre el cuidado de los pies', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Ha tenido el paciente educación sobre el cuidado de los pies&quot;}', '2019-02-10 12:06:44', NULL, 1, 7, 5),
+(70, 'Ha recibido educación en diabetes (3  ó más sesiones )', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Ha recibido educación en diabetes (  ó más sesiones )&quot;}', '2019-02-10 12:07:21', NULL, 1, 7, 5),
+(71, 'Se realiza automonitoreo de glucosa', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Se realiza automonitoreo de glucosa&quot;}', '2019-02-10 12:07:58', NULL, 1, 7, 5),
+(72, 'Valoración del Calzado', '{&quot;TipoOpcion&quot;:1,&quot;CodigoOpcion&quot;:&quot;Cabecera&quot;,&quot;Titulo&quot;:&quot;Valoración del Calzado&quot;}', '2019-02-10 12:08:18', NULL, 1, 1, 5),
+(73, 'Calzado en mal estado,roto,desgastado, o deforme por el uso', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Calzado en mal estado,roto,desgastado, o deforme por el uso&quot;}', '2019-02-10 12:08:43', NULL, 1, 7, 5),
+(74, 'Calzado que deja descubierto los dedos o el Talón', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Calzado que deja descubierto los dedos o el Talón&quot;}', '2019-02-10 12:09:07', NULL, 1, 7, 5),
+(75, 'Calzado de punta estrecha  que comprimiera los dedos', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Calzado de punta estrecha  que comprimiera los dedos&quot;}', '2019-02-10 12:09:32', NULL, 1, 7, 5),
+(76, 'Calzado demasiado ancho que no permitiera un ajuste adecuado al pie', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Calzado demasiado ancho que no permitiera un ajuste adecuado al pie&quot;}', '2019-02-10 12:10:07', NULL, 1, 7, 5),
+(77, 'Calzado de un Tacón de altura  superior a 2.5 cm', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Calzado de un Tacón de altura  superori a  cm&quot;}', '2019-02-10 12:10:33', NULL, 1, 7, 5),
+(78, 'Calzado con costuras o imperfecciones en su interior que favorecen roces', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;Calzado con costuras o imperfecciones en su interior que favorecen roces&quot;}', '2019-02-10 12:11:24', NULL, 1, 7, 5),
+(80, 'RIESGO', '{&quot;TipoOpcion&quot;:2,&quot;CodigoOpcion&quot;:&quot;Opcion Campo Texto&quot;,&quot;Titulo&quot;:&quot;RIESGO&quot;}', '2019-02-10 19:13:31', NULL, 1, 2, 6),
+(81, 'FECHA DE INICIO', '{&quot;TipoOpcion&quot;:5,&quot;CodigoOpcion&quot;:&quot;Opcion Campo Fecha&quot;,&quot;Titulo&quot;:&quot;FECHA DE INICIO&quot;}', '2019-02-10 19:13:43', NULL, 1, 5, 6),
+(82, 'OBSERVACIONES', '{&quot;TipoOpcion&quot;:2,&quot;CodigoOpcion&quot;:&quot;Opcion Campo Texto&quot;,&quot;Titulo&quot;:&quot;OBSERVACIONES&quot;}', '2019-02-10 19:13:53', NULL, 1, 2, 6),
+(89, 'DIAGNOSTICO DE ENFERMERIA', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;DIAGNOSTICO DE ENFERMERIA&quot;,&quot;TipoCampo&quot;:5}', '2019-02-10 19:17:26', NULL, 1, 9, 6),
+(90, 'TALLER DE GLUCOMETRIA', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;TALLER DE GLUCOMETRIA&quot;}', '2019-02-10 19:17:40', NULL, 1, 7, 6),
+(91, 'TALLER DE NUTRICIÓN', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;TALLER DE NUTRICIÓN&quot;}', '2019-02-10 19:17:53', NULL, 1, 7, 6),
+(92, 'TALLER DE CONOCIMIENTO DE DIABETES', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;TALLER DE CONOCIMIENTO DE DIABETES&quot;} ', '2019-02-10 19:18:06', NULL, 1, 7, 6),
+(93, 'TALLER DE INSULINISACIÓN', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;TALLER DE INSULINISACIÓN&quot;}', '2019-02-10 19:18:24', NULL, 1, 7, 6),
+(94, 'TALLER DE PODOLOGIA', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;TALLER DE PODOLOGIA&quot;}', '2019-02-10 19:18:35', NULL, 1, 7, 6),
+(95, 'TALLER DE PSICOLOGÍA', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;TALLER DE PSICOLOGÍA&quot;}', '2019-02-10 19:18:46', NULL, 1, 7, 6),
+(96, 'PLAN DE ACCIÓN', '{&quot;TipoOpcion&quot;:2,&quot;CodigoOpcion&quot;:&quot;Opcion Campo Texto&quot;,&quot;Titulo&quot;:&quot;PLAN DE ACCIÓN&quot;}', '2019-02-10 19:19:25', NULL, 1, 2, 6),
+(97, 'PRÓXIMA CITA', '{&quot;TipoOpcion&quot;:5,&quot;CodigoOpcion&quot;:&quot;Opcion Campo Fecha&quot;,&quot;Titulo&quot;:&quot;PRÓXIMA CITA&quot;}', '2019-02-10 19:21:12', NULL, 1, 5, 6),
+(98, 'FECHA DE SEGUIMIENTO', '{&quot;TipoOpcion&quot;:5,&quot;CodigoOpcion&quot;:&quot;Opcion Campo Fecha&quot;,&quot;Titulo&quot;:&quot;FECHA DE SEGUIMIENTO&quot;}', '2019-02-11 13:47:44', NULL, 1, 5, 7),
+(99, 'CUMPLE DIETA', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;CUMPLE DIETA&quot;}', '2019-02-11 13:47:59', NULL, 1, 7, 7),
+(100, 'CUMPLE CAMINATA', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;CUMPLE CAMINATA&quot;}', '2019-02-11 13:48:10', NULL, 1, 7, 7),
+(101, 'CUMPLE MEDICACIÓN', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;CUMPLE MEDICACIÓN&quot;}', '2019-02-11 13:48:21', NULL, 1, 7, 7),
+(102, 'CUMPLE MEDICACIÓN DM', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;CUMPLE MEDICACIÓN DM&quot;}', '2019-02-11 13:48:38', NULL, 1, 7, 7),
+(103, 'RECIBIÓ EDUCACIÓN', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;RECIBIÓ EDUCACIÓN&quot;}', '2019-02-11 13:48:56', NULL, 1, 7, 7),
+(104, 'TUVO HIPOGLICEMIA', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;TUVO HIPOGLICEMIA&quot;}', '2019-02-11 13:49:13', NULL, 1, 7, 7),
+(105, 'TIENE ULCERA EN EL PIE', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;TIENE ULCERA EN EL PIE&quot;}', '2019-02-11 14:37:18', NULL, 1, 7, 7),
+(106, 'AUTOMONITOREO DE GLUCOSA', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;AUTOMONITOREO DE GLUCOSA&quot;}', '2019-02-11 14:37:40', NULL, 1, 7, 7),
+(107, 'SE HOSPITALIZÓ', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;SE HOSPITALIZÓ&quot;}', '2019-02-11 14:37:56', NULL, 1, 7, 7),
+(108, 'ELECTROCARDIOGRAMA', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;ELECTROCARDIOGRAMA&quot;}', '2019-02-11 14:38:12', NULL, 1, 7, 7),
+(109, 'CHEQUEO DE RETINOPATÍA', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;CHEQUEO DE RETINOPATÍA&quot;}', '2019-02-11 14:38:50', NULL, 1, 7, 7),
+(112, 'OTROS TRATAMIENTOS', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;OTROS TRATAMIENTOS&quot;,&quot;TipoCampo&quot;:6}', '2019-02-24 21:12:36', NULL, 1, 9, 5),
+(117, 'NIVEL DE SATISFACCIÓN', '{&quot;TipoOpcion&quot;:11,&quot;CodigoOpcion&quot;:&quot;Opcion Listado&quot;,&quot;Titulo&quot;:&quot;NIVEL DE SATISFACCIÓN&quot;,&quot;TipoCampo&quot;:7}', '2019-03-15 16:35:24', NULL, 1, 11, 7),
+(125, 'Prueba Rango Criterio', '{&quot;TipoOpcion&quot;:16,&quot;CodigoOpcion&quot;:&quot;Opcion Rango-Criterio&quot;,&quot;Titulo&quot;:&quot;Prueba Rango Criterio&quot;,&quot;AtributoCriterioA&quot;:&quot;kg&quot;,&quot;MinimoCriterioA&quot;:1,&quot;MaximoCriterioA&quot;:50,&quot;AtributoCriterioB&quot;:&quot;kg&quot;,&quot;MinimoCriterioB&quot;:1,&quot;MaximoCriterioB&quot;:100,&quot;CriterioA&quot;:&quot;CriterioA&quot;,&quot;CriterioB&quot;:&quot;CriterioB&quot;}', '2019-10-02 16:37:31', 'Prueba de Rango Criterio', 1, 16, 1);
 
 -- --------------------------------------------------------
 
@@ -4353,16 +3981,7 @@ CREATE TABLE IF NOT EXISTS `tab_paciente` (
   KEY `FK_PACI_TIPO` (`TipoMedida_idTipoMedida`),
   KEY `FK_COND_PA` (`Condicion_idCondicion`),
   KEY `FK_GRADO` (`GradoInstruccion_idGradoInstruccion`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `tab_paciente`
---
-
-INSERT INTO `tab_paciente` (`idPaciente`, `Codigo`, `Nombres`, `apellidoPaterno`, `apellidoMaterno`, `fechaNacimiento`, `edad`, `numeroDocumento`, `Telefono`, `Celular`, `Correo`, `Direccion`, `TipoMedida_idTipoMedida`, `CantidadTiempo`, `tituloGrado`, `Sexo_idSexo`, `DX_idDX`, `Medico_idMedico`, `TipoDocumento_idTipoDocumento`, `Departamento_idDepartamento`, `Provincia_idProvincia`, `Distrito_idDistrito`, `Condicion_idCondicion`, `GradoInstruccion_idGradoInstruccion`, `Estado_idEstado`, `fechaRegistro`) VALUES
-(13, 'Nº 0001', 'Jesús', 'Inca', 'Cárdenas', '1992-05-18', 26, '47040087', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 4, NULL, 1, NULL, NULL, NULL, 7, NULL, 1, '2019-02-23 13:34:43'),
-(14, 'Nº 0002', 'José', 'Román', 'López', '1959-11-26', 59, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 3, NULL, NULL, NULL, NULL, NULL, 7, NULL, 1, '2019-02-23 19:25:55'),
-(15, 'Nº 0003', 'Luisa', 'Perez', 'Quispe', '1960-10-20', 58, '21212121', NULL, NULL, NULL, NULL, 1, 5, NULL, 2, 5, 1, 1, 15, 127, 1267, 8, 1, 1, '2019-03-08 16:22:07');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -4603,325 +4222,7 @@ CREATE TABLE IF NOT EXISTS `tab_resultado_ficha` (
   KEY `FK_RESU_SEGU` (`Seguimiento_idSeguimiento`),
   KEY `FK_RESU_ESP` (`Especialidad_idEspecialidad`),
   KEY `FKORSE` (`Opcion_Opcion`)
-) ENGINE=InnoDB AUTO_INCREMENT=313 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `tab_resultado_ficha`
---
-
-INSERT INTO `tab_resultado_ficha` (`idResultadoFicha`, `Seguimiento_idSeguimiento`, `Opcion_Opcion`, `Especialidad_idEspecialidad`, `TipoOpcion`, `Propiedades`, `RespuestaTexto`, `RespuestaValor`, `RespuestaFecha`, `RespuestaAdecuado`, `TipoListado`, `Grupo_idGrupo`, `fechaRegistro`) VALUES
-(1, 1, 5, NULL, 3, NULL, NULL, '70.00', NULL, 1, NULL, 1, '2019-03-23 15:50:11'),
-(2, 1, 6, NULL, 3, NULL, NULL, '70.00', NULL, 1, NULL, 1, '2019-03-23 15:50:11'),
-(3, 1, 7, NULL, 3, NULL, NULL, '5.00', NULL, 1, NULL, 1, '2019-03-23 15:50:11'),
-(4, 1, 8, NULL, 3, NULL, NULL, '12.00', NULL, 0, NULL, 1, '2019-03-23 15:50:11'),
-(5, 1, 9, NULL, 3, NULL, NULL, '12.00', NULL, 1, NULL, 1, '2019-03-23 15:50:11'),
-(6, 1, 10, NULL, 4, '{\"Sexo\":}', NULL, '12.00', NULL, 0, NULL, 1, '2019-03-23 15:50:11'),
-(7, 1, 11, NULL, 3, NULL, NULL, '12.00', NULL, 1, NULL, 1, '2019-03-23 15:50:11'),
-(8, 1, 12, NULL, 3, NULL, NULL, '12.00', NULL, 1, NULL, 1, '2019-03-23 15:50:11'),
-(9, 1, 13, NULL, 6, '{\"v1\":1.7,\"v2\":77,\"v3\":0,\"v4\":0}', NULL, '26.65', NULL, NULL, NULL, 1, '2019-03-23 15:50:11'),
-(10, 1, 16, NULL, 3, NULL, NULL, '44.00', NULL, 1, NULL, 1, '2019-03-23 15:50:11'),
-(11, 1, 17, NULL, 3, NULL, NULL, '2.00', NULL, 1, NULL, 1, '2019-03-23 15:50:11'),
-(12, 1, 18, NULL, 3, NULL, NULL, '12.00', NULL, 0, NULL, 1, '2019-03-23 15:50:11'),
-(13, 1, 19, NULL, 3, NULL, NULL, '12.00', NULL, 1, NULL, 1, '2019-03-23 15:50:11'),
-(14, 1, 21, NULL, 9, '{\"tipocampo\":\"2\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:11'),
-(15, 1, 23, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:11'),
-(16, 1, 24, NULL, 9, '{\"tipocampo\":\"undefined\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:11'),
-(17, 1, 25, NULL, 9, '{\"tipocampo\":\"undefined\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:11'),
-(18, 1, 26, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:12'),
-(19, 1, 27, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:12'),
-(20, 1, 28, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:12'),
-(21, 1, 29, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:12'),
-(22, 1, 30, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:12'),
-(23, 1, 31, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:12'),
-(24, 1, 32, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:12'),
-(25, 1, 33, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:12'),
-(26, 1, 35, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:12'),
-(27, 1, 36, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:12'),
-(28, 1, 38, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:12'),
-(29, 1, 39, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:12'),
-(30, 1, 40, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:12'),
-(31, 1, 41, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:12'),
-(32, 1, 42, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:12'),
-(33, 1, 43, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:12'),
-(34, 1, 44, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:12'),
-(35, 1, 45, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:12'),
-(36, 1, 46, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:12'),
-(37, 1, 47, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:12'),
-(38, 1, 48, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:12'),
-(39, 1, 50, NULL, 9, '{\"tipocampo\":\"4\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:13'),
-(40, 1, 51, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:13'),
-(41, 1, 53, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:13'),
-(42, 1, 54, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:13'),
-(43, 1, 56, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:13'),
-(44, 1, 57, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:13'),
-(45, 1, 58, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:13'),
-(46, 1, 59, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:13'),
-(47, 1, 60, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:13'),
-(48, 1, 61, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:13'),
-(49, 1, 62, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:13'),
-(50, 1, 64, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:13'),
-(51, 1, 65, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:13'),
-(52, 1, 66, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:13'),
-(53, 1, 67, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:13'),
-(54, 1, 69, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:13'),
-(55, 1, 70, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:13'),
-(56, 1, 71, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:13'),
-(57, 1, 73, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:13'),
-(58, 1, 74, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:13'),
-(59, 1, 75, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:13'),
-(60, 1, 76, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:13'),
-(61, 1, 77, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:13'),
-(62, 1, 78, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:14'),
-(63, 1, 112, NULL, 9, '{\"tipocampo\":\"6\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:50:14'),
-(64, 1, 80, NULL, 2, NULL, '', NULL, NULL, NULL, NULL, 6, '2019-03-23 15:50:14'),
-(65, 1, 81, NULL, 5, NULL, NULL, NULL, '2019-03-23', NULL, NULL, 6, '2019-03-23 15:50:14'),
-(66, 1, 82, NULL, 2, NULL, '', NULL, NULL, NULL, NULL, 6, '2019-03-23 15:50:14'),
-(67, 1, 89, NULL, 9, '{\"tipocampo\":\"5\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 6, '2019-03-23 15:50:14'),
-(68, 1, 90, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-03-23 15:50:14'),
-(69, 1, 91, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-03-23 15:50:14'),
-(70, 1, 92, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-03-23 15:50:14'),
-(71, 1, 93, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-03-23 15:50:14'),
-(72, 1, 94, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-03-23 15:50:14'),
-(73, 1, 95, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-03-23 15:50:14'),
-(74, 1, 96, NULL, 2, NULL, '', NULL, NULL, NULL, NULL, 6, '2019-03-23 15:50:14'),
-(75, 1, 97, NULL, 5, NULL, NULL, NULL, '2019-03-27', NULL, NULL, 6, '2019-03-23 15:50:14'),
-(76, 1, 98, NULL, 5, NULL, NULL, NULL, '2019-03-27', NULL, NULL, 7, '2019-03-23 15:50:14'),
-(77, 1, 99, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:50:14'),
-(78, 1, 100, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:50:14'),
-(79, 1, 101, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:50:15'),
-(80, 1, 102, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:50:15'),
-(81, 1, 103, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:50:15'),
-(82, 1, 104, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:50:15'),
-(83, 1, 105, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:50:15'),
-(84, 1, 106, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:50:15'),
-(85, 1, 107, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:50:15'),
-(86, 1, 108, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:50:15'),
-(87, 1, 109, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:50:15'),
-(88, 1, 117, NULL, 11, '{\"tipocampo\":\"7\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, NULL, NULL, 7, '2019-03-23 15:50:15'),
-(89, 1, NULL, 4, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:50:15'),
-(90, 1, NULL, 5, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:50:15'),
-(91, 1, NULL, 6, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:50:15'),
-(92, 1, NULL, 7, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:50:15'),
-(93, 1, NULL, 8, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:50:15'),
-(94, 1, NULL, 9, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:50:15'),
-(95, 1, NULL, 10, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:50:15'),
-(96, 1, NULL, 11, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:50:15'),
-(97, 1, NULL, 12, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:50:15'),
-(98, 1, NULL, 13, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:50:15'),
-(99, 1, NULL, 14, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:50:15'),
-(100, 1, NULL, 15, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:50:15'),
-(101, 1, NULL, 16, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:50:16'),
-(102, 1, NULL, 18, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:50:16'),
-(103, 1, NULL, 19, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:50:16'),
-(104, 1, NULL, 20, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:50:16'),
-(105, 2, 5, NULL, 3, NULL, NULL, '1.00', NULL, 0, NULL, 1, '2019-03-23 15:51:07'),
-(106, 2, 6, NULL, 3, NULL, NULL, '1.00', NULL, 0, NULL, 1, '2019-03-23 15:51:07'),
-(107, 2, 7, NULL, 3, NULL, NULL, '1.00', NULL, 1, NULL, 1, '2019-03-23 15:51:07'),
-(108, 2, 8, NULL, 3, NULL, NULL, '1.00', NULL, 0, NULL, 1, '2019-03-23 15:51:07'),
-(109, 2, 9, NULL, 3, NULL, NULL, '1.00', NULL, 1, NULL, 1, '2019-03-23 15:51:07'),
-(110, 2, 10, NULL, 4, '{\"Sexo\":1}', NULL, '1.00', NULL, 0, NULL, 1, '2019-03-23 15:51:07'),
-(111, 2, 11, NULL, 3, NULL, NULL, '1.00', NULL, 1, NULL, 1, '2019-03-23 15:51:08'),
-(112, 2, 12, NULL, 3, NULL, NULL, '2.00', NULL, 1, NULL, 1, '2019-03-23 15:51:08'),
-(113, 2, 13, NULL, 6, '{\"v1\":1,\"v2\":1,\"v3\":0,\"v4\":0}', NULL, '1.00', NULL, NULL, NULL, 1, '2019-03-23 15:51:08'),
-(114, 2, 16, NULL, 3, NULL, NULL, '1.00', NULL, 0, NULL, 1, '2019-03-23 15:51:08'),
-(115, 2, 17, NULL, 3, NULL, NULL, '1.00', NULL, 1, NULL, 1, '2019-03-23 15:51:08'),
-(116, 2, 18, NULL, 3, NULL, NULL, '1.00', NULL, 1, NULL, 1, '2019-03-23 15:51:08'),
-(117, 2, 19, NULL, 3, NULL, NULL, '1.00', NULL, 1, NULL, 1, '2019-03-23 15:51:08'),
-(118, 2, 21, NULL, 9, '{\"tipocampo\":\"2\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:08'),
-(119, 2, 23, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:08'),
-(120, 2, 24, NULL, 9, '{\"tipocampo\":\"undefined\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:08'),
-(121, 2, 25, NULL, 9, '{\"tipocampo\":\"undefined\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:08'),
-(122, 2, 26, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:08'),
-(123, 2, 27, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(124, 2, 28, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(125, 2, 29, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(126, 2, 30, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(127, 2, 31, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(128, 2, 32, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(129, 2, 33, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(130, 2, 35, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(131, 2, 36, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(132, 2, 38, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(133, 2, 39, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(134, 2, 40, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(135, 2, 41, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(136, 2, 42, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(137, 2, 43, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(138, 2, 44, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(139, 2, 45, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(140, 2, 46, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(141, 2, 47, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(142, 2, 48, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(143, 2, 50, NULL, 9, '{\"tipocampo\":\"4\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(144, 2, 51, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(145, 2, 53, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(146, 2, 54, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(147, 2, 56, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(148, 2, 57, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(149, 2, 58, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:09'),
-(150, 2, 59, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:10'),
-(151, 2, 60, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:10'),
-(152, 2, 61, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:10'),
-(153, 2, 62, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:10'),
-(154, 2, 64, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:10'),
-(155, 2, 65, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:10'),
-(156, 2, 66, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:10'),
-(157, 2, 67, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:10'),
-(158, 2, 69, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:10'),
-(159, 2, 70, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:10'),
-(160, 2, 71, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:10'),
-(161, 2, 73, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:10'),
-(162, 2, 74, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:10'),
-(163, 2, 75, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:10'),
-(164, 2, 76, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:10'),
-(165, 2, 77, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:10'),
-(166, 2, 78, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:10'),
-(167, 2, 112, NULL, 9, '{\"tipocampo\":\"6\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:10'),
-(168, 2, 80, NULL, 2, NULL, '', NULL, NULL, NULL, NULL, 6, '2019-03-23 15:51:10'),
-(169, 2, 81, NULL, 5, NULL, NULL, NULL, '2019-03-12', NULL, NULL, 6, '2019-03-23 15:51:10'),
-(170, 2, 82, NULL, 2, NULL, '', NULL, NULL, NULL, NULL, 6, '2019-03-23 15:51:10'),
-(171, 2, 89, NULL, 9, '{\"tipocampo\":\"5\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 6, '2019-03-23 15:51:10'),
-(172, 2, 90, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-03-23 15:51:10'),
-(173, 2, 91, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-03-23 15:51:10'),
-(174, 2, 92, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-03-23 15:51:10'),
-(175, 2, 93, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-03-23 15:51:11'),
-(176, 2, 94, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-03-23 15:51:11'),
-(177, 2, 95, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-03-23 15:51:11'),
-(178, 2, 96, NULL, 2, NULL, '', NULL, NULL, NULL, NULL, 6, '2019-03-23 15:51:11'),
-(179, 2, 97, NULL, 5, NULL, NULL, NULL, '2019-03-20', NULL, NULL, 6, '2019-03-23 15:51:11'),
-(180, 2, 98, NULL, 5, NULL, NULL, NULL, '2019-03-20', NULL, NULL, 7, '2019-03-23 15:51:11'),
-(181, 2, 99, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:51:11'),
-(182, 2, 100, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:51:11'),
-(183, 2, 101, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:51:11'),
-(184, 2, 102, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:51:11'),
-(185, 2, 103, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:51:11'),
-(186, 2, 104, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:51:11'),
-(187, 2, 105, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:51:11'),
-(188, 2, 106, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:51:11'),
-(189, 2, 107, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:51:11'),
-(190, 2, 108, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:51:11'),
-(191, 2, 109, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:51:11'),
-(192, 2, 117, NULL, 11, '{\"tipocampo\":\"7\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, NULL, NULL, 7, '2019-03-23 15:51:11'),
-(193, 2, NULL, 4, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:51:11'),
-(194, 2, NULL, 5, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:51:11'),
-(195, 2, NULL, 6, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:51:11'),
-(196, 2, NULL, 7, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:51:11'),
-(197, 2, NULL, 8, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:51:11'),
-(198, 2, NULL, 9, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:51:11'),
-(199, 2, NULL, 10, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:51:12'),
-(200, 2, NULL, 11, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:51:12'),
-(201, 2, NULL, 12, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:51:12'),
-(202, 2, NULL, 13, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:51:12'),
-(203, 2, NULL, 14, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:51:12'),
-(204, 2, NULL, 15, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:51:12'),
-(205, 2, NULL, 16, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:51:12'),
-(206, 2, NULL, 18, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:51:12'),
-(207, 2, NULL, 19, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:51:12'),
-(208, 2, NULL, 20, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:51:12'),
-(209, 3, 5, NULL, 3, NULL, NULL, '21.00', NULL, 0, NULL, 1, '2019-03-23 15:51:55'),
-(210, 3, 6, NULL, 3, NULL, NULL, '2.00', NULL, 0, NULL, 1, '2019-03-23 15:51:55'),
-(211, 3, 7, NULL, 3, NULL, NULL, '12.00', NULL, 1, NULL, 1, '2019-03-23 15:51:55'),
-(212, 3, 8, NULL, 3, NULL, NULL, '22.00', NULL, 0, NULL, 1, '2019-03-23 15:51:55'),
-(213, 3, 9, NULL, 3, NULL, NULL, '22.00', NULL, 1, NULL, 1, '2019-03-23 15:51:55'),
-(214, 3, 10, NULL, 4, '{\"Sexo\":2}', NULL, '22.00', NULL, 0, NULL, 1, '2019-03-23 15:51:55'),
-(215, 3, 11, NULL, 3, NULL, NULL, '22.00', NULL, 1, NULL, 1, '2019-03-23 15:51:55'),
-(216, 3, 12, NULL, 3, NULL, NULL, '2.00', NULL, 1, NULL, 1, '2019-03-23 15:51:55'),
-(217, 3, 13, NULL, 6, '{\"v1\":1,\"v2\":1,\"v3\":0,\"v4\":0}', NULL, '1.00', NULL, NULL, NULL, 1, '2019-03-23 15:51:55'),
-(218, 3, 16, NULL, 3, NULL, NULL, '1.00', NULL, 0, NULL, 1, '2019-03-23 15:51:55'),
-(219, 3, 17, NULL, 3, NULL, NULL, '1.00', NULL, 1, NULL, 1, '2019-03-23 15:51:55'),
-(220, 3, 18, NULL, 3, NULL, NULL, '22.00', NULL, 0, NULL, 1, '2019-03-23 15:51:55'),
-(221, 3, 19, NULL, 3, NULL, NULL, '22.00', NULL, 1, NULL, 1, '2019-03-23 15:51:56'),
-(222, 3, 21, NULL, 9, '{\"tipocampo\":\"2\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:56'),
-(223, 3, 23, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:56'),
-(224, 3, 24, NULL, 9, '{\"tipocampo\":\"undefined\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:56'),
-(225, 3, 25, NULL, 9, '{\"tipocampo\":\"undefined\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:56'),
-(226, 3, 26, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:56'),
-(227, 3, 27, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:56'),
-(228, 3, 28, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:56'),
-(229, 3, 29, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:56'),
-(230, 3, 30, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:56'),
-(231, 3, 31, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:56'),
-(232, 3, 32, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:56'),
-(233, 3, 33, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:56'),
-(234, 3, 35, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:56'),
-(235, 3, 36, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:56'),
-(236, 3, 38, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:56'),
-(237, 3, 39, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:56'),
-(238, 3, 40, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:57'),
-(239, 3, 41, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:57'),
-(240, 3, 42, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:57'),
-(241, 3, 43, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:57'),
-(242, 3, 44, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:57'),
-(243, 3, 45, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:57'),
-(244, 3, 46, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:57'),
-(245, 3, 47, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:57'),
-(246, 3, 48, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:57'),
-(247, 3, 50, NULL, 9, '{\"tipocampo\":\"4\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:57'),
-(248, 3, 51, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:57'),
-(249, 3, 53, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:57'),
-(250, 3, 54, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:57'),
-(251, 3, 56, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:57'),
-(252, 3, 57, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:57'),
-(253, 3, 58, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:57'),
-(254, 3, 59, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:57'),
-(255, 3, 60, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:57'),
-(256, 3, 61, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:57'),
-(257, 3, 62, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:57'),
-(258, 3, 64, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:58'),
-(259, 3, 65, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:58'),
-(260, 3, 66, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:58'),
-(261, 3, 67, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:58'),
-(262, 3, 69, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:58'),
-(263, 3, 70, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:58'),
-(264, 3, 71, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:58'),
-(265, 3, 73, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:58'),
-(266, 3, 74, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:58'),
-(267, 3, 75, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:58'),
-(268, 3, 76, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:58'),
-(269, 3, 77, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:58'),
-(270, 3, 78, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:58'),
-(271, 3, 112, NULL, 9, '{\"tipocampo\":\"6\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-03-23 15:51:58'),
-(272, 3, 80, NULL, 2, NULL, '', NULL, NULL, NULL, NULL, 6, '2019-03-23 15:51:58'),
-(273, 3, 81, NULL, 5, NULL, NULL, NULL, '2019-03-14', NULL, NULL, 6, '2019-03-23 15:51:58'),
-(274, 3, 82, NULL, 2, NULL, '', NULL, NULL, NULL, NULL, 6, '2019-03-23 15:51:58'),
-(275, 3, 89, NULL, 9, '{\"tipocampo\":\"5\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 6, '2019-03-23 15:51:58'),
-(276, 3, 90, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-03-23 15:51:58'),
-(277, 3, 91, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-03-23 15:51:58'),
-(278, 3, 92, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-03-23 15:51:58'),
-(279, 3, 93, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-03-23 15:51:58'),
-(280, 3, 94, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-03-23 15:51:58'),
-(281, 3, 95, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-03-23 15:51:58'),
-(282, 3, 96, NULL, 2, NULL, '', NULL, NULL, NULL, NULL, 6, '2019-03-23 15:51:59'),
-(283, 3, 97, NULL, 5, NULL, NULL, NULL, '2019-03-15', NULL, NULL, 6, '2019-03-23 15:51:59'),
-(284, 3, 98, NULL, 5, NULL, NULL, NULL, '2019-03-20', NULL, NULL, 7, '2019-03-23 15:51:59'),
-(285, 3, 99, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:51:59'),
-(286, 3, 100, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:51:59'),
-(287, 3, 101, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:51:59'),
-(288, 3, 102, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:51:59'),
-(289, 3, 103, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:51:59'),
-(290, 3, 104, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:51:59'),
-(291, 3, 105, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:51:59'),
-(292, 3, 106, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:51:59'),
-(293, 3, 107, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:51:59'),
-(294, 3, 108, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:51:59'),
-(295, 3, 109, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-03-23 15:51:59'),
-(296, 3, 117, NULL, 11, '{\"tipocampo\":\"7\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, NULL, NULL, 7, '2019-03-23 15:51:59'),
-(297, 3, NULL, 4, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:51:59'),
-(298, 3, NULL, 5, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:51:59'),
-(299, 3, NULL, 6, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:51:59'),
-(300, 3, NULL, 7, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:51:59'),
-(301, 3, NULL, 8, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:51:59'),
-(302, 3, NULL, 9, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:52:00'),
-(303, 3, NULL, 10, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:52:00'),
-(304, 3, NULL, 11, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:52:00'),
-(305, 3, NULL, 12, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:52:00'),
-(306, 3, NULL, 13, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:52:00'),
-(307, 3, NULL, 14, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:52:00'),
-(308, 3, NULL, 15, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:52:00'),
-(309, 3, NULL, 16, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:52:00'),
-(310, 3, NULL, 18, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:52:00'),
-(311, 3, NULL, 19, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:52:00'),
-(312, 3, NULL, 20, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-03-23 15:52:00');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -4942,16 +4243,7 @@ CREATE TABLE IF NOT EXISTS `tab_resultado_pie` (
   `R7` int(11) NOT NULL,
   `R8` int(11) NOT NULL,
   PRIMARY KEY (`idResultadoPie`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `tab_resultado_pie`
---
-
-INSERT INTO `tab_resultado_pie` (`idResultadoPie`, `Seguimiento_idSeguimiento`, `R1`, `R2`, `R3`, `R4`, `R5`, `R6`, `R7`, `R8`) VALUES
-(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-(2, 2, 1, 1, 1, 1, 1, 1, 1, 1),
-(3, 3, 1, 1, 1, 1, 1, 1, 1, 1);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -4997,16 +4289,18 @@ CREATE TABLE IF NOT EXISTS `tab_seguimiento` (
   PRIMARY KEY (`idSeguimiento`),
   KEY `FK_SEGUI_PA` (`Paciente_idPaciente`),
   KEY `FK_YEAR` (`Year`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `tab_seguimiento`
 --
 
 INSERT INTO `tab_seguimiento` (`idSeguimiento`, `Codigo`, `Year`, `Mes`, `Paciente_idPaciente`, `fechaRegistro`) VALUES
-(1, 'SEG-1', 4, 1, 13, '2019-03-23 15:50:11'),
-(2, 'SEG-2', 4, 1, 14, '2019-03-23 15:51:07'),
-(3, 'SEG-3', 4, 1, 15, '2019-03-23 15:51:55');
+(1, 'SEG-1', 3, 1, 13, '2019-10-03 16:18:45'),
+(2, 'SEG-2', 4, 1, 13, '2019-10-03 16:21:17'),
+(3, 'SEG-3', 4, 1, 14, '2019-10-03 16:22:09'),
+(4, 'SEG-4', 4, 1, 15, '2019-10-03 16:23:12'),
+(5, 'SEG-5', 4, 1, 16, '2019-10-03 16:25:04');
 
 -- --------------------------------------------------------
 
@@ -5067,7 +4361,7 @@ CREATE TABLE IF NOT EXISTS `tab_tipoopcion` (
   `idTipoOpcion` int(11) NOT NULL AUTO_INCREMENT,
   `Descripcion` varchar(150) NOT NULL,
   PRIMARY KEY (`idTipoOpcion`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `tab_tipoopcion`
@@ -5083,7 +4377,8 @@ INSERT INTO `tab_tipoopcion` (`idTipoOpcion`, `Descripcion`) VALUES
 (7, 'Opción Condición'),
 (9, 'Opción Condición y Selección de Lista'),
 (10, 'SubCabecera'),
-(11, 'Opción Lista');
+(11, 'Opción Lista'),
+(16, 'Opción de Rango Según Criterio');
 
 -- --------------------------------------------------------
 
@@ -5169,10 +4464,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 --
 
 INSERT INTO `usuario` (`idUsuario`, `usuario`, `pass`, `Perfil_idPerfil`, `Persona_idPersona`, `Estado_idEstado`, `fechaRegistro`) VALUES
-(1, 'admin', '$2a$08$Vo4zFrwFG.k2ZHhln/fQVu5NoeJdzJUSG6HOVA6fBCknS/umS0bki', 1, 1, 1, '2018-09-29 14:03:15'),
-(49, 'agarciaa', '$2a$08$wyjmYshNwr4LA2OqlXw.OOxAi1WMxvGcHve8oXL/VQNWFTpwMXfiO', 11, 40, 1, '2018-11-21 22:46:32'),
-(50, 'jgonzalezc', '$2a$08$wMCGnNSJl1Al2ZhvbSh6JeXv6lKrdQrnyWQdZfroQbGiZDnrB6lJ6', 11, 41, 1, '2018-11-21 22:46:48'),
-(51, 'mrodriguezc', '$2a$08$TGTEo0z.wGkW6KsOZfBGY.yFOPxcrBWmoucC43qTWFVNG0Ao1YgLC', 11, 42, 1, '2018-11-21 22:47:07');
+(1, 'admin', '$2a$08$Vo4zFrwFG.k2ZHhln/fQVu5NoeJdzJUSG6HOVA6fBCknS/umS0bki', 1, 1, 1, '2018-09-29 14:03:15');
 
 --
 -- Restricciones para tablas volcadas
