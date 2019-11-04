@@ -105,7 +105,7 @@
                                             <div class="col-md-7">
                                                 <div class=" row">
 																<div class="input-group date  col-md-12" id="dateFechaNacimiento"   >
-																	<input class="form-control validarPanel" type="text" id="PersonaFechaNacimiento" name="PersonaFechaNacimiento"  autocomplete="off" data-message="- Fecha de Nacimiento">
+																	<input class="form-control validarPanel" type="text" id="PersonaFechaNacimiento" name="PersonaFechaNacimiento"  autocomplete="off" data-message="- Fecha de Nacimiento" readonly>
 																	<span class="input-group-append input-group-addon">
 
 																		<span class="input-group-text "><i class="fa fa-calendar fa-lg"></i></span>
@@ -168,16 +168,7 @@
                                             </div>
                                         </div>
                                     </div>
- 										 <div class="col-md-6 br">
-                                        <div class="form-group row">
-                                            <label for="PersonaEstado" class="col-md-5 col-form-label"><i class="fa fa-sun fa-lg mr-3"></i>Estado<span class="red">*</span>:</label>
-                                            <div class="col-md-7">
-                                                <select class="form-control validarPanel" id="PersonaEstado" name="PersonaEstado" data-message="- Estado">
 
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="row mr-1 ml-1">
                                            <button type="submit" class="col-md-2 btn btn-success btn-sm" title="Guardar">

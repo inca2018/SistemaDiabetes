@@ -15,6 +15,20 @@
            $sql="CALL `SP_PERSONA_HABILITACION`('$idPersona','$codigo','$idCreador');";
            return ejecutarConsulta($sql);
        }
+
+       public function EliminarPersona($idPersona){
+           $sql="UPDATE `persona` SET `Estado_idEstado`=10 WHERE `idPersona`=$idPersona";
+           return ejecutarConsulta($sql);
+       }
+       public function HabilitarPersona($idPersona){
+           $sql="UPDATE `persona` SET `Estado_idEstado`=3 WHERE `idPersona`=$idPersona";
+           return ejecutarConsulta($sql);
+       }
+       public function DesHabilitarPersona($idPersona){
+           $sql="UPDATE `persona` SET `Estado_idEstado`=4 WHERE `idPersona`=$idPersona";
+           return ejecutarConsulta($sql);
+       }
+
       public function ValidarPersona($dni,$idPersona){
           $sql="";
           if($idPersona=='' || $idPersona==null || empty($idPersona)){

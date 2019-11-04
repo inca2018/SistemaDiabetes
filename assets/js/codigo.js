@@ -96,24 +96,7 @@ $.fn.datepicker.dates['es'] = {
     weekStart: 0
 };
 
-function hoyFecha(){
-    var hoy = new Date();
-        var dd = hoy.getDate();
-        var mm = hoy.getMonth()+1;
-        var yyyy = hoy.getFullYear();
 
-        dd = addZero(dd);
-        mm = addZero(mm);
-
-        return dd+'/'+mm+'/'+yyyy;
-}
-
-function addZero(i) {
-    if (i < 10) {
-        i = '0' + i;
-    }
-    return i;
-}
 
 
 function Formato_Moneda(amount, decimals) {
@@ -166,7 +149,7 @@ function SoloLetras(e,num,id){
 }
 
 function hoyFecha(){
-    var hoy = new Date();
+       var hoy = new Date();
         var dd = hoy.getDate();
         var mm = hoy.getMonth()+1;
         var yyyy = hoy.getFullYear();
@@ -176,12 +159,28 @@ function hoyFecha(){
 
         return dd+'/'+mm+'/'+yyyy;
 }
+
+
+function RecuperarYearActual(){
+    var hoy = new Date();
+    return  hoy.getFullYear();
+}
+function RecuperarMesActual(){
+    var hoy = new Date();
+    var mm = hoy.getMonth()+1;
+    mm = addZero(mm);
+    return  mm;
+}
+function RecuperarDiaActual(){
+    var hoy = new Date();
+    var dd = hoy.getDate();
+     dd = addZero(dd);
+    return  dd;
+}
+
 function addZero(i) {
     if (i < 10) {
         i = '0' + i;
     }
     return i;
 }
-
-
-

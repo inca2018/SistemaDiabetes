@@ -30,7 +30,7 @@ $PersonaEstado=isset($_POST["PersonaEstado"])?limpiarCadena($_POST["PersonaEstad
    $fechaVencimiento = date("Y-m-d", strtotime($date));*/
 
     function BuscarEstado($reg){
-        if($reg->Estado_idEstado=='1' || $reg->Estado_idEstado==1 ){
+        if($reg->Estado_idEstado=='1' || $reg->Estado_idEstado==1 || $reg->Estado_idEstado==3 ){
             return '<div class="badge badge-success">'.$reg->nombreEstado.'</div>';
         }elseif($reg->Estado_idEstado=='2' || $reg->Estado_idEstado==2){
             return '<div class="badge badge-danger">'.$reg->nombreEstado.'</div>';
@@ -39,11 +39,14 @@ $PersonaEstado=isset($_POST["PersonaEstado"])?limpiarCadena($_POST["PersonaEstad
         }
     }
     function BuscarAccion($reg){
-        if($reg->Estado_idEstado==1 || $reg->Estado_idEstado==2 ){
-            return '<button type="button"   title="Editar" class="btn btn-warning btn-sm" onclick="EditarPersona('.$reg->idPersona.')"><i class="fa fa-edit"></i></button>
-               <button type="button"  title="Eliminar" class="btn btn-danger btn-sm" onclick="EliminarPersona('.$reg->idPersona.')"><i class="fa fa-trash"></i></button>';
+        if($reg->Estado_idEstado==1 || $reg->Estado_idEstado==2 || $reg->Estado_idEstado==3){
+            return '
+            <button type="button" title="Editar" class="btn btn-warning btn-sm" onclick="EditarPersona('.$reg->idPersona.')"><i class="fa fa-edit"></i></button>
+            <button type="button"  title="DesHabilitar" class="btn btn-info btn-sm" onclick="DesHabilitarPersona(' . $reg->idPersona . ')"><i class="fa fa-arrow-circle-down"></i></button>
+            <button type="button"  title="Eliminar" class="btn btn-danger btn-sm" onclick="EliminarPersona('.$reg->idPersona.')"><i class="fa fa-trash"></i></button>';
         }elseif($reg->Estado_idEstado==4){
-            return '<button type="button"  title="Habilitar" class="btn btn-info btn-sm" onclick="HabilitarPersona('.$reg->idPersona.')"><i class="fa fa-sync"></i></button>';
+            return '<button type="button"  title="Habilitar" class="btn btn-info btn-sm" onclick="HabilitarPersona('.$reg->idPersona.')"><i class="fa fa-sync"></i></button>
+            <button type="button"  title="Eliminar" class="btn btn-danger btn-sm" onclick="EliminarPersona('.$reg->idPersona.')"><i class="fa fa-trash"></i></button>';
         }
     }
 
@@ -61,7 +64,7 @@ $PersonaEstado=isset($_POST["PersonaEstado"])?limpiarCadena($_POST["PersonaEstad
                 if($rspta["Error"]){
                     $rspta["Mensaje"].="Por estas razones no se puede Registrar el Persona.";
                 }else{
-                    $RespuestaRegistro=$mantenimiento->RegistroPersona($PersonaNombre,$PersonaApellidoP,$PersonaApellidoM,$PersonaDNI,$PersonaFechaNacimiento,$PersonaCorreo,$PersonaTelefono,$PersonaDireccion,$PersonaEstado,$idPersona,$login_idLog);
+                    $RespuestaRegistro=$mantenimiento->RegistroPersona($PersonaNombre,$PersonaApellidoP,$PersonaApellidoM,$PersonaDNI,$PersonaFechaNacimiento,$PersonaCorreo,$PersonaTelefono,$PersonaDireccion,3,$idPersona,$login_idLog);
                     if($RespuestaRegistro){
                         $rspta["Registro"]=true;
                         $rspta["Mensaje"]="Persona se registro Correctamente.";
@@ -80,7 +83,7 @@ $PersonaEstado=isset($_POST["PersonaEstado"])?limpiarCadena($_POST["PersonaEstad
                     $rspta["Mensaje"].="Por estas razones no se puede Registrar el Persona.";
                 }else{
 
-                    $RespuestaRegistro=$mantenimiento->RegistroPersona($PersonaNombre,$PersonaApellidoP,$PersonaApellidoM,$PersonaDNI,$PersonaFechaNacimiento,$PersonaCorreo,$PersonaTelefono,$PersonaDireccion,$PersonaEstado,$idPersona,$login_idLog);
+                    $RespuestaRegistro=$mantenimiento->RegistroPersona($PersonaNombre,$PersonaApellidoP,$PersonaApellidoM,$PersonaDNI,$PersonaFechaNacimiento,$PersonaCorreo,$PersonaTelefono,$PersonaDireccion,3,$idPersona,$login_idLog);
                     if($RespuestaRegistro){
                         $rspta["Registro"]=true;
                         $rspta["Mensaje"]="Persona se Actualizo Correctamente.";
@@ -134,7 +137,7 @@ $PersonaEstado=isset($_POST["PersonaEstado"])?limpiarCadena($_POST["PersonaEstad
                "2"=>$reg->nombrePersona,
                "3"=>$reg->apellidoPaterno." ".$reg->apellidoMaterno,
                "4"=>$reg->DNI,
-               "5"=>$reg->fechaRegistro,
+               "5"=>$reg->RegistroPersona,
                "6"=>BuscarAccion($reg)
             );
          }
@@ -149,18 +152,34 @@ $PersonaEstado=isset($_POST["PersonaEstado"])?limpiarCadena($_POST["PersonaEstad
       case 'Eliminar_Persona':
          $rspta = array("Mensaje"=>"","Eliminar"=>false,"Error"=>false);
          /*------ Cuando el usuario ya se esta facturando, ya no se puede eliminar --------*/
-         $rspta['Eliminar']=$mantenimiento->Eliminar_Persona($idPersona,1,$login_idLog);
+         $rspta['Eliminar']=$mantenimiento->EliminarPersona($idPersona);
 
          $rspta['Eliminar']?$rspta['Mensaje']="Persona Eliminado.":$rspta['Mensaje']="Persona no se pudo eliminar comuniquese con el area de soporte";
          echo json_encode($rspta);
       break;
 
-      case 'Recuperar_Persona':
-         $rspta = array("Mensaje"=>"","Eliminar"=>false,"Error"=>false);
+      case 'Habilitar_Persona':
+         $rspta = array("Mensaje"=>"","Habilitar"=>false,"Error"=>false);
          /*------ Cuando el usuario ya se esta facturando, ya no se puede eliminar --------*/
-         $rspta['Eliminar']=$mantenimiento->Eliminar_Persona($idPersona,2,$login_idLog);
+         $rspta['Habilitar']=$mantenimiento->HabilitarPersona($idPersona,1,$login_idLog);
 
-         $rspta['Eliminar']?$rspta['Mensaje']="Persona Restablecido.":$rspta['Mensaje']="Persona no se pudo Restablecer comuniquese con el area de soporte";
+         $rspta['Habilitar']?$rspta['Mensaje']="Persona Habilitada.":$rspta['Mensaje']="Persona no se pudo Restablecer comuniquese con el area de soporte";
+         echo json_encode($rspta);
+      break;
+
+      case 'DesHabilitar_Persona':
+         $rspta = array("Mensaje"=>"","Deshabilitar"=>false,"Error"=>false);
+         /*------ Cuando el usuario ya se esta facturando, ya no se puede eliminar --------*/
+         $rspta['Deshabilitar']=$mantenimiento->DesHabilitarPersona($idPersona,2,$login_idLog);
+
+         if($rspta['Deshabilitar']){
+             $rspta['Error']=true;
+             $rspta['Mensaje']="Persona DesHabilitada.";
+         } else{
+            $rspta['Error']=false;
+            $rspta['Mensaje']="Persona no se pudo Restablecer comuniquese con el area de soporte.";
+         }
+
          echo json_encode($rspta);
       break;
 

@@ -23,9 +23,10 @@ function BuscarEstado($reg)
 function BuscarAccion($reg)
 {
     if ($reg->Estado_idEstado == 1) {
-        return '<button type="button"   title="Editar" class="btn btn-warning btn-sm" onclick="EditarSatisfaccion(' . $reg->idSatisfaccion . ')"><i class="fa fa-edit"></i></button>
-                <button type="button"  title="Desactivación" class="btn btn-info btn-sm" onclick="DesactivacionSatisfaccion(' . $reg->idSatisfaccion . ')"><i class="fa fa-arrow-circle-down"></i></button>
-               <button type="button"  title="Eliminar" class="btn btn-danger btn-sm" onclick="EliminarSatisfaccion(' . $reg->idSatisfaccion . ')"><i class="fa fa-trash"></i></button>';
+        return '
+        <button type="button"   title="Editar" class="btn btn-warning btn-sm" onclick="EditarSatisfaccion(' . $reg->idSatisfaccion . ')"><i class="fa fa-edit"></i></button>
+        <button type="button"  title="Desactivación" class="btn btn-info btn-sm" onclick="DesactivacionSatisfaccion(' . $reg->idSatisfaccion . ')"><i class="fa fa-arrow-circle-down"></i></button>
+         <button type="button"  title="Eliminar" class="btn btn-danger btn-sm" onclick="EliminarSatisfaccion(' . $reg->idSatisfaccion . ')"><i class="fa fa-trash"></i></button>';
     } elseif ($reg->Estado_idEstado == 2) {
         return '<button type="button"  title="Activación" class="btn btn-info btn-sm" onclick="ActivacionSatisfaccion(' . $reg->idSatisfaccion . ')"><i class="fa fa-arrow-circle-up"></i></button>
             <button type="button"  title="Eliminar" class="btn btn-danger btn-sm" onclick="EliminarSatisfaccion(' . $reg->idSatisfaccion . ')"><i class="fa fa-trash"></i></button>';

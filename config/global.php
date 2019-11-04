@@ -18,7 +18,7 @@ define("DB_ENCODE","utf8");
 define("PRO_NOMBRE","");
 
 //Definimos ruta base
-define("URI","http://diabetes.qsystemdevs.com");
+define("URI","http://localhost/SistemaDiabetes/");
 
 ?>
 
