@@ -1,0 +1,8 @@
+punto 1 - cambiar a select 2 (todos)
+punto 3 - aumentar 4 estados nuevo en el pie. (check y verde, check y rojo,x y verde , x y rojo).
+punto 4 - chekear bd  y ver si se puede recuperar
+reporte por tipo de riesgo y subtipo
+punto 6 : segun sexo -- agregar tipo a segun criterio
+punto 8 : agregar nota opcional.. icono ? ... Y mostrar nota al pasar puntero.
+punto 9: porcentaje segun N* fichas
+punto 10: agregar tipo de opcion - condicion y area de texto.

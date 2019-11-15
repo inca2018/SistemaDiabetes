@@ -1,0 +1,9 @@
+usuario_ correccion
+Dni . person exactamente 8 
+Id PERSONA LA ACTUALIZAR
+
+Usuario, editar , actualizar , eliminar.. pero que no se borre de la tabla.
+
+1.- chekear usuario - persona -
+2.- dni (8dig) y fecha nacimiento.
+3.- pendiente 2 cambios.
