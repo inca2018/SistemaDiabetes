@@ -24,7 +24,7 @@ function SetFechaFin() {
     var hoy = hoyFecha();
     var day = parseInt(hoy.substr(0, 2));
     var month = parseInt(hoy.substr(3, 2));
-    var year = parseInt(hoy.substr(6, 8));
+    var year = (parseInt(hoy.substr(6, 8))-18);
     $('#dateFechaNacimiento').datepicker('setEndDate', new Date(year, (month - 1), day));
 }
 
@@ -49,6 +49,10 @@ function RegistroMedico(event) {
             error = error + $(this).data("message") + "<br>";
         }
     });
+     var dni = $("#MedicoDNI").val().length;
+    if (dni < 8) {
+        error = error + "- Dni debe ser Igual a 8 Digitos<br>";
+    }
 
     if (error == "") {
         $("#ModalMedico #cuerpo").addClass("whirl");
@@ -60,10 +64,9 @@ function RegistroMedico(event) {
 }
 
 function AjaxRegistroMedico() {
+    var edad=$("#Edad").val();
     var formData = new FormData($("#FormularioMedico")[0]);
-    var MedicoEdad = $("#Edad").val();
-    formData.append("MedicoEdad", MedicoEdad);
-
+    formData.append("MedicoEdad",edad);
     console.log(formData);
     $.ajax({
         url: "../../controlador/Mantenimiento/CMedico.php?op=AccionMedico",
@@ -118,7 +121,7 @@ function Listar_Medico() {
         "columnDefs": [
             {
                 "className": "text-center",
-                "targets": [1, 2, 3, 4, 5,6]
+                "targets": [1, 2, 3, 4, 5, 6]
             }
             , {
                 "className": "text-left",
@@ -193,12 +196,12 @@ function EditarMedico(idMedico, idPersona) {
     $("#tituloModalMedico").empty();
     $("#tituloModalMedico").append("Editar Medico:");
     RecuperarMedico(idMedico, idPersona);
-     ReiniciarNav();
+    ReiniciarNav();
 }
 
 function RecuperarMedico(idMedico) {
     //solicitud de recuperar Proveedor
-  LimpiarMedico();
+    LimpiarMedico();
     $("#idMedico").val(idMedico);
     $.post("../../controlador/Mantenimiento/CMedico.php?op=RecuperarInformacion_Medico", {
         "idMedico": idMedico,
@@ -219,21 +222,31 @@ function RecuperarMedico(idMedico) {
             $("#MedicoApellidoM").val(data.apellidoMaterno);
             $("#Edad").val(data.edad);
             $("#MedicoDNI").val(data.dni);
-            $("#MedicoTelefono").val(data.Telefono);
-            $("#MedicoCelular").val(data.Celular);
-            $("#MedicoCorreo").val(data.Correo);
+            $("#MedicoTelefono").val(VerificarCampo(data.Telefono));
+            $("#MedicoCelular").val(VerificarCampo(data.Celular));
+            $("#MedicoCorreo").val(VerificarCampo(data.Correo));
+            $('#dateFechaNacimiento').datepicker("setDate",SetFechaNacimiento(data.fechaNacimiento));
 
-            var year = data.fechaNacimiento.substring(0, 4);
-            var mothn = data.fechaNacimiento.substring(5,7);
-            var day = data.fechaNacimiento.substring(8,10);
-
-            $('#dateFechaNacimiento').datepicker("setDate", new Date(year,mothn-1,day));
-            //$('#MedicoFechaNacimiento').datepicker('setDate', data.fechaNacimiento);
 
         });
 
     });
 }
+
+function VerificarCampo(valor){
+    if(valor=="-1" || valor==null){
+        return "";
+    }else{
+        return valor;
+    }
+}
+function SetFechaNacimiento(fecha) {
+    var year = fecha.substring(0, 4);
+    var mes = fecha.substring(5, 7);
+    var dia = fecha.substring(8, 10);
+    return new Date(year, (mes - 1), dia);
+}
+
 
 
 function EliminarMedico(idMedico) {
@@ -316,12 +329,10 @@ function DesactivacionMedico(idMedico) {
     });
 }
 
-
-
 function LimpiarMedico() {
     $('#FormularioMedico')[0].reset();
     $("#idMedico").val("");
-    $("#dateFechaNacimiento").datepicker("SetDate",null);
+    $("#dateFechaNacimiento").datepicker("SetDate", null);
 }
 
 function Cancelar() {
@@ -343,8 +354,9 @@ function calcularEdad(fecha) {
     return edad;
 }
 
-function ReiniciarNav(){
+function ReiniciarNav() {
     $(".nav-link").removeClass("active");
     $("#nav-base").addClass("active");
 }
+
 init();

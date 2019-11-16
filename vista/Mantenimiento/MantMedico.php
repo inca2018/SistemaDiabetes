@@ -72,6 +72,16 @@
             <div class="modal-body" id="cuerpo">
                 <form id="FormularioMedico" method="POST" autocomplete="off">
                     <input type="hidden" name="idMedico" id="idMedico">
+                    <div class="row mb-3 mt-1">
+                         <div class="col-md-3">
+                             <label class=""><span class="red">(*) Campos Obligatorios</span></label>
+                         </div>
+                         <div class="col-md-1 offset-8">
+                              <button type="button" class="btn btn-info btn-sm btn-display" title="Limpiar Campos" onclick="LimpiarMedico();">
+                              <i class="fa fa-trash-alt fa-lg "></i>
+                              </button>
+                         </div>
+                     </div>
                     <div class="row">
                         <div class="col-12">
                             <div role="tabpanel">

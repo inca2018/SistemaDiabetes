@@ -29,6 +29,7 @@
       public function RegistroMedico($idMedico,$MedicoNombre,$MedicoApellidoP,$MedicoApellidoM,$MedicoFechaNacimiento,$MedicoEdad,$MedicoDNI,$MedicoSexo,$MedicoTelefono,$MedicoCelular,$MedicoCorreo){
         $sql="";
 
+
             $MedicoNombre=ucfirst(mb_strtolower($MedicoNombre));
             $MedicoApellidoP=ucfirst(mb_strtolower($MedicoApellidoP));
             $MedicoApellidoM=ucfirst(mb_strtolower($MedicoApellidoM));
@@ -52,6 +53,7 @@
              $sql="CALL `SP_CRUD_MEDICO`('EDITAR','$idMedico','$MedicoNombre','$MedicoApellidoP','$MedicoApellidoM','$MedicoFechaNacimiento','$MedicoEdad','$MedicoDNI','$MedicoTelefono','$MedicoCelular','$MedicoCorreo','$MedicoSexo');";
         }
 
+
          return ejecutarConsulta($sql);
       }
 		public function Recuperar_Medico($idMedico){
@@ -73,7 +75,7 @@
 
 
         public function VerificarNull($valor){
-           if($valor=='' || $valor==null || empty($valor)){
+           if($valor=='' || $valor==null){
 			  return $valor='-1';
 		   }else{
                return $valor;
