@@ -22,7 +22,7 @@
                 </div>
                 <hr class="mt-2 mb-2">
                 <div class="row">
-                    <div class="col-md-2 offset-10">
+                    <div class="col-md-3 offset-9">
                         <button class="btn btn-success btn-block btn-sm" onclick="NuevoDiagnostico();"><i class="fa fa-plus fa-lg mr-2"></i> Nuevo Diagnostico de Paciente</button>
                     </div>
                 </div>
