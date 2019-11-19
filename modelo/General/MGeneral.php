@@ -96,6 +96,11 @@
            return ejecutarConsulta($sql);
        }
 
+        public function listarNacionalidad(){
+           $sql="SELECT * FROM tab_nacionalidad where Estado_idEstado=1";
+           return ejecutarConsulta($sql);
+       }
+
 
    }
 

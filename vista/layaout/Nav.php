@@ -209,6 +209,11 @@
 										<span> Condición </span>
 									</a>
 								</li>
+								<li id="" class="">
+									<a href="<?php echo  $conexionConfig->rutaOP().'vista/Mantenimiento/MantNacionalidad.php';?>" title=" Nacionalidad">
+										<span> Nacionalidad </span>
+									</a>
+								</li>
 
 							</ul>
 						</li>

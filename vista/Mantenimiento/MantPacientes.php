@@ -76,6 +76,16 @@
                 <form id="FormularioPaciente" method="POST" autocomplete="off">
                     <input type="hidden" name="idPaciente" id="idPaciente">
                      <input type="hidden" id="PacienteCodigo" name="PacienteCodigo">
+                     <div class="row mb-3 mt-1">
+                         <div class="col-md-3">
+                             <label class=""><span class="red">(*) Campos Obligatorios</span></label>
+                         </div>
+                         <div class="col-md-1 offset-8">
+                              <button type="button" class="btn btn-info btn-sm btn-display" title="Limpiar Campos" onclick="LimpiarPaciente();">
+                              <i class="fa fa-trash-alt fa-lg "></i>
+                              </button>
+                         </div>
+                     </div>
                     <div class="row">
                         <div class="col-12">
                             <div role="tabpanel">
@@ -184,8 +194,17 @@
                                                     <textarea id="PacienteDireccion" name="PacienteDireccion" rows="1" class="form-control"></textarea>
                                                 </div>
                                             </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="PacienteNacionalidad" class="col-form-label">Nacionalidad:</label>
+                                                    <select class="form-control" id="PacienteNacionalidad" name="PacienteNacionalidad" data-message="">
+                                                    </select>
+                                                </div>
+                                            </div>
 
                                         </div>
+
+
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="op_2" role="tabpanel">

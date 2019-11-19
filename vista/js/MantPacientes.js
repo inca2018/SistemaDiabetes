@@ -14,7 +14,15 @@ function init() {
     Listar_Distrito(0);
     Listar_TipoMedida();
     Listar_GradoInstruccion();
+    ListarNacionalidad();
 
+}
+
+function ListarNacionalidad(){
+     $.post("../../controlador/Mantenimiento/CPaciente.php?op=listarNacionalidad", function (ts) {
+        $("#PacienteNacionalidad").empty();
+        $("#PacienteNacionalidad").append(ts);
+    });
 }
 
 function Iniciar_Componentes() {
@@ -92,7 +100,7 @@ function SetFechaFin() {
     var hoy = hoyFecha();
     var day = parseInt(hoy.substr(0, 2));
     var month = parseInt(hoy.substr(3, 2));
-    var year = parseInt(hoy.substr(6, 8));
+    var year = (parseInt(hoy.substr(6, 8))-18);
     $('#dateFechaNacimiento').datepicker('setEndDate', new Date(year, (month - 1), day));
 }
 
@@ -393,6 +401,11 @@ function RecuperarPaciente(idPaciente) {
                                                 (data.GradoInstruccion_idGradoInstruccion == null) ? $("#PacienteGrado").val(0): $("#PacienteGrado").val(data.GradoInstruccion_idGradoInstruccion);
                                                 $("#PacienteTitulo").val(data.tituloGrado);
 
+                                                $.post("../../controlador/Mantenimiento/CPaciente.php?op=listarNacionalidad", function (ts) {
+                                                    $("#PacienteNacionalidad").empty();
+                                                    $("#PacienteNacionalidad").append(ts);
+                                                    $("#PacienteNacionalidad").val(data.Nacionalidad_idNacionalidad);
+                                                });
 
                                                 $("#codigoMostrar").empty();
                                                 $("#codigoMostrar").append(data.Codigo);

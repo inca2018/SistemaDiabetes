@@ -36,11 +36,11 @@ class MOpcion
         return ejecutarConsulta($sql);
     }
     public function Listar_Opcion($idGrupoOpcion){
-        $sql = "SELECT op.idOpcion,op.TituloOpcion,op.fechaRegistro,op.Estado_idEstado,e.nombreEstado,tip.Descripcion as tipoOpcion FROM tab_opcion op inner join estado e ON e.idEstado=op.Estado_idEstado inner join tab_tipoopcion tip on tip.idTipoOpcion=op.TipoOpcion_idTipoOpcion where op.GrupoOpcion_idGrupoOpcion= '$idGrupoOpcion' ";
+        $sql = "SELECT op.idOpcion,op.TituloOpcion,op.fechaRegistro,op.Estado_idEstado,e.nombreEstado,tip.Descripcion as tipoOpcion FROM tab_opcion op inner join estado e ON e.idEstado=op.Estado_idEstado inner join tab_tipoopcion tip on tip.idTipoOpcion=op.TipoOpcion_idTipoOpcion where op.GrupoOpcion_idGrupoOpcion= '$idGrupoOpcion' and e.idEstado!=10 ";
         return ejecutarConsulta($sql);
     }
     public function Eliminar_Opcion($idOpcion){
-        $sql = "DELETE FROM `tab_opcion` WHERE `idOpcion`='$idOpcion'";
+        $sql = "UPDATE `tab_opcion` SET  `Estado_idEstado`=10   WHERE `idOpcion`='$idOpcion'";
         return ejecutarConsulta($sql);
     }
     public function Activacion_Opcion($idOpcion, $Opcion){

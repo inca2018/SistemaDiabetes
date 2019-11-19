@@ -8,12 +8,13 @@
       }
 
 	  public function Listar_Medicos(){
-           $sql="CALL `SP_MEDICO_LISTAR`();";
+           /*$sql="CALL `SP_MEDICO_LISTAR`();";*/
+           $sql="SELECT med.idMedico,CONCAT(med.nombres,' ',med.apellidoPaterno,' ',med.apellidoMaterno) as Nombremedico,med.edad,med.dni,med.Estado_idEstado,e.nombreEstado,CONCAT(med.Telefono,'/',med.Celular) as Comunicacion  FROM tab_medico med INNER JOIN estado e ON e.idEstado=med.Estado_idEstado WHERE med.Estado_idEstado!=10";
            return ejecutarConsulta($sql);
        }
       public function Eliminar_Medico($idMedico){
-          $sql="CALL `SP_CRUD_MEDICO`('ELIMINAR','$idMedico','-1','-1','-1','2000-01-01','-1','-1','-1','-1','-1','-1');";
-
+          /*$sql="CALL `SP_CRUD_MEDICO`('ELIMINAR','$idMedico','-1','-1','-1','2000-01-01','-1','-1','-1','-1','-1','-1');";*/
+           $sql="UPDATE `tab_medico` SET `Estado_idEstado`=10 WHERE `idMedico`=$idMedico";
            return ejecutarConsulta($sql);
        }
       public function ValidarMedico($documento,$idMedico){

@@ -226,8 +226,6 @@ function RecuperarMedico(idMedico) {
             $("#MedicoCelular").val(VerificarCampo(data.Celular));
             $("#MedicoCorreo").val(VerificarCampo(data.Correo));
             $('#dateFechaNacimiento').datepicker("setDate",SetFechaNacimiento(data.fechaNacimiento));
-
-
         });
 
     });
@@ -240,14 +238,13 @@ function VerificarCampo(valor){
         return valor;
     }
 }
+
 function SetFechaNacimiento(fecha) {
     var year = fecha.substring(0, 4);
     var mes = fecha.substring(5, 7);
     var dia = fecha.substring(8, 10);
     return new Date(year, (mes - 1), dia);
 }
-
-
 
 function EliminarMedico(idMedico) {
     swal({

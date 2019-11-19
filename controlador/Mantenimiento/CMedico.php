@@ -135,7 +135,7 @@ function BuscarAccion($reg)
 
 
 
-       case 'Eliminar_Medico':
+    case 'Eliminar_Medico':
         $rspta = array(
             "Mensaje" => "",
             "Eliminar" => false,

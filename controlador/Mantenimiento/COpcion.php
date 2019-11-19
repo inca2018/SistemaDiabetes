@@ -36,7 +36,7 @@ function BuscarAccion($reg)
         <button type="button"  title="Desactivación" class="btn btn-info btn-sm" onclick="DesactivacionOpcion(' . $reg->idOpcion . ')"><i class="fa fa-arrow-circle-down"></i></button>
                <button type="button"  title="Eliminar" class="btn btn-danger btn-sm" onclick="EliminarOpcion(' . $reg->idOpcion . ')"><i class="fa fa-trash"></i></button>';
     } elseif ($reg->Estado_idEstado == 2) {
-        return '<button type="button"  title="Editar Opción" class="btn btn-warning btn-sm" onclick="EditarOpcion(' . $reg->idOpcion . ')"><i class="fa fa-pen"></i></button><button type="button"  title="Activación" class="btn btn-info btn-sm" onclick="ActivacionOpcion(' . $reg->idOpcion . ')"><i class="fa fa-arrow-circle-up"></i></button>
+        return '<button type="button"  title="Activación" class="btn btn-info btn-sm" onclick="ActivacionOpcion(' . $reg->idOpcion . ')"><i class="fa fa-arrow-circle-up"></i></button>
             <button type="button"  title="Eliminar" class="btn btn-danger btn-sm" onclick="EliminarOpcion(' . $reg->idOpcion . ')"><i class="fa fa-trash"></i></button>';
     }
 }

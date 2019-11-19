@@ -25,7 +25,7 @@
 
           return validarDatos($sql);
       }
-      public function RegistroPaciente($idPaciente,$PacienteCodigo,$PacienteNombre,$PacienteApellidoP,$PacienteApellidoM,$PacienteFechaNacimiento,$PacienteEdad,$PacienteTipoDocumento,$PacienteNumeroDocumento,$PacienteSexo,$PacienteTelefono,$PacienteCelular,$PacienteCorreo,$PacienteDireccion,$PacienteTipoMedida,$PacienteCantidadMedida,$PacienteDX,$PacienteMedico,$PacienteDepartamento,$PacienteProvincia,$PacienteDistrito,$PacienteCondicion,$PacienteGrado,$PacienteTitulo){
+      public function RegistroPaciente($idPaciente,$PacienteCodigo,$PacienteNombre,$PacienteApellidoP,$PacienteApellidoM,$PacienteFechaNacimiento,$PacienteEdad,$PacienteTipoDocumento,$PacienteNumeroDocumento,$PacienteSexo,$PacienteTelefono,$PacienteCelular,$PacienteCorreo,$PacienteDireccion,$PacienteTipoMedida,$PacienteCantidadMedida,$PacienteDX,$PacienteMedico,$PacienteDepartamento,$PacienteProvincia,$PacienteDistrito,$PacienteCondicion,$PacienteGrado,$PacienteTitulo,$PacienteNacionalidad){
         $sql="";
 
             $PacienteNombre=ucfirst(mb_strtolower($PacienteNombre,'utf-8'));
@@ -55,15 +55,16 @@
             $PacienteCondicion=$this->VerificarNull($PacienteCondicion);
             $PacienteGrado=$this->VerificarNull($PacienteGrado);
             $PacienteTitulo=$this->VerificarNull($PacienteTitulo);
+            $PacienteNacionalidad=$this->VerificarNull($PacienteNacionalidad);
 
 
 
         if($idPaciente=="" || $idPaciente==null || empty($idPaciente)){
 
-             $sql="INSERT INTO `tab_paciente`(`idPaciente`, `Codigo`, `Nombres`, `apellidoPaterno`, `apellidoMaterno`, `fechaNacimiento`, `edad`, `numeroDocumento`, `Telefono`, `Celular`, `Correo`, `Direccion`, `TipoMedida_idTipoMedida`, `CantidadTiempo`, `tituloGrado`, `Sexo_idSexo`, `DX_idDX`, `Medico_idMedico`, `TipoDocumento_idTipoDocumento`, `Departamento_idDepartamento`, `Provincia_idProvincia`, `Distrito_idDistrito`, `Condicion_idCondicion`, `GradoInstruccion_idGradoInstruccion`, `Estado_idEstado`, `fechaRegistro`) VALUES (NULL,$PacienteCodigo,$PacienteNombre,$PacienteApellidoP,$PacienteApellidoM,$PacienteFechaNacimiento,$PacienteEdad,$PacienteNumeroDocumento,$PacienteTelefono,$PacienteCelular,$PacienteCorreo,$PacienteDireccion,$PacienteTipoMedida,$PacienteCantidadMedida,$PacienteTitulo,$PacienteSexo,$PacienteDX,$PacienteMedico,$PacienteTipoDocumento,$PacienteDepartamento,$PacienteProvincia,$PacienteDistrito,$PacienteCondicion,$PacienteGrado,1,NOW())";
+             $sql="INSERT INTO `tab_paciente`(`idPaciente`, `Codigo`, `Nombres`, `apellidoPaterno`, `apellidoMaterno`, `fechaNacimiento`, `edad`, `numeroDocumento`, `Telefono`, `Celular`, `Correo`, `Direccion`, `TipoMedida_idTipoMedida`, `CantidadTiempo`, `tituloGrado`, `Sexo_idSexo`, `DX_idDX`, `Medico_idMedico`, `TipoDocumento_idTipoDocumento`, `Departamento_idDepartamento`, `Provincia_idProvincia`, `Distrito_idDistrito`, `Condicion_idCondicion`, `GradoInstruccion_idGradoInstruccion`, `Estado_idEstado`, `fechaRegistro`,`Nacionalidad_idNacionalidad`) VALUES (NULL,$PacienteCodigo,$PacienteNombre,$PacienteApellidoP,$PacienteApellidoM,$PacienteFechaNacimiento,$PacienteEdad,$PacienteNumeroDocumento,$PacienteTelefono,$PacienteCelular,$PacienteCorreo,$PacienteDireccion,$PacienteTipoMedida,$PacienteCantidadMedida,$PacienteTitulo,$PacienteSexo,$PacienteDX,$PacienteMedico,$PacienteTipoDocumento,$PacienteDepartamento,$PacienteProvincia,$PacienteDistrito,$PacienteCondicion,$PacienteGrado,1,NOW(),$PacienteNacionalidad)";
 
         }else{
-            $sql="UPDATE `tab_paciente` SET  `Nombres`=$PacienteNombre,`apellidoPaterno`=$PacienteApellidoP,`apellidoMaterno`=$PacienteApellidoM,`fechaNacimiento`=$PacienteFechaNacimiento,`edad`=$PacienteEdad,`numeroDocumento`=$PacienteNumeroDocumento,`Telefono`=$PacienteTelefono,`Celular`=$PacienteCelular,`Correo`=$PacienteCorreo,`Direccion`=$PacienteDireccion,`TipoMedida_idTipoMedida`=$PacienteTipoMedida,`CantidadTiempo`=$PacienteCantidadMedida,`tituloGrado`=$PacienteTitulo,`Sexo_idSexo`=$PacienteSexo,`DX_idDX`=$PacienteDX,`Medico_idMedico`=$PacienteMedico,`TipoDocumento_idTipoDocumento`=$PacienteTipoDocumento,`Departamento_idDepartamento`=$PacienteDepartamento,`Provincia_idProvincia`=$PacienteProvincia,`Distrito_idDistrito`=$PacienteDistrito,`Condicion_idCondicion`=$PacienteCondicion,`GradoInstruccion_idGradoInstruccion`=$PacienteGrado WHERE `idPaciente`=$idPaciente";
+            $sql="UPDATE `tab_paciente` SET  `Nombres`=$PacienteNombre,`apellidoPaterno`=$PacienteApellidoP,`apellidoMaterno`=$PacienteApellidoM,`fechaNacimiento`=$PacienteFechaNacimiento,`edad`=$PacienteEdad,`numeroDocumento`=$PacienteNumeroDocumento,`Telefono`=$PacienteTelefono,`Celular`=$PacienteCelular,`Correo`=$PacienteCorreo,`Direccion`=$PacienteDireccion,`TipoMedida_idTipoMedida`=$PacienteTipoMedida,`CantidadTiempo`=$PacienteCantidadMedida,`tituloGrado`=$PacienteTitulo,`Sexo_idSexo`=$PacienteSexo,`DX_idDX`=$PacienteDX,`Medico_idMedico`=$PacienteMedico,`TipoDocumento_idTipoDocumento`=$PacienteTipoDocumento,`Departamento_idDepartamento`=$PacienteDepartamento,`Provincia_idProvincia`=$PacienteProvincia,`Distrito_idDistrito`=$PacienteDistrito,`Condicion_idCondicion`=$PacienteCondicion,`GradoInstruccion_idGradoInstruccion`=$PacienteGrado , `Nacionalidad_idNacionalidad`=$PacienteNacionalidad WHERE `idPaciente`=$idPaciente";
         }
 
          return ejecutarConsulta($sql);

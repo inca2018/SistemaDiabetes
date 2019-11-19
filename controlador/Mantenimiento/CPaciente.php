@@ -38,6 +38,8 @@
     $PacienteDistrito=isset($_POST["PacienteDistrito"])?limpiarCadena($_POST["PacienteDistrito"]):"";
     $PacienteCondicion=isset($_POST["PacienteCondicion"])?limpiarCadena($_POST["PacienteCondicion"]):"";
 
+    $PacienteNacionalidad=isset($_POST["PacienteNacionalidad"])?limpiarCadena($_POST["PacienteNacionalidad"]):"";
+
 
 
     $idDepartamento=isset($_POST["idDepartamento"])?limpiarCadena($_POST["idDepartamento"]):"";
@@ -93,7 +95,7 @@ function BuscarAccion($reg)
                 if($rspta["Error"]){
                     $rspta["Mensaje"].="Por estas razones no se puede Registrar el Paciente.";
                 }else{
-                    $RespuestaRegistro=$mantenimiento->RegistroPaciente($idPaciente,$PacienteCodigo,$PacienteNombre,$PacienteApellidoP,$PacienteApellidoM,$PacienteFechaNacimiento,$PacienteEdad,$PacienteTipoDocumento,$PacienteNumeroDocumento,$PacienteSexo,$PacienteTelefono,$PacienteCelular,$PacienteCorreo,$PacienteDireccion,$PacienteTipoMedida,$PacienteCantidadMedida,$PacienteDX,$PacienteMedico,$PacienteDepartamento,$PacienteProvincia,$PacienteDistrito,$PacienteCondicion,$PacienteGrado,$PacienteTitulo);
+                    $RespuestaRegistro=$mantenimiento->RegistroPaciente($idPaciente,$PacienteCodigo,$PacienteNombre,$PacienteApellidoP,$PacienteApellidoM,$PacienteFechaNacimiento,$PacienteEdad,$PacienteTipoDocumento,$PacienteNumeroDocumento,$PacienteSexo,$PacienteTelefono,$PacienteCelular,$PacienteCorreo,$PacienteDireccion,$PacienteTipoMedida,$PacienteCantidadMedida,$PacienteDX,$PacienteMedico,$PacienteDepartamento,$PacienteProvincia,$PacienteDistrito,$PacienteCondicion,$PacienteGrado,$PacienteTitulo,$PacienteNacionalidad);
                     if($RespuestaRegistro){
                         $rspta["Registro"]=true;
                         $rspta["Mensaje"]="Paciente se registro Correctamente.";
@@ -112,7 +114,7 @@ function BuscarAccion($reg)
                     $rspta["Mensaje"].="Por estas razones no se puede Actualizar el Paciente.";
                 }else{
 
-                    $RespuestaRegistro=$mantenimiento->RegistroPaciente($idPaciente,$PacienteCodigo,$PacienteNombre,$PacienteApellidoP,$PacienteApellidoM,$PacienteFechaNacimiento,$PacienteEdad,$PacienteTipoDocumento,$PacienteNumeroDocumento,$PacienteSexo,$PacienteTelefono,$PacienteCelular,$PacienteCorreo,$PacienteDireccion,$PacienteTipoMedida,$PacienteCantidadMedida,$PacienteDX,$PacienteMedico,$PacienteDepartamento,$PacienteProvincia,$PacienteDistrito,$PacienteCondicion,$PacienteGrado,$PacienteTitulo);
+                    $RespuestaRegistro=$mantenimiento->RegistroPaciente($idPaciente,$PacienteCodigo,$PacienteNombre,$PacienteApellidoP,$PacienteApellidoM,$PacienteFechaNacimiento,$PacienteEdad,$PacienteTipoDocumento,$PacienteNumeroDocumento,$PacienteSexo,$PacienteTelefono,$PacienteCelular,$PacienteCorreo,$PacienteDireccion,$PacienteTipoMedida,$PacienteCantidadMedida,$PacienteDX,$PacienteMedico,$PacienteDepartamento,$PacienteProvincia,$PacienteDistrito,$PacienteCondicion,$PacienteGrado,$PacienteTitulo,$PacienteNacionalidad);
                     if($RespuestaRegistro){
                         $rspta["Registro"]=true;
                         $rspta["Mensaje"]="Paciente se Actualizo Correctamente.";
@@ -221,7 +223,13 @@ function BuscarAccion($reg)
 					echo '<option   value=' . $reg->idDist . '>' . $reg->distrito . '</option>';
          	}
        break;
-
+       case 'listarNacionalidad':
+      		$rpta = $general->listarNacionalidad();
+            echo '<option value="0">-- SELECCIONE --</option>';
+         	while ($reg = $rpta->fetch_object()){
+					echo '<option   value=' . $reg->idNacionalidad . '>' . $reg->Descripcion . '</option>';
+         	}
+       break;
 
 
 		case 'Listar_Paciente':
