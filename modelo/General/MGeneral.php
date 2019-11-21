@@ -20,7 +20,7 @@
          return ejecutarConsulta($sql);
        }
 		public function Listar_Personas_Todo(){
-         $sql="select * from persona";
+         $sql="select * from persona where Estado_idEstado!=10";
          return ejecutarConsulta($sql);
        }
         public function Listar_Perfiles(){

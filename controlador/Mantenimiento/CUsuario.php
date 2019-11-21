@@ -34,11 +34,14 @@
         }
     }
     function BuscarAccion($reg){
-        if($reg->Estado_idEstado==1 || $reg->Estado_idEstado==2 ){
+        if($reg->Estado_idEstado==1  ){
             return '<button type="button"   title="Editar" class="btn btn-warning btn-sm" onclick="EditarUsuario('.$reg->idUsuario.')"><i class="fa fa-edit"></i></button>
+             <button type="button"  title="DesHabilitar" class="btn btn-info btn-sm" onclick="DesHabilitarUsuario(' . $reg->idUsuario . ')"><i class="fa fa-arrow-circle-down"></i></button>
                <button type="button"  title="Eliminar" class="btn btn-danger btn-sm" onclick="EliminarUsuario('.$reg->idUsuario.')"><i class="fa fa-trash"></i></button>';
-        }elseif($reg->Estado_idEstado==4){
-            return '<button type="button"  title="Habilitar" class="btn btn-info btn-sm" onclick="HabilitarUsuario('.$reg->idUsuario.')"><i class="fa fa-sync"></i></button>';
+        }elseif($reg->Estado_idEstado==2  ){
+            return '
+            <button type="button"  title="Habilitar" class="btn btn-info btn-sm" onclick="HabilitarUsuario('.$reg->idUsuario.')"><i class="fa fa-sync"></i></button>
+             <button type="button"  title="Eliminar" class="btn btn-danger btn-sm" onclick="EliminarUsuario('.$reg->idUsuario.')"><i class="fa fa-trash"></i></button>';
         }
     }
 
@@ -168,6 +171,30 @@
          $rspta['Eliminar']=$mantenimiento->Eliminar_Usuario($idUsuario,2,$login_idLog);
 
          $rspta['Eliminar']?$rspta['Mensaje']="Usuario Restablecido.":$rspta['Mensaje']="Usuario no se pudo Restablecer comuniquese con el area de soporte";
+         echo json_encode($rspta);
+      break;
+
+       case 'Habilitar_Usuario':
+         $rspta = array("Mensaje"=>"","Habilitar"=>false,"Error"=>false);
+         /*------ Cuando el usuario ya se esta facturando, ya no se puede eliminar --------*/
+         $rspta['Habilitar']=$mantenimiento->HabilitarUsuario($idUsuario,1,$login_idLog);
+         $rspta['Habilitar']?$rspta['Mensaje']="Usuario Habilitada.":$rspta['Mensaje']="Usuario no se pudo Restablecer comuniquese con el area de soporte";
+         echo json_encode($rspta);
+      break;
+
+           case 'DesHabilitar_Usuario':
+         $rspta = array("Mensaje"=>"","Deshabilitar"=>false,"Error"=>false);
+         /*------ Cuando el usuario ya se esta facturando, ya no se puede eliminar --------*/
+         $rspta['Deshabilitar']=$mantenimiento->DesHabilitarUsuario($idUsuario,2,$login_idLog);
+
+         if($rspta['Deshabilitar']){
+             $rspta['Error']=true;
+             $rspta['Mensaje']="Usuario DesHabilitada.";
+         } else{
+            $rspta['Error']=false;
+            $rspta['Mensaje']="Usuario no se pudo Restablecer comuniquese con el area de soporte.";
+         }
+
          echo json_encode($rspta);
       break;
 

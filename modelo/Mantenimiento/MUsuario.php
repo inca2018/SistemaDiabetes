@@ -12,7 +12,7 @@
            return ejecutarConsulta($sql);
        }
       public function Eliminar_Usuario($idUsuario,$codigo,$idCreador){
-           $sql="CALL `SP_USUARIO_HABILITACION`('$idUsuario','$codigo','$idCreador');";
+            $sql="UPDATE `usuario` SET `Estado_idEstado`=10 WHERE `idUsuario`=$idUsuario";
            return ejecutarConsulta($sql);
        }
       public function ValidarUsuario($nombreUsuario,$idUsuario){
@@ -41,6 +41,16 @@
 			$sql="CALL `SP_USUARIO_RECUPERAR`('$idUsuario');";
 			return ejecutarConsultaSimpleFila($sql);
 		}
+
+        public function HabilitarUsuario($idUsuario){
+           $sql="UPDATE `usuario` SET `Estado_idEstado`=1 WHERE `idUsuario`=$idUsuario";
+           return ejecutarConsulta($sql);
+       }
+       public function DesHabilitarUsuario($idUsuario){
+           $sql="UPDATE `usuario` SET `Estado_idEstado`=2 WHERE `idUsuario`=$idUsuario";
+           return ejecutarConsulta($sql);
+       }
+
 
    }
 

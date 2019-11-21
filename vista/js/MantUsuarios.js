@@ -173,6 +173,7 @@ function NuevoUsuario(){
     $("#ModalUsuario").modal("show");
     $("#tituloModalUsuario").empty();
     $("#tituloModalUsuario").append("Nuevo Usuario:");
+    $("#UsuarioPerfil").val(0).trigger('change');
 }
 function EditarUsuario(idUsuario){
     $("#ModalUsuario").modal({
@@ -187,6 +188,7 @@ function EditarUsuario(idUsuario){
 function RecuperarUsuario(idUsuario){
 	//solicitud de recuperar Proveedor
 	$.post("../../controlador/Mantenimiento/CUsuario.php?op=RecuperarInformacion_Usuario",{"idUsuario":idUsuario}, function(data, status){
+        debugger;
 		data = JSON.parse(data);
 		$.post("../../controlador/Mantenimiento/CUsuario.php?op=listar_personas_todo", function (ts) {
 		$("#UsuarioPersona").empty();
@@ -196,7 +198,13 @@ function RecuperarUsuario(idUsuario){
 		$("#idUsuario").val(data.idUsuario);
 		$("#UsuarioPersona").val(data.Persona_idPersona);
 		$("#UsuarioUsuario").val(data.usuario);
-		$("#UsuarioPerfil").val(data.Perfil_idPerfil);
+             $.post("../../controlador/Mantenimiento/CUsuario.php?op=listar_perfiles", function (ts) {
+                 $("#UsuarioPerfil").empty();
+                 $("#UsuarioPerfil").append(ts);
+                  //$("#UsuarioPerfil").val(data.Perfil_idPerfil);
+                  $("#UsuarioPerfil").val(data.Perfil_idPerfil).trigger('change');
+             });
+
 		$("#UsuarioPassword").val("");
 		$("#UsuarioPassword").removeClass("validarPanel");
 		$("#UsuarioEstado").val(data.Estado_idEstado);
@@ -266,6 +274,63 @@ function Cancelar(){
     LimpiarUsuario();
     $("#ModalUsuario").modal("hide");
 
+}
+
+function DesHabilitarUsuario(idUsuario) {
+    swal({
+        title: "DesHabilitar?",
+        text: "Esta Seguro que desea DesHabilitar Usuario!",
+        type: "info",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Si, DesHabilitar!",
+        closeOnConfirm: false
+    }, function () {
+        ajaxDesHabilitarUsuario(idUsuario);
+    });
+}
+function ajaxDesHabilitarUsuario(idUsuario) {
+    $.post("../../controlador/Mantenimiento/CUsuario.php?op=DesHabilitar_Usuario", {
+        idUsuario: idUsuario
+    }, function (data, e) {
+        data = JSON.parse(data);
+        var Deshabilitar = data.Deshabilitar;
+        var Mensaje = data.Mensaje;
+        if (!Deshabilitar) {
+            swal("Error", Mensaje, "error");
+        } else {
+            swal("Deshabilitado!", Mensaje, "success");
+            tablaUsuario.ajax.reload();
+        }
+    });
+}
+function HabilitarUsuario(idUsuario) {
+    swal({
+        title: "Habilitar?",
+        text: "Esta Seguro que desea Habilitar Usuario!",
+        type: "info",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Si, Habilitar!",
+        closeOnConfirm: false
+    }, function () {
+        ajaxHabilitarUsuario(idUsuario);
+    });
+}
+function ajaxHabilitarUsuario(idUsuario) {
+    $.post("../../controlador/Mantenimiento/CUsuario.php?op=Habilitar_Usuario", {
+        idUsuario: idUsuario
+    }, function (data, e) {
+        data = JSON.parse(data);
+        var Habilitar = data.Habilitar;
+        var Mensaje = data.Mensaje;
+        if (!Habilitar) {
+            swal("Error", Mensaje, "error");
+        } else {
+            swal("Habilitado!", Mensaje, "success");
+            tablaUsuario.ajax.reload();
+        }
+    });
 }
 
 init();
