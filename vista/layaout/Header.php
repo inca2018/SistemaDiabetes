@@ -62,4 +62,7 @@ $conexionConfig = new Conexion();
    <link rel="stylesheet" href="<?php echo $conexionConfig->ruta(); ?>css/theme-g.css" id="maincss">
    <!-- =============== APP STYLES PERSONAL ===============-->
    <link rel="stylesheet" href="<?php echo $conexionConfig->rutaOP(); ?>assets/css/style.css" id="maincss">
+
+
+    <link rel="stylesheet" href="<?php echo $conexionConfig->ruta(); ?>vendor/autocomplete/awesomplete.css">
 </head>

@@ -148,7 +148,7 @@ if(isset($_POST["idPaciente"])){
 
 
 <div class="modal fade" id="modal_seguimiento" role="dialog" aria-labelledby="myModalLabelLarge" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabelLarge">Resultado de Ficha:</h4>

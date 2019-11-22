@@ -17,6 +17,8 @@
     $idMes=isset($_POST["idMes"]) ? limpiarCadena($_POST["idMes"]) : "";
     $idSeguimiento=isset($_POST["idSeguimiento"]) ? limpiarCadena($_POST["idSeguimiento"]) : "";
 
+
+
    switch($_GET['op']){
 
         case 'RecuperarGrupos':
@@ -56,12 +58,22 @@
          break;
 
        case 'ListarDiagnosticos':
+            $Diagnostico=array();
+
            	$rpta = $Ficha->ListarDiagnosticoEspecialidad();
-        echo '<option value="0">--- SELECCIONE ---</option>';
-         	while ($reg = $rpta->fetch_object()){
-					echo '<option   value=' . $reg->idDiagnosticoEspecialidad . '>' . $reg->Descripcion . '</option>';
+
+          	while ($reg = $rpta->fetch_object()){
+
+             $Diagnostico["list"][]=$reg->Descripcion;
+					//echo '<option   value=' . $reg->idDiagnosticoEspecialidad . '>' . $reg->Descripcion . '</option>';
          	}
 
+           /*echo '<option value="0">--- SELECCIONE ---</option>';
+         	while ($reg = $rpta->fetch_object()){
+
+					echo '<option   value=' . $reg->idDiagnosticoEspecialidad . '>' . $reg->Descripcion . '</option>';
+         	}*/
+            echo json_encode($Diagnostico);
            break;
 
        case 'RecuperarListas':
@@ -125,7 +137,7 @@
        break;
 
        case 'GuardarFicha':
-              $rspta=array("Error"=>false,"Mensaje"=>"","Registro"=>false);
+            $rspta=array("Error"=>false,"Mensaje"=>"","Registro"=>false);
             $resuSeguimiento = $Ficha->RegistrarSeguimiento($idPaciente,$idAno,$idMes);
             $idSeguimiento=$resuSeguimiento["ID"];
 
@@ -134,6 +146,9 @@
             $contador=count($OpcionesR);
             for($i=0;$i<$contador;$i++){
                 $opcion=explode('#',$OpcionesR[$i]);
+
+                 $opcion[15]= $Ficha->BuscarDiagnostico(trim($opcion[15]));
+
                  if($i==$contador-1){
                         $resuSeguimiento = $Ficha->RegistrarResultados($opcion,$idSeguimiento);
                         $rspta["Registro"]=true;
@@ -160,6 +175,9 @@
             $contador=count($OpcionesR);
             for($i=0;$i<$contador;$i++){
                 $opcion=explode('#',$OpcionesR[$i]);
+
+                $opcion[15]= $Ficha->BuscarDiagnostico(trim($opcion[15]));
+
                  if($i==$contador-1){
                         $resuSeguimiento = $Ficha->ActualizarResultados($opcion,$idSeguimiento);
                         $rspta["Registro"]=true;
@@ -198,6 +216,7 @@
             echo json_encode($rspta);
            break;
    }
+
 
 
 ?>

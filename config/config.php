@@ -30,7 +30,7 @@ if (!function_exists('ejecutarConsulta')){
    }
 
    function ejecutarConsultaSimpleFila($sql){
-       $conexion=Conexion();
+      $conexion=Conexion();
       $query = $conexion->query($sql);
       $row = $query->fetch_assoc();
        mysqli_close($conexion);
@@ -39,9 +39,10 @@ if (!function_exists('ejecutarConsulta')){
 
 	function ejecutarConsulta_retornarID($sql){
        $conexion=Conexion();
-      $query = $conexion->query($sql);
-        mysqli_close($conexion);
-      return $conexion->insert_id;
+       $query = $conexion->query($sql);
+       $id=$conexion->insert_id;
+       mysqli_close($conexion);
+      return $id;
 	}
 
 	function limpiarCadena($str){
@@ -61,7 +62,7 @@ if (!function_exists('ejecutarConsulta')){
    function totalLista($sql){
       $conexion=Conexion();
       $query = $conexion->query($sql);
-        mysqli_close($conexion);
+       mysqli_close($conexion);
       return $query->num_rows;
    }
 

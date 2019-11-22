@@ -131,11 +131,10 @@ function MostrarOpcion(Check, opcion) {
 function RecuperarEspecialidades() {
     //$("#bloqueEspecialidades")
 
-    $.post("../../controlador/Gestion/CFicha.php?op=RecuperarEspecialidades", function (data, status) {
-        data = JSON.parse(data);
-
-        $.post("../../controlador/Gestion/CFicha.php?op=ListarDiagnosticos", function (ts) {
-            var diagnosticos = ts;
+    $.post("../../controlador/Gestion/CFicha.php?op=ListarDiagnosticos", function (ts) {
+        var diagnosticos = ts;
+        $.post("../../controlador/Gestion/CFicha.php?op=RecuperarEspecialidades", function (data, status) {
+            data = JSON.parse(data);
             var query = "";
             data.forEach(function (element) {
 
@@ -162,21 +161,17 @@ function RecuperarEspecialidades() {
                     '</div>' +
                     '</div>' +
 
+
                     '<div class="col-md-2">' +
                     ' <div class="form-group">' +
-                    '<label for="OpcionTipoCampo" class="col-form-label">Diagnosticos:</label>' +
-                    ' <script>' +
-                    '$("#OptionDiag' + idEspecialidad + '").select2({' +
-                    'theme: "bootstrap"' +
-                    '});' +
-                    '$("#OptionMedico' + idEspecialidad + '").select2({' +
-                    'theme: "bootstrap"' +
-                    '});' +
-                    '</script>' +
-                    '<select class="form-control " id="OptionDiag' + idEspecialidad + '" data-message="' + especialidad + ' - Diagnostico" name="OpcionTipoCampo" disabled>' +
-                    diagnosticos + '</select>' +
-                    ' </div>' +
-                    ' </div>' +
+                    ' <label for="" class="col-form-label">Diagnostico:</label>' +
+                    ' <input type="text" class="form-control"  data-message="' + especialidad + ' - Diagnostico" id="OptionDiag' + idEspecialidad + '" disabled>' +
+                    '</div>' +
+                    '</div>' +
+
+                    '<script>var input' + idEspecialidad + ' = document.getElementById("OptionDiag' + idEspecialidad + '"); new Awesomplete(input' + idEspecialidad + ','+diagnosticos+'); </script>' +
+
+
                     '<div class="col-md-2">' +
                     ' <div class="form-group">' +
                     ' <label for="OpcionTipoCampo" class="col-form-label">Medico:</label>' +
@@ -208,8 +203,9 @@ function RecuperarEspecialidades() {
 
             $("#contenedorEspecialidades").html(query);
             LanzarFuncionesEspecialidad();
-        });
 
+
+        });
     });
 
 }
@@ -436,8 +432,8 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
     switch (Tipo) {
         case "1":
             opcion = '<div class="col-md-12">' +
-                        '<h4 class="text-info"><u>' + Titulo + ':</u></h4>' +
-                     '</div>';
+                '<h4 class="text-info"><u>' + Titulo + ':</u></h4>' +
+                '</div>';
             break;
         case "2":
             opcion = '<div class="col-md-12">' +
@@ -673,34 +669,34 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
 
             opcion =
                 '<input type="hidden" class="opcionOculto " id="OFA' + idOpcion + '"  data-minimo="' + minimoCriterioA + '" data-maximo="' + maximoCriterioA + '" data-sexo="' + sexo + '">' +
-                 '<input type="hidden" class="opcionOculto " id="OFB' + idOpcion + '"  data-minimo="' + minimoCriterioB + '" data-maximo="' + maximoCriterioB + '" data-sexo="' + sexo + '">' +
+                '<input type="hidden" class="opcionOculto " id="OFB' + idOpcion + '"  data-minimo="' + minimoCriterioB + '" data-maximo="' + maximoCriterioB + '" data-sexo="' + sexo + '">' +
 
-                '<div class="col-md-12">'+
-                    '<label class="">' + Titulo + '</label>'+
-                    '<span class="ml-3 badge badge-primary" title="' + Informacion + '"><i class="fa fa-info-circle fa2x"></i></span>'+
+                '<div class="col-md-12">' +
+                '<label class="">' + Titulo + '</label>' +
+                '<span class="ml-3 badge badge-primary" title="' + Informacion + '"><i class="fa fa-info-circle fa2x"></i></span>' +
                 '</div>' +
 
                 '<div class="col-md-4">' +
-                    '<label>' + CriterioA + ' - Rango(' + minimoCriterioA + '' + atributoCriterioA + ' - ' + maximoCriterioA + ' ' + atributoCriterioA + '):</label>' +
-                    '<input id="OPA' + idOpcion + '" class="form-control  caja campo FuRango16 validar fuTextoCaja  " data-message="' + grupo + ' - ' + Titulo + '" data-id="' + idOpcion + '" data-atributo="' + atributoCriterioA + '" data-tipo="' + Tipo + '" data-minimo="' + minimoCriterioA + '" data-maximo="' + maximoCriterioA + '" data-op="A" type="text" step="any"  maxlength="100" placeholder="' + placeA + '" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
+                '<label>' + CriterioA + ' - Rango(' + minimoCriterioA + '' + atributoCriterioA + ' - ' + maximoCriterioA + ' ' + atributoCriterioA + '):</label>' +
+                '<input id="OPA' + idOpcion + '" class="form-control  caja campo FuRango16 validar fuTextoCaja  " data-message="' + grupo + ' - ' + Titulo + '" data-id="' + idOpcion + '" data-atributo="' + atributoCriterioA + '" data-tipo="' + Tipo + '" data-minimo="' + minimoCriterioA + '" data-maximo="' + maximoCriterioA + '" data-op="A" type="text" step="any"  maxlength="100" placeholder="' + placeA + '" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
                 '</div>' +
 
                 '<div class="col-md-2 mt-4">' +
-                    '<img style="display:none;" id="SI' + idOpcion + 'A" src="../../assets/image/emoticon2.png" alt="Resultado Bueno" height="30" width="30">' +
-                    '<img style="display:none;" id="NO' + idOpcion + 'A" src="../../assets/image/emoticon1.png" alt="Resultado Malo" height="30" width="30">' +
+                '<img style="display:none;" id="SI' + idOpcion + 'A" src="../../assets/image/emoticon2.png" alt="Resultado Bueno" height="30" width="30">' +
+                '<img style="display:none;" id="NO' + idOpcion + 'A" src="../../assets/image/emoticon1.png" alt="Resultado Malo" height="30" width="30">' +
                 '</div> ' +
 
-                '<div class="col-md-12">'+
-                    '<label class="">' + CriterioB + ' Rango(' + minimoCriterioB + '' + atributoCriterioB + ' - ' + maximoCriterioB + ' ' + atributoCriterioB + '):</label>'+
+                '<div class="col-md-12">' +
+                '<label class="">' + CriterioB + ' Rango(' + minimoCriterioB + '' + atributoCriterioB + ' - ' + maximoCriterioB + ' ' + atributoCriterioB + '):</label>' +
                 '</div>' +
 
                 '<div class="col-md-4">' +
-                    '<input id="OPB' + idOpcion + '" class="form-control  caja campo FuRango16 validar fuTextoCaja  " data-message="' + grupo + ' - ' + Titulo + '" data-id="' + idOpcion + '" data-atributo="' + atributoCriterioB + '" data-tipo="' + Tipo + '" data-minimo="' + minimoCriterioB + '" data-maximo="' + maximoCriterioB + '" data-op="B" type="text" step="any"  maxlength="100" placeholder="' + placeB + '" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
+                '<input id="OPB' + idOpcion + '" class="form-control  caja campo FuRango16 validar fuTextoCaja  " data-message="' + grupo + ' - ' + Titulo + '" data-id="' + idOpcion + '" data-atributo="' + atributoCriterioB + '" data-tipo="' + Tipo + '" data-minimo="' + minimoCriterioB + '" data-maximo="' + maximoCriterioB + '" data-op="B" type="text" step="any"  maxlength="100" placeholder="' + placeB + '" onkeypress="return SoloNumerosModificado(event,4,this.id);">' +
                 '</div>' +
 
                 '<div class="col-md-2 mt-1">' +
-                    '<img style="display:none;" id="SI' + idOpcion + 'B" src="../../assets/image/emoticon2.png" alt="Resultado Bueno" height="30" width="30">' +
-                    '<img style="display:none;" id="NO' + idOpcion + 'B" src="../../assets/image/emoticon1.png" alt="Resultado Malo" height="30" width="30">' +
+                '<img style="display:none;" id="SI' + idOpcion + 'B" src="../../assets/image/emoticon2.png" alt="Resultado Bueno" height="30" width="30">' +
+                '<img style="display:none;" id="NO' + idOpcion + 'B" src="../../assets/image/emoticon1.png" alt="Resultado Malo" height="30" width="30">' +
                 '</div> ';
             /*'<button style="display:none;" id="SI' + idOpcion + '" class="btn btn-success  btn-sm"type="button"><i class="fa fa-sm fa-check"></i></button>' +
             '<button style="display:none;" id="NO' + idOpcion + '" class="btn btn-danger  btn-sm"type="button"><i class="fa fa-sm fa-times"></i>' + '</button>' +
@@ -981,6 +977,10 @@ function LanzarFuncionesEspecialidad() {
     $("#RefiereOpcion").click(function () {
         $("#RefiereOpcion").val($("#ocultoRefiere").val());
     });
+
+
+
+    //$("#paises").autocomplete({source:availableTags});
 }
 
 function examinarFormula(id, v1, v2, v3, v4, formula, min, max) {
@@ -1455,11 +1455,11 @@ function AjaxGuardarFicha() {
                     } else {
                         EstadoCriterioB = 0;
                     }
-                    var Estado=0;
-                    if(EstadoCriterioA==1 && EstadoCriterioB==1){
-                        Estado=1;
-                    }else{
-                        Estado=0;
+                    var Estado = 0;
+                    if (EstadoCriterioA == 1 && EstadoCriterioB == 1) {
+                        Estado = 1;
+                    } else {
+                        Estado = 0;
                     }
 
                     var Opcion = "";
@@ -1483,13 +1483,13 @@ function AjaxGuardarFicha() {
                     Opcion = Opcion + "# "; //tratamiento
                     Opcion = Opcion + "# "; //observacion
                     Opcion = Opcion + "#" + respuestaCriterioA; //r1
-                    Opcion = Opcion + "#" + EstadoCriterioA;    //r2
-                    Opcion = Opcion + "#" + minimoCriterioA;    //r3
-                    Opcion = Opcion + "#" + maximoCriterioA;    //r4
+                    Opcion = Opcion + "#" + EstadoCriterioA; //r2
+                    Opcion = Opcion + "#" + minimoCriterioA; //r3
+                    Opcion = Opcion + "#" + maximoCriterioA; //r4
                     Opcion = Opcion + "#" + respuestaCriterioB; //r5
-                    Opcion = Opcion + "#" + EstadoCriterioB;    //r6
-                    Opcion = Opcion + "#" + maximoCriterioB;    //r7
-                    Opcion = Opcion + "#" + maximoCriterioB;    //r8
+                    Opcion = Opcion + "#" + EstadoCriterioB; //r6
+                    Opcion = Opcion + "#" + maximoCriterioB; //r7
+                    Opcion = Opcion + "#" + maximoCriterioB; //r8
                     Opcion = Opcion + "#" + grupo; //grupo
                     ArregloOpciones.push(Opcion);
                     //console.log("ID="+id+" tipo="+4+" respuesta="+respuesta+" estado="+Estado+" Sexo="+sexo);
@@ -1507,34 +1507,34 @@ function AjaxGuardarFicha() {
             var observacion = $("#Obser" + id).val();
 
             var Opcion = "";
-            Opcion = Opcion + "" + id; //id
-            Opcion = Opcion + "#ESPECIALIDAD"; //Gneral
-            Opcion = Opcion + "# "; //tipoOpcion
-            Opcion = Opcion + "# "; //campo
-            Opcion = Opcion + "# "; //rESPUESTA
-            Opcion = Opcion + "#" + Estado; //Estado
-            Opcion = Opcion + "# "; //Sexo
-            Opcion = Opcion + "# "; //v1
-            Opcion = Opcion + "# "; //v2
-            Opcion = Opcion + "# "; //v3
-            Opcion = Opcion + "# "; //v4
-            Opcion = Opcion + "# "; //tipocampo
-            Opcion = Opcion + "# "; //valorcampo
-            Opcion = Opcion + "# "; //dosis
-            Opcion = Opcion + "# "; //numero
-            Opcion = Opcion + "#" + diagnostico; //diagnostico
-            Opcion = Opcion + "#" + medico; //medico
-            Opcion = Opcion + "#" + tratamiento; //tratamiento
-            Opcion = Opcion + "#" + observacion; //observacion
-            Opcion = Opcion + "# "; //r1
-            Opcion = Opcion + "# "; //r2
-            Opcion = Opcion + "# "; //r3
-            Opcion = Opcion + "# "; //r4
-            Opcion = Opcion + "# "; //r5
-            Opcion = Opcion + "# "; //r6
-            Opcion = Opcion + "# "; //r7
-            Opcion = Opcion + "# "; //r8
-            Opcion = Opcion + "# "; //grupo
+            Opcion = Opcion + "" + id; //id - 0
+            Opcion = Opcion + "#ESPECIALIDAD"; //Gneral - 1
+            Opcion = Opcion + "# "; //tipoOpcion - 2
+            Opcion = Opcion + "# "; //campo -3
+            Opcion = Opcion + "# "; //rESPUESTA -4
+            Opcion = Opcion + "#" + Estado; //Estado -5
+            Opcion = Opcion + "# "; //Sexo -6
+            Opcion = Opcion + "# "; //v1 -7
+            Opcion = Opcion + "# "; //v2 -8
+            Opcion = Opcion + "# "; //v3 -9
+            Opcion = Opcion + "# "; //v4 -10
+            Opcion = Opcion + "# "; //tipocampo -11
+            Opcion = Opcion + "# "; //valorcampo -12
+            Opcion = Opcion + "# "; //dosis -13
+            Opcion = Opcion + "# "; //numero -14
+            Opcion = Opcion + "#" + diagnostico; //diagnostico -15
+            Opcion = Opcion + "#" + medico; //medico -16
+            Opcion = Opcion + "#" + tratamiento; //tratamiento -17
+            Opcion = Opcion + "#" + observacion; //observacion -18
+            Opcion = Opcion + "# "; //r1 -19
+            Opcion = Opcion + "# "; //r2 -20
+            Opcion = Opcion + "# "; //r3 -21
+            Opcion = Opcion + "# "; //r4 -22
+            Opcion = Opcion + "# "; //r5 -23
+            Opcion = Opcion + "# "; //r6 -24
+            Opcion = Opcion + "# "; //r7 -25
+            Opcion = Opcion + "# "; //r8 -26
+            Opcion = Opcion + "# "; //grupo -27
             ArregloOpciones.push(Opcion);
             // console.log("ID ="+id+" Estado="+Estado+" Diag="+diagnostico+" Medico="+medico+" Tratamiento="+tratamiento+" Obsr="+observacion);
         }
@@ -1669,6 +1669,7 @@ function AjaxGuardarFicha() {
     var idPaciente = $("#idPaciente").val();
     var idAno = $("#idAno").val();
     var idMes = $("#idMes").val();
+
     $.post("../../controlador/Gestion/CFicha.php?op=GuardarFicha", {
         OpcionesR: OpcionesR,
         idPaciente: idPaciente,
@@ -1862,5 +1863,6 @@ function VerificarPorcentajeAvance() {
         }
     });
 }
+
 
 init();

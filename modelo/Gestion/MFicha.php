@@ -22,11 +22,11 @@
          return ejecutarConsulta($sql);
       }
        public function RecuperarMedicos($idEspecialidad){
-           $sql = "SELECT tab.Medico_idMedico as idMedico,CONCAT(me.nombres,' ',me.apellidoPaterno,' ',me.apellidoMaterno) as Medico FROM tab_asignacionespecialidad tab INNER JOIN tab_medico me ON me.idMedico=tab.Medico_idMedico where tab.Especialidad_idEspecialidad='$idEspecialidad'";
+           $sql = "SELECT tab.Medico_idMedico as idMedico,CONCAT(me.nombres,' ',me.apellidoPaterno,' ',me.apellidoMaterno) as Medico FROM tab_asignacionespecialidad tab INNER JOIN tab_medico me ON me.idMedico=tab.Medico_idMedico where tab.Especialidad_idEspecialidad='$idEspecialidad' and me.Estado_idEstado=1";
          return ejecutarConsulta($sql);
       }
       public function ListarDiagnosticoEspecialidad(){
-          $sql="SELECT * FROM tab_diagnostico_especialidad;";
+          $sql="SELECT * FROM tab_diagnostico_especialidad where Estado_idEstado=1;";
           return ejecutarConsulta($sql);
       }
 
@@ -61,6 +61,22 @@
        public function RecuperarResultadoRefiere($idSeguimiento){
            $sql="SELECT * FROM `tab_extra` WHERE  `Seguimiento_idSeguimiento`=$idSeguimiento";
            return ejecutarConsultaSimpleFila($sql);
+       }
+
+       public function BuscarDiagnostico($diagnostico){
+          $idRecuperado=0;
+           if($diagnostico!=""){
+
+             $sql ="SELECT * FROM tab_diagnostico_especialidad d WHERE Descripcion='$diagnostico';";
+             $resultado=ejecutarConsultaSimpleFila($sql);
+             if($resultado["idDiagnosticoEspecialidad"]>0){
+               $idRecuperado=$resultado["idDiagnosticoEspecialidad"];
+             }else{
+                 $sql2="INSERT INTO `tab_diagnostico_especialidad`(`idDiagnosticoEspecialidad`, `Descripcion`, `Estado_idEstado`, `fechaRegistro`) VALUES (NULL,'".$diagnostico."',1,NOW())";
+                 $idRecuperado=ejecutarConsulta_retornarID($sql2);
+             }
+           }
+            return $idRecuperado;
        }
 
    }

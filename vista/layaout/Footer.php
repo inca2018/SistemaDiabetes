@@ -29,7 +29,15 @@
    <!-- MODERNIZR-->
    <script src="<?php echo $conexionConfig->ruta(); ?>vendor/modernizr/modernizr.custom.js"></script>
    <!-- JQUERY-->
-   <script src="<?php echo $conexionConfig->ruta(); ?>vendor/jquery/dist/jquery.js"></script>
+    <script src="<?php  echo $conexionConfig->ruta(); ?>vendor/jquery/dist/jquery.js"></script>
+    <script src="<?php  echo $conexionConfig->ruta(); ?>vendor/jquery/ui/jquery-ui.js"></script>
+
+      <!-- AUTOCOMPLETE-->
+   <script src="<?php  echo $conexionConfig->ruta(); ?>vendor/autocomplete/awesomplete.js"></script>
+   <script src="<?php  echo $conexionConfig->ruta(); ?>vendor/autocomplete/prism/prism.js"></script>
+
+
+    <!-- REDIRECT-->
    <script src="<?php echo $conexionConfig->ruta(); ?>vendor/jquery/dist/jquery.redirect.js"></script>
    <!-- BOOTSTRAP-->
    <script src="<?php echo $conexionConfig->ruta(); ?>vendor/popper.js/dist/umd/popper.js"></script>
