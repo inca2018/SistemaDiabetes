@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 04-10-2019 a las 14:07:40
+-- Tiempo de generación: 22-11-2019 a las 19:50:29
 -- Versión del servidor: 5.7.26
 -- Versión de PHP: 5.6.40
 
@@ -250,7 +250,9 @@ DROP PROCEDURE IF EXISTS `SP_MANT_COMORBILIDAD_ELIMINAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_COMORBILIDAD_ELIMINAR` (IN `idComorbilidadD` INT(11))  NO SQL
 BEGIN
 
-DELETE FROM `tab_comorbilidad` WHERE `idComorbilidad`=idComorbilidadD;
+
+UPDATE `tab_comorbilidad` SET  `Estado_idEstado`=10  WHERE  `idComorbilidad`=idComorbilidadD;
+
 
 END$$
 
@@ -258,7 +260,7 @@ DROP PROCEDURE IF EXISTS `SP_MANT_COMORBILIDAD_LISTAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_COMORBILIDAD_LISTAR` ()  NO SQL
 BEGIN
 
-SELECT tab.idComorbilidad,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_comorbilidad tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado;
+SELECT tab.idComorbilidad,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_comorbilidad tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado where e.idEstado!=10;
 
 END$$
 
@@ -298,7 +300,8 @@ DROP PROCEDURE IF EXISTS `SP_MANT_CONDICION_ELIMINAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_CONDICION_ELIMINAR` (IN `idCONDICIOND` INT(11))  NO SQL
 BEGIN
 
-DELETE FROM `tab_Condicion` WHERE `idCondicion`=idCONDICIOND;
+
+UPDATE `tab_Condicion` SET  `Estado_idEstado`=10  WHERE  `idCondicion`=idCONDICIOND;
 
 END$$
 
@@ -306,7 +309,7 @@ DROP PROCEDURE IF EXISTS `SP_MANT_CONDICION_LISTAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_CONDICION_LISTAR` ()  NO SQL
 BEGIN
 
-SELECT tab.idCondicion,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_condicion tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado;
+SELECT tab.idCondicion,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_condicion tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado where e.idEstado!=10;
 
 END$$
 
@@ -346,7 +349,7 @@ DROP PROCEDURE IF EXISTS `SP_MANT_DIAGNOSTICOENFERMERIA_ELIMINAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_DIAGNOSTICOENFERMERIA_ELIMINAR` (IN `idDiagnosticoEnfermeriaD` INT(11))  NO SQL
 BEGIN
 
-DELETE FROM `tab_diagnostico_enfermeria` WHERE `idDiagnosticoEnfermeria`=idDiagnosticoEnfermeriaD;
+UPDATE `tab_diagnostico_enfermeria` SET  `Estado_idEstado`=10  WHERE  `idDiagnosticoEnfermeria`=idDiagnosticoEnfermeriaD;
 
 END$$
 
@@ -354,7 +357,7 @@ DROP PROCEDURE IF EXISTS `SP_MANT_DIAGNOSTICOENFERMERIA_LISTAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_DIAGNOSTICOENFERMERIA_LISTAR` ()  NO SQL
 BEGIN
 
-SELECT tab.idDiagnosticoEnfermeria,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_diagnostico_enfermeria tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado;
+SELECT tab.idDiagnosticoEnfermeria,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_diagnostico_enfermeria tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado where e.idEstado!=10;
 
 END$$
 
@@ -394,7 +397,8 @@ DROP PROCEDURE IF EXISTS `SP_MANT_DIAGNOSTICOESPECIALIDAD_ELIMINAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_DIAGNOSTICOESPECIALIDAD_ELIMINAR` (IN `idDiag` INT(11))  NO SQL
 BEGIN
 
-DELETE FROM `tab_diagnostico_especialidad` WHERE `idDiagnosticoEspecialidad`=idDiag;
+UPDATE `tab_diagnostico_especialidad` SET  `Estado_idEstado`=10  WHERE  `idDiagnosticoEspecialidad`=idDiag;
+
 
 END$$
 
@@ -402,7 +406,7 @@ DROP PROCEDURE IF EXISTS `SP_MANT_DIAGNOSTICOESPECIALIDAD_LISTAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_DIAGNOSTICOESPECIALIDAD_LISTAR` ()  NO SQL
 BEGIN
 
-SELECT tab.idDiagnosticoEspecialidad,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_diagnostico_especialidad tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado;
+SELECT tab.idDiagnosticoEspecialidad,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_diagnostico_especialidad tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado where e.idEstado!=10;
 
 END$$
 
@@ -442,7 +446,8 @@ DROP PROCEDURE IF EXISTS `SP_MANT_DIAGNOSTICO_ELIMINAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_DIAGNOSTICO_ELIMINAR` (IN `idDIAGNOSTICOD` INT(11))  NO SQL
 BEGIN
 
-DELETE FROM `tab_Diagnostico` WHERE `idDiagnostico`=idDIAGNOSTICOD;
+
+UPDATE `tab_Diagnostico` SET  `Estado_idEstado`=10  WHERE  `idDiagnostico`=idDIAGNOSTICOD;
 
 END$$
 
@@ -450,7 +455,7 @@ DROP PROCEDURE IF EXISTS `SP_MANT_DIAGNOSTICO_LISTAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_DIAGNOSTICO_LISTAR` ()  NO SQL
 BEGIN
 
-SELECT tab.idDiagnostico,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_Diagnostico tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado;
+SELECT tab.idDiagnostico,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_Diagnostico tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado where e.idEstado!=10;
 
 END$$
 
@@ -490,7 +495,7 @@ DROP PROCEDURE IF EXISTS `SP_MANT_ESPECIALIDAD_ELIMINAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_ESPECIALIDAD_ELIMINAR` (IN `idEspecialidadD` INT(11))  NO SQL
 BEGIN
 
-DELETE FROM `tab_especialidad` WHERE `idEspecialidad`=idEspecialidadD;
+UPDATE `tab_especialidad` SET  `Estado_idEstado`=10  WHERE  `idEspecialidad`=idEspecialidadD;
 
 END$$
 
@@ -498,7 +503,7 @@ DROP PROCEDURE IF EXISTS `SP_MANT_ESPECIALIDAD_LISTAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_ESPECIALIDAD_LISTAR` ()  NO SQL
 BEGIN
 
-SELECT tab.idEspecialidad,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado,(SELECT COUNT(*) FROM tab_asignacionespecialidad asig WHERE asig.Especialidad_idEspecialidad=tab.idEspecialidad) as Asignaciones FROM tab_especialidad tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado;
+SELECT tab.idEspecialidad,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado,(SELECT COUNT(*) FROM tab_asignacionespecialidad asig WHERE asig.Especialidad_idEspecialidad=tab.idEspecialidad) as Asignaciones FROM tab_especialidad tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado where e.idEstado!=10;
 
 END$$
 
@@ -538,7 +543,7 @@ DROP PROCEDURE IF EXISTS `SP_MANT_GRADOINSTRUCCION_ELIMINAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_GRADOINSTRUCCION_ELIMINAR` (IN `idGradoInstruccionD` INT(11))  NO SQL
 BEGIN
 
-DELETE FROM `tab_gradoinstruccion` WHERE `idGradoInstruccion`=idGradoInstruccionD;
+UPDATE `tab_gradoinstruccion` SET  `Estado_idEstado`=10  WHERE  `idGradoInstruccion`=idGradoInstruccionD;
 
 END$$
 
@@ -546,7 +551,7 @@ DROP PROCEDURE IF EXISTS `SP_MANT_GRADOINSTRUCCION_LISTAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_GRADOINSTRUCCION_LISTAR` ()  NO SQL
 BEGIN
 
-SELECT tab.idGradoInstruccion,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_gradoinstruccion tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado;
+SELECT tab.idGradoInstruccion,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_gradoinstruccion tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado where e.idEstado!=10;
 
 END$$
 
@@ -586,7 +591,7 @@ DROP PROCEDURE IF EXISTS `SP_MANT_GRUPOOPCION_ELIMINAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_GRUPOOPCION_ELIMINAR` (IN `idGrupoOpcionD` INT(11))  NO SQL
 BEGIN
 
-DELETE FROM `tab_grupoopcion` WHERE `idGrupoOpcion`=idGrupoOpcionD;
+UPDATE `tab_grupoopcion` SET `Estado_idEstado`=10 WHERE `idGrupoOpcion`=idGrupoOpcionD;
 
 END$$
 
@@ -594,7 +599,7 @@ DROP PROCEDURE IF EXISTS `SP_MANT_GRUPOOPCION_LISTAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_GRUPOOPCION_LISTAR` ()  NO SQL
 BEGIN
 
-SELECT tab.idGrupoOpcion,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado,(SELECT COUNT(*) FROM tab_opcion op where op.GrupoOpcion_idGrupoOpcion=tab.idGrupoOpcion) as Opciones FROM tab_grupoopcion tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado;
+SELECT tab.idGrupoOpcion,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado,(SELECT COUNT(*) FROM tab_opcion op where op.GrupoOpcion_idGrupoOpcion=tab.idGrupoOpcion) as Opciones FROM tab_grupoopcion tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado where e.idEstado!=10;
 
 END$$
 
@@ -642,7 +647,8 @@ DROP PROCEDURE IF EXISTS `SP_MANT_SATISFACCION_ELIMINAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_SATISFACCION_ELIMINAR` (IN `idSatisfaccionD` INT(11))  NO SQL
 BEGIN
 
-DELETE FROM `tab_satisfaccion` WHERE `idSatisfaccion`=idSatisfaccionD;
+
+UPDATE `tab_satisfaccion` SET  `Estado_idEstado`=10  WHERE  `idSatisfaccion`=idSatisfaccionD;
 
 END$$
 
@@ -650,7 +656,7 @@ DROP PROCEDURE IF EXISTS `SP_MANT_SATISFACCION_LISTAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_SATISFACCION_LISTAR` ()  NO SQL
 BEGIN
 
-SELECT tab.idSatisfaccion,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_satisfaccion tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado;
+SELECT tab.idSatisfaccion,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_satisfaccion tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado where e.idEstado!=10;
 
 END$$
 
@@ -825,7 +831,7 @@ DROP PROCEDURE IF EXISTS `SP_PERSONAS_LISTAR_SIN_USUARIOS`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_PERSONAS_LISTAR_SIN_USUARIOS` ()  NO SQL
 BEGIN
 
-SELECT * FROM persona p WHERE NOT EXISTS (SELECT * FROM usuario u WHERE u.Persona_idPersona=p.idPersona);
+SELECT * FROM persona p WHERE NOT EXISTS (SELECT * FROM usuario u WHERE u.Persona_idPersona=p.idPersona) AND p.Estado_idEstado!=10;
 
 
 END$$
@@ -863,18 +869,24 @@ SET @NombrePersona=(SELECT concat(p.nombrePersona,' ',p.apellidoPaterno,' ',p.ap
 
 
 if (codigo=1) then
- 	UPDATE `persona` SET  `Estado_idEstado`=4 WHERE `idPersona`=idPersonaE;
-  SET @Mensaje=("PERSONA DESHBILITADO");
-else
-    UPDATE `persona` SET  `Estado_idEstado`=1  WHERE `idPersona`=idPersonaE;
- SET  @Mensaje=("PERSONA HABILITADO");
+ 	UPDATE `persona` SET  `Estado_idEstado`=1 WHERE `idPersona`=idPersonaE;
+  SET @Mensaje=("PERSONA HABILITADA");
+
+ELSEIF(codigo=2)then
+
+UPDATE `persona` SET  `Estado_idEstado`=4 WHERE `idPersona`=idPersonaE;
+  SET @Mensaje=("PERSONA DESHBILITADA");
+
+ELSE
+    UPDATE `persona` SET  `Estado_idEstado`=10  WHERE `idPersona`=idPersonaE;
+ SET  @Mensaje=("PERSONA ELIMINADA");
 end if;
 
  /* ------ REGISTRO DE BITACORA ------ */
 
 set @usuario=(SELECT u.user FROM usuario u  WHERE u.idUsuario=idUsuarioE);
 
-INSERT INTO `bitacora`(`idBitacora`, `usuarioAccion`, `Accion`, `tablaAccion`,`Detalle`, `fechaRegistro`) VALUES (null,@usuario,@Mensaje,'USUARIO',CONCAT("SE",@Mensaje," :", @NombrePersona),NOW());
+INSERT INTO `bitacora`(`idBitacora`, `usuarioAccion`, `Accion`, `tablaAccion`,`Detalle`, `fechaRegistro`) VALUES (null,@usuario,@Mensaje,'PERSONA',CONCAT("SE",@Mensaje," :", @NombrePersona),NOW());
 
 END$$
 
@@ -883,8 +895,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_PERSONA_LISTAR` ()  NO SQL
 BEGIN
 
 
-SELECT * FROM persona p INNER JOIN estado e ON e.idEstado=p.Estado_idEstado;
-
+SELECT DATE_FORMAT(p.fechaRegistro,"%d/%m/%Y") as RegistroPersona,p.*,e.* FROM persona p INNER JOIN estado e ON e.idEstado=p.Estado_idEstado WHERE e.idEstado!=10;
 
 END$$
 
@@ -1443,7 +1454,28 @@ CREATE TABLE IF NOT EXISTS `bitacora` (
   `Detalle` text NOT NULL,
   `fechaRegistro` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idBitacora`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `bitacora`
+--
+
+INSERT INTO `bitacora` (`idBitacora`, `usuarioAccion`, `Accion`, `tablaAccion`, `Detalle`, `fechaRegistro`) VALUES
+(1, 'Administrador General del Sistema', 'ACTUALIZACION', 'Persona', 'SE ACTUALIZO PERSONA:Administrador General del Sistema', '2019-10-26 11:38:03'),
+(2, 'Administrador General del Sistema', 'ACTUALIZACION', 'Persona', 'SE ACTUALIZO PERSONA:Administrador General del Sistema', '2019-10-26 11:38:15'),
+(3, 'Administrador General del Sistema', 'REGISTRO', 'Persona', 'SE REGISTRO PERSONA:Jesus Inca Cardenas', '2019-11-03 13:12:23'),
+(4, 'Administrador General del Sistema', 'REGISTRO', 'Persona', 'SE REGISTRO PERSONA:Prueba prueba ape wefwefwfe', '2019-11-03 13:17:05'),
+(5, 'Administrador General del Sistema', 'ACTUALIZACION', 'Persona', 'SE ACTUALIZO PERSONA:Prueba prueba ape wefwefwfe', '2019-11-03 13:18:38'),
+(6, 'Administrador General del Sistema', 'ACTUALIZACION', 'Persona', 'SE ACTUALIZO PERSONA:Pruebad prueba ape wefwefwfe', '2019-11-03 13:18:52'),
+(7, 'Administrador General del Sistema', 'REGISTRO', 'Persona', 'SE REGISTRO PERSONA:fewfewf ef wefwe', '2019-11-03 13:21:38'),
+(8, 'Administrador General del Sistema', 'REGISTRO', 'Persona', 'SE REGISTRO PERSONA:prueba wfefwe ewfwe', '2019-11-03 13:27:48'),
+(9, 'Administrador General del Sistema', 'REGISTRO', 'Persona', 'SE REGISTRO PERSONA:wefew wef wef', '2019-11-03 13:32:53'),
+(10, 'Administrador General del Sistema', 'REGISTRO', 'Persona', 'SE REGISTRO PERSONA:prueba rfwef wef', '2019-11-03 13:38:21'),
+(11, 'Administrador General del Sistema', 'ACTUALIZACION', 'Persona', 'SE ACTUALIZO PERSONA:prueba rfwef wef', '2019-11-03 13:38:46'),
+(12, 'Administrador General del Sistema', 'ACTUALIZACION', 'Persona', 'SE ACTUALIZO PERSONA:prueba rfwef wef', '2019-11-03 13:38:59'),
+(13, 'Administrador General del Sistema', 'REGISTRO', 'Persona', 'SE REGISTRO PERSONA:fwef wef wef', '2019-11-15 09:56:31'),
+(14, 'Administrador General del Sistema', 'ACTUALIZACION', 'Persona', 'SE ACTUALIZO PERSONA:fwefaa wefaa wefaaa', '2019-11-15 09:56:59'),
+(15, 'Administrador General del Sistema', 'REGISTRO', 'USUARIO', 'SE REGISTRO EL USUARIO:prueba', '2019-11-20 18:43:55');
 
 -- --------------------------------------------------------
 
@@ -1494,12 +1526,7 @@ INSERT INTO `estado` (`idEstado`, `tipoEstado`, `nombreEstado`) VALUES
 (2, 1, 'INACTIVO'),
 (3, 2, 'HABILITADO'),
 (4, 2, 'DESHABILITADO'),
-(5, 3, 'EN PROCESO - OVILLADO'),
-(6, 3, 'EN PROCESO - CALIDAD'),
-(7, 3, 'FINALIZADO'),
-(8, 3, 'ENVIADO A ENCONADO'),
-(9, 3, 'ENVIADO A CALIDAD'),
-(10, 3, 'EN PROCESO - ENCONADO');
+(10, 3, 'ELIMINADO');
 
 -- --------------------------------------------------------
 
@@ -1526,7 +1553,7 @@ CREATE TABLE IF NOT EXISTS `login` (
 --
 
 INSERT INTO `login` (`idLogin`, `Usuario_idUsuario`, `usuarioLog`, `passwordLog`, `perfilLog`, `fechaLog`, `ip`, `fechaLogout`) VALUES
-(1, 1, 'admin', '$2a$08$RCuzW/8g2Lg4QMNCfmsa/uKp33rvDmdWrC.P40DOECJlMtPu16NMW', 'Administrador', '2018-09-29 14:03:44', '::1', '2019-10-04 08:44:31');
+(1, 1, 'admin', '$2a$08$RCuzW/8g2Lg4QMNCfmsa/uKp33rvDmdWrC.P40DOECJlMtPu16NMW', 'Administrador', '2018-09-29 14:03:44', '::1', '2019-11-15 09:46:20');
 
 -- --------------------------------------------------------
 
@@ -1606,14 +1633,16 @@ CREATE TABLE IF NOT EXISTS `persona` (
   `fechaRegistro` datetime NOT NULL,
   PRIMARY KEY (`idPersona`),
   KEY `FK_Estado_idEstado` (`Estado_idEstado`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `persona`
 --
 
 INSERT INTO `persona` (`idPersona`, `nombrePersona`, `apellidoPaterno`, `apellidoMaterno`, `DNI`, `fechaNacimiento`, `correo`, `telefono`, `direccion`, `Estado_idEstado`, `fechaRegistro`) VALUES
-(1, 'Administrador', 'General', 'del Sistema', '44444444', '1992-10-16', NULL, NULL, NULL, 1, '2019-10-04 00:00:00');
+(1, 'Administrador', 'General', 'del Sistema', '44444444', '1970-01-01', NULL, NULL, NULL, 3, '2019-10-04 00:00:00'),
+(7, 'prueba', 'rfwef', 'wef', '52343242', '2019-11-01', NULL, NULL, NULL, 10, '2019-11-03 13:38:20'),
+(8, 'fwefaa', 'wefaa', 'wefaaa', '21231231', '2019-03-11', NULL, '21123123', 'wef', 10, '2019-11-15 09:56:31');
 
 -- --------------------------------------------------------
 
@@ -1651,7 +1680,22 @@ CREATE TABLE IF NOT EXISTS `tab_asignacionespecialidad` (
   PRIMARY KEY (`idAsignacionEspecialidad`),
   KEY `FK_MEDICOAS` (`Medico_idMedico`),
   KEY `FK_ESPEAS` (`Especialidad_idEspecialidad`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `tab_asignacionespecialidad`
+--
+
+INSERT INTO `tab_asignacionespecialidad` (`idAsignacionEspecialidad`, `Especialidad_idEspecialidad`, `Medico_idMedico`, `fechaRegistro`) VALUES
+(2, 4, 6, '2019-11-22 10:27:33'),
+(3, 4, 7, '2019-11-22 10:27:36'),
+(4, 4, 8, '2019-11-22 10:27:40'),
+(5, 5, 6, '2019-11-22 10:27:48'),
+(6, 5, 7, '2019-11-22 10:27:51'),
+(7, 5, 8, '2019-11-22 10:27:54'),
+(8, 6, 6, '2019-11-22 10:28:02'),
+(9, 6, 7, '2019-11-22 10:28:05'),
+(10, 6, 8, '2019-11-22 10:28:08');
 
 -- --------------------------------------------------------
 
@@ -1667,7 +1711,7 @@ CREATE TABLE IF NOT EXISTS `tab_comorbilidad` (
   `fechaRegistro` datetime NOT NULL,
   PRIMARY KEY (`idComorbilidad`),
   KEY `FK_COM_ESTADO` (`Estado_idEstado`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `tab_comorbilidad`
@@ -1685,7 +1729,8 @@ INSERT INTO `tab_comorbilidad` (`idComorbilidad`, `Descripcion`, `Estado_idEstad
 (11, 'Hipotiroidismo', 1, '2019-02-10 11:30:09'),
 (12, 'Tuberculosis', 1, '2019-02-10 11:30:19'),
 (13, 'Fuma Actualmente (Fumador)', 1, '2019-02-10 11:30:34'),
-(14, 'Cáncer', 1, '2019-02-10 11:30:44');
+(14, 'Cáncer', 1, '2019-02-10 11:30:44'),
+(15, 'prueba', 10, '2019-11-19 18:01:58');
 
 -- --------------------------------------------------------
 
@@ -1771,7 +1816,16 @@ CREATE TABLE IF NOT EXISTS `tab_diagnostico` (
   `fechaRegistro` datetime NOT NULL,
   PRIMARY KEY (`idDiagnostico`),
   KEY `FK_DIAG_ESTADO` (`Estado_idEstado`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `tab_diagnostico`
+--
+
+INSERT INTO `tab_diagnostico` (`idDiagnostico`, `Descripcion`, `Estado_idEstado`, `fechaRegistro`) VALUES
+(1, 'prueba', 10, '2019-11-19 17:54:06'),
+(2, 'prueba1', 1, '2019-11-19 18:48:42'),
+(3, 'diax 2', 1, '2019-11-19 18:48:47');
 
 -- --------------------------------------------------------
 
@@ -1787,7 +1841,14 @@ CREATE TABLE IF NOT EXISTS `tab_diagnostico_enfermeria` (
   `fechaRegistro` datetime NOT NULL,
   PRIMARY KEY (`idDiagnosticoEnfermeria`),
   KEY `FK_DIAG_ENF_ESTADO` (`Estado_idEstado`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `tab_diagnostico_enfermeria`
+--
+
+INSERT INTO `tab_diagnostico_enfermeria` (`idDiagnosticoEnfermeria`, `Descripcion`, `Estado_idEstado`, `fechaRegistro`) VALUES
+(1, 'wefewfe', 10, '2019-11-19 17:55:54');
 
 -- --------------------------------------------------------
 
@@ -1802,7 +1863,16 @@ CREATE TABLE IF NOT EXISTS `tab_diagnostico_especialidad` (
   `Estado_idEstado` int(11) NOT NULL,
   `fechaRegistro` datetime NOT NULL,
   PRIMARY KEY (`idDiagnosticoEspecialidad`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `tab_diagnostico_especialidad`
+--
+
+INSERT INTO `tab_diagnostico_especialidad` (`idDiagnosticoEspecialidad`, `Descripcion`, `Estado_idEstado`, `fechaRegistro`) VALUES
+(3, 'diagnostico2', 1, '2019-11-22 09:52:36'),
+(4, 'diagnostico3', 1, '2019-11-22 09:52:44'),
+(10, 'nuevo diag', 1, '2019-11-22 11:40:53');
 
 -- --------------------------------------------------------
 
@@ -3751,7 +3821,14 @@ CREATE TABLE IF NOT EXISTS `tab_gradoinstruccion` (
   `fechaRegistro` datetime NOT NULL,
   PRIMARY KEY (`idGradoInstruccion`),
   KEY `FK_GRADOP_ESTADO` (`Estado_idEstado`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `tab_gradoinstruccion`
+--
+
+INSERT INTO `tab_gradoinstruccion` (`idGradoInstruccion`, `Descripcion`, `Estado_idEstado`, `fechaRegistro`) VALUES
+(1, 'prueba', 10, '2019-11-19 17:58:50');
 
 -- --------------------------------------------------------
 
@@ -3767,7 +3844,7 @@ CREATE TABLE IF NOT EXISTS `tab_grupoopcion` (
   `fechaRegistro` datetime NOT NULL,
   PRIMARY KEY (`idGrupoOpcion`),
   KEY `FK_GRUPO_eSTA` (`Estado_idEstado`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `tab_grupoopcion`
@@ -3777,7 +3854,8 @@ INSERT INTO `tab_grupoopcion` (`idGrupoOpcion`, `Descripcion`, `Estado_idEstado`
 (1, 'DATOS DEL SEGUIMIENTO', 1, '2019-01-19 14:35:55'),
 (5, 'OTROS TRATAMIENTOS', 1, '2019-02-10 11:25:10'),
 (6, 'DATOS ADICIONALES', 1, '2019-02-10 19:12:43'),
-(7, 'FICHA DE SEGUIMIENTO', 1, '2019-02-11 13:47:25');
+(7, 'FICHA DE SEGUIMIENTO', 1, '2019-02-11 13:47:25'),
+(8, 'prueba', 10, '2019-11-19 17:46:53');
 
 -- --------------------------------------------------------
 
@@ -3805,7 +3883,44 @@ CREATE TABLE IF NOT EXISTS `tab_medico` (
   KEY `FK_SEXO` (`Sexo_idSexo`),
   KEY `FK_Perfil` (`Perfil_idPerfil`),
   KEY `FK_EstadoMEDIC` (`Estado_idEstado`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `tab_medico`
+--
+
+INSERT INTO `tab_medico` (`idMedico`, `nombres`, `apellidoPaterno`, `apellidoMaterno`, `fechaNacimiento`, `edad`, `dni`, `Telefono`, `Celular`, `Correo`, `Sexo_idSexo`, `Perfil_idPerfil`, `Estado_idEstado`, `fechaRegistro`) VALUES
+(3, 'Efewfew', 'Fwefewf', 'Wefewf', '2001-11-13', 18, '34324234', '243423423', NULL, NULL, 1, 11, 10, '2019-11-15 11:09:04'),
+(5, 'Rfe', 'Fee', 'Fef', '2001-11-14', 18, '32312312', NULL, NULL, NULL, 1, 11, 10, '2019-11-19 16:49:57'),
+(6, 'Medico', 'Primero', 'Nuevo', '2001-11-21', 18, '44444111', NULL, NULL, NULL, 1, 11, 1, '2019-11-22 10:26:00'),
+(7, 'Medico', 'Segundo', 'Prueba', '2001-11-20', 18, '45501161', NULL, NULL, NULL, 1, 11, 1, '2019-11-22 10:26:23'),
+(8, 'Medico', 'Tercero', 'Nuevo', '2001-11-06', 18, '31412312', NULL, NULL, NULL, 1, 11, 1, '2019-11-22 10:26:44');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tab_nacionalidad`
+--
+
+DROP TABLE IF EXISTS `tab_nacionalidad`;
+CREATE TABLE IF NOT EXISTS `tab_nacionalidad` (
+  `idNacionalidad` int(11) NOT NULL AUTO_INCREMENT,
+  `Descripcion` varchar(150) NOT NULL,
+  `Estado_idEstado` int(11) NOT NULL,
+  `fechaRegistro` datetime NOT NULL,
+  PRIMARY KEY (`idNacionalidad`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `tab_nacionalidad`
+--
+
+INSERT INTO `tab_nacionalidad` (`idNacionalidad`, `Descripcion`, `Estado_idEstado`, `fechaRegistro`) VALUES
+(1, 'Peruana', 10, '2019-10-04 00:00:00'),
+(2, 'Venezolana', 10, '2019-10-04 00:00:00'),
+(3, 'fwef', 10, '2019-11-19 17:33:05'),
+(4, 'Peruano', 1, '2019-11-19 17:39:21'),
+(5, 'Venezolano', 1, '2019-11-19 17:39:31');
 
 -- --------------------------------------------------------
 
@@ -3827,7 +3942,7 @@ CREATE TABLE IF NOT EXISTS `tab_opcion` (
   KEY `FK_GrupoOpcion` (`GrupoOpcion_idGrupoOpcion`),
   KEY `FK_EstadoFK` (`Estado_idEstado`),
   KEY `FK_TIPOOPCION` (`TipoOpcion_idTipoOpcion`)
-) ENGINE=InnoDB AUTO_INCREMENT=126 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `tab_opcion`
@@ -3933,7 +4048,8 @@ INSERT INTO `tab_opcion` (`idOpcion`, `TituloOpcion`, `Propiedades`, `fechaRegis
 (109, 'CHEQUEO DE RETINOPATÍA', '{&quot;TipoOpcion&quot;:7,&quot;CodigoOpcion&quot;:&quot;Opcion Condición&quot;,&quot;Titulo&quot;:&quot;CHEQUEO DE RETINOPATÍA&quot;}', '2019-02-11 14:38:50', NULL, 1, 7, 7),
 (112, 'OTROS TRATAMIENTOS', '{&quot;TipoOpcion&quot;:9,&quot;CodigoOpcion&quot;:&quot;Opcion Condición Campos&quot;,&quot;Titulo&quot;:&quot;OTROS TRATAMIENTOS&quot;,&quot;TipoCampo&quot;:6}', '2019-02-24 21:12:36', NULL, 1, 9, 5),
 (117, 'NIVEL DE SATISFACCIÓN', '{&quot;TipoOpcion&quot;:11,&quot;CodigoOpcion&quot;:&quot;Opcion Listado&quot;,&quot;Titulo&quot;:&quot;NIVEL DE SATISFACCIÓN&quot;,&quot;TipoCampo&quot;:7}', '2019-03-15 16:35:24', NULL, 1, 11, 7),
-(125, 'Prueba Rango Criterio', '{&quot;TipoOpcion&quot;:16,&quot;CodigoOpcion&quot;:&quot;Opcion Rango-Criterio&quot;,&quot;Titulo&quot;:&quot;Prueba Rango Criterio&quot;,&quot;AtributoCriterioA&quot;:&quot;kg&quot;,&quot;MinimoCriterioA&quot;:1,&quot;MaximoCriterioA&quot;:50,&quot;AtributoCriterioB&quot;:&quot;kg&quot;,&quot;MinimoCriterioB&quot;:1,&quot;MaximoCriterioB&quot;:100,&quot;CriterioA&quot;:&quot;CriterioA&quot;,&quot;CriterioB&quot;:&quot;CriterioB&quot;}', '2019-10-02 16:37:31', 'Prueba de Rango Criterio', 1, 16, 1);
+(125, 'Prueba Rango Criterio', '{&quot;TipoOpcion&quot;:16,&quot;CodigoOpcion&quot;:&quot;Opcion Rango-Criterio&quot;,&quot;Titulo&quot;:&quot;Prueba Rango Criterio&quot;,&quot;AtributoCriterioA&quot;:&quot;kg&quot;,&quot;MinimoCriterioA&quot;:1,&quot;MaximoCriterioA&quot;:50,&quot;AtributoCriterioB&quot;:&quot;kg&quot;,&quot;MinimoCriterioB&quot;:1,&quot;MaximoCriterioB&quot;:100,&quot;CriterioA&quot;:&quot;CriterioA&quot;,&quot;CriterioB&quot;:&quot;CriterioB&quot;}', '2019-10-02 16:37:31', 'Prueba de Rango Criterio', 1, 16, 1),
+(126, 'prueba', '{&quot;TipoOpcion&quot;:1,&quot;CodigoOpcion&quot;:&quot;Cabecera&quot;,&quot;Titulo&quot;:&quot;prueba&quot;}', '2019-11-19 17:50:01', 'prueba', 10, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -3955,6 +4071,7 @@ CREATE TABLE IF NOT EXISTS `tab_paciente` (
   `Celular` char(9) DEFAULT NULL,
   `Correo` varchar(150) DEFAULT NULL,
   `Direccion` text,
+  `Nacionalidad_idNacionalidad` int(11) DEFAULT NULL,
   `TipoMedida_idTipoMedida` int(11) DEFAULT NULL,
   `CantidadTiempo` int(11) DEFAULT NULL,
   `tituloGrado` text,
@@ -3981,7 +4098,14 @@ CREATE TABLE IF NOT EXISTS `tab_paciente` (
   KEY `FK_PACI_TIPO` (`TipoMedida_idTipoMedida`),
   KEY `FK_COND_PA` (`Condicion_idCondicion`),
   KEY `FK_GRADO` (`GradoInstruccion_idGradoInstruccion`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `tab_paciente`
+--
+
+INSERT INTO `tab_paciente` (`idPaciente`, `Codigo`, `Nombres`, `apellidoPaterno`, `apellidoMaterno`, `fechaNacimiento`, `edad`, `numeroDocumento`, `Telefono`, `Celular`, `Correo`, `Direccion`, `Nacionalidad_idNacionalidad`, `TipoMedida_idTipoMedida`, `CantidadTiempo`, `tituloGrado`, `Sexo_idSexo`, `DX_idDX`, `Medico_idMedico`, `TipoDocumento_idTipoDocumento`, `Departamento_idDepartamento`, `Provincia_idProvincia`, `Distrito_idDistrito`, `Condicion_idCondicion`, `GradoInstruccion_idGradoInstruccion`, `Estado_idEstado`, `fechaRegistro`) VALUES
+(1, 'Nº 0001', 'Jesus', 'Inca', 'Cardenas', '2001-11-14', 18, '22123123', NULL, NULL, NULL, NULL, 4, 3, 1, NULL, 1, 2, NULL, 1, NULL, NULL, NULL, 7, NULL, 1, '2019-11-19 18:49:20');
 
 -- --------------------------------------------------------
 
@@ -4289,18 +4413,7 @@ CREATE TABLE IF NOT EXISTS `tab_seguimiento` (
   PRIMARY KEY (`idSeguimiento`),
   KEY `FK_SEGUI_PA` (`Paciente_idPaciente`),
   KEY `FK_YEAR` (`Year`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `tab_seguimiento`
---
-
-INSERT INTO `tab_seguimiento` (`idSeguimiento`, `Codigo`, `Year`, `Mes`, `Paciente_idPaciente`, `fechaRegistro`) VALUES
-(1, 'SEG-1', 3, 1, 13, '2019-10-03 16:18:45'),
-(2, 'SEG-2', 4, 1, 13, '2019-10-03 16:21:17'),
-(3, 'SEG-3', 4, 1, 14, '2019-10-03 16:22:09'),
-(4, 'SEG-4', 4, 1, 15, '2019-10-03 16:23:12'),
-(5, 'SEG-5', 4, 1, 16, '2019-10-03 16:25:04');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -4457,14 +4570,15 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   KEY `Perfil_idPerfil` (`Perfil_idPerfil`) USING BTREE,
   KEY `Persona_idPersona` (`Persona_idPersona`) USING BTREE,
   KEY `Estado_idEstado` (`Estado_idEstado`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
 INSERT INTO `usuario` (`idUsuario`, `usuario`, `pass`, `Perfil_idPerfil`, `Persona_idPersona`, `Estado_idEstado`, `fechaRegistro`) VALUES
-(1, 'admin', '$2a$08$Vo4zFrwFG.k2ZHhln/fQVu5NoeJdzJUSG6HOVA6fBCknS/umS0bki', 1, 1, 1, '2018-09-29 14:03:15');
+(1, 'admin', '$2a$08$Vo4zFrwFG.k2ZHhln/fQVu5NoeJdzJUSG6HOVA6fBCknS/umS0bki', 1, 1, 1, '2018-09-29 14:03:15'),
+(2, 'prueba', '$2a$08$LXkQraO0eykRMCzy76VYn.IRx2SWhxcvbM8ZiKmZ.jM8yb95anM/2', 10, 7, 1, '2019-11-20 18:43:55');
 
 --
 -- Restricciones para tablas volcadas
@@ -4608,14 +4722,6 @@ ALTER TABLE `tab_seguimiento`
 --
 ALTER TABLE `tab_tratamientos`
   ADD CONSTRAINT `FK_TRATAMIENTOS_ESTADO` FOREIGN KEY (`Estado_idEstado`) REFERENCES `estado` (`idEstado`);
-
---
--- Filtros para la tabla `usuario`
---
-ALTER TABLE `usuario`
-  ADD CONSTRAINT `FK_Estado_idEstado2` FOREIGN KEY (`Estado_idEstado`) REFERENCES `estado` (`idEstado`),
-  ADD CONSTRAINT `FK_Perfil_idPerfil2` FOREIGN KEY (`Perfil_idPerfil`) REFERENCES `perfil` (`idPerfil`),
-  ADD CONSTRAINT `FK_Persona_idPersona2` FOREIGN KEY (`Persona_idPersona`) REFERENCES `persona` (`idPersona`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
