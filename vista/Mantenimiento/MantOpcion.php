@@ -180,7 +180,7 @@ if(isset($_POST["idGrupoOpcion"])){
                                         </div>
                                     </div>
                                 </div>
-                                   <div class="col-md-12" id="ElementoRangoCriterio">
+                                <div class="col-md-12" id="ElementoRangoCriterio">
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
@@ -356,7 +356,7 @@ if(isset($_POST["idGrupoOpcion"])){
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="OpcionTipoCampo" class="col-form-label">Tipo de Campo:</label>
-                                                <select class="form-control  " id="OpcionTipoCampo2" name="OpcionTipoCampo2" data-message="- Tipo de Opción">
+                                                <select class="form-control" id="OpcionTipoCampo2" name="OpcionTipoCampo2" data-message="- Tipo de Opción">
                                                 <option value="0">--SELECCIONAR--</option>
                                                 <option value="1">LISTA MEDICOS</option>
                                                 <option value="2">LISTA DE COMORBILIDAD(OTRAS PATOLOGIAS)</option>

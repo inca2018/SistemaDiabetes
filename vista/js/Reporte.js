@@ -21,7 +21,7 @@ function init() {
 
 
 function Listar_Sexo() {
-    $.post("../../controlador/Mantenimiento/CMedico.php?op=listar_sexo", function (ts) {
+    $.post("../../controlador/Mantenimiento/CMedico.php?op=listar_sexo_completo", function (ts) {
         $("#IndicadorSexo").empty();
         $("#IndicadorSexo").append(ts);
     });
@@ -68,6 +68,11 @@ function buscar_reporte() {
         notificar_warning("Seleccione Fechas")
     } else {
         buscarReporte(f_inicio, f_fin, sexo);
+        /*if(sexo!='0' || sexo!=0){
+               buscarReporte(f_inicio, f_fin, sexo);
+           }else{
+            notificar_warning("Seleccione Sexo");
+           }  */
     }
 }
 

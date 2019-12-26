@@ -84,6 +84,7 @@
             $tratamientos="";
             $evaluado="";
             $satisfaccion="";
+            $Iconos=array();
 
       		$rpta = $general->Listar_Medicos();
             $Medicos.='<option value="0">-- SELECCIONE --</option>';
@@ -129,8 +130,14 @@
             $rpta6 = $general->Listar_Satisfaccion();
             $satisfaccion.='<option value="0">-- SELECCIONE --</option>';
          	while ($reg6 = $rpta6->fetch_object()){
-					$satisfaccion.='<option   value=' . $reg6->idSatisfaccion . '>' . $reg6->Descripcion . '</option>';
+                    $dato=array();
+					$satisfaccion.='<option   value=' . $reg6->idSatisfaccion . '>' . $reg6->Descripcion .'</option>';
+                    $dato["idIcono"]=$reg6->idSatisfaccion;
+                    $dato["Icono"]=$reg6->Icono;
+
+                    $Listas["iconos"][]=$dato;
          	}
+            //htmlspecialchars_decode($reg6->Icono)
             $Listas["satisfaccion"]=$satisfaccion;
 
             echo json_encode($Listas);

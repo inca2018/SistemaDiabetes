@@ -163,6 +163,7 @@ function RecuperarSatisfaccion(idSatisfaccion) {
 
         $("#idSatisfaccion").val(data.idSatisfaccion);
         $("#SatisfaccionDescripcion").val(data.Descripcion);
+        $("#SatisfaccionIcono").val(data.Icono);
 
     });
 }

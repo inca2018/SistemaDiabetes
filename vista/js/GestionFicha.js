@@ -10,13 +10,13 @@ var idSeguimiento;
 
 var totalPreguntas = 0;
 var totalAvance = $("#totalAvance");
+var IconosSatifaccion;
 
 function init() {
     var idPaciente = $("#idPaciente").val();
     RecuperarInformacionPaciente(idPaciente);
     listar_seguimiento();
     listar_year();
-
 }
 
 function listar_year() {
@@ -226,7 +226,7 @@ function agregar_seguimiento() {
     var ano = $("#select_ano").val();
     var mes = $("#select_mes").val();
 
-    debugger;
+
     if (ano == '0' || mes == '0') {
         swal("Error:", "Seleccione Año y Mes para continuar!");
     } else {
@@ -424,9 +424,11 @@ function VerFicha(idSeguimientoR) {
         Tratamientos = data.tratamientos;
         Evaluado = data.evaluado;
         Satisfaccion = data.satisfaccion;
+        IconosSatifaccion= data.iconos;
 
         RecuperarGrupos(idSeguimientoR);
         RecuperarEspecialidades(idSeguimientoR);
+
 
     });
 
@@ -537,6 +539,7 @@ function RecuperarEspecialidades(idSeguimiento) {
             $("#contenedorEspecialidades").html(query);
             LanzarFuncionesEspecialidad();
             RecuperarResultadosEspecialidad(idSeguimiento);
+            LanzarFunciones();
         });
 
     });
@@ -613,6 +616,7 @@ function RecuperarGrupos(idSeguimiento) {
             '</div>' +
             '</div>' +
             '</div>';
+
         var especialidades = '<div class="card border-primary mb-1">' +
             '<div class="card-header text-white bg-primary" id="headingEspecialidad">' +
             '<h4 class="mb-0"><a class="text-inherit" data-toggle="collapse" data-target="#collapseEspecialidad" aria-expanded="false" aria-controls="collapseEspecialidad" href="">OTRAS ESPECIALIDADES</a>' +
@@ -632,9 +636,11 @@ function RecuperarGrupos(idSeguimiento) {
         Html = Html + riesgo;
         Html = Html + especialidades;
 
+
+
         $("#accordion_info").html(Html);
 
-        LanzarFunciones();
+         LanzarFunciones();
 
     });
 }
@@ -853,10 +859,11 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
                 '<div class="col-md-12"><label class="col-form-label">' + Titulo + ':</label><span class="ml-3 badge badge-primary" title="' + Informacion + '"><i class="fa fa-info-circle fa2x"></i></span></div>' +
                 '<div class="col-md-3" style="display:none;" id="area' + idOpcion + '"> <select class="form-control " data-message="' + grupo + ' - ' + Titulo + ' - Listado" id="SELECT' + idOpcion + '" name=""></select></div>' +
                 '<div class=" col-md-3" style="display:none;" id="DO' + idOpcion + '" ><input id="dosis' + idOpcion + '" class="form-control  caja campo opcionCampo" type="text"  maxlength="100" placeholder="DOSIS/DIA" disabled></div>' +
-                '<div class=" col-md-3" style="display:none;" id="TA' + idOpcion + '"><input id="tab' + idOpcion + '"  class="form-control  caja campo opcionCampo" type="text"  maxlength="100" placeholder="NUM. INYECC." disabled></div>';
+                '<div class=" col-md-3" style="display:none;" id="TA' + idOpcion + '"><input id="tab' + idOpcion + '" class="form-control  caja campo opcionCampo" type="text"  maxlength="100" placeholder="NUM. INYECC." disabled></div><div class="col-md-2" id="SP'+idOpcion+'"></div>';
             totalPreguntas = totalPreguntas + 1;
             break;
         case "16":
+            debugger;
             var atributoCriterioA = "";
             var minimoCriterioA = "";
             var maximoCriterioA = "";
@@ -999,7 +1006,30 @@ function verificarV(valor) {
 
 }
 
+function BuscarIcono(opcion,valor){
+
+     IconosSatifaccion.forEach(function (satisfaccion) {
+
+                var idSatis = satisfaccion.idIcono;
+                var icono = satisfaccion.Icono;
+                var IconDecode=htmlDecode(icono);
+           if(idSatis==valor){
+               $("#SP"+opcion).empty();
+               $("#SP"+opcion).append(IconDecode);
+           }
+
+    });
+}
+
+function htmlDecode(input){
+  var e = document.createElement('div');
+  e.innerHTML = input;
+  return e.childNodes[0].nodeValue;
+}
+
 function LanzarFunciones() {
+
+    console.log("Entro");
 
     $(".OpcionGeneral").each(function () {
         var id = $(this).data("id");
@@ -1038,9 +1068,18 @@ function LanzarFunciones() {
                 case 7:
                     $("#area" + id).show();
                     $("#SELECT" + id).append(Satisfaccion);
+
+                    $('#SELECT' + id).change(function () {
+
+                        var idRecu=$('#SELECT' + id).val();
+                        BuscarIcono(id,idRecu);
+                    });
+
                     break;
 
             }
+
+
 
             $('#SI' + id).change(function () {
                 if (this.checked == true) {
@@ -1141,7 +1180,9 @@ function LanzarFunciones() {
     $(".FuRango16").each(function () {
         var elemento = $(this);
         elemento.on('change', function () {
-            debugger;
+
+                console.log("Entro Funcion");
+
             var id = elemento.data("id");
             var opcion = elemento.data("op");
             var minimo = elemento.data("minimo");
@@ -1193,12 +1234,11 @@ function LanzarFunciones() {
     });
 
     $(".fuTextoSelect").change(function () {
-        debugger;
+
         VerificarPorcentajeAvance();
     });
 
     $('input').change(function () {
-        debugger;
         VerificarPorcentajeAvance();
     });
 
@@ -1426,30 +1466,33 @@ function RecuperarResultadosEspecialidad(idSeguimiento) {
                             $("#SELECT" + element.idOpcion).val(propiedades.valorCampo);
                         } else if (tipocampo == 7) {
                             $("#SELECT" + element.idOpcion).val(propiedades.valorCampo);
+                            BuscarIcono(element.idOpcion,propiedades.valorCampo);
+
                         }
                         break;
                     case '16':
+                        debugger;
                         var propiedades = data = JSON.parse(element.Propiedades);
                         var CriterioA = propiedades.CriterioA;
-                        var EstadoCriterioA = propiedades.EstadoCriterioA;
-                        var minimoCriterioA = propiedades.minimoCriterioA;
-                        var maximoCriterioA = propiedades.maximoCriterioA;
-                        var CriterioB = propiedades.CriterioB;
-                        var EstadoCriterioB = propiedades.EstadoCriterioB;
-                        var minimoCriterioB = propiedades.minimoCriterioB;
-                        var maximoCriterioB = propiedades.maximoCriterioB;
+                        var EstadoCriterioA = parseFloat(propiedades.EstadoCriterioA);
+                        var minimoCriterioA = parseFloat(propiedades.minimoCriterioA);
+                        var maximoCriterioA = parseFloat(propiedades.maximoCriterioA);
+                        var CriterioB =  propiedades.CriterioB;
+                        var EstadoCriterioB = parseFloat(propiedades.EstadoCriterioB);
+                        var minimoCriterioB = parseFloat(propiedades.minimoCriterioB);
+                        var maximoCriterioB = parseFloat(propiedades.maximoCriterioB);
 
 
                         $("#OPA" + element.idOpcion).val(CriterioA);
                         $("#OPB" + element.idOpcion).val(CriterioB);
 
-                        if (minimoCriterioA >= CriterioA && CriterioA <= maximoCriterioA) {
+                        if (CriterioA >=  minimoCriterioA && CriterioA <= maximoCriterioA) {
                             $("#SI" + element.idOpcion + "A").show();
                         } else {
                             $("#NO" + element.idOpcion + "A").show();
                         }
 
-                        if (minimoCriterioB >= CriterioB && CriterioB <= maximoCriterioB) {
+                        if (CriterioB >=  minimoCriterioB  && CriterioB <= maximoCriterioB) {
                             $("#SI" + element.idOpcion + "B").show();
                         } else {
                             $("#NO" + element.idOpcion + "B").show();
@@ -1529,7 +1572,7 @@ function RecuperarResultadoPie(idSeguimiento) {
     }, function (data, status) {
         data = JSON.parse(data);
         console.log(data);
-        debugger;
+
         MostrarOpcion($("#PIE1"), data.R1);
         MostrarOpcion($("#PIE2"), data.R2);
         MostrarOpcion($("#PIE3"), data.R3);
@@ -1543,7 +1586,7 @@ function RecuperarResultadoPie(idSeguimiento) {
 }
 
 function MostrarOpcion(Check, opcion) {
-    debugger;
+
     Check.removeClass("OptionA");
     Check.removeClass("OptionB");
     Check.removeClass("OptionC");
@@ -1661,40 +1704,40 @@ function LanzarFuncionOpcionesPie() {
             var opcion = $(this).data("opcion");
             switch (opcion) {
                 //Opcion Libre
-                case 1:
-                    MostrarOpcion($(this), 2);
+                case '1':
+                    MostrarOpcion($(this), '2');
                     break;
                     //Opcion B -  MONOFILAMENTO NORMAL (CHECK)
-                case 2:
-                    MostrarOpcion($(this), 3);
+                case '2':
+                    MostrarOpcion($(this), '3');
                     break;
                     //Opcion C - MONOFILAMENTO ANORMAL (X)
-                case 3:
-                    MostrarOpcion($(this), 4);
+                case '3':
+                    MostrarOpcion($(this), '4');
                     break;
                     //Opcion D - VIBRACION NORMAL (VERDE)
-                case 4:
-                    MostrarOpcion($(this), 5);
+                case '4':
+                    MostrarOpcion($(this), '5');
                     break;
                     //Opcion E - VIBRACION ANORMAL (ROJO)
-                case 5:
-                    MostrarOpcion($(this), 6);
+                case '5':
+                    MostrarOpcion($(this), '6');
                     break;
                     //Opcion F - MONOFILAMENTO NORMAL (CHECK) - VIBRACION NORMAL (VERDE)
-                case 6:
-                    MostrarOpcion($(this), 7);
+                case '6':
+                    MostrarOpcion($(this), '7');
                     break;
                     //Opcion G - MONOFILAMENTO NORMAL (CHECK) - VIBRACION ANORMAL (ROJO)
-                case 7:
-                    MostrarOpcion($(this), 8);
+                case '7':
+                    MostrarOpcion($(this), '8');
                     break;
                     //Opcion H - MONOFILAMENTO ANORMAL (X) - VIBRACION ANORMAL (VERDE)
-                case 8:
-                    MostrarOpcion($(this), 9);
+                case '8':
+                    MostrarOpcion($(this), '9');
                     break;
                     //Opcion I - MONOFILAMENTO ANORMAL (X) - VIBRACION ANORMAL (ROJO)
-                case 9:
-                    MostrarOpcion($(this), 1);
+                case '9':
+                    MostrarOpcion($(this), '1');
                     break;
             }
         });
@@ -1706,7 +1749,7 @@ function actualizar() {
 
     $(".validar").each(function () {
         if ($(this).val() == " " || $(this).val() == 0) {
-            error = error + $(this).data("message") + "<br>";
+            //error = error + $(this).data("message") + "<br>";
         }
     });
 
@@ -2144,7 +2187,7 @@ function AjaxActualizarFicha() {
                     Opcion = Opcion + "#" + maximoCriterioA; //r4
                     Opcion = Opcion + "#" + respuestaCriterioB; //r5
                     Opcion = Opcion + "#" + EstadoCriterioB; //r6
-                    Opcion = Opcion + "#" + maximoCriterioB; //r7
+                    Opcion = Opcion + "#" + minimoCriterioB; //r7
                     Opcion = Opcion + "#" + maximoCriterioB; //r8
                     Opcion = Opcion + "#" + grupo; //grupo
                     ArregloOpciones.push(Opcion);
@@ -2564,11 +2607,13 @@ function VerificarPorcentajeAvance() {
     });
 }
 
-
 function SetFecha(fecha) {
-    var year = fecha.substring(0, 4);
-    var mes = fecha.substring(5, 7);
-    var dia = fecha.substring(8, 10);
-    return new Date(year, (mes - 1), dia);
+    if(fecha!=null){
+        var year = fecha.substring(0, 4);
+        var mes = fecha.substring(5, 7);
+        var dia = fecha.substring(8, 10);
+        return new Date(year, (mes - 1), dia);
+       }
+
 }
 init();

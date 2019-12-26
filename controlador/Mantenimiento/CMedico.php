@@ -103,8 +103,15 @@ function BuscarAccion($reg)
          echo json_encode($rspta);
        break;
 
-           case 'listar_sexo':
+       case 'listar_sexo':
       		$rpta = $general->Listar_Sexo();
+         	while ($reg = $rpta->fetch_object()){
+					echo '<option   value=' . $reg->idSexo . '>' . $reg->Descripcion . '</option>';
+         	}
+       break;
+       case 'listar_sexo_completo':
+      		$rpta = $general->Listar_Sexo();
+           echo '<option   value="0">--- SELECCIONE ---</option>';
          	while ($reg = $rpta->fetch_object()){
 					echo '<option   value=' . $reg->idSexo . '>' . $reg->Descripcion . '</option>';
          	}

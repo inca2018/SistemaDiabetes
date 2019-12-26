@@ -8,6 +8,7 @@ var Satisfaccion;
 var totalPreguntas = 0;
 
 var totalAvance = $("#totalAvance");
+var IconosSatifaccion;
 
 function init() {
     RecuperarListas();
@@ -22,6 +23,7 @@ function RecuperarListas() {
         Tratamientos = data.tratamientos;
         Evaluado = data.evaluado;
         Satisfaccion = data.satisfaccion;
+        IconosSatifaccion= data.iconos;
         iniciar_funciones();
     });
 }
@@ -627,7 +629,7 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
                 '<div class="col-md-12"><label class="col-form-label">' + Titulo + ':</label><span class="ml-3 badge badge-primary" title="' + Informacion + '"><i class="fa fa-info-circle fa2x"></i></span></div>' +
                 '<div class="col-md-4" style="display:none;" id="area' + idOpcion + '"> <select class="form-control fuTextoSelect" data-message="' + grupo + ' - ' + Titulo + ' - Listado" id="SELECT' + idOpcion + '" name=""></select></div>' +
                 '<div class=" col-md-4" style="display:none;" id="DO' + idOpcion + '" ><input id="dosis' + idOpcion + '" class="form-control  caja campo opcionCampo" type="text"  maxlength="100" placeholder="DOSIS/DIA" disabled></div>' +
-                '<div class=" col-md-4" style="display:none;" id="TA' + idOpcion + '"><input id="tab' + idOpcion + '"  class="form-control  caja campo opcionCampo" type="text"  maxlength="100" placeholder="NUM. INYECC." disabled></div>';
+                '<div class=" col-md-4" style="display:none;" id="TA' + idOpcion + '"><input id="tab' + idOpcion + '"  class="form-control  caja campo opcionCampo" type="text"  maxlength="100" placeholder="NUM. INYECC." disabled></div><div class="col-md-2" id="SP'+idOpcion+'"></div>';
             totalPreguntas = totalPreguntas + 1;
             break;
 
@@ -707,6 +709,27 @@ function RecuperarTipoOpcion(elemento, contador, grupo) {
     return opcion;
 }
 
+function BuscarIcono(opcion,valor){
+
+     IconosSatifaccion.forEach(function (satisfaccion) {
+
+                var idSatis = satisfaccion.idIcono;
+                var icono = satisfaccion.Icono;
+                var IconDecode=htmlDecode(icono);
+           if(idSatis==valor){
+               $("#SP"+opcion).empty();
+               $("#SP"+opcion).append(IconDecode);
+           }
+
+    });
+}
+
+function htmlDecode(input){
+  var e = document.createElement('div');
+  e.innerHTML = input;
+  return e.childNodes[0].nodeValue;
+}
+
 function LanzarFunciones() {
 
     $(".OpcionGeneral").each(function () {
@@ -751,6 +774,12 @@ function LanzarFunciones() {
                 case 7:
                     $("#area" + id).show();
                     $("#SELECT" + id).append(Satisfaccion);
+
+                    $('#SELECT' + id).change(function () {
+
+                        var idRecu=$('#SELECT' + id).val();
+                        BuscarIcono(id,idRecu);
+                    });
                     break;
 
             }
@@ -852,7 +881,7 @@ function LanzarFunciones() {
     $(".FuRango16").each(function () {
         var elemento = $(this);
         elemento.on('change', function () {
-
+            debugger;
             var id = elemento.data("id");
             var opcion = elemento.data("op");
             var minimo = elemento.data("minimo");
@@ -887,8 +916,6 @@ function LanzarFunciones() {
             }
         });
     });
-
-
 
     $(".campoV").blur(function () {
 
@@ -1054,7 +1081,7 @@ function GuardarFicha() {
 
     $(".validar").each(function () {
         if ($(this).val() == " " || $(this).val() == 0) {
-            error = error + $(this).data("message") + "<br>";
+            //error = error + $(this).data("message") + "<br>";
         }
     });
     if (error == "") {
@@ -1488,7 +1515,7 @@ function AjaxGuardarFicha() {
                     Opcion = Opcion + "#" + maximoCriterioA; //r4
                     Opcion = Opcion + "#" + respuestaCriterioB; //r5
                     Opcion = Opcion + "#" + EstadoCriterioB; //r6
-                    Opcion = Opcion + "#" + maximoCriterioB; //r7
+                    Opcion = Opcion + "#" + minimoCriterioB; //r7
                     Opcion = Opcion + "#" + maximoCriterioB; //r8
                     Opcion = Opcion + "#" + grupo; //grupo
                     ArregloOpciones.push(Opcion);

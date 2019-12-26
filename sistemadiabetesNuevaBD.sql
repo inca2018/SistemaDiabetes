@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 22-11-2019 a las 19:50:29
+-- Tiempo de generación: 26-12-2019 a las 22:28:33
 -- Versión del servidor: 5.7.26
 -- Versión de PHP: 5.6.40
 
@@ -636,10 +636,10 @@ UPDATE `tab_satisfaccion` SET  `Estado_idEstado`=codigo  WHERE  `idSatisfaccion`
 END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_SATISFACCION_EDITAR`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_SATISFACCION_EDITAR` (IN `dato` VARCHAR(150), IN `idSatisfaccionU` INT(11))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_SATISFACCION_EDITAR` (IN `dato` VARCHAR(150), IN `idSatisfaccionU` INT(11), IN `icono` TEXT)  NO SQL
 BEGIN
 
-UPDATE `tab_satisfaccion` SET `Descripcion`=dato WHERE `idSatisfaccion`=idSatisfaccionU;
+UPDATE `tab_satisfaccion` SET `Descripcion`=dato,`Icono`=icono WHERE `idSatisfaccion`=idSatisfaccionU;
 
 END$$
 
@@ -656,7 +656,7 @@ DROP PROCEDURE IF EXISTS `SP_MANT_SATISFACCION_LISTAR`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_SATISFACCION_LISTAR` ()  NO SQL
 BEGIN
 
-SELECT tab.idSatisfaccion,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado FROM tab_satisfaccion tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado where e.idEstado!=10;
+SELECT tab.idSatisfaccion,tab.Descripcion,tab.Estado_idEstado,DATE_FORMAT(tab.fechaRegistro,"%d/%m/%Y") as fechaRegistro,e.nombreEstado,tab.Icono FROM tab_satisfaccion tab INNER JOIN estado e ON e.idEstado=tab.Estado_idEstado where e.idEstado!=10;
 
 END$$
 
@@ -669,10 +669,10 @@ SELECT * FROM tab_satisfaccion tab where tab.idSatisfaccion=idSatisfaccionS;
 END$$
 
 DROP PROCEDURE IF EXISTS `SP_MANT_SATISFACCION_REGISTRO`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_SATISFACCION_REGISTRO` (IN `dato` VARCHAR(150))  NO SQL
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_MANT_SATISFACCION_REGISTRO` (IN `dato` VARCHAR(150), IN `icono` TEXT)  NO SQL
 BEGIN
 
-INSERT INTO `tab_satisfaccion`(`idSatisfaccion`, `Descripcion`, `Estado_idEstado`, `fechaRegistro`) VALUES (NULL,dato,1,NOW());
+INSERT INTO `tab_satisfaccion`(`idSatisfaccion`, `Descripcion`,`Icono`, `Estado_idEstado`, `fechaRegistro`) VALUES (NULL,dato,icono,1,NOW());
 
 END$$
 
@@ -1146,7 +1146,63 @@ DECLARE totalFichasYear DECIMAL(20,3);
 
 DECLARE totalMedico DECIMAL(20,3);
 
-SET TotalPaciente=(SELECT COUNT(*) FROM tab_paciente pa where pa.Sexo_idSexo=Sexo );
+if(sexo=0)then
+SET TotalPaciente=(SELECT COUNT(*) FROM tab_paciente pa);
+
+SET CantidadHgSI=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente and  resu.Opcion_Opcion=8 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=1,1,NULL)) as Estado FROM tab_paciente pa);
+
+SET CantidadHgNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente and resu.Opcion_Opcion=8 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa);
+
+SET PorcentajeHgCon=(ROUND((CantidadHgSI*100)/TotalPaciente,2));
+SET PorcentajeHgSin=(ROUND((CantidadHgNO*100)/TotalPaciente,2));
+
+
+SET totalColesterolSI=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente and resu.Opcion_Opcion=9 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=1,1,NULL)) as Estado FROM tab_paciente pa);
+
+SET totalColesterolNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente  and resu.Opcion_Opcion=9 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa);
+
+SET totalHDLSI=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente  and resu.Opcion_Opcion=10 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=1,1,NULL)) as Estado FROM tab_paciente pa);
+
+SET totalHDLNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente  and resu.Opcion_Opcion=10 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa);
+
+SET totalLDLSI=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente and resu.Opcion_Opcion=11 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=1,1,NULL)) as Estado FROM tab_paciente pa);
+
+SET totalLDLNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente  and resu.Opcion_Opcion=11 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa);
+
+SET totalIMCSI=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente   and resu.Opcion_Opcion=13 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=1,1,NULL)) as Estado FROM tab_paciente pa);
+
+SET totalIMCNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente  and resu.Opcion_Opcion=13 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa);
+
+
+SET tallerGLUCSI=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente and resu.Opcion_Opcion=90 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=1,1,NULL)) as Estado FROM tab_paciente pa);
+
+SET tallerGLUCNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente  and resu.Opcion_Opcion=90 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa);
+
+SET tallerNUTSI=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente and resu.Opcion_Opcion=91 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=1,1,NULL)) as Estado FROM tab_paciente pa);
+
+SET tallerNUTNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente   and resu.Opcion_Opcion=91 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa);
+
+SET tallerDIASI=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente  and resu.Opcion_Opcion=92 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=1,1,NULL)) as Estado FROM tab_paciente pa);
+
+SET tallerDIANO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente  and resu.Opcion_Opcion=92 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa);
+
+SET tallerINSSI=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente   and resu.Opcion_Opcion=93 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=1,1,NULL)) as Estado FROM tab_paciente pa);
+
+SET tallerINSNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente  and resu.Opcion_Opcion=93 and  seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa);
+
+SET tallerPODSI=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente  and resu.Opcion_Opcion=94 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=1,1,NULL)) as Estado FROM tab_paciente pa);
+
+SET tallerPODNO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente and resu.Opcion_Opcion=94 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa);
+
+SET tallerPSISI=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente   and resu.Opcion_Opcion=95 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=1,1,NULL)) as Estado FROM tab_paciente pa);
+
+SET tallerPSINO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente   and resu.Opcion_Opcion=95 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa);
+
+
+ELSE
+
+SET TotalPaciente=(SELECT COUNT(*) FROM tab_paciente pa where pa.Sexo_idSexo=sexo);
+
 
 SET CantidadHgSI=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente and  resu.Opcion_Opcion=8 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=1,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);
 
@@ -1197,14 +1253,29 @@ SET tallerPSISI=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimi
 
 SET tallerPSINO=(SELECT COUNT(IF((SELECT resu.RespuestaAdecuado FROM tab_seguimiento seg inner join tab_resultado_ficha resu on resu.Seguimiento_idSeguimiento=seg.idSeguimiento where seg.Paciente_idPaciente=pa.idPaciente   and resu.Opcion_Opcion=95 and seg.fechaRegistro BETWEEN Inicio AND Fin ORDER BY resu.idResultadoFicha DESC LIMIT 1)=0,1,NULL)) as Estado FROM tab_paciente pa where pa.Sexo_idSexo=sexo);
 
+end if;
+
+
+
+
 SET totalFichasGeneral=(SELECT COUNT(*) FROM tab_seguimiento);
 
 SET totalFichasYear=(SELECT COUNT(*) FROM tab_seguimiento seg where seg.Year=year);
 
 SET totalMedico=(SELECT COUNT(*) FROM tab_medico);
 
+IF(sexo='1')then
+SET TotalPacienteMasculino=(SELECT COUNT(*) FROM tab_paciente pa where pa.Sexo_idSexo=1);
+SET TotalPacienteFemenino=0;
+ELSEIF(sexo='2') THEN
+SET TotalPacienteMasculino=0;
+SET TotalPacienteFemenino=(SELECT COUNT(*) FROM tab_paciente pa where pa.Sexo_idSexo=2);
+ELSE
 SET TotalPacienteMasculino=(SELECT COUNT(*) FROM tab_paciente pa where pa.Sexo_idSexo=1);
 SET TotalPacienteFemenino=(SELECT COUNT(*) FROM tab_paciente pa where pa.Sexo_idSexo=2);
+end if;
+
+
 
 
 SELECT totalFichasGeneral,totalFichasYear,TotalPaciente,TotalPacienteMasculino,
@@ -3805,7 +3876,16 @@ CREATE TABLE IF NOT EXISTS `tab_extra` (
   `Seguimiento_idSeguimiento` int(11) NOT NULL,
   `fechaRegistro` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idExtra`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `tab_extra`
+--
+
+INSERT INTO `tab_extra` (`idExtra`, `Refiere`, `Riesgo`, `Seguimiento_idSeguimiento`, `fechaRegistro`) VALUES
+(1, '', '{&quot;opA1&quot;:0,&quot;opA2&quot;:0,&quot;opA3&quot;:0,&quot;opA4&quot;:0,&quot;opB1&quot;:0,&quot;opB2&quot;:0,&quot;opB3&quot;:0,&quot;opB4&quot;:0,&quot;opC1&quot;:0,&quot;opC2&quot;:0,&quot;opC3&quot;:0,&quot;opC4&quot;:0,&quot;opD1&quot;:0,&quot;opD2&quot;:0,&quot;opE1&quot;:0,&quot;opE2&quot;:0}', 1, '2019-12-26 14:44:34'),
+(2, '', '{&quot;opA1&quot;:0,&quot;opA2&quot;:0,&quot;opA3&quot;:0,&quot;opA4&quot;:0,&quot;opB1&quot;:0,&quot;opB2&quot;:0,&quot;opB3&quot;:0,&quot;opB4&quot;:0,&quot;opC1&quot;:0,&quot;opC2&quot;:0,&quot;opC3&quot;:0,&quot;opC4&quot;:0,&quot;opD1&quot;:0,&quot;opD2&quot;:0,&quot;opE1&quot;:0,&quot;opE2&quot;:0}', 2, '2019-12-26 15:42:02'),
+(3, '', '{&quot;opA1&quot;:0,&quot;opA2&quot;:0,&quot;opA3&quot;:0,&quot;opA4&quot;:0,&quot;opB1&quot;:0,&quot;opB2&quot;:0,&quot;opB3&quot;:0,&quot;opB4&quot;:0,&quot;opC1&quot;:0,&quot;opC2&quot;:0,&quot;opC3&quot;:0,&quot;opC4&quot;:0,&quot;opD1&quot;:0,&quot;opD2&quot;:0,&quot;opE1&quot;:0,&quot;opE2&quot;:0}', 3, '2019-12-26 15:52:30');
 
 -- --------------------------------------------------------
 
@@ -4098,14 +4178,15 @@ CREATE TABLE IF NOT EXISTS `tab_paciente` (
   KEY `FK_PACI_TIPO` (`TipoMedida_idTipoMedida`),
   KEY `FK_COND_PA` (`Condicion_idCondicion`),
   KEY `FK_GRADO` (`GradoInstruccion_idGradoInstruccion`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `tab_paciente`
 --
 
 INSERT INTO `tab_paciente` (`idPaciente`, `Codigo`, `Nombres`, `apellidoPaterno`, `apellidoMaterno`, `fechaNacimiento`, `edad`, `numeroDocumento`, `Telefono`, `Celular`, `Correo`, `Direccion`, `Nacionalidad_idNacionalidad`, `TipoMedida_idTipoMedida`, `CantidadTiempo`, `tituloGrado`, `Sexo_idSexo`, `DX_idDX`, `Medico_idMedico`, `TipoDocumento_idTipoDocumento`, `Departamento_idDepartamento`, `Provincia_idProvincia`, `Distrito_idDistrito`, `Condicion_idCondicion`, `GradoInstruccion_idGradoInstruccion`, `Estado_idEstado`, `fechaRegistro`) VALUES
-(1, 'Nº 0001', 'Jesus', 'Inca', 'Cardenas', '2001-11-14', 18, '22123123', NULL, NULL, NULL, NULL, 4, 3, 1, NULL, 1, 2, NULL, 1, NULL, NULL, NULL, 7, NULL, 1, '2019-11-19 18:49:20');
+(1, 'Nº 0001', 'Jesus', 'Inca', 'Cardenas', '2001-11-14', 18, '22123123', NULL, NULL, NULL, NULL, 4, 3, 1, NULL, 1, 2, NULL, 1, NULL, NULL, NULL, 7, NULL, 1, '2019-11-19 18:49:20'),
+(2, 'Nº 0002', 'Rosa', 'Marian', 'Palaciones', '2001-12-26', 18, '47044445', NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, 2, 2, 6, 1, NULL, NULL, NULL, 7, NULL, 1, '2019-12-26 15:52:01');
 
 -- --------------------------------------------------------
 
@@ -4346,7 +4427,328 @@ CREATE TABLE IF NOT EXISTS `tab_resultado_ficha` (
   KEY `FK_RESU_SEGU` (`Seguimiento_idSeguimiento`),
   KEY `FK_RESU_ESP` (`Especialidad_idEspecialidad`),
   KEY `FKORSE` (`Opcion_Opcion`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=316 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `tab_resultado_ficha`
+--
+
+INSERT INTO `tab_resultado_ficha` (`idResultadoFicha`, `Seguimiento_idSeguimiento`, `Opcion_Opcion`, `Especialidad_idEspecialidad`, `TipoOpcion`, `Propiedades`, `RespuestaTexto`, `RespuestaValor`, `RespuestaFecha`, `RespuestaAdecuado`, `TipoListado`, `Grupo_idGrupo`, `fechaRegistro`) VALUES
+(1, 1, 5, NULL, 3, NULL, NULL, '12.00', NULL, 0, NULL, 1, '2019-12-26 14:44:33'),
+(2, 1, 6, NULL, 3, NULL, NULL, '12.00', NULL, 0, NULL, 1, '2019-12-26 14:44:33'),
+(3, 1, 7, NULL, 3, NULL, NULL, '12.00', NULL, 1, NULL, 1, '2019-12-26 14:44:33'),
+(4, 1, 8, NULL, 3, NULL, NULL, '12.00', NULL, 0, NULL, 1, '2019-12-26 14:44:33'),
+(5, 1, 9, NULL, 3, NULL, NULL, '12.00', NULL, 1, NULL, 1, '2019-12-26 14:44:33'),
+(6, 1, 10, NULL, 4, '{\"Sexo\":}', NULL, '12.00', NULL, 0, NULL, 1, '2019-12-26 14:44:33'),
+(7, 1, 11, NULL, 3, NULL, NULL, '12.00', NULL, 1, NULL, 1, '2019-12-26 14:44:33'),
+(8, 1, 12, NULL, 3, NULL, NULL, '12.00', NULL, 1, NULL, 1, '2019-12-26 14:44:33'),
+(9, 1, 13, NULL, 6, '{\"v1\":12,\"v2\":12,\"v3\":0,\"v4\":0}', NULL, '0.09', NULL, 0, NULL, 1, '2019-12-26 14:44:33'),
+(10, 1, 16, NULL, 4, '{\"Sexo\":}', NULL, '12.00', NULL, 1, NULL, 1, '2019-12-26 14:44:33'),
+(11, 1, 17, NULL, 3, NULL, NULL, '12.00', NULL, 1, NULL, 1, '2019-12-26 14:44:33'),
+(12, 1, 18, NULL, 3, NULL, NULL, '12.00', NULL, 0, NULL, 1, '2019-12-26 14:44:33'),
+(13, 1, 19, NULL, 3, NULL, NULL, '12.00', NULL, 1, NULL, 1, '2019-12-26 14:44:33'),
+(14, 1, 125, NULL, 16, '{\"CriterioA\":\"44\",\"EstadoCriterioA\":\"1\",\"minimoCriterioA\":\"1\",\"maximoCriterioA\":\"50\",\"CriterioB\":\"51\",\"EstadoCriterioB\":\"1\",\"minimoCriterioB\":\"1\",\"maximoCriterioB\":\"100\"}', NULL, NULL, NULL, 1, NULL, 1, '2019-12-26 14:44:33'),
+(15, 1, 21, NULL, 9, '{\"tipocampo\":\"2\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:33'),
+(16, 1, 23, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:33'),
+(17, 1, 24, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:33'),
+(18, 1, 25, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:33'),
+(19, 1, 26, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:33'),
+(20, 1, 27, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:33'),
+(21, 1, 28, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:33'),
+(22, 1, 29, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(23, 1, 30, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(24, 1, 31, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(25, 1, 32, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(26, 1, 33, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(27, 1, 35, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(28, 1, 36, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(29, 1, 38, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(30, 1, 39, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(31, 1, 40, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(32, 1, 41, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(33, 1, 42, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(34, 1, 43, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(35, 1, 44, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(36, 1, 45, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(37, 1, 46, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(38, 1, 47, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(39, 1, 48, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(40, 1, 50, NULL, 9, '{\"tipocampo\":\"4\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(41, 1, 51, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(42, 1, 53, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(43, 1, 54, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(44, 1, 56, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(45, 1, 57, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(46, 1, 58, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(47, 1, 59, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(48, 1, 60, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(49, 1, 61, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(50, 1, 62, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(51, 1, 64, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(52, 1, 65, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(53, 1, 66, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(54, 1, 67, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(55, 1, 69, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(56, 1, 70, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(57, 1, 71, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(58, 1, 73, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(59, 1, 74, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(60, 1, 75, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(61, 1, 76, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(62, 1, 77, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(63, 1, 78, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(64, 1, 112, NULL, 9, '{\"tipocampo\":\"6\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 14:44:34'),
+(65, 1, 80, NULL, 2, NULL, '', NULL, NULL, NULL, NULL, 6, '2019-12-26 14:44:34'),
+(66, 1, 81, NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, 6, '2019-12-26 14:44:34'),
+(67, 1, 82, NULL, 2, NULL, '', NULL, NULL, NULL, NULL, 6, '2019-12-26 14:44:34'),
+(68, 1, 89, NULL, 9, '{\"tipocampo\":\"5\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 6, '2019-12-26 14:44:34'),
+(69, 1, 90, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-12-26 14:44:34'),
+(70, 1, 91, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-12-26 14:44:34'),
+(71, 1, 92, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-12-26 14:44:34'),
+(72, 1, 93, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-12-26 14:44:34'),
+(73, 1, 94, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-12-26 14:44:34'),
+(74, 1, 95, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-12-26 14:44:34'),
+(75, 1, 96, NULL, 2, NULL, '', NULL, NULL, NULL, NULL, 6, '2019-12-26 14:44:34'),
+(76, 1, 97, NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, 6, '2019-12-26 14:44:34'),
+(77, 1, 98, NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, 7, '2019-12-26 14:44:34'),
+(78, 1, 99, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 14:44:34'),
+(79, 1, 100, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 14:44:34'),
+(80, 1, 101, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 14:44:34'),
+(81, 1, 102, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 14:44:34'),
+(82, 1, 103, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 14:44:34'),
+(83, 1, 104, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 14:44:34'),
+(84, 1, 105, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 14:44:34'),
+(85, 1, 106, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 14:44:34'),
+(86, 1, 107, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 14:44:34'),
+(87, 1, 108, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 14:44:34'),
+(88, 1, 109, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 14:44:34'),
+(89, 1, 117, NULL, 11, '{\"tipocampo\":\"7\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, NULL, NULL, 7, '2019-12-26 14:44:34'),
+(90, 1, NULL, 4, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 14:44:34'),
+(91, 1, NULL, 5, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 14:44:34'),
+(92, 1, NULL, 6, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 14:44:34'),
+(93, 1, NULL, 7, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 14:44:34'),
+(94, 1, NULL, 8, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 14:44:34'),
+(95, 1, NULL, 9, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 14:44:34'),
+(96, 1, NULL, 10, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 14:44:34'),
+(97, 1, NULL, 11, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 14:44:34'),
+(98, 1, NULL, 12, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 14:44:34'),
+(99, 1, NULL, 13, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 14:44:34'),
+(100, 1, NULL, 14, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 14:44:34'),
+(101, 1, NULL, 15, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 14:44:34'),
+(102, 1, NULL, 16, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 14:44:34'),
+(103, 1, NULL, 18, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 14:44:34'),
+(104, 1, NULL, 19, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 14:44:34'),
+(105, 1, NULL, 20, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 14:44:34'),
+(106, 2, 5, NULL, 3, NULL, NULL, '12.00', NULL, 0, NULL, 1, '2019-12-26 15:42:01'),
+(107, 2, 6, NULL, 3, NULL, NULL, '12.00', NULL, 0, NULL, 1, '2019-12-26 15:42:01'),
+(108, 2, 7, NULL, 3, NULL, NULL, '12.00', NULL, 1, NULL, 1, '2019-12-26 15:42:01'),
+(109, 2, 8, NULL, 3, NULL, NULL, '12.00', NULL, 0, NULL, 1, '2019-12-26 15:42:01'),
+(110, 2, 9, NULL, 3, NULL, NULL, '0.00', NULL, 0, NULL, 1, '2019-12-26 15:42:01'),
+(111, 2, 10, NULL, 4, '{\"Sexo\":}', NULL, '0.00', NULL, 0, NULL, 1, '2019-12-26 15:42:01'),
+(112, 2, 11, NULL, 3, NULL, NULL, '0.00', NULL, 0, NULL, 1, '2019-12-26 15:42:01'),
+(113, 2, 12, NULL, 3, NULL, NULL, '0.00', NULL, 0, NULL, 1, '2019-12-26 15:42:01'),
+(114, 2, 13, NULL, 6, '{\"v1\":0,\"v2\":0,\"v3\":0,\"v4\":0}', NULL, '0.00', NULL, 0, NULL, 1, '2019-12-26 15:42:01'),
+(115, 2, 16, NULL, 4, '{\"Sexo\":}', NULL, '0.00', NULL, 0, NULL, 1, '2019-12-26 15:42:01'),
+(116, 2, 17, NULL, 3, NULL, NULL, '0.00', NULL, 0, NULL, 1, '2019-12-26 15:42:01'),
+(117, 2, 18, NULL, 3, NULL, NULL, '0.00', NULL, 0, NULL, 1, '2019-12-26 15:42:01'),
+(118, 2, 19, NULL, 3, NULL, NULL, '0.00', NULL, 0, NULL, 1, '2019-12-26 15:42:01'),
+(119, 2, 125, NULL, 16, '{\"CriterioA\":\"30\",\"EstadoCriterioA\":\"1\",\"minimoCriterioA\":\"1\",\"maximoCriterioA\":\"50\",\"CriterioB\":\"35\",\"EstadoCriterioB\":\"1\",\"minimoCriterioB\":\"1\",\"maximoCriterioB\":\"100\"}', NULL, NULL, NULL, 1, NULL, 1, '2019-12-26 15:42:01'),
+(120, 2, 21, NULL, 9, '{\"tipocampo\":\"2\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(121, 2, 23, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(122, 2, 24, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(123, 2, 25, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(124, 2, 26, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(125, 2, 27, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(126, 2, 28, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(127, 2, 29, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(128, 2, 30, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(129, 2, 31, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(130, 2, 32, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(131, 2, 33, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(132, 2, 35, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(133, 2, 36, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(134, 2, 38, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(135, 2, 39, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(136, 2, 40, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(137, 2, 41, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(138, 2, 42, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(139, 2, 43, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(140, 2, 44, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(141, 2, 45, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(142, 2, 46, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(143, 2, 47, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(144, 2, 48, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(145, 2, 50, NULL, 9, '{\"tipocampo\":\"4\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(146, 2, 51, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(147, 2, 53, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(148, 2, 54, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(149, 2, 56, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(150, 2, 57, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(151, 2, 58, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(152, 2, 59, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(153, 2, 60, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(154, 2, 61, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(155, 2, 62, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(156, 2, 64, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(157, 2, 65, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(158, 2, 66, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(159, 2, 67, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(160, 2, 69, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(161, 2, 70, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(162, 2, 71, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(163, 2, 73, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(164, 2, 74, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(165, 2, 75, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(166, 2, 76, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(167, 2, 77, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(168, 2, 78, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(169, 2, 112, NULL, 9, '{\"tipocampo\":\"6\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:42:01'),
+(170, 2, 80, NULL, 2, NULL, '', NULL, NULL, NULL, NULL, 6, '2019-12-26 15:42:01'),
+(171, 2, 81, NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, 6, '2019-12-26 15:42:01'),
+(172, 2, 82, NULL, 2, NULL, '', NULL, NULL, NULL, NULL, 6, '2019-12-26 15:42:01'),
+(173, 2, 89, NULL, 9, '{\"tipocampo\":\"5\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 6, '2019-12-26 15:42:01'),
+(174, 2, 90, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-12-26 15:42:01'),
+(175, 2, 91, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-12-26 15:42:01'),
+(176, 2, 92, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-12-26 15:42:01'),
+(177, 2, 93, NULL, 7, NULL, NULL, NULL, NULL, 1, NULL, 6, '2019-12-26 15:42:01'),
+(178, 2, 94, NULL, 7, NULL, NULL, NULL, NULL, 1, NULL, 6, '2019-12-26 15:42:01'),
+(179, 2, 95, NULL, 7, NULL, NULL, NULL, NULL, 1, NULL, 6, '2019-12-26 15:42:01'),
+(180, 2, 96, NULL, 2, NULL, '', NULL, NULL, NULL, NULL, 6, '2019-12-26 15:42:01'),
+(181, 2, 97, NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, 6, '2019-12-26 15:42:01'),
+(182, 2, 98, NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, 7, '2019-12-26 15:42:01'),
+(183, 2, 99, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 15:42:01'),
+(184, 2, 100, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 15:42:01'),
+(185, 2, 101, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 15:42:01'),
+(186, 2, 102, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 15:42:01'),
+(187, 2, 103, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 15:42:01'),
+(188, 2, 104, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 15:42:01'),
+(189, 2, 105, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 15:42:01'),
+(190, 2, 106, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 15:42:01'),
+(191, 2, 107, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 15:42:01'),
+(192, 2, 108, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 15:42:01'),
+(193, 2, 109, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 15:42:01'),
+(194, 2, 117, NULL, 11, '{\"tipocampo\":\"7\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, NULL, NULL, 7, '2019-12-26 15:42:01'),
+(195, 2, NULL, 4, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:42:01'),
+(196, 2, NULL, 5, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:42:02'),
+(197, 2, NULL, 6, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:42:02'),
+(198, 2, NULL, 7, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:42:02'),
+(199, 2, NULL, 8, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:42:02'),
+(200, 2, NULL, 9, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:42:02'),
+(201, 2, NULL, 10, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:42:02'),
+(202, 2, NULL, 11, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:42:02'),
+(203, 2, NULL, 12, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:42:02'),
+(204, 2, NULL, 13, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:42:02'),
+(205, 2, NULL, 14, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:42:02'),
+(206, 2, NULL, 15, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:42:02'),
+(207, 2, NULL, 16, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:42:02'),
+(208, 2, NULL, 18, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:42:02'),
+(209, 2, NULL, 19, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:42:02'),
+(210, 2, NULL, 20, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:42:02'),
+(211, 3, 5, NULL, 3, NULL, NULL, '12.00', NULL, 0, NULL, 1, '2019-12-26 15:52:29'),
+(212, 3, 6, NULL, 3, NULL, NULL, '12.00', NULL, 0, NULL, 1, '2019-12-26 15:52:29'),
+(213, 3, 7, NULL, 3, NULL, NULL, '12.00', NULL, 1, NULL, 1, '2019-12-26 15:52:29'),
+(214, 3, 8, NULL, 3, NULL, NULL, '31.00', NULL, 0, NULL, 1, '2019-12-26 15:52:29'),
+(215, 3, 9, NULL, 3, NULL, NULL, '13.00', NULL, 1, NULL, 1, '2019-12-26 15:52:29'),
+(216, 3, 10, NULL, 4, '{\"Sexo\":1}', NULL, '12.00', NULL, 0, NULL, 1, '2019-12-26 15:52:29'),
+(217, 3, 11, NULL, 3, NULL, NULL, '12.00', NULL, 1, NULL, 1, '2019-12-26 15:52:29'),
+(218, 3, 12, NULL, 3, NULL, NULL, '12.00', NULL, 1, NULL, 1, '2019-12-26 15:52:29'),
+(219, 3, 13, NULL, 6, '{\"v1\":0,\"v2\":0,\"v3\":0,\"v4\":0}', NULL, '0.00', NULL, 0, NULL, 1, '2019-12-26 15:52:29'),
+(220, 3, 16, NULL, 4, '{\"Sexo\":1}', NULL, '0.00', NULL, 0, NULL, 1, '2019-12-26 15:52:29'),
+(221, 3, 17, NULL, 3, NULL, NULL, '0.00', NULL, 0, NULL, 1, '2019-12-26 15:52:29'),
+(222, 3, 18, NULL, 3, NULL, NULL, '0.00', NULL, 0, NULL, 1, '2019-12-26 15:52:29'),
+(223, 3, 19, NULL, 3, NULL, NULL, '0.00', NULL, 0, NULL, 1, '2019-12-26 15:52:29'),
+(224, 3, 125, NULL, 16, '{\"CriterioA\":\"0\",\"EstadoCriterioA\":\"0\",\"minimoCriterioA\":\"1\",\"maximoCriterioA\":\"50\",\"CriterioB\":\"0\",\"EstadoCriterioB\":\"0\",\"minimoCriterioB\":\"100\",\"maximoCriterioB\":\"100\"}', NULL, NULL, NULL, NULL, NULL, 1, '2019-12-26 15:52:29'),
+(225, 3, 21, NULL, 9, '{\"tipocampo\":\"2\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(226, 3, 23, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(227, 3, 24, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(228, 3, 25, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(229, 3, 26, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(230, 3, 27, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(231, 3, 28, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(232, 3, 29, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(233, 3, 30, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(234, 3, 31, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(235, 3, 32, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(236, 3, 33, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(237, 3, 35, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(238, 3, 36, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(239, 3, 38, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(240, 3, 39, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(241, 3, 40, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(242, 3, 41, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(243, 3, 42, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(244, 3, 43, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(245, 3, 44, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(246, 3, 45, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(247, 3, 46, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(248, 3, 47, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(249, 3, 48, NULL, 9, '{\"tipocampo\":\"3\",\"valorCampo\":\"null\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(250, 3, 50, NULL, 9, '{\"tipocampo\":\"4\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(251, 3, 51, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(252, 3, 53, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(253, 3, 54, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(254, 3, 56, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(255, 3, 57, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(256, 3, 58, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(257, 3, 59, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(258, 3, 60, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(259, 3, 61, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:29'),
+(260, 3, 62, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:30'),
+(261, 3, 64, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:30'),
+(262, 3, 65, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:30'),
+(263, 3, 66, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:30'),
+(264, 3, 67, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:30'),
+(265, 3, 69, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:30'),
+(266, 3, 70, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:30'),
+(267, 3, 71, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:30'),
+(268, 3, 73, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:30'),
+(269, 3, 74, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:30'),
+(270, 3, 75, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:30'),
+(271, 3, 76, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:30'),
+(272, 3, 77, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:30'),
+(273, 3, 78, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:30'),
+(274, 3, 112, NULL, 9, '{\"tipocampo\":\"6\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 5, '2019-12-26 15:52:30'),
+(275, 3, 80, NULL, 2, NULL, '', NULL, NULL, NULL, NULL, 6, '2019-12-26 15:52:30'),
+(276, 3, 81, NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, 6, '2019-12-26 15:52:30'),
+(277, 3, 82, NULL, 2, NULL, '', NULL, NULL, NULL, NULL, 6, '2019-12-26 15:52:30'),
+(278, 3, 89, NULL, 9, '{\"tipocampo\":\"5\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, 0, NULL, 6, '2019-12-26 15:52:30'),
+(279, 3, 90, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-12-26 15:52:30'),
+(280, 3, 91, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-12-26 15:52:30'),
+(281, 3, 92, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-12-26 15:52:30'),
+(282, 3, 93, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-12-26 15:52:30'),
+(283, 3, 94, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-12-26 15:52:30'),
+(284, 3, 95, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 6, '2019-12-26 15:52:30'),
+(285, 3, 96, NULL, 2, NULL, '', NULL, NULL, NULL, NULL, 6, '2019-12-26 15:52:30'),
+(286, 3, 97, NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, 6, '2019-12-26 15:52:30'),
+(287, 3, 98, NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, 7, '2019-12-26 15:52:30'),
+(288, 3, 99, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 15:52:30'),
+(289, 3, 100, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 15:52:30'),
+(290, 3, 101, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 15:52:30'),
+(291, 3, 102, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 15:52:30'),
+(292, 3, 103, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 15:52:30'),
+(293, 3, 104, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 15:52:30'),
+(294, 3, 105, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 15:52:30'),
+(295, 3, 106, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 15:52:30'),
+(296, 3, 107, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 15:52:30'),
+(297, 3, 108, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 15:52:30'),
+(298, 3, 109, NULL, 7, NULL, NULL, NULL, NULL, 0, NULL, 7, '2019-12-26 15:52:30'),
+(299, 3, 117, NULL, 11, '{\"tipocampo\":\"7\",\"valorCampo\":\"0\",\"Dosis\":\"0\",\"Num\":\"0\"}', NULL, NULL, NULL, NULL, NULL, 7, '2019-12-26 15:52:30'),
+(300, 3, NULL, 4, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:52:30'),
+(301, 3, NULL, 5, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:52:30'),
+(302, 3, NULL, 6, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:52:30'),
+(303, 3, NULL, 7, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:52:30'),
+(304, 3, NULL, 8, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:52:30'),
+(305, 3, NULL, 9, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:52:30'),
+(306, 3, NULL, 10, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:52:30'),
+(307, 3, NULL, 11, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:52:30'),
+(308, 3, NULL, 12, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:52:30'),
+(309, 3, NULL, 13, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:52:30'),
+(310, 3, NULL, 14, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:52:30'),
+(311, 3, NULL, 15, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:52:30'),
+(312, 3, NULL, 16, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:52:30'),
+(313, 3, NULL, 18, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:52:30'),
+(314, 3, NULL, 19, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:52:30'),
+(315, 3, NULL, 20, NULL, '{\"Diagnostico\":\"0\",\"Medico\":\"0\",\"Tratamiento\":\"0\",\"Observacion\":\"0\"}', NULL, NULL, NULL, 0, NULL, NULL, '2019-12-26 15:52:30');
 
 -- --------------------------------------------------------
 
@@ -4367,7 +4769,16 @@ CREATE TABLE IF NOT EXISTS `tab_resultado_pie` (
   `R7` int(11) NOT NULL,
   `R8` int(11) NOT NULL,
   PRIMARY KEY (`idResultadoPie`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `tab_resultado_pie`
+--
+
+INSERT INTO `tab_resultado_pie` (`idResultadoPie`, `Seguimiento_idSeguimiento`, `R1`, `R2`, `R3`, `R4`, `R5`, `R6`, `R7`, `R8`) VALUES
+(1, 1, 3, 3, 2, 2, 6, 6, 6, 6),
+(2, 2, 1, 1, 1, 1, 1, 1, 1, 1),
+(3, 3, 1, 1, 1, 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -4379,6 +4790,7 @@ DROP TABLE IF EXISTS `tab_satisfaccion`;
 CREATE TABLE IF NOT EXISTS `tab_satisfaccion` (
   `idSatisfaccion` int(11) NOT NULL AUTO_INCREMENT,
   `Descripcion` varchar(150) NOT NULL,
+  `Icono` text,
   `Estado_idEstado` int(11) NOT NULL,
   `fechaRegistro` datetime NOT NULL,
   PRIMARY KEY (`idSatisfaccion`),
@@ -4389,12 +4801,12 @@ CREATE TABLE IF NOT EXISTS `tab_satisfaccion` (
 -- Volcado de datos para la tabla `tab_satisfaccion`
 --
 
-INSERT INTO `tab_satisfaccion` (`idSatisfaccion`, `Descripcion`, `Estado_idEstado`, `fechaRegistro`) VALUES
-(1, 'MUY POCO', 1, '2019-03-08 02:12:46'),
-(2, 'POCO', 1, '2019-03-08 02:12:57'),
-(3, 'NORMAL', 1, '2019-03-08 02:13:07'),
-(4, 'SATISFECHO', 1, '2019-03-08 02:13:17'),
-(5, 'MUY SATISFECHO', 1, '2019-03-08 02:13:28');
+INSERT INTO `tab_satisfaccion` (`idSatisfaccion`, `Descripcion`, `Icono`, `Estado_idEstado`, `fechaRegistro`) VALUES
+(1, 'MUY POCO', '&lt;i class=&quot;far fa-sad-cry fa-2x&quot;&gt;&lt;/i&gt;', 1, '2019-03-08 02:12:46'),
+(2, 'POCO', '&lt;i class=&quot;far fa-frown fa-2x&quot;&gt;&lt;/i&gt;', 1, '2019-03-08 02:12:57'),
+(3, 'NORMAL', '&lt;i class=&quot;far fa-meh fa-2x&quot;&gt;&lt;/i&gt;', 1, '2019-03-08 02:13:07'),
+(4, 'SATISFECHO', '&lt;i class=&quot;far fa-smile fa-2x&quot;&gt;&lt;/i&gt;', 1, '2019-03-08 02:13:17'),
+(5, 'MUY SATISFECHO', '&lt;i class=&quot;far fa-smile-beam fa-2x&quot;&gt;&lt;/i&gt;', 1, '2019-03-08 02:13:28');
 
 -- --------------------------------------------------------
 
@@ -4413,7 +4825,16 @@ CREATE TABLE IF NOT EXISTS `tab_seguimiento` (
   PRIMARY KEY (`idSeguimiento`),
   KEY `FK_SEGUI_PA` (`Paciente_idPaciente`),
   KEY `FK_YEAR` (`Year`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `tab_seguimiento`
+--
+
+INSERT INTO `tab_seguimiento` (`idSeguimiento`, `Codigo`, `Year`, `Mes`, `Paciente_idPaciente`, `fechaRegistro`) VALUES
+(1, 'SEG-1', 4, 1, 1, '2019-12-26 14:44:33'),
+(2, 'SEG-2', 4, 1, 1, '2019-12-26 15:42:01'),
+(3, 'SEG-3', 4, 1, 2, '2019-12-26 15:52:29');
 
 -- --------------------------------------------------------
 

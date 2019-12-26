@@ -37,6 +37,7 @@
                                             <th data-priority="1">#</th>
                                             <th>ESTADO</th>
                                             <th>DESCRIPCIÓN</th>
+                                            <th>ICONO</th>
                                             <th>FECHA DE REGISTRO</th>
                                             <th>ACCION</th>
                                         </tr>
@@ -49,6 +50,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -73,11 +75,19 @@
                     <div class="row" id="cuerpo">
                         <div class="col-md-12 bl">
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-md-6">
                                     <div class="form-group row">
                                         <label for="SatisfaccionDescripcion " class="col-md-4 col-form-label  ">Satisfaccion:</label>
                                         <div class="col-md-8">
                                             <input type="text" class="form-control validarPanel" placeholder="Satisfaccion" name="SatisfaccionDescripcion" id="SatisfaccionDescripcion" data-message="- Campo Satisfaccion">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label for="SatisfaccionIcono " class="col-md-4 col-form-label  ">Icono:</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control validarPanel" placeholder="Icono" name="SatisfaccionIcono" id="SatisfaccionIcono" data-message="- Campo Icono">
                                         </div>
                                     </div>
                                 </div>

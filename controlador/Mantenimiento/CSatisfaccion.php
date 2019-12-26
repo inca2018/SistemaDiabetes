@@ -7,6 +7,8 @@ $mantenimiento        = new MSatisfaccion();
 $general              = new MGeneral();
 $idSatisfaccion          = isset($_POST["idSatisfaccion"]) ? limpiarCadena($_POST["idSatisfaccion"]) : "";
 $SatisfaccionDescripcion = isset($_POST["SatisfaccionDescripcion"]) ? limpiarCadena($_POST["SatisfaccionDescripcion"]) : "";
+$SatisfaccionIcono = isset($_POST["SatisfaccionIcono"]) ? limpiarCadena($_POST["SatisfaccionIcono"]) : "";
+
 $Opcion               = isset($_POST["Opcion"]) ? limpiarCadena($_POST["Opcion"]) : "";
 $login_idLog          = $_SESSION['idUsuario'];
 
@@ -48,7 +50,7 @@ switch ($_GET['op']) {
             if ($rspta["Error"]) {
                 $rspta["Mensaje"] .= "Por estas razones no se puede Registrar el Satisfaccion.";
             } else {
-                $RespuestaRegistro = $mantenimiento->RegistroSatisfaccion($SatisfaccionDescripcion, $idSatisfaccion);
+                $RespuestaRegistro = $mantenimiento->RegistroSatisfaccion($SatisfaccionDescripcion, $idSatisfaccion,$SatisfaccionIcono);
                 if ($RespuestaRegistro) {
                     $rspta["Registro"] = true;
                     $rspta["Mensaje"]  = "Satisfaccion se registro Correctamente.";
@@ -69,7 +71,7 @@ switch ($_GET['op']) {
                 $rspta["Mensaje"] .= "Por estas razones no se puede Actualizar Satisfaccion.";
             } else {
 
-                $RespuestaRegistro = $mantenimiento->RegistroSatisfaccion($SatisfaccionDescripcion, $idSatisfaccion);
+                $RespuestaRegistro = $mantenimiento->RegistroSatisfaccion($SatisfaccionDescripcion, $idSatisfaccion,$SatisfaccionIcono);
                 if ($RespuestaRegistro) {
                     $rspta["Registro"] = true;
                     $rspta["Mensaje"]  = "Satisfaccion se Actualizo Correctamente.";
@@ -91,8 +93,9 @@ switch ($_GET['op']) {
                 "0" => '',
                 "1" => BuscarEstado($reg),
                 "2" => $reg->Descripcion,
-                "3" => $reg->fechaRegistro,
-                "4" => BuscarAccion($reg)
+                "3" => htmlspecialchars_decode($reg->Icono),
+                "4" => $reg->fechaRegistro,
+                "5" => BuscarAccion($reg)
             );
         }
         $results = array(

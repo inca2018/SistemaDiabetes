@@ -28,14 +28,14 @@ class MSatisfaccion
         }
         return validarDatos($sql);
     }
-    public function RegistroSatisfaccion($SatisfaccionDescripcion, $idSatisfaccion)
+    public function RegistroSatisfaccion($SatisfaccionDescripcion, $idSatisfaccion,$SatisfaccionIcono)
     {
         $sql = "";
         if ($idSatisfaccion == "" || $idSatisfaccion == null || empty($idSatisfaccion)) {
-            $sql = "CALL `SP_MANT_SATISFACCION_REGISTRO`('$SatisfaccionDescripcion');";
+            $sql = "CALL `SP_MANT_SATISFACCION_REGISTRO`('$SatisfaccionDescripcion','$SatisfaccionIcono');";
 
         } else {
-            $sql = "CALL `SP_MANT_SATISFACCION_EDITAR`('$SatisfaccionDescripcion','$idSatisfaccion');";
+            $sql = "CALL `SP_MANT_SATISFACCION_EDITAR`('$SatisfaccionDescripcion','$idSatisfaccion','$SatisfaccionIcono');";
         }
         return ejecutarConsulta($sql);
     }
